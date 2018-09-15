@@ -1,0 +1,12 @@
+Subject: Inactive Account Reminder
+
+Hello {USERNAME},
+
+This notification is a reminder that your Account at "{SITENAME}", Created on {REGISTER_DATE}, remains Inactive.  If you would like to Activate this Account, then please visit the following link:
+
+
+{U_ACTIVATE}
+
+Thank you for Registering at "{SITENAME}", we look forward to your participation.
+
+{EMAIL_SIG}

@@ -1,0 +1,10 @@
+Subject: Account Activated
+
+Hello {USERNAME},
+
+Your Account on "{SITENAME}" has been Activated by an Administrator, you may now login.
+
+Your Password has been Securely Stored in our Database and can NOT be retrieved.  In the event that it is forgotten, you will be able to Reset it using the email Address Associated with your Account.
+
+
+{EMAIL_SIG}

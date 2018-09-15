@@ -1,0 +1,14 @@
+Subject: Post Approved - "{POST_SUBJECT}"
+
+Hello {USERNAME},
+
+You are receiving this Notification because your Post "{POST_SUBJECT}" at "{SITENAME}" was Approved by a Moderator or Administrator.
+
+If you want to View the Post, Click the following Link:
+{U_VIEW_POST}
+
+If you want to View the Topic, Click the following Link:
+{U_VIEW_TOPIC}
+
+
+{EMAIL_SIG}

@@ -1,0 +1,8 @@
+Subject: Report Deleted - "{PM_SUBJECT}"
+
+Hello {USERNAME},
+
+You are receiving this Notification because the Report you filed regarding the Private Message "{PM_SUBJECT}" at "{SITENAME}" was Deleted by a Moderator or Administrator.
+
+
+{EMAIL_SIG}

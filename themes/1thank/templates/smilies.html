@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="{S_CONTENT_DIRECTION}" lang="{S_USER_LANG}" xml:lang="{S_USER_LANG}">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset={S_CONTENT_ENCODING}">
+        <meta name="generator" content="BTManager {PMBT_VER}">
+        <meta http-equiv="PRAGMA" content="NO-CACHE">
+        <meta http-equiv="EXPIRES" content="-1">
+        <meta http-equiv="Cache-Control" content="no-cache">
+        <link REL="shortcut icon" HREF="{SITE_URL}/themes/1thank/favicon.ico" TYPE="image/x-icon">
+        <link rel="search" type="application/opensearchdescription+xml" title="{SITENAME}" href="{SITE_URL}/opensearch.php">
+        <title>{SITENAME} &bull; <!-- IF S_IN_MCP -->{L_MCP} &bull; <!-- ELSEIF S_IN_UCP -->{L_USER_CPANNEL} &bull; <!-- ENDIF -->{PAGE_TITLE}</title>
+        <link REL="shortcut icon" HREF="{SITE_URL}/themes/1thank/favicon.ico" TYPE="image/x-icon">
+        <link rel="alternate" type="application/rss+xml" title="{L_LAST_TORRENT}" href="{SITE_URL}/backend.php?op=last">
+        <link rel="alternate" type="application/rss+xml" title="{L_BEST_TORRENT}" href="{SITE_URL}/backend.php?op=best">
+        <link rel="StyleSheet" href="{SITE_URL}/themes/1thank/style.css" type="text/css">
+<script type="text/javascript">
+    // <![CDATA[
+        function insert(code)
+        {
+            opener.document.forms['{FORM}'].elements['{AREA}'].value = ( opener.document.forms['{FORM}'].elements['{AREA}'].value.length && opener.document.forms['{FORM}'].elements['{AREA}'].type == "textarea" ) ? opener.document.forms['{FORM}'].elements['{AREA}'].value + " " + code : code;
+            self.close();
+        }
+    // ]]>
+    </script>
+</head>
+
+<body>
+<h2>{L_SMILIE_LIST}</h2>
+<div class="panel">
+	<div class="inner"><span class="corners-top"><span></span></span>
+		<!-- BEGIN smilies --> 
+			<img onClick="insert('{smilies.CODE}')" src="{SITE_URL}/smiles/{smilies.FILE}" title="{smilies.ALT}" id="smilie_{smilies.ID}" alt="{smilies.CODE}" />
+		<!-- END smilies	-->
+	
+	<span class="corners-bottom"><span></span></span></div>
+</div>
+<a  href="#" onclick="window.close(); return false;">{L_CLOSE_WINDOW}</a>
+
+</body>
+</html>

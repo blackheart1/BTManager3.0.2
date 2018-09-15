@@ -1,0 +1,12 @@
+Subject: Topic Approved - "{TOPIC_TITLE}"
+
+Hello {USERNAME},
+
+You are receiving this Notification because your Topic "{TOPIC_TITLE}" at "{SITENAME}" was Approved by a Moderator or Administrator.
+
+If you want to View the Topic, Click the following Link:
+
+{U_VIEW_TOPIC}
+
+
+{EMAIL_SIG}

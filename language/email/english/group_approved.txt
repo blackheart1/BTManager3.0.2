@@ -1,0 +1,12 @@
+Subject: Your Request has been Approved
+
+Congratulations,
+
+Your Request to Join the "{GROUP_NAME}" Group on "{SITENAME}" has been Approved.
+
+Click on the following Link to see your Group Membership.
+
+{U_GROUP}
+
+
+{EMAIL_SIG}

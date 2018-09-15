@@ -1,0 +1,16 @@
+Subject: New Private Message has arrived
+
+Hello {USERNAME},
+
+You have received a New Private Message from "{AUTHOR_NAME}" to your Account on "{SITENAME}" with the following Subject:
+
+{SUBJECT}
+
+You can View your New Message by Clicking on the following Link:
+
+{U_VIEW_MESSAGE}
+
+You have Requested that you be Notified on this Event, remember that you can always choose NOT to be Notified of New Messages by changing the appropriate Setting in your Profile.
+
+
+{EMAIL_SIG}

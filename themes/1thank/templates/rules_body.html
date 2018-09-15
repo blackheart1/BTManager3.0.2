@@ -1,0 +1,37 @@
+<!-- INCLUDE themes/1thank/templates/overall_header.html -->
+
+<a name="faqtop"></a>
+
+<div id="pagecontent">
+
+    {$CA_BLOCK_START}
+<div class="forabg">
+	<div class="inner">
+    	<span class="corners-top"><span></span></span>
+        <ul class="topiclist">
+            <li class="header">
+                <dl class="icon">
+                    <dt>
+                        {L_RULES}
+                    </dt>
+                </dl>
+            </li>
+        </ul>
+    	<span class="corners-bottom"><span></span></span>
+    </div>
+</div>	
+<!-- IF S_RULES -->
+<!-- BEGIN rules_var -->
+<div class="panel">
+	<div class="inner"><span class="corners-top"><span></span></span>
+            <h2>{rules_var.TITLE}</h2>
+            	<div class="content">
+				{rules_var.RULE}
+				</div>
+	<span class="corners-bottom"><span></span></span></div>
+</div>
+<!-- END rules_var -->
+<!-- ENDIF -->
+</div>
+
+<!-- INCLUDE themes/1thank/templates/overall_footer.html -->

@@ -1,0 +1,18 @@
+Subject: {SUB_JECT}
+
+Attention {USER_NAME},
+
+You are receiving this Message because you Requested a New Password on {SITENAME}.
+
+Your New Password is:
+
+{REG_PASS}
+
+For the change to become effective, you'll have to Confirm it using the following Link:
+
+{REG_URL}
+
+If you did NOT intend to Change your Password, please Disregard this Message.
+
+
+{EMAIL_SIG}
