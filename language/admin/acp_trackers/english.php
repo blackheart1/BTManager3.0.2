@@ -2,10 +2,10 @@
 
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -13,16 +13,10 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts)
 ** Project Leaders: Black_heart, Thor.
-** File acp_trackers/english.php 2018-09-15 09:13:00 Thor
+** File acp_trackers/english.php 2018-09-15 21:28:00 Thor
 **
 ** CHANGES
 **
-** 2018-02-23 - Added New Masthead
-** 2018-02-23 - Added New !defined('IN_PMBT')
-** 2018-02-23 - Fixed Spelling
-** 2018-03-28 - Amended the Wording of some Sentences
-** 2018-03-28 - Amended !defined('IN_PMBT') Corrected Path
-** 2018-05-03 - Added Missing Language
 **/
 
 if (!defined('IN_PMBT'))
@@ -67,7 +61,7 @@ $lang = array_merge($lang, array(
     'NOTOR_ERR'            => 'There was an Error ',
     'INFO_HASH'            => 'Info Hash',
     'INVALID_ANNOUNCE'     => 'Invalid Announce URL.<br /><strong>"%1$s"</strong>',
-	'BLANK_ANNOUNCE_URL'   => 'The Announce url was left blank',
+	'BLANK_ANNOUNCE_URL'   => 'The Announce URL is Blank',
     'NO_TORRENTS_LISTED'   => '"%1$s" has NO Torrents OR has Been Blacklisted (If NOT Blacklisted it has been Removed from the Database.)',
 
     'PEER_SUMERY'          => 'Found <strong>"%1$s"</strong> Seeds, <strong>"%2$s"</strong> Leechers, <strong>"%3$s"</strong> Completed Downloads for Torrent "%4$s" Info Hash "%5$s"."',
