@@ -116,7 +116,7 @@ foreach($tupd as $var=>$val)
 	{
 		sql_add($check, $table, $d, $val['add'][$v], $val['asvas']);
 	}
-	$db->sql_query($vas);
+	//$db->sql_query($vas);
 }
 die();
        $template->assign_vars(array(
