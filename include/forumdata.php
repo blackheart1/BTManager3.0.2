@@ -1,10 +1,11 @@
 <?php
+
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -12,17 +13,19 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File forumdata.php 2018-02-18 14:32:00 joeroberts
+** File include/forumdata.php 2018-09-22 00:00:00 Thor
 **
 ** CHANGES
 **
-** 24-02-18 depricated file
+** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
 **/
-if (!defined('IN_PMBT'))
+
+if (!defined('IN_BTM'))
 {
-	include_once './../security.php';
-	die ();
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
+    die ("Error 404 - Page Not Found");
 }
+
 require_once("../../include/configdata.php");
 define('TRACKERPX',$db_prefix);
 $sql = "SELECT * FROM " . TRACKERPX . "_config LIMIT 1;";
@@ -52,10 +55,11 @@ $phpbb2_folder = "./";
 $auto_post = $row["auto_post_forum"];
 $allow_posting = ($row["auto_post"]=="true") ? true : false;
 $db->sql_freeresult($configquery);
-	if ($forumshare) define('ADMIN_BT_SHARE', true);
+    if ($forumshare) define('ADMIN_BT_SHARE', true);
 define('phpBBBASE',$forumbase);
 define('FORUMPRX',$forumpx);
 define('PHPBB_ROOT_PATH',$phpbb2_folder);
 $phpbb_root_path = $phpbb2_folder;
 #Config Parser end
+
 ?>

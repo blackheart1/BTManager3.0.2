@@ -1,10 +1,11 @@
 <?php
+
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -12,14 +13,15 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File mysql4.php 2018-02-18 10:18:00 Black_Heart
+** File udl/mysql4.php 2018-09-21 00:00:00 Thor
 **
 ** CHANGES
 **
-** EXAMPLE 26-04-13 - Added Auto Ban
+** 2018-09-21 - Updated Masthead, Github, !defined('IN_BTM')
 **/
 
-if (!defined('IN_PMBT'))die ("You can't access this file directly");
+if (!defined('IN_BTM'))
+    die ("You Can't Access this File Directly");
 
 if(!defined("SQL_LAYER")) {
         define("SQL_LAYER","mysql4");
@@ -61,12 +63,12 @@ if(!defined("SQL_LAYER")) {
                                 return false;
                         }
                 }
-				/*To not break everyone using your library, you have to keep backwards compatibility: 
-				Add the PHP5-style constructor, but keep the PHP4-style one. */
-				function sql_db($sqlserver, $sqluser, $sqlpassword, $database, $persistency = true)
-				{
-					$this->__construct($sqlserver, $sqluser, $sqlpassword, $database, $persistency);
-				}
+                /*To not break everyone using your library, you have to keep backwards compatibility:
+                Add the PHP5-style constructor, but keep the PHP4-style one. */
+                function sql_db($sqlserver, $sqluser, $sqlpassword, $database, $persistency = true)
+                {
+                    $this->__construct($sqlserver, $sqluser, $sqlpassword, $database, $persistency);
+                }
 
                 //
                 // Other base methods
@@ -262,15 +264,15 @@ if(!defined("SQL_LAYER")) {
                         }
                 }
 
-				function sql_escape($msg)
-				{
-					if (!$this->db_connect_id)
-					{
-						return @mysql_real_escape_string($msg);
-					}
-			
-					return @mysql_real_escape_string($msg, $this->db_connect_id);
-				}
+                function sql_escape($msg)
+                {
+                    if (!$this->db_connect_id)
+                    {
+                        return @mysql_real_escape_string($msg);
+                    }
+
+                    return @mysql_real_escape_string($msg, $this->db_connect_id);
+                }
                 function sql_error() {
                         $result['message'] = @mysql_error($this->db_connect_id);
                         $result['code'] = @mysql_errno($this->db_connect_id);

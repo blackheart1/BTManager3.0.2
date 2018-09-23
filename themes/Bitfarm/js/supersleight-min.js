@@ -1,7 +1,7 @@
 var supersleight=function(){var root=false;
-	var applyPositioning=true;
-	var shim='x.gif';
-	var shim_pattern=/x\.gif$/i;
+    var applyPositioning=true;
+    var shim='x.gif';
+    var shim_pattern=/x\.gif$/i;
 var fnLoadPngs=function(){if(root){root=document.getElementById(root);}else{root=document;}
 for(var i=root.all.length-1,obj=null;(obj=root.all[i]);i--){if(obj.currentStyle.backgroundImage.match(/\.png/i)!==null){bg_fnFixPng(obj);}
 if(obj.tagName=='IMG'&&obj.src.match(/\.png$/i)!==null){el_fnFixPng(obj);}

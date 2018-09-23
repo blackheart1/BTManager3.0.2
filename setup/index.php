@@ -1,10 +1,11 @@
 <?php
+
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -12,15 +13,19 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File index.php 2018-02-18 10:18:00 Black_Heart
+** File index.php 2018-09-21 00:00:00 Thor
 **
 ** CHANGES
 **
-** EXAMPLE 26-04-13 - Added Auto Ban
+** 2018-09-21 - Updated Masthead, Github, !defined('IN_BTM')
 **/
+
 error_reporting(E_ALL ^ E_NOTICE);
-if (defined('IN_PMBT'))die ("You can't include this file");
-define("IN_PMBT",true);
+
+if (defined('IN_BTM'))
+    die ("Error 404 - Page Not Found");
+
+define("IN_BTM",true);
 define('INSETUP',true);
 
 if (function_exists('ob_gzhandler') && !ini_get('zlib.output_compression'))
@@ -59,7 +64,7 @@ require_once("graphics/graphics.php");
 function check_chmod($file_check)
 {
 }
-function is__writable($path, $file = '') 
+function is__writable($path, $file = '')
 {
 	if ($path{strlen($path)-1}=='/' AND $file == '') return is__writable($path, uniqid(mt_rand()).'.tmp');
 	//die($path);
@@ -153,7 +158,7 @@ function getscrapedata($url, $display=false, $info = false) {
 					{
 						return false;
 					}
-					else 
+					else
 					{
 						return true;
 					}

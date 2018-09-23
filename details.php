@@ -2,10 +2,10 @@
 
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -13,20 +13,21 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File details.php 2018-06-11 20:24:00 Black_Heart
+** File details.php 2018-09-22 00:00:00 Thor
 **
 ** CHANGES
 **
-** 2018-06-11 - Corrected Language
+** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
 **/
 
-if (defined('IN_PMBT'))
+if (defined('IN_BTM'))
 {
-    die ("You can't include this file");
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
+    die ("Error 404 - Page Not Found");
 }
 else
 {
-    define("IN_PMBT",true);
+    define("IN_BTM",true);
 }
 
 require_once("common.php");
@@ -294,7 +295,7 @@ $java_link = '&torrent=' . $id . (($password)? '&password=' . $password : '');
 
 $template->assign_vars(array(
         'U_ID'             =>  $id,
-		'T_NAME'				=> $torrent["name"],
+        'T_NAME'                => $torrent["name"],
         'U_PASSWORD'       =>  ($password)? '&password=' . $password : '',
         'U_CAN_BOOK'       =>  ($user->user AND $torrent["type"] != "link")? true : false,
         'U_DETAIL_LINK'    =>  'op=view_details_page' . $java_link,

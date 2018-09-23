@@ -1,73 +1,73 @@
 function ShowHideMainCats(tableCount)
 {
-	var MainCats = document.getElementById('cats');
-	var MainCatsPic = document.getElementById('pic');
-	var DefCats = document.getElementById('defcats');
+    var MainCats = document.getElementById('cats');
+    var MainCatsPic = document.getElementById('pic');
+    var DefCats = document.getElementById('defcats');
 
-	if (MainCats.style.display == 'none') {
-	  MainCats.style.display = 'block';
-	  DefCats.style.display = 'block';
-	  MainCatsPic.src = 'images/noncross.gif';
-	}
-	else {
-	  MainCats.style.display = 'none';
-	  DefCats.style.display = 'none';
-	  MainCatsPic.src = 'images/cross.gif';
-	}
-	
-	for(i = 1; i <= tableCount; i++) {
-		tableID = 'tabletype' + i;
-		tabletype = document.getElementById(tableID);
-		picID = 'pic' + i;
-		picture = document.getElementById(picID);
-		tabletype.style.display = 'none';
-		picture.src = 'images/cross.gif';
-	}
-	
+    if (MainCats.style.display == 'none') {
+      MainCats.style.display = 'block';
+      DefCats.style.display = 'block';
+      MainCatsPic.src = 'images/noncross.gif';
+    }
+    else {
+      MainCats.style.display = 'none';
+      DefCats.style.display = 'none';
+      MainCatsPic.src = 'images/cross.gif';
+    }
+
+    for(i = 1; i <= tableCount; i++) {
+        tableID = 'tabletype' + i;
+        tabletype = document.getElementById(tableID);
+        picID = 'pic' + i;
+        picture = document.getElementById(picID);
+        tabletype.style.display = 'none';
+        picture.src = 'images/cross.gif';
+    }
+
 }
 
 
 function ShowHideMainSubCats(tableNum,tableCount){
-	
-	//Modified http://lists.evolt.org/pipermail/javascript/2006-May/010443.html
-	
-	if(tableCount > 1)
-	for(i = 1; i <= tableCount; i++) {
-		tableID = 'tabletype' + i;
-		tabletype = document.getElementById(tableID);
-		picID = 'pic' + i;
-		picture = document.getElementById(picID);
-		
-		if(i == tableNum){
-			if(tabletype.style.display == 'none')
-			{
-			tabletype.style.display = 'block';
-			picture.src = 'images/noncross.gif';
-		    }
-			else
-			{
-			tabletype.style.display = 'none';
-			picture.src = 'images/cross.gif';
-		}
-		}
-		else
-		{
-		tabletype.style.display = 'none';
-		picture.src = 'images/cross.gif';
-	}
 
-	}
+    //Modified http://lists.evolt.org/pipermail/javascript/2006-May/010443.html
+
+    if(tableCount > 1)
+    for(i = 1; i <= tableCount; i++) {
+        tableID = 'tabletype' + i;
+        tabletype = document.getElementById(tableID);
+        picID = 'pic' + i;
+        picture = document.getElementById(picID);
+
+        if(i == tableNum){
+            if(tabletype.style.display == 'none')
+            {
+            tabletype.style.display = 'block';
+            picture.src = 'images/noncross.gif';
+            }
+            else
+            {
+            tabletype.style.display = 'none';
+            picture.src = 'images/cross.gif';
+        }
+        }
+        else
+        {
+        tabletype.style.display = 'none';
+        picture.src = 'images/cross.gif';
+    }
+
+    }
 }
 
 function checkAllFields(ref,tabletype) {
-	
-	//Modified http://www.dustindiaz.com/check-one-check-all-javascript/
-	
-	checkAllID = 'checkAll' + tabletype;
+
+    //Modified http://www.dustindiaz.com/check-one-check-all-javascript/
+
+    checkAllID = 'checkAll' + tabletype;
     var chkAll = document.getElementById(checkAllID);
-	CatsID = 'cats' + tabletype + '[]';
+    CatsID = 'cats' + tabletype + '[]';
     var checks = document.getElementsByName(CatsID);
- 
+
     var boxLength = checks.length;
     var allChecked = false;
     var totalChecked = 0;
@@ -211,4 +211,3 @@ thisbrowser="NN6";
 }
 }
 // -->
-

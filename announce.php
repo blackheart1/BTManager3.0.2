@@ -1,10 +1,11 @@
 <?php
+
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -12,21 +13,27 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File announce.php 2018-02-19 14:32:00 Black_Heart
+** File announce.php 2018-09-22 00:00:00 Thor
 **
 ** CHANGES
 **
-** EXAMPLE 26-04-13 - Added Auto Ban
+** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
 **/
+
 @error_reporting(E_ALL & ~(E_NOTICE | E_USER_NOTICE)); //We don't get stupid messages
 #Stop from Including this file
-if (defined('IN_PMBT'))die ("You can't include this file");
-define("IN_PMBT",true);
+if (defined('IN_BTM'))
+{
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
+    die ("Error 404 - Page Not Found");
+}
+
+define("IN_BTM",true);
 $agent = $_SERVER['HTTP_USER_AGENT'];
 #stop Broswer use
-if (preg_match("/(Mozilla|Opera|Lynx|Netscape|Links)$/", $agent) || 
-    isset($_SERVER['HTTP_COOKIE']) || 
-    isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) || 
+if (preg_match("/(Mozilla|Opera|Lynx|Netscape|Links)$/", $agent) ||
+    isset($_SERVER['HTTP_COOKIE']) ||
+    isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ||
     isset($_SERVER['HTTP_ACCEPT_CHARSET']))
  {
                 header("HTTP/1.0 401 Access Denied");
@@ -43,23 +50,23 @@ $user->set_lang('common',$user->ulanguage);
 #Clear any unwanted blank spaces
 if (extension_loaded('zlib')){ ob_end_clean();}
 if (function_exists('ob_gzhandler') && !ini_get('zlib.output_compression'))
-	ob_start('ob_gzhandler');
+    ob_start('ob_gzhandler');
 else
-	ob_start();
+    ob_start();
 ob_implicit_flush(0);
 
 #Make sure local tracker is active
 if ($stealthmode) die();
 #create Basic Functions
-function hash_where($name, $hash) 
+function hash_where($name, $hash)
 {
-	global $db, $phpEx;
+    global $db, $phpEx;
         $shhash = preg_replace('/ *$/s', "", $hash);
-		$utf_hash = utf8_encode($hash);
-		$utf_clean = utf8_clean_string($hash);
-	return "($name = '" . $db->sql_escape($utf_clean) . "'
-			 OR $name = '" . $db->sql_escape($shhash) . "' 
-			 OR $name = '" . $db->sql_escape($utf_hash) . "')";
+        $utf_hash = utf8_encode($hash);
+        $utf_clean = utf8_clean_string($hash);
+    return "($name = '" . $db->sql_escape($utf_clean) . "'
+             OR $name = '" . $db->sql_escape($shhash) . "'
+             OR $name = '" . $db->sql_escape($utf_hash) . "')";
 }
 
 function unesc_magic($x) {
@@ -67,8 +74,8 @@ function unesc_magic($x) {
 }
 function err($msg, $sqlerror = false)
 {
-	if($sqlerror) $msg = $msg . '  ' . $sqlerror['message'];
-	add_log('admin','LOG_ANNOUNCE',$msg);
+    if($sqlerror) $msg = $msg . '  ' . $sqlerror['message'];
+    add_log('admin','LOG_ANNOUNCE',$msg);
    benc_resp(array("failure reason" => array('type' => "string", 'value' => $msg)));
    exit();
 }
@@ -120,9 +127,9 @@ function benc_dict($d) {
    return $s;
 }
 function benc_resp_raw($x){
-	header("Content-Type: text/plain");
-	header("Pragma: no-cache");
-	print($x);
+    header("Content-Type: text/plain");
+    header("Pragma: no-cache");
+    print($x);
 }
 function GetUserAgent($pid) {
         $strAgent = "Unknown";
@@ -143,7 +150,7 @@ function GetUserAgent($pid) {
                 elseif ($ltrs == "XT") $strAgent = "XanTorrent";
                 elseif ($ltrs == "BB") $strAgent = "BitBuddy";
                 elseif ($ltrs == "TN") $strAgent = "TorrentDOTnet";
-				elseif ($ltrs == "BC") $strAgent = "BitComet";
+                elseif ($ltrs == "BC") $strAgent = "BitComet";
                 //else; Unknown client using this naming.
         } elseif ($pid[4] == '-' AND $pid[5] == '-' AND $pid[6] == '-' AND $pid[7] == '-' ) {
                 $strversion = sprintf(" %i%i%i", $pid[1] - '0', $pid[2] - '0', $pid[3] - '0' );
@@ -190,12 +197,12 @@ foreach (explode(":", $req) as $x) {
         }
         else
                 $opt = false;
-				if($x == 'port')$dev = 0;
-				elseif($x == 'downloaded')$dev = 0;
-				elseif($x == 'uploaded')$dev = 0;
-				elseif($x == 'left')$dev = 0;
-				else $dev = '';
-			$$x = $$x;
+                if($x == 'port')$dev = 0;
+                elseif($x == 'downloaded')$dev = 0;
+                elseif($x == 'uploaded')$dev = 0;
+                elseif($x == 'left')$dev = 0;
+                else $dev = '';
+            $$x = $$x;
         if (!isset($$x) or $$x == '') {
                 if (!$opt) err("missing key " . $x . ' ' . $$x);
                 else $$x = "";
@@ -215,7 +222,7 @@ $uploaded = 0 + $uploaded;
 $left = 0 + $left;
 //GET USER IP
 $ip = $real_ip = getip();
-		if($ip == "0.0.0.0")err("Bad Ip report");
+        if($ip == "0.0.0.0")err("Bad Ip report");
 else $ip = sprintf("%u",ip2long($ip));
 #make sure Ip is not banned
 $sql = "SELECT  ipstart, ban_exclude, ban_give_reason AS reason, ban_end FROM ".$db_prefix."_bans
@@ -258,18 +265,18 @@ $user_sql = "SELECT id, username, password, act_key, level, uploaded, downloaded
 if (!$userres = $db->sql_query($user_sql)) err("SQL Error: ". $user_sql ,$db->sql_error());
 if ($userrow = $db->sql_fetchrow($userres)) {
         $uid = $userrow["id"];
-		$usergift = $userrow['dongift'];
+        $usergift = $userrow['dongift'];
         $ulevel = $userrow["level"];
-		$cookiedata = array($userrow["id"],addslashes($userrow["username"]),$userrow["password"],$userrow["act_key"]);
-		$user = cookie_encode($cookiedata);
-		$user = @new User($user);
-		$auth = new auth();
-		$auth->acl($user);
-		if(!$auth->acl_get('u_download_torrents')){
-			err("You are not allowed to Access this Download");
-		}
+        $cookiedata = array($userrow["id"],addslashes($userrow["username"]),$userrow["password"],$userrow["act_key"]);
+        $user = cookie_encode($cookiedata);
+        $user = @new User($user);
+        $auth = new auth();
+        $auth->acl($user);
+        if(!$auth->acl_get('u_download_torrents')){
+            err("You are not allowed to Access this Download");
+        }
 } else {
-	//REJECR INVALED PASSKEY
+    //REJECR INVALED PASSKEY
         if ($passkey != "") err("Invalid Passkey. It may have been renewed.");
         $uid = 0;
         $ulevel = "guest";
@@ -277,18 +284,18 @@ if ($userrow = $db->sql_fetchrow($userres)) {
 $db->sql_freeresult($userres);
 if($userrow["parked"] == 'true')
 {
-	err('Your account is Parked');
+    err('Your account is Parked');
 }
 if($userrow["disabled"] == 'true')
 {
-	err('Your account has been Disabled Reason Given is ' . $userrow["disabled_reason"]);
+    err('Your account has been Disabled Reason Given is ' . $userrow["disabled_reason"]);
 }
 # Check If Client is banned
                         $sql = "SELECT client, reason FROM ".$db_prefix."_client_ban";
                         $res = $db->sql_query($sql);
                         while ($banedclient = $db->sql_fetchrow($res)){
                         if (strpos($peer_id,$banedclient['client'])) err($banedclient['reason']);
-						}
+                        }
                         $db->sql_freeresult($res);
 /* CLIENT INFORMATION */
 
@@ -387,22 +394,22 @@ if ($event != "stopped") {
 if(!$compact){
                 $resp .= benc_str("peers")."l";
                 while ($row = $db->sql_fetchrow($res)) {
-						#Skip user
+                        #Skip user
                         if ($row["peer_id"] === utf8_clean_string($peer_id)) {
                                 continue;
                         }
-   				$resp .= "d" .
-      			benc_str("ip") . benc_str(long2ip($row["ip"])) .
-      			benc_str("peer id") . benc_str(stripslashes($row["peer_id"])) .
-      			benc_str("port") . "i" . $row["port"] . "e" .
-      			"e";
+                $resp .= "d" .
+                benc_str("ip") . benc_str(long2ip($row["ip"])) .
+                benc_str("peer id") . benc_str(stripslashes($row["peer_id"])) .
+                benc_str("port") . "i" . $row["port"] . "e" .
+                "e";
                 }
 } else {
                 $peers = "";
                while ($row = $db->sql_fetchrow($res)) {
                         $peers .= pack("Nn", sprintf("%d",$row["ip"]), $row["port"]);
                 }
-					$resp .= benc_str("peers") . strlen($peers).":".$peers;
+                    $resp .= benc_str("peers") . strlen($peers).":".$peers;
 
 }
         $db->sql_freeresult($res);
@@ -411,17 +418,17 @@ if(!$compact){
 $resp .= "ee";
                 unset($row, $sql_select, $res);
         $shhash = preg_replace('/ *$/s', "", $key);
-		$utf_hash = utf8_encode($key);
-		$utf_clean = utf8_clean_string($key);
+        $utf_hash = utf8_encode($key);
+        $utf_clean = utf8_clean_string($key);
         $shhasha = preg_replace('/ *$/s', "", $peer_id);
-		$utf_hasha = utf8_encode($peer_id);
-		$utf_cleana = utf8_clean_string($peer_id);
-	$where = "(P.unique_id = '" . $db->sql_escape($utf_clean) . "'
-			 OR P.unique_id = '" . $db->sql_escape($shhash) . "' 
-			 OR P.unique_id = '" . $db->sql_escape($utf_hash) . "'
-			 OR P.peer_id = '" . $db->sql_escape($utf_cleana) . "'
-			 OR P.peer_id = '" . $db->sql_escape($shhasha) . "' 
-			 OR P.peer_id = '" . $db->sql_escape($utf_hasha) . "')";
+        $utf_hasha = utf8_encode($peer_id);
+        $utf_cleana = utf8_clean_string($peer_id);
+    $where = "(P.unique_id = '" . $db->sql_escape($utf_clean) . "'
+             OR P.unique_id = '" . $db->sql_escape($shhash) . "'
+             OR P.unique_id = '" . $db->sql_escape($utf_hash) . "'
+             OR P.peer_id = '" . $db->sql_escape($utf_cleana) . "'
+             OR P.peer_id = '" . $db->sql_escape($shhasha) . "'
+             OR P.peer_id = '" . $db->sql_escape($utf_hasha) . "')";
 
 
 $where = "P.torrent = '" . $torrentid . "' AND " . $where;
@@ -439,16 +446,16 @@ $updateset = Array();
 $stoppeer = false;
 // EVENT TEST
 if ($event == "stopped") {
-      //UPDATE SNATCHED 
+      //UPDATE SNATCHED
 
         $sql="UPDATE ".$db_prefix."_snatched SET seeder = 'no', connectable='no' WHERE torrent = $torrentid AND userid = ".$uid.";";
         $db->sql_query($sql) or err("SQL Error = ".$sql,$db->sql_error());
-      	unset($sql);
+        unset($sql);
         $sql_delete = "DELETE FROM ".$db_prefix."_peers WHERE torrent = '".$torrentid."' AND ".hash_where("peer_id", $peer_id).";";
         $db->sql_query($sql_delete) or err("SQL Error: ".$sql_delete,$db->sql_error());
         if ($db->sql_affectedrows() > 0) {
         $hitrun = (($torrentadded > get_date_time(gmtime() - 10800) && ($downloaded / 2) > $uploaded) ? "IF(hitrun = '0000-00-00 00:00:00', '".get_date_time()."', hitrun)" : "hitrun");
-       //$db->sql_query("UPDATE ".$db_prefix."_snatched SET  ip = '".$ip."', port = $port, agent= '".$agent.$clientversion."', last_action = '".get_date_time()."', hitrun = $hitrun WHERE torrentid = $torrentid AND userid = $uid") or err(mysql_error());		
+       //$db->sql_query("UPDATE ".$db_prefix."_snatched SET  ip = '".$ip."', port = $port, agent= '".$agent.$clientversion."', last_action = '".get_date_time()."', hitrun = $hitrun WHERE torrentid = $torrentid AND userid = $uid") or err(mysql_error());
                 if ($self["seeder"] == "yes")
                         $updateset[] = "seeders = if(`seeders` > 0,`seeders` - 1, `seeders`)";
                 else
@@ -458,24 +465,24 @@ if ($event == "stopped") {
                 $updateset[] = "speed = speed - '".$self["upload_speed"]."'";
         }
         unset($sql_delete);
-		$stoppeer = true;
+        $stoppeer = true;
 }
 elseif($event == "completed")
 {
         if ($uid != 0) {
-			$sql="UPDATE ".$db_prefix."_snatched SET  finished  = 'yes', completedat = NOW() WHERE torrent = $torrentid AND userid = ".$uid.";";
-			$db->sql_query($sql);
-			unset($sql);
-			$sql = "INSERT INTO ".$db_prefix."_download_completed ( user , torrent , completed ) VALUES ('".$uid."', '".$torrentid."', NOW());";
-			$db->sql_query($sql);
-			unset($sql);
+            $sql="UPDATE ".$db_prefix."_snatched SET  finished  = 'yes', completedat = NOW() WHERE torrent = $torrentid AND userid = ".$uid.";";
+            $db->sql_query($sql);
+            unset($sql);
+            $sql = "INSERT INTO ".$db_prefix."_download_completed ( user , torrent , completed ) VALUES ('".$uid."', '".$torrentid."', NOW());";
+            $db->sql_query($sql);
+            unset($sql);
         }
         require_once("include/class.email.php");
         require_once("include/utf/utf_tools.php");
-		$user->set_lang('download',$user->ulanguage);
-		$data = @file_get_contents('language/email/' . $language . '/seednotif.txt');
-		eval('$data = "' . $data . '";');
-		$e_message = wordwrap(utf8_wordwrap($data), 70, "\r\n", true);
+        $user->set_lang('download',$user->ulanguage);
+        $data = @file_get_contents('language/email/' . $language . '/seednotif.txt');
+        eval('$data = "' . $data . '";');
+        $e_message = wordwrap(utf8_wordwrap($data), 70, "\r\n", true);
         $sql_trigger = "SELECT U.email FROM ".$db_prefix."_users U, ".$db_prefix."_seeder_notify S WHERE S.torrent = '".$torrentid."' AND S.user = U.id AND S.status = 'active';";
         $res_trigger = $db->sql_query($sql_trigger) or err("Error SQL = ".$sql_trigger,$db->sql_error());
         $notify_mail = New eMail();
@@ -576,27 +583,27 @@ if ($announce_level == "user" AND $ulevel == "user" AND $seeder == "no" AND $eve
 unset($row_trigger);
 if ($self) { //Peer is already connected
         if (!$stoppeer AND !$event == "started" AND !$event == "stopped" AND !$event == "completed" AND !$self["seconds"] == 0 AND $self["seconds"]+5 < $announce_interval_min)
-		{
-			//err("You cannot hammer this tracker. Wait ". intval($announce_interval_min - $self["seconds"]) ." seconds and try again.");
-			if(!$compact){
-				$resp = "d" . benc_str("interval") . "i" . $announce_interval . "e". benc_str("complete") . "i" . $seeders . "e" . benc_str("incomplete") . "i" . $leechers . "e" . benc_str("downloaded") . "i" . $completed . "e" . benc_str('size') . "i" . $size . "e" . benc_str("private") . 'i1e' . benc_str("peers") . "le" . benc_str("min interval") . "i" . $announce_interval_min . "e";
-				$resp .= "15:warning message". strlen("You cannot hammer this tracker. Wait ". intval($announce_interval_min - $self["seconds"]) ." seconds and try again.") .":". "You cannot hammer this tracker. Wait ". intval($announce_interval_min - $self["seconds"]) ." seconds and try again.";
-   				$resp .= "d" .
-      			benc_str("ip") . benc_str(long2ip($ip)) .
-      			benc_str("peer id") . benc_str(stripslashes($peer_id)) .
-      			benc_str("port") . "i" . $port . "e" .
-      			"e";
-			}else{
-				$resp = "d" . benc_str("interval") . "i" . $announce_interval . "e". benc_str("complete") . "i" . $seeders . "e" . benc_str("incomplete") . "i" . $leechers . "e" . benc_str("downloaded") . "i" . $completed . "e" . benc_str('size') . "i" . $size . "e" . benc_str("min interval") . "i" . $announce_interval_min . "e";
-				$resp .= "15:warning message". strlen("You cannot hammer this tracker. Wait ". intval($announce_interval_min - $self["seconds"]) ." seconds and try again.") .":". "You cannot hammer this tracker. Wait ". intval($announce_interval_min - $self["seconds"]) ." seconds and try again.";
+        {
+            //err("You cannot hammer this tracker. Wait ". intval($announce_interval_min - $self["seconds"]) ." seconds and try again.");
+            if(!$compact){
+                $resp = "d" . benc_str("interval") . "i" . $announce_interval . "e". benc_str("complete") . "i" . $seeders . "e" . benc_str("incomplete") . "i" . $leechers . "e" . benc_str("downloaded") . "i" . $completed . "e" . benc_str('size') . "i" . $size . "e" . benc_str("private") . 'i1e' . benc_str("peers") . "le" . benc_str("min interval") . "i" . $announce_interval_min . "e";
+                $resp .= "15:warning message". strlen("You cannot hammer this tracker. Wait ". intval($announce_interval_min - $self["seconds"]) ." seconds and try again.") .":". "You cannot hammer this tracker. Wait ". intval($announce_interval_min - $self["seconds"]) ." seconds and try again.";
+                $resp .= "d" .
+                benc_str("ip") . benc_str(long2ip($ip)) .
+                benc_str("peer id") . benc_str(stripslashes($peer_id)) .
+                benc_str("port") . "i" . $port . "e" .
+                "e";
+            }else{
+                $resp = "d" . benc_str("interval") . "i" . $announce_interval . "e". benc_str("complete") . "i" . $seeders . "e" . benc_str("incomplete") . "i" . $leechers . "e" . benc_str("downloaded") . "i" . $completed . "e" . benc_str('size') . "i" . $size . "e" . benc_str("min interval") . "i" . $announce_interval_min . "e";
+                $resp .= "15:warning message". strlen("You cannot hammer this tracker. Wait ". intval($announce_interval_min - $self["seconds"]) ." seconds and try again.") .":". "You cannot hammer this tracker. Wait ". intval($announce_interval_min - $self["seconds"]) ." seconds and try again.";
                         $peers = pack("Nn", sprintf("%d",$ip), $port);
-					$resp .= benc_str("peers") . strlen($peers).":".$peers;
-			}
-			$resp .= "ee";
-			benc_resp_raw($resp);
-			$db->sql_close();
-			die();
-		}
+                    $resp .= benc_str("peers") . strlen($peers).":".$peers;
+            }
+            $resp .= "ee";
+            benc_resp_raw($resp);
+            $db->sql_close();
+            die();
+        }
         if ($self["seconds"] != 0){
                 $upload_speed = round(($uploaded - $self["uploaded"]) / $self["seconds"]);
                 $download_speed = round(($downloaded - $self["downloaded"]) / $self["seconds"] );
@@ -626,12 +633,12 @@ if ($self) { //Peer is already connected
    if($seeder2 == "yes")$seed_for = ", seeding_time = '".$seed_overal."'";
    else
    $seed_for='';
-      $downloaded2	=	$downloaded - $self["downloaded"];
-	  if($downloaded2 <= 0) $downloaded2 = 0;
-      $uploaded2	=	$uploaded - $self["uploaded"];
-	  if($uploaded2 <= 0) $uploaded2 = 0;
+      $downloaded2  =   $downloaded - $self["downloaded"];
+      if($downloaded2 <= 0) $downloaded2 = 0;
+      $uploaded2    =   $uploaded - $self["uploaded"];
+      if($uploaded2 <= 0) $uploaded2 = 0;
       $usna = "UPDATE ".$db_prefix."_snatched SET uploaded = uploaded+$uploaded2, downloaded = downloaded+$downloaded2, port = '".$port."', seeder = 'yes', connectable = '$connectable'".$seed_for.", agent= " . $client . ", ip = '".$ip."', to_go = '".$left."',speedup='".$upload_speed."',speeddown='".$download_speed."', last_action = '".get_date_time()."', warned = 'no', hnr_warning = 'no' WHERE torrent = $torrentid AND userid = ".$uid."";
-	  if (!$db->sql_query($usna))err("SQL Error: ". $usna ,$db->sql_error());
+      if (!$db->sql_query($usna))err("SQL Error: ". $usna ,$db->sql_error());
 
 //END SNATCH UPDATE
 
@@ -677,7 +684,7 @@ $clientused = str_replace("'","",$client) . " " . $clientversion;
 $updateset[] = "visible = 'yes'";
 if ($seeder == "yes") {
         $updateset[] = "last_action = NOW()";
-} 
+}
 unset($seeder);
 if (count($updateset)) {
         $sql_update = "UPDATE ".$db_prefix."_torrents SET " . implode(",", $updateset) . " WHERE id = '".$torrentid."';";
@@ -688,8 +695,8 @@ unset($torrentid);
 $setdownload = 0;
 $setupload = 0;
 if($usergift == 1)$ratiobuild = 'yes';
-		$setupload = $uploaded-$selfupload;
-		$setdownload = $downloaded-$selfdownloaded;
+        $setupload = $uploaded-$selfupload;
+        $setdownload = $downloaded-$selfdownloaded;
 if ($free_dl OR $ratiobuild == "yes" )$setdownload = 0;
 //Update user ratio
 if ($uid != 0 AND !($event =="started")) {
@@ -699,7 +706,7 @@ if ($uid != 0 AND !($event =="started")) {
 unset($uploaded ,$downloaded, $self, $uid, $sql);
 
 if ($debug) {
-	add_log('admin','LOG_ANNOUNCE',$_SERVER["REQUEST_URI"]."\n\n\n".$resp);
+    add_log('admin','LOG_ANNOUNCE',$_SERVER["REQUEST_URI"]."\n\n\n".$resp);
         //$email = New eMail();
         //$email->Add('black_heart@me.com');
         //$email->subject = "Announce Debug";
@@ -710,4 +717,5 @@ if ($debug) {
 benc_resp_raw($resp);
 $db->sql_close();
 die();
+
 ?>

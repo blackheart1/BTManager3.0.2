@@ -1,10 +1,11 @@
 <?php
+
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -12,16 +13,17 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File bencoder-domxml.php 2018-02-18 14:32:00 joeroberts
+** File bencoder/bencoder-domxml.php 2018-09-22 00:00:00 Thor
 **
 ** CHANGES
 **
-** EXAMPLE 26-04-13 - Added Auto Ban
+** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
 **/
-if (!defined('IN_PMBT'))
+
+if (!defined('IN_BTM'))
 {
-	include_once './../../security.php';
-	die ();
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
+    die ("Error 404 - Page Not Found");
 }
 
 function unescape_hex($str) {
@@ -51,7 +53,7 @@ PRIVATE. NEVER CALL THEM UNLESS
 YOU'RE DEALING WITH NODES
 */
 function Benc(&$node) {
-		$node_pass = $node->owner_document();
+        $node_pass = $node->owner_document();
         $type = null;
         $calcX = xpath_new_context($node_pass);
         $result = xpath_eval($calcX,"attribute::type",$node);
@@ -87,7 +89,7 @@ function Benc(&$node) {
         }
 }
 function Benc_integer(&$node) {
-		$node_pass = $node->owner_document();
+        $node_pass = $node->owner_document();
         $calcX = xpath_new_context($node_pass);
         $result = xpath_eval($calcX,"attribute::type",$node);
 
@@ -108,7 +110,7 @@ function Benc_integer(&$node) {
 }
 
 function Benc_string(&$node) {
-		$node_pass = $node->owner_document();
+        $node_pass = $node->owner_document();
         $calcX = xpath_new_context($node_pass);
         $result = xpath_eval($calcX,"attribute::type",$node);
 
@@ -127,7 +129,7 @@ function Benc_string(&$node) {
 }
 
 function Benc_list(&$node) {
-		$node_pass = $node->owner_document();
+        $node_pass = $node->owner_document();
         $calcX = xpath_new_context($node_pass);
         $result = xpath_eval($calcX,"attribute::type",$node);
 
@@ -150,7 +152,7 @@ function Benc_list(&$node) {
 }
 
 function Benc_dict(&$node) {
-		$node_pass = $node->owner_document();
+        $node_pass = $node->owner_document();
         $calcX = xpath_new_context($node_pass);
         $result = xpath_eval($calcX,"attribute::type",$node);
 

@@ -1,10 +1,11 @@
 <?php
+
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -12,20 +13,21 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File benc.php 2018-02-18 14:32:00 joeroberts
+** File include/benc.php 2018-09-22 00:00:00 Thor
 **
 ** CHANGES
 **
-** EXAMPLE 26-04-13 - Added Auto Ban
+** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
 **/
-if (!defined('IN_PMBT'))
+
+if (!defined('IN_BTM'))
 {
-	include_once './../security.php';
-	die ();
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
+    die ("Error 404 - Page Not Found");
 }
 
 function benc($obj) {
-		global $user;
+        global $user;
         if (!is_array($obj) || !isset($obj["type"]) || !isset($obj["value"]))
                 return;
         $c = $obj["value"];
@@ -44,17 +46,17 @@ function benc($obj) {
 }
 
 function benc_str($s) {
-		global $user;
+        global $user;
         return strlen($s) . ":$s";
 }
 
 function benc_int($i) {
-		global $user;
+        global $user;
         return "i" . $i . "e";
 }
 
 function benc_list($a) {
-		global $user;
+        global $user;
         $s = "l";
         foreach ($a as $e) {
                 $s .= benc($e);
@@ -64,7 +66,7 @@ function benc_list($a) {
 }
 
 function benc_dict($d) {
-		global $user;
+        global $user;
         $s = "d";
         $keys = array_keys($d);
         sort($keys);
@@ -78,7 +80,7 @@ function benc_dict($d) {
 }
 
 function bdec_file($f) {
-		global $user;
+        global $user;
         $fp = @fopen($f, "rb");
         if (!$fp)
                 return;
@@ -89,7 +91,7 @@ function bdec_file($f) {
 }
 
 function bdec($s) {
-		global $user;
+        global $user;
         if (preg_match('/^(\d+):/', $s, $m)) {
                 $l = $m[1];
                 $pl = strlen($l) + 1;
@@ -119,7 +121,7 @@ function bdec($s) {
 }
 
 function bdec_list($s) {
-		global $user;
+        global $user;
         if ($s[0] != "l")
                 return;
         $sl = strlen($s);
@@ -143,7 +145,7 @@ function bdec_list($s) {
 }
 
 function bdec_dict($s) {
-		global $user;
+        global $user;
         if ($s[0] != "d")
                 return;
         $sl = strlen($s);
@@ -174,7 +176,7 @@ function bdec_dict($s) {
         return array("type" => "dictionary", "value" => $v, "strlen" => strlen($ss), "string" => $ss);
 }
 function dict_check($d, $s) {
-		global $user;
+        global $user;
         if ($d["type"] != "dictionary")
                 bterror($user->lang['T_DIR_NOT_PRES'],_btuploaderror);
         $a = explode(":", $s);
@@ -199,7 +201,7 @@ function dict_check($d, $s) {
         return $ret;
 }
 function dict_exists($d, $s) {
-		global $user;
+        global $user;
         if ($d["type"] != "dictionary") return false;
         $a = explode(":", $s);
         $dd = $d["value"];
@@ -220,7 +222,7 @@ function dict_exists($d, $s) {
         return true;
 }
 function dict_get($d, $k, $t) {
-		global $user;
+        global $user;
         if ($d["type"] != "dictionary")
                 bterror($user->lang['T_DIR_NOT_PRES'],_btuploaderror);
         $dd = $d["value"];

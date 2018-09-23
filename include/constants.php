@@ -1,10 +1,11 @@
 <?php
+
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -12,17 +13,19 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File constants.php 2018-03-20 17:43:00 joeroberts
+** File include/constants.php 2018-09-22 00:00:00 Thor
 **
 ** CHANGES
 **
-** EXAMPLE 26-04-13 - Added Auto Ban
+** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
 **/
-if (!defined('IN_PMBT'))
+
+if (!defined('IN_BTM'))
 {
-	include_once './../security.php';
-	die ();
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
+    die ("Error 404 - Page Not Found");
 }
+
 define('PRIVMSGS_HOLD_BOX', -4);
 define('PRIVMSGS_NO_BOX', -3);
 define('PRIVMSGS_OUTBOX', -2);
@@ -43,20 +46,20 @@ define('FULL_FOLDER_NONE', -3);
 define('FULL_FOLDER_DELETE', -2);
 define('FULL_FOLDER_HOLD', -1);
 define('_IF', 'IF');
-define('RULE_IS_LIKE', 1);		// Is Like
-define('RULE_IS_NOT_LIKE', 2);	// Is Not Like
-define('RULE_IS', 3);			// Is
-define('RULE_IS_NOT', 4);		// Is Not
-define('RULE_BEGINS_WITH', 5);	// Begins with
-define('RULE_ENDS_WITH', 6);	// Ends with
-define('RULE_IS_FRIEND', 7);	// Is Friend
-define('RULE_IS_FOE', 8);		// Is Foe
-define('RULE_IS_USER', 9);		// Is User
-define('RULE_IS_GROUP', 10);	// Is In Usergroup
-define('RULE_ANSWERED', 11);	// Answered
-define('RULE_FORWARDED', 12);	// Forwarded
-define('RULE_TO_GROUP', 14);	// Usergroup
-define('RULE_TO_ME', 15);		// Me
+define('RULE_IS_LIKE', 1);      // Is Like
+define('RULE_IS_NOT_LIKE', 2);  // Is Not Like
+define('RULE_IS', 3);           // Is
+define('RULE_IS_NOT', 4);       // Is Not
+define('RULE_BEGINS_WITH', 5);  // Begins with
+define('RULE_ENDS_WITH', 6);    // Ends with
+define('RULE_IS_FRIEND', 7);    // Is Friend
+define('RULE_IS_FOE', 8);       // Is Foe
+define('RULE_IS_USER', 9);      // Is User
+define('RULE_IS_GROUP', 10);    // Is In Usergroup
+define('RULE_ANSWERED', 11);    // Answered
+define('RULE_FORWARDED', 12);   // Forwarded
+define('RULE_TO_GROUP', 14);    // Usergroup
+define('RULE_TO_ME', 15);       // Me
 
 define('ACTION_PLACE_INTO_FOLDER', 1);
 define('ACTION_MARK_AS_READ', 2);
@@ -81,4 +84,5 @@ define('GROUP_CLOSED', 1);
 define('GROUP_HIDDEN', 2);
 define('GROUP_SPECIAL', 3);
 define('GROUP_FREE', 4);
+
 ?>

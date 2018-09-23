@@ -1,9 +1,9 @@
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -11,50 +11,51 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File ajax.js 2018-02-19 14:32:00 Black_Heart
+** File ajax.js 2018-09-22 00:00:00 Thor
 **
 ** CHANGES
 **
-** EXAMPLE 26-04-13 - Added Auto Ban
+** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
 **/
+
 var req;
 var offset = 1;
 function doAjax() {
     if ( trackers[offset] == null )
         return;
-        
+
     var command = 'op=scrape&tracker=' + trackers[offset] + '&info_hash=' + hash;
     document.getElementById('scrape_' + offset).innerHTML = 'connecting...';
 
     req = false;
     // branch for native XMLHttpRequest object
     if (window.XMLHttpRequest && !(window.ActiveXObject)) {
-    	try {
-			req = new XMLHttpRequest();
+        try {
+            req = new XMLHttpRequest();
         } catch(e) {
-			req = false;
+            req = false;
         }
     // branch for IE/Windows ActiveX version
     } else if (window.ActiveXObject) {
-       	try {
-        	req = new ActiveXObject("Msxml2.XMLHTTP");
-      	} catch(e) {
-        	try {
-          		req = new ActiveXObject("Microsoft.XMLHTTP");
-        	} catch(e) {
-          		req = false;
-        	}
-		}
+        try {
+            req = new ActiveXObject("Msxml2.XMLHTTP");
+        } catch(e) {
+            try {
+                req = new ActiveXObject("Microsoft.XMLHTTP");
+            } catch(e) {
+                req = false;
+            }
+        }
     }
 
-	if (req) {
+    if (req) {
         req.onreadystatechange=state;
-		req.open('POST', 'ajax.php', true);
-		req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        req.open('POST', 'ajax.php', true);
+        req.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         req.setRequestHeader('Content-length', command.length);
-		req.send(command);
+        req.send(command);
 
-	} else {
+    } else {
         alert('Your browser is not supported.');
     }
 }

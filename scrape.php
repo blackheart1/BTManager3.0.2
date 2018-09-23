@@ -1,10 +1,11 @@
 <?php
+
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -12,16 +13,17 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File scrape.php 2018-02-17 14:32:00 Black_Heart
+** File scrape.php 2018-09-22 00:00:00 Thor
 **
 ** CHANGES
 **
-** EXAMPLE 26-04-13 - Added Auto Ban
+** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
 **/
+
 $self=explode("/", $_SERVER["PHP_SELF"]);
 $last_key=(count($self)-1);
-if (defined('IN_PMBT'))die ("You can't include this file...".$self[$last_key]);
-define("IN_PMBT",true);
+if (defined('IN_BTM'))die ("You can't include this file...".$self[$last_key]);
+define("IN_BTM",true);
 require_once("include/config_lite.php");
 if(!isset($HTTP_SERVER_VARS["HTTP_USER_AGENT"])) $HTTP_SERVER_VARS["HTTP_USER_AGENT"] = '0';
 if (preg_match("/(Mozilla|Opera|Lynx|Netscape)$/",$HTTP_SERVER_VARS["HTTP_USER_AGENT"])) {
@@ -126,4 +128,5 @@ benc_resp_raw($r);
 $db->sql_query("",END_TRANSACTION);
 if (!$db->persistency) $db->sql_close();
 die();
+
 ?>

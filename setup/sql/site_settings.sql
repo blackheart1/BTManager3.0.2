@@ -55,7 +55,7 @@ INSERT INTO `#prefix#_settings` (`config_name`, `config_value`, `is_dynamic`) VA
 ('allow_bbcode', '1', 0),
 ('allow_smilies', '1', 0),
 ('allow_post_links', '1', 0),
-('site_url', 'http://demo.btmanager.org', 0),
+('site_url', 'http://YOUR_URL.HERE', 0),
 ('posts_per_page', '15', 0),
 ('allow_birthdays', '1', 0),
 ('display_last_edited', '1', 0),
@@ -128,4 +128,3 @@ INSERT INTO `#prefix#_settings` (`config_name`, `config_value`, `is_dynamic`) VA
 ('ranks_path', 'images/ranks', 0),
 ('session_gc', '3600', 0),
 ('session_last_gc', '0', 0);
-

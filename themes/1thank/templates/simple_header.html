@@ -17,28 +17,28 @@
 <script type="text/javascript">
 // <![CDATA[
 
-	var onload_functions = new Array();
-	var onunload_functions = new Array();
-	var style_cookie_settings = '{A_COOKIE_SETTINGS}';
+    var onload_functions = new Array();
+    var onunload_functions = new Array();
+    var style_cookie_settings = '{A_COOKIE_SETTINGS}';
 
-	/**
-	* New function for handling multiple calls to window.onload and window.unload by pentapenguin
-	*/
-	window.onload = function()
-	{
-		for (var i = 0; i < onload_functions.length; i++)
-		{
-			eval(onload_functions[i]);
-		}
-	}
+    /**
+    * New function for handling multiple calls to window.onload and window.unload by pentapenguin
+    */
+    window.onload = function()
+    {
+        for (var i = 0; i < onload_functions.length; i++)
+        {
+            eval(onload_functions[i]);
+        }
+    }
 
-	window.onunload = function()
-	{
-		for (var i = 0; i < onunload_functions.length; i++)
-		{
-			eval(onunload_functions[i]);
-		}
-	}
+    window.onunload = function()
+    {
+        for (var i = 0; i < onunload_functions.length; i++)
+        {
+            eval(onunload_functions[i]);
+        }
+    }
 
 // ]]>
 </script>
@@ -53,7 +53,7 @@
 <link href="{SITE_URL}/themes/1thank/large.css" rel="alternate stylesheet" type="text/css" title="A++" />
 
 <!-- IF S_CONTENT_DIRECTION eq rtl -->
-	<link href="{SITE_URL}/themes/1thank/bidi.css" rel="stylesheet" type="text/css" media="screen, projection" />
+    <link href="{SITE_URL}/themes/1thank/bidi.css" rel="stylesheet" type="text/css" media="screen, projection" />
 <!-- ENDIF -->
 
 <!-- DEFINE $POPUP = 1 -->
@@ -63,5 +63,5 @@
 <body id="phpbb" class="{S_CONTENT_DIRECTION}">
 
 <div id="simple-wrap">
-	<a id="top" name="top" accesskey="t"></a>
-	<div id="page-body">
+    <a id="top" name="top" accesskey="t"></a>
+    <div id="page-body">

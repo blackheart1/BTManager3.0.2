@@ -2,10 +2,10 @@
 
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -13,15 +13,18 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File common.php 2018-05-30 07:03:00 Thor
+** File common.php 2018-09-22 00:00:00 Thor
 **
 ** CHANGES
 **
-** 2018-05-30- Updated DOCTYPE
+** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
 **/
 
-if (!defined('IN_PMBT'))
-    die ("You can't Directly Access this File");
+if (!defined('IN_BTM'))
+{
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
+    die ("Error 404 - Page Not Found");
+}
 
 /*Set error handling*/
 if (!ini_get('display_errors'))
@@ -39,7 +42,7 @@ if($_SERVER["PHP_SELF"] == '')$_SERVER["PHP_SELF"] = 'index.php';
 if (!function_exists("sha1"))
     require_once("include/sha1lib.php");
 /*if config file has not been loaded yet*/
-require_once("include/config.php"); 
+require_once("include/config.php");
 include_once('include/class.template.php');
 require_once("include/actions.php");
 require_once("include/user.functions.php");
@@ -47,7 +50,7 @@ include('include/auth.php');
 
 if (is_banned($user, $reason) && !preg_match("/ban.php/",$_SERVER["PHP_SELF"]))
 {
-	redirect('ban.php?reson='.urlencode($reason));
+    redirect('ban.php?reson='.urlencode($reason));
     die();
 }
 

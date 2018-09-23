@@ -173,7 +173,7 @@
 
         this.funcNext   = function() { self.next(); };
         this.funcPrev   = function() { self.prev(); };
-        this.funcResize = function() { 
+        this.funcResize = function() {
             if (self.resizeTimer) {
                 clearTimeout(self.resizeTimer);
             }
@@ -469,11 +469,11 @@
          * @return undefined
          */
         prev: function() {
-            if (this.tail !== null && this.inTail) {			
-				
+            if (this.tail !== null && this.inTail) {
+
                 this.scrollTail(true);
-            } else {		
-				
+            } else {
+
                 this.scroll(((this.options.wrap == 'both' || this.options.wrap == 'first') && this.options.size !== null && this.first == 1) ? this.options.size : this.first - this.options.scroll);
             }
         },

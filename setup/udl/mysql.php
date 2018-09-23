@@ -1,10 +1,11 @@
 <?php
+
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -12,30 +13,24 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File mysql.php 2018-02-18 10:18:00 Black_Heart
+** File udl/mysql.php 2018-09-21 00:00:00 Thor
 **
 ** CHANGES
 **
-** EXAMPLE 26-04-13 - Added Auto Ban
+** 2018-09-21 - Updated Masthead, Github, !defined('IN_BTM')
 **/
 
-if (!defined('IN_PMBT'))die ("You can't access this file directly");
+if (!defined('IN_BTM'))
+    die ("You Can't Access this File Directly");
 
 if(!defined("SQL_LAYER"))
-
 {
 
-
-
 define("SQL_LAYER","mysql");
-
-
 
 class sql_db
 
 {
-
-
 
         var $db_connect_id;
 
@@ -90,81 +85,81 @@ class sql_db
                 }
         }
 
-	/*To not break everyone using your library, you have to keep backwards compatibility: 
-	Add the PHP5-style constructor, but keep the PHP4-style one. */
-	function sql_db($sqlserver, $sqluser, $sqlpassword, $database, $persistency = true)
-	{
-		$this->__construct($sqlserver, $sqluser, $sqlpassword, $database, $persistency);
-	}
+    /*To not break everyone using your library, you have to keep backwards compatibility:
+    Add the PHP5-style constructor, but keep the PHP4-style one. */
+    function sql_db($sqlserver, $sqluser, $sqlpassword, $database, $persistency = true)
+    {
+        $this->__construct($sqlserver, $sqluser, $sqlpassword, $database, $persistency);
+    }
 
-	function sql_build_array($query, $assoc_ary = false)
-	{
-		if (!is_array($assoc_ary))
-		{
-			return false;
-		}
+    function sql_build_array($query, $assoc_ary = false)
+    {
+        if (!is_array($assoc_ary))
+        {
+            return false;
+        }
 
-		$fields = $values = array();
+        $fields = $values = array();
 
-		if ($query == 'INSERT' || $query == 'INSERT_SELECT')
-		{
-			foreach ($assoc_ary as $key => $var)
-			{
-				$fields[] = $key;
+        if ($query == 'INSERT' || $query == 'INSERT_SELECT')
+        {
+            foreach ($assoc_ary as $key => $var)
+            {
+                $fields[] = $key;
 
-				if (is_array($var) && is_string($var[0]))
-				{
-					// This is used for INSERT_SELECT(s)
-					$values[] = $var[0];
-				}
-				else
-				{
-					$values[] = $this->_sql_validate_value($var);
-				}
-			}
+                if (is_array($var) && is_string($var[0]))
+                {
+                    // This is used for INSERT_SELECT(s)
+                    $values[] = $var[0];
+                }
+                else
+                {
+                    $values[] = $this->_sql_validate_value($var);
+                }
+            }
 
-			$query = ($query == 'INSERT') ? ' (' . implode(', ', $fields) . ') VALUES (' . implode(', ', $values) . ')' : ' (' . implode(', ', $fields) . ') SELECT ' . implode(', ', $values) . ' ';
-		}
-		else if ($query == 'MULTI_INSERT')
-		{
-			trigger_error('The MULTI_INSERT query value is no longer supported. Please use sql_multi_insert() instead.', E_USER_ERROR);
-		}
-		else if ($query == 'UPDATE' || $query == 'SELECT')
-		{
-			$values = array();
-			foreach ($assoc_ary as $key => $var)
-			{
-				$values[] = "$key = " . $this->_sql_validate_value($var);
-			}
-			$query = implode(($query == 'UPDATE') ? ', ' : ' AND ', $values);
-		}
+            $query = ($query == 'INSERT') ? ' (' . implode(', ', $fields) . ') VALUES (' . implode(', ', $values) . ')' : ' (' . implode(', ', $fields) . ') SELECT ' . implode(', ', $values) . ' ';
+        }
+        else if ($query == 'MULTI_INSERT')
+        {
+            trigger_error('The MULTI_INSERT query value is no longer supported. Please use sql_multi_insert() instead.', E_USER_ERROR);
+        }
+        else if ($query == 'UPDATE' || $query == 'SELECT')
+        {
+            $values = array();
+            foreach ($assoc_ary as $key => $var)
+            {
+                $values[] = "$key = " . $this->_sql_validate_value($var);
+            }
+            $query = implode(($query == 'UPDATE') ? ', ' : ' AND ', $values);
+        }
 
-		return $query;
-	}
-	function _sql_validate_value($var)
-	{
-		if (is_null($var))
-		{
-			return 'NULL';
-		}
-		else if (is_string($var))
-		{
-			return "'" . $this->sql_escape($var) . "'";
-		}
-		else
-		{
-			return (is_bool($var)) ? intval($var) : $var;
-		}
-	}
-	function sql_escape($msg)
-	{
-		if (!$this->db_connect_id)
-		{
-			return @mysql_real_escape_string($msg);
-		}
+        return $query;
+    }
+    function _sql_validate_value($var)
+    {
+        if (is_null($var))
+        {
+            return 'NULL';
+        }
+        else if (is_string($var))
+        {
+            return "'" . $this->sql_escape($var) . "'";
+        }
+        else
+        {
+            return (is_bool($var)) ? intval($var) : $var;
+        }
+    }
+    function sql_escape($msg)
+    {
+        if (!$this->db_connect_id)
+        {
+            return @mysql_real_escape_string($msg);
+        }
 
-		return @mysql_real_escape_string($msg, $this->db_connect_id);
-	}
+        return @mysql_real_escape_string($msg, $this->db_connect_id);
+    }
 
         //
 

@@ -1,9 +1,9 @@
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -11,13 +11,13 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File pngfix.php 2018-02-17 14:32:00 Black_Heart
+** File pngfix.php 2018-09-22 00:00:00 Thor
 **
 ** CHANGES
 **
-** EXAMPLE 26-04-13 - Added Auto Ban
+** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
+**
 
- 
 Correctly handle PNG transparency in Win IE 5.5 & 6.
 http://homepage.ntlworld.com/bobosola. Updated 18-Jan-2006.
 
@@ -31,7 +31,7 @@ Use in <HEAD> with DEFER keyword wrapped in conditional comments:
 var arVersion = navigator.appVersion.split("MSIE")
 var version = parseFloat(arVersion[1])
 
-if ((version >= 5.5) && (document.body.filters)) 
+if ((version >= 5.5) && (document.body.filters))
 {
    for(var i=0; i<document.images.length; i++)
    {
@@ -42,14 +42,14 @@ if ((version >= 5.5) && (document.body.filters))
          var imgID = (img.id) ? "id='" + img.id + "' " : ""
          var imgClass = (img.className) ? "class='" + img.className + "' " : ""
          var imgTitle = (img.title) ? "title='" + img.title + "' " : "title='" + img.alt + "' "
-         var imgStyle = "display:inline-block;" + img.style.cssText 
+         var imgStyle = "display:inline-block;" + img.style.cssText
          if (img.align == "left") imgStyle = "float:left;" + imgStyle
          if (img.align == "right") imgStyle = "float:right;" + imgStyle
          if (img.parentElement.href) imgStyle = "cursor:hand;" + imgStyle
          var strNewHTML = "<span " + imgID + imgClass + imgTitle
          + " style=\"" + "width:" + img.width + "px; height:" + img.height + "px;" + imgStyle + ";"
          + "filter:progid:DXImageTransform.Microsoft.AlphaImageLoader"
-         + "(src=\'" + img.src + "\', sizingMethod='scale');\"></span>" 
+         + "(src=\'" + img.src + "\', sizingMethod='scale');\"></span>"
          img.outerHTML = strNewHTML
          i = i-1
       }

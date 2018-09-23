@@ -1,10 +1,11 @@
 <?php
+
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -12,16 +13,17 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File domxml-php4-to-php5.php 2018-02-18 14:32:00 joeroberts
+** File extensions/domxml-php4-to-php5.php 2018-09-22 00:00:00 Thor
 **
 ** CHANGES
 **
-** 04-15-2018 fix depricated action
+** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
 **/
-if (!defined('IN_PMBT'))
+
+if (!defined('IN_BTM'))
 {
-	//include_once './../../security.php';
-	//die ();
+    //require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
+    //die ();
 }
 
 function domxml_new_doc($version) {return new php4DOMDocument('');}
@@ -29,12 +31,12 @@ function domxml_new_xmldoc($version) {return new php4DOMDocument('');}
 function domxml_open_file($filename) {return new php4DOMDocument($filename);}
 if (!function_exists("domxml_open_mem"))
 {
-	function domxml_open_mem($str)
-	{
-	 $dom=new php4DOMDocument('');
-	 $dom->myDOMNode->loadXML($str);
-	 return $dom;
-	}
+    function domxml_open_mem($str)
+    {
+     $dom=new php4DOMDocument('');
+     $dom->myDOMNode->loadXML($str);
+     return $dom;
+    }
 }
 function html_doc($html_doc,$from_file=false)
 {
@@ -46,15 +48,15 @@ function html_doc($html_doc,$from_file=false)
 function html_doc_file($filename) {return html_doc($filename,true);}
 if (!function_exists("xmldoc"))
 {
-	function xmldoc($str) {return domxml_open_mem($str);}
+    function xmldoc($str) {return domxml_open_mem($str);}
 }
 if (!function_exists("xmldocfile"))
 {
-	function xmldocfile($filename) {return new php4DOMDocument($filename);}
+    function xmldocfile($filename) {return new php4DOMDocument($filename);}
 }
 if (!function_exists("xpath_eval"))
 {
-	function xpath_eval($xpath_context,$eval_str,$contextnode=null) {return $xpath_context->xpath_eval($eval_str,$contextnode);}
+    function xpath_eval($xpath_context,$eval_str,$contextnode=null) {return $xpath_context->xpath_eval($eval_str,$contextnode);}
 }
 function xpath_new_context($dom_document) {return new php4DOMXPath($dom_document);}
 function xpath_register_ns($xpath_context,$prefix,$namespaceURI) {return $xpath_context->myDOMXPath->registerNamespace($prefix,$namespaceURI);}
@@ -305,7 +307,7 @@ class php4DOMNode
    foreach ($this->myDOMNode->childNodes as $n) $NewNode->appendChild($n->cloneNode(true));
    $xpath=new DOMXPath($this->myDOMNode->ownerDocument);
    $myDOMNodeList=$xpath->query('namespace::*[name()!="xml"]',$this->myDOMNode); //Add old namespaces
-   foreach ($myDOMNodeList as $n) $NewNode->setAttributeNS('http://www.w3.org/2000/xmlns/',$n->nodeName,$n->nodeValue); 
+   foreach ($myDOMNodeList as $n) $NewNode->setAttributeNS('http://www.w3.org/2000/xmlns/',$n->nodeName,$n->nodeValue);
    $this->myDOMNode->parentNode->replaceChild($NewNode,$this->myDOMNode);
    $this->myDOMNode=$NewNode;
   }
@@ -418,4 +420,5 @@ if (extension_loaded('xsl'))
   function result_dump_mem($dom_document) {return $dom_document->myDOMNode->saveHTML();}
  }
 }
+
 ?>

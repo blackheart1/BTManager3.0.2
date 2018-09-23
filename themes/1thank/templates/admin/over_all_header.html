@@ -28,19 +28,19 @@ var menu_state = 'shown';
 */
 function jumpto()
 {
-	var page = prompt(jump_page, on_page);
+    var page = prompt(jump_page, on_page);
 
-	if (page !== null && !isNaN(page) && page == Math.floor(page) && page > 0)
-	{
-		if (base_url.indexOf('?') == -1)
-		{
-			document.location.href = base_url + '?page=' + ((page - 1) * per_page/per_page+1);
-		}
-		else
-		{
-			document.location.href = base_url.replace(/&amp;/g, '&') + '&page=' + ((page - 1) * per_page/per_page+1);
-		}
-	}
+    if (page !== null && !isNaN(page) && page == Math.floor(page) && page > 0)
+    {
+        if (base_url.indexOf('?') == -1)
+        {
+            document.location.href = base_url + '?page=' + ((page - 1) * per_page/per_page+1);
+        }
+        else
+        {
+            document.location.href = base_url.replace(/&amp;/g, '&') + '&page=' + ((page - 1) * per_page/per_page+1);
+        }
+    }
 }
 
 /**
@@ -49,17 +49,17 @@ function jumpto()
 */
 function dE(n, s, type)
 {
-	if (!type)
-	{
-		type = 'block';
-	}
+    if (!type)
+    {
+        type = 'block';
+    }
 
-	var e = document.getElementById(n);
-	if (!s)
-	{
-		s = (e.style.display == '') ? -1 : 1;
-	}
-	e.style.display = (s == 1) ? type : 'none';
+    var e = document.getElementById(n);
+    if (!s)
+    {
+        s = (e.style.display == '') ? -1 : 1;
+    }
+    e.style.display = (s == 1) ? type : 'none';
 }
 
 /**
@@ -68,26 +68,26 @@ function dE(n, s, type)
 */
 function marklist(id, name, state)
 {
-	var parent = document.getElementById(id);
-	if (!parent)
-	{
-		eval('parent = document.' + id);
-	}
+    var parent = document.getElementById(id);
+    if (!parent)
+    {
+        eval('parent = document.' + id);
+    }
 
-	if (!parent)
-	{
-		return;
-	}
+    if (!parent)
+    {
+        return;
+    }
 
-	var rb = parent.getElementsByTagName('input');
+    var rb = parent.getElementsByTagName('input');
 
-	for (var r = 0; r < rb.length; r++)
-	{
-		if (rb[r].name.substr(0, name.length) == name)
-		{
-			rb[r].checked = state;
-		}
-	}
+    for (var r = 0; r < rb.length; r++)
+    {
+        if (rb[r].name.substr(0, name.length) == name)
+        {
+            rb[r].checked = state;
+        }
+    }
 }
 
 /**
@@ -95,8 +95,8 @@ function marklist(id, name, state)
 */
 function find_username(url)
 {
-	popup(url, 760, 570, '_usersearch');
-	return false;
+    popup(url, 760, 570, '_usersearch');
+    return false;
 }
 
 /**
@@ -104,13 +104,13 @@ function find_username(url)
 */
 function popup(url, width, height, name)
 {
-	if (!name)
-	{
-		name = '_popup';
-	}
+    if (!name)
+    {
+        name = '_popup';
+    }
 
-	window.open(url.replace(/&amp;/g, '&'), name, 'height=' + height + ',resizable=yes,scrollbars=yes, width=' + width);
-	return false;
+    window.open(url.replace(/&amp;/g, '&'), name, 'height=' + height + ',resizable=yes,scrollbars=yes, width=' + width);
+    return false;
 }
 
 /**
@@ -118,49 +118,49 @@ function popup(url, width, height, name)
 */
 function switch_menu()
 {
-	var menu = document.getElementById('menu');
-	var main = document.getElementById('main');
-	var toggle = document.getElementById('toggle');
-	var handle = document.getElementById('toggle-handle');
+    var menu = document.getElementById('menu');
+    var main = document.getElementById('main');
+    var toggle = document.getElementById('toggle');
+    var handle = document.getElementById('toggle-handle');
 
-	switch (menu_state)
-	{
-		// hide
-		case 'shown':
-			main.style.width = '93%';
-			menu_state = 'hidden';
-			menu.style.display = 'none';
-			toggle.style.width = '20px';
-			handle.style.backgroundImage = 'url(themes/1thank/pics/admin/toggle.gif)';
-			handle.style.backgroundRepeat = 'no-repeat';
+    switch (menu_state)
+    {
+        // hide
+        case 'shown':
+            main.style.width = '93%';
+            menu_state = 'hidden';
+            menu.style.display = 'none';
+            toggle.style.width = '20px';
+            handle.style.backgroundImage = 'url(themes/1thank/pics/admin/toggle.gif)';
+            handle.style.backgroundRepeat = 'no-repeat';
 
-			<!-- IF S_CONTENT_DIRECTION eq rtl -->
-				handle.style.backgroundPosition = '0% 50%';
-				toggle.style.left = '96%';
-			<!-- ELSE -->
-				handle.style.backgroundPosition = '100% 50%';
-				toggle.style.left = '0';
-			<!-- ENDIF -->
-		break;
+            <!-- IF S_CONTENT_DIRECTION eq rtl -->
+                handle.style.backgroundPosition = '0% 50%';
+                toggle.style.left = '96%';
+            <!-- ELSE -->
+                handle.style.backgroundPosition = '100% 50%';
+                toggle.style.left = '0';
+            <!-- ENDIF -->
+        break;
 
-		// show
-		case 'hidden':
-			main.style.width = '76%';
-			menu_state = 'shown';
-			menu.style.display = 'block';
-			toggle.style.width = '5%';
-			handle.style.backgroundImage = 'url(themes/1thank/pics/admin/toggle.gif)';
-			handle.style.backgroundRepeat = 'no-repeat';
+        // show
+        case 'hidden':
+            main.style.width = '76%';
+            menu_state = 'shown';
+            menu.style.display = 'block';
+            toggle.style.width = '5%';
+            handle.style.backgroundImage = 'url(themes/1thank/pics/admin/toggle.gif)';
+            handle.style.backgroundRepeat = 'no-repeat';
 
-			<!-- IF S_CONTENT_DIRECTION eq rtl -->
-				handle.style.backgroundPosition = '100% 50%';
-				toggle.style.left = '75%';
-			<!-- ELSE -->
-				handle.style.backgroundPosition = '0% 50%';
-				toggle.style.left = '15%';
-			<!-- ENDIF -->
-		break;
-	}
+            <!-- IF S_CONTENT_DIRECTION eq rtl -->
+                handle.style.backgroundPosition = '100% 50%';
+                toggle.style.left = '75%';
+            <!-- ELSE -->
+                handle.style.backgroundPosition = '0% 50%';
+                toggle.style.left = '15%';
+            <!-- ENDIF -->
+        break;
+    }
 }
 
 // ]]>
@@ -170,55 +170,55 @@ function switch_menu()
 <body class="{S_CONTENT_DIRECTION}">
 
 <div id="wrap">
-	<div id="page-header">
-		<h1 style="color:#89cff0;" align="center">{L_ADMIN_PANEL}</h1>
-		<h3><a style="color:#ffbf00;" href="./index.php">{L_SITE_INDEX}</a></h1>
-		<p id="skip"><a href="#acp">{L_SKIP}</a></p>
-	</div>
+    <div id="page-header">
+        <h1 style="color:#89cff0;" align="center">{L_ADMIN_PANEL}</h1>
+        <h3><a style="color:#ffbf00;" href="./index.php">{L_SITE_INDEX}</a></h1>
+        <p id="skip"><a href="#acp">{L_SKIP}</a></p>
+    </div>
 
-	<div id="page-body">
+    <div id="page-body">
 
-		<div id="tabs">
-			<ul>
-			<!-- BEGIN t_block1 -->
-				<li<!-- IF t_block1.S_SELECTED --> id="activetab"<!-- ENDIF -->><a href="{t_block1.U_TITLE}"><span>{t_block1.L_TITLE}</span></a></li>
-			<!-- END t_block1 -->
-			</ul>
-		</div>
+        <div id="tabs">
+            <ul>
+            <!-- BEGIN t_block1 -->
+                <li<!-- IF t_block1.S_SELECTED --> id="activetab"<!-- ENDIF -->><a href="{t_block1.U_TITLE}"><span>{t_block1.L_TITLE}</span></a></li>
+            <!-- END t_block1 -->
+            </ul>
+        </div>
 
-		<div id="acp">
-		<div class="panel">
-			<span class="corners-top"><span></span></span>
-				<div id="content">
-					<!-- IF not S_USER_NOTICE -->
-					<div id="toggle">
-						<a id="toggle-handle" accesskey="m" title="{L_MENU_TOGGLE}" onclick="switch_menu(); return false;" href="#"></a></div>
-					<!-- ENDIF -->
-					<div id="menu">
-						<p><strong>{U_USER_USERNAME}</strong> [&nbsp;<a href="{U_LOGOUT}">{L_LOG_OUT}</a>&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-						<ul>
-						<!-- DEFINE $LI_USED = 0 -->
-						<!-- BEGIN l_block1 -->
-							<!-- IF l_block1.S_SELECTED -->
+        <div id="acp">
+        <div class="panel">
+            <span class="corners-top"><span></span></span>
+                <div id="content">
+                    <!-- IF not S_USER_NOTICE -->
+                    <div id="toggle">
+                        <a id="toggle-handle" accesskey="m" title="{L_MENU_TOGGLE}" onclick="switch_menu(); return false;" href="#"></a></div>
+                    <!-- ENDIF -->
+                    <div id="menu">
+                        <p><strong>{U_USER_USERNAME}</strong> [&nbsp;<a href="{U_LOGOUT}">{L_LOG_OUT}</a>&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                        <ul>
+                        <!-- DEFINE $LI_USED = 0 -->
+                        <!-- BEGIN l_block1 -->
+                            <!-- IF l_block1.S_SELECTED -->
 
-						<!-- BEGIN l_block2 -->
-							<!-- IF .l_block1.l_block2.l_block3 -->
-							<li class="header">{l_block1.l_block2.L_TITLE}</li>
-							<!-- DEFINE $LI_USED = 1 -->
-							<!-- ENDIF -->
+                        <!-- BEGIN l_block2 -->
+                            <!-- IF .l_block1.l_block2.l_block3 -->
+                            <li class="header">{l_block1.l_block2.L_TITLE}</li>
+                            <!-- DEFINE $LI_USED = 1 -->
+                            <!-- ENDIF -->
 
-							<!-- BEGIN l_block3 -->
-								<li<!-- IF l_block1.l_block2.l_block3.S_SELECTED --> id="activemenu"<!-- ENDIF -->><a href="{l_block1.l_block2.l_block3.U_TITLE}"><span>{l_block1.l_block2.l_block3.L_TITLE}</span></a></li>
-								<!-- DEFINE $LI_USED = 1 -->
-							<!-- END l_block3 -->
-						<!-- END l_block2 -->
+                            <!-- BEGIN l_block3 -->
+                                <li<!-- IF l_block1.l_block2.l_block3.S_SELECTED --> id="activemenu"<!-- ENDIF -->><a href="{l_block1.l_block2.l_block3.U_TITLE}"><span>{l_block1.l_block2.l_block3.L_TITLE}</span></a></li>
+                                <!-- DEFINE $LI_USED = 1 -->
+                            <!-- END l_block3 -->
+                        <!-- END l_block2 -->
 
-							<!-- ENDIF -->
-						<!-- END l_block1 -->
-						<!-- IF not $LI_USED -->
-							<li></li>
-						<!-- ENDIF -->
-						</ul>
-					</div>
+                            <!-- ENDIF -->
+                        <!-- END l_block1 -->
+                        <!-- IF not $LI_USED -->
+                            <li></li>
+                        <!-- ENDIF -->
+                        </ul>
+                    </div>
 
-					<div id="main">
+                    <div id="main">

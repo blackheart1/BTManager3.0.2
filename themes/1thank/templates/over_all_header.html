@@ -56,12 +56,12 @@ var pd = new Date();
 var last_reload = pd.getTime();
 function do_breload() {
     if (document.location.href.match(/\/torrents\.php/)) {
-	   var d = new Date();
-	   if (last_reload && last_reload > (d.getTime() - "4000")) return;
-	      last_reload = d.getTime();
-	   bparam('page=1')
+       var d = new Date();
+       if (last_reload && last_reload > (d.getTime() - "4000")) return;
+          last_reload = d.getTime();
+       bparam('page=1')
 
-	}
+    }
 }
 
 function toggle2(nome) {
@@ -102,19 +102,19 @@ var menu_state = 'shown';
 */
 function jumpto()
 {
-	var page = prompt(jump_page, on_page);
+    var page = prompt(jump_page, on_page);
 
-	if (page !== null && !isNaN(page) && page == Math.floor(page) && page > 0)
-	{
-		if (base_url.indexOf('?') == -1)
-		{
-			document.location.href = base_url + '?page=' + ((page - 1) * per_page/per_page+1);
-		}
-		else
-		{
-			document.location.href = base_url.replace(/&amp;/g, '&') + '&page=' + ((page - 1) * per_page/per_page+1);
-		}
-	}
+    if (page !== null && !isNaN(page) && page == Math.floor(page) && page > 0)
+    {
+        if (base_url.indexOf('?') == -1)
+        {
+            document.location.href = base_url + '?page=' + ((page - 1) * per_page/per_page+1);
+        }
+        else
+        {
+            document.location.href = base_url.replace(/&amp;/g, '&') + '&page=' + ((page - 1) * per_page/per_page+1);
+        }
+    }
 }
 
 /**
@@ -123,17 +123,17 @@ function jumpto()
 */
 function dE(n, s, type)
 {
-	if (!type)
-	{
-		type = 'block';
-	}
+    if (!type)
+    {
+        type = 'block';
+    }
 
-	var e = document.getElementById(n);
-	if (!s)
-	{
-		s = (e.style.display == '') ? -1 : 1;
-	}
-	e.style.display = (s == 1) ? type : 'none';
+    var e = document.getElementById(n);
+    if (!s)
+    {
+        s = (e.style.display == '') ? -1 : 1;
+    }
+    e.style.display = (s == 1) ? type : 'none';
 }
 // ]]>
 </script>
@@ -152,10 +152,10 @@ function dE(n, s, type)
 <script src="{SITE_URL}/themes/1thank/js/init.js" type="text/javascript"></script>
 <script type="text/javascript" src="{SITE_URL}/themes/1thank/js/jquery.jqDock.min.js"></script>
 <script type="text/javascript">
-	$(function(){
-		var jqDockOpts = {align: 'left', duration: 200, labels: 'tc', size: 48, distance: 85};
-		$('#jqDock').jqDock(jqDockOpts);
-	});
+    $(function(){
+        var jqDockOpts = {align: 'left', duration: 200, labels: 'tc', size: 48, distance: 85};
+        $('#jqDock').jqDock(jqDockOpts);
+    });
 </script>
 </head>
 <!--[if lt IE 7]><link rel="stylesheet" type="text/css" media="screen" href="{SITE_URL}/themes/1thank/iestyle.css">

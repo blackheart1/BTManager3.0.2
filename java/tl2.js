@@ -2,7 +2,7 @@
 || #################################################################### ||
 || # vBulletin 3.6.8 Patch Level 2
 || # ---------------------------------------------------------------- # ||
-|| # Copyright ©2000-2008 Jelsoft Enterprises Ltd. All Rights Reserved. ||
+|| # Copyright ?2000-2008 Jelsoft Enterprises Ltd. All Rights Reserved. ||
 || # This file may not be redistributed in whole or significant part. # ||
 || # ---------------- VBULLETIN IS NOT FREE SOFTWARE ---------------- # ||
 || # http://www.vbulletin.com | http://www.vbulletin.com/license.html # ||
@@ -16,9 +16,9 @@ PMBT.add_event("vBmenuHide");
 * PMBT popup menu example usage:
 *
 * To create a new popup menu:
-* 	<element id="x">Click me <script type="text/javascript"> vbmenu_register('x'); </script></element>
+*   <element id="x">Click me <script type="text/javascript"> vbmenu_register('x'); </script></element>
 * The menu class expects an element with the id of x_menu that contains the menu.
-*	<div id="x_menu" class="vbmenu_popup"> ... </div>
+*   <div id="x_menu" class="vbmenu_popup"> ... </div>
 */
 
 // #############################################################################
@@ -30,21 +30,21 @@ PMBT.add_event("vBmenuHide");
 */
 function vB_Popup_Handler()
 {
-	/**
-	* Options:
-	*
-	* @var	integer	Number of steps to use in sliding menus open
-	* @var	boolean	Use opacity face in menu open?
-	*/
-	this.open_steps = 10;
-	this.open_fade = false;
+    /**
+    * Options:
+    *
+    * @var  integer Number of steps to use in sliding menus open
+    * @var  boolean Use opacity face in menu open?
+    */
+    this.open_steps = 10;
+    this.open_fade = false;
 
-	this.active = false;
+    this.active = false;
 
-	this.menus = new Array();
-	this.activemenu = null;
+    this.menus = new Array();
+    this.activemenu = null;
 
-	this.hidden_selects = new Array();
+    this.hidden_selects = new Array();
 };
 
 // =============================================================================
@@ -53,29 +53,29 @@ function vB_Popup_Handler()
 /**
 * Activate / Deactivate the menu system
 *
-* @param	boolean	Active state for menus
+* @param    boolean Active state for menus
 */
 vB_Popup_Handler.prototype.activate = function(active)
 {
-	this.active = active;
-	console.log("vBmenu :: System Activated");
+    this.active = active;
+    console.log("vBmenu :: System Activated");
 };
 
 /**
 * Register a control object as a menu control
 *
-* @param	string	ID of the control object
-* @param	boolean	Disable menu pop image addition
-* @param	boolean	Disable menu slide open
+* @param    string  ID of the control object
+* @param    boolean Disable menu pop image addition
+* @param    boolean Disable menu slide open
 *
-* @return	vB_Popup_Menu
+* @return   vB_Popup_Menu
 */
 vB_Popup_Handler.prototype.register = function(controlkey, noimage, noslide)
 {
-	//console.log("vBmenu :: registering '%s'", controlkey);
-	this.menus[controlkey] = new vB_Popup_Menu(controlkey, noimage, noslide);
+    //console.log("vBmenu :: registering '%s'", controlkey);
+    this.menus[controlkey] = new vB_Popup_Menu(controlkey, noimage, noslide);
 
-	return this.menus[controlkey];
+    return this.menus[controlkey];
 };
 
 /**
@@ -83,10 +83,10 @@ vB_Popup_Handler.prototype.register = function(controlkey, noimage, noslide)
 */
 vB_Popup_Handler.prototype.hide = function()
 {
-	if (this.activemenu != null)
-	{
-		this.menus[this.activemenu].hide();
-	}
+    if (this.activemenu != null)
+    {
+        this.menus[this.activemenu].hide();
+    }
 };
 
 
@@ -98,20 +98,20 @@ var vBmenu = new vB_Popup_Handler();
 /**
 * Function to allow anything to hide all menus
 *
-* @param	event	Event object
+* @param    event   Event object
 *
-* @return	mixed
+* @return   mixed
 */
 function vbmenu_hide(e)
 {
-	if (e && e.button && e.button != 1 && e.type == 'click')
-	{
-		return true;
-	}
-	else
-	{
-		vBmenu.hide();
-	}
+    if (e && e.button && e.button != 1 && e.type == 'click')
+    {
+        return true;
+    }
+    else
+    {
+        vBmenu.hide();
+    }
 };
 
 // #############################################################################
@@ -124,27 +124,27 @@ function vbmenu_hide(e)
 * Manages a single menu and control object
 * Initializes control object
 *
-* @param	string	ID of the control object
-* @param	boolean	Disable menu pop image addition
-* @param	boolean	Disable menu slide open
+* @param    string  ID of the control object
+* @param    boolean Disable menu pop image addition
+* @param    boolean Disable menu slide open
 */
 function vB_Popup_Menu(controlkey, noimage, noslide)
 {
-	this.controlkey = controlkey;
-	this.menuname = this.controlkey.split('.')[0] + '_menu';
+    this.controlkey = controlkey;
+    this.menuname = this.controlkey.split('.')[0] + '_menu';
 
-	this.init_control(noimage);
+    this.init_control(noimage);
 
-	if (fetch_object(this.menuname))
-	{
-		this.init_menu();
-	}
+    if (fetch_object(this.menuname))
+    {
+        this.init_menu();
+    }
 
-	this.slide_open = ((is_opera || noslide) ? false : true);
-	this.open_steps = vBmenu.open_steps;
+    this.slide_open = ((is_opera || noslide) ? false : true);
+    this.open_steps = vBmenu.open_steps;
 
-	PMBT.add_event("vBmenuShow_" + this.controlkey);
-	PMBT.add_event("vBmenuHide_" + this.controlkey);
+    PMBT.add_event("vBmenuShow_" + this.controlkey);
+    PMBT.add_event("vBmenuHide_" + this.controlkey);
 };
 
 // =============================================================================
@@ -155,36 +155,36 @@ function vB_Popup_Menu(controlkey, noimage, noslide)
 */
 vB_Popup_Menu.prototype.init_control = function(noimage)
 {
-	this.controlobj = fetch_object(this.controlkey);
-	this.controlobj.state = false;
+    this.controlobj = fetch_object(this.controlkey);
+    this.controlobj.state = false;
 
-	if (this.controlobj.firstChild && (this.controlobj.firstChild.tagName == 'TEXTAREA' || this.controlobj.firstChild.tagName == 'INPUT'))
-	{
-		// do nothing
-	}
-	else
-	{
-		if (!noimage && !(is_mac && is_ie))
-		{
-			var space = document.createTextNode(' ');
-			this.controlobj.appendChild(space);
+    if (this.controlobj.firstChild && (this.controlobj.firstChild.tagName == 'TEXTAREA' || this.controlobj.firstChild.tagName == 'INPUT'))
+    {
+        // do nothing
+    }
+    else
+    {
+        if (!noimage && !(is_mac && is_ie))
+        {
+            var space = document.createTextNode(' ');
+            this.controlobj.appendChild(space);
 
-			var img = document.createElement('img');
-			img.src = IMGDIR_MISC + '/menu_open.gif';
-			img.border = 0;
-			img.title = '';
-			img.alt = '';
-			this.controlobj.appendChild(img);
-		}
+            var img = document.createElement('img');
+            img.src = IMGDIR_MISC + '/menu_open.gif';
+            img.border = 0;
+            img.title = '';
+            img.alt = '';
+            this.controlobj.appendChild(img);
+        }
 
-		this.controlobj.unselectable = true;
-		if (!noimage)
-		{
-			this.controlobj.style.cursor = pointer_cursor;
-		}
-		this.controlobj.onclick = vB_Popup_Events.prototype.controlobj_onclick;
-		this.controlobj.onmouseover = vB_Popup_Events.prototype.controlobj_onmouseover;
-	}
+        this.controlobj.unselectable = true;
+        if (!noimage)
+        {
+            this.controlobj.style.cursor = pointer_cursor;
+        }
+        this.controlobj.onclick = vB_Popup_Events.prototype.controlobj_onclick;
+        this.controlobj.onmouseover = vB_Popup_Events.prototype.controlobj_onmouseover;
+    }
 };
 
 /**
@@ -192,24 +192,24 @@ vB_Popup_Menu.prototype.init_control = function(noimage)
 */
 vB_Popup_Menu.prototype.init_menu = function()
 {
-	this.menuobj = fetch_object(this.menuname);
+    this.menuobj = fetch_object(this.menuname);
 
-	if (this.menuobj && !this.menuobj.initialized)
-	{
-		this.menuobj.initialized = true;
-		this.menuobj.onclick = e_by_gum;
-		this.menuobj.style.position = 'absolute';
-		this.menuobj.style.zIndex = 50;
+    if (this.menuobj && !this.menuobj.initialized)
+    {
+        this.menuobj.initialized = true;
+        this.menuobj.onclick = e_by_gum;
+        this.menuobj.style.position = 'absolute';
+        this.menuobj.style.zIndex = 50;
 
-		// init popup filters (ie only)
-		if (is_ie && !is_mac)
-		{
-			this.menuobj.style.filter += "progid:DXImageTransform.Microsoft.alpha(enabled=1,opacity=100)";
-			this.menuobj.style.filter += "progid:DXImageTransform.Microsoft.shadow(direction=135,color=#8E8E8E,strength=3)";
-		}
+        // init popup filters (ie only)
+        if (is_ie && !is_mac)
+        {
+            this.menuobj.style.filter += "progid:DXImageTransform.Microsoft.alpha(enabled=1,opacity=100)";
+            this.menuobj.style.filter += "progid:DXImageTransform.Microsoft.shadow(direction=135,color=#8E8E8E,strength=3)";
+        }
 
-		this.init_menu_contents();
-	}
+        this.init_menu_contents();
+    }
 };
 
 /**
@@ -217,169 +217,169 @@ vB_Popup_Menu.prototype.init_menu = function()
 */
 vB_Popup_Menu.prototype.init_menu_contents = function()
 {
-	var tds = fetch_tags(this.menuobj, 'td');
-	for (var i = 0; i < tds.length; i++)
-	{
-		if (tds[i].className == 'vbmenu_option')
-		{
-			if (tds[i].title && tds[i].title == 'nohilite')
-			{
-				// not an active cell
-				tds[i].title = '';
-			}
-			else
-			{
-				// create a reference back to the menu class
-				tds[i].controlkey = this.controlkey;
+    var tds = fetch_tags(this.menuobj, 'td');
+    for (var i = 0; i < tds.length; i++)
+    {
+        if (tds[i].className == 'vbmenu_option')
+        {
+            if (tds[i].title && tds[i].title == 'nohilite')
+            {
+                // not an active cell
+                tds[i].title = '';
+            }
+            else
+            {
+                // create a reference back to the menu class
+                tds[i].controlkey = this.controlkey;
 
-				// handle mouseover / mouseout highlighting events
-				tds[i].onmouseover = vB_Popup_Events.prototype.menuoption_onmouseover;
-				tds[i].onmouseout = vB_Popup_Events.prototype.menuoption_onmouseout;
+                // handle mouseover / mouseout highlighting events
+                tds[i].onmouseover = vB_Popup_Events.prototype.menuoption_onmouseover;
+                tds[i].onmouseout = vB_Popup_Events.prototype.menuoption_onmouseout;
 
-				var links = fetch_tags(tds[i], 'a');
-				if (links.length == 1)
-				{
-					/* Ok we have a link, we should use this if
-					1. There is no onclick event in the link
-					2. There is no onclick event on the cell
-					3. The onclick event for the cell should equal the link if the above are true
+                var links = fetch_tags(tds[i], 'a');
+                if (links.length == 1)
+                {
+                    /* Ok we have a link, we should use this if
+                    1. There is no onclick event in the link
+                    2. There is no onclick event on the cell
+                    3. The onclick event for the cell should equal the link if the above are true
 
-					If we find a browser thats gets confused we may need to set remove_link to true for it.
-					*/
+                    If we find a browser thats gets confused we may need to set remove_link to true for it.
+                    */
 
-					tds[i].className = tds[i].className + ' vbmenu_option_alink';
-					tds[i].islink = true;
+                    tds[i].className = tds[i].className + ' vbmenu_option_alink';
+                    tds[i].islink = true;
 
-					var linkobj = links[0];
-					var remove_link = false;
+                    var linkobj = links[0];
+                    var remove_link = false;
 
-					tds[i].target = linkobj.getAttribute('target');
+                    tds[i].target = linkobj.getAttribute('target');
 
-					if (typeof linkobj.onclick == 'function')
-					{
-						tds[i].ofunc = linkobj.onclick;
-						tds[i].onclick = vB_Popup_Events.prototype.menuoption_onclick_function;
-						remove_link = true;
-					}
-					else if (typeof tds[i].onclick == 'function')
-					{
-						tds[i].ofunc = tds[i].onclick;
-						tds[i].onclick = vB_Popup_Events.prototype.menuoption_onclick_function;
-						remove_link = true;
-					}
-					else
-					{
-						tds[i].href = linkobj.href;
-						tds[i].onclick = vB_Popup_Events.prototype.menuoption_onclick_link;
-					}
+                    if (typeof linkobj.onclick == 'function')
+                    {
+                        tds[i].ofunc = linkobj.onclick;
+                        tds[i].onclick = vB_Popup_Events.prototype.menuoption_onclick_function;
+                        remove_link = true;
+                    }
+                    else if (typeof tds[i].onclick == 'function')
+                    {
+                        tds[i].ofunc = tds[i].onclick;
+                        tds[i].onclick = vB_Popup_Events.prototype.menuoption_onclick_function;
+                        remove_link = true;
+                    }
+                    else
+                    {
+                        tds[i].href = linkobj.href;
+                        tds[i].onclick = vB_Popup_Events.prototype.menuoption_onclick_link;
+                    }
 
-					if (remove_link)
-					{
-						var newlink = document.createElement('a');
-						newlink.innerHTML = linkobj.innerHTML;
-						newlink.href = '#';
-						newlink.onclick = function(e) { e = e ? e : window.event; e.returnValue = false; return false; };
-						tds[i].insertBefore(newlink, linkobj);
-						tds[i].removeChild(linkobj);
-					}
-				}
-				else if (typeof tds[i].onclick == 'function')
-				{
-					tds[i].ofunc = tds[i].onclick;
-					tds[i].onclick = vB_Popup_Events.prototype.menuoption_onclick_function;
-				}
-			}
-		}
-	}
+                    if (remove_link)
+                    {
+                        var newlink = document.createElement('a');
+                        newlink.innerHTML = linkobj.innerHTML;
+                        newlink.href = '#';
+                        newlink.onclick = function(e) { e = e ? e : window.event; e.returnValue = false; return false; };
+                        tds[i].insertBefore(newlink, linkobj);
+                        tds[i].removeChild(linkobj);
+                    }
+                }
+                else if (typeof tds[i].onclick == 'function')
+                {
+                    tds[i].ofunc = tds[i].onclick;
+                    tds[i].onclick = vB_Popup_Events.prototype.menuoption_onclick_function;
+                }
+            }
+        }
+    }
 };
 
 /**
 * Show the menu
 *
-* @param	object	The control object calling the menu
-* @param	boolean	Use slide (false) or open instantly? (true)
+* @param    object  The control object calling the menu
+* @param    boolean Use slide (false) or open instantly? (true)
 */
 vB_Popup_Menu.prototype.show = function(obj, instant)
 {
-	if (!vBmenu.active)
-	{
-		return false;
-	}
-	else if (!this.menuobj)
-	{
-		this.init_menu();
-	}
+    if (!vBmenu.active)
+    {
+        return false;
+    }
+    else if (!this.menuobj)
+    {
+        this.init_menu();
+    }
 
-	if (!this.menuobj || vBmenu.activemenu == this.controlkey)
-	{
-		return false;
-	}
+    if (!this.menuobj || vBmenu.activemenu == this.controlkey)
+    {
+        return false;
+    }
 
-	console.log("vBmenu :: Show '%s'", this.controlkey);
+    console.log("vBmenu :: Show '%s'", this.controlkey);
 
-	if (vBmenu.activemenu != null && vBmenu.activemenu != this.controlkey)
-	{
-		vBmenu.menus[vBmenu.activemenu].hide();
-	}
+    if (vBmenu.activemenu != null && vBmenu.activemenu != this.controlkey)
+    {
+        vBmenu.menus[vBmenu.activemenu].hide();
+    }
 
-	vBmenu.activemenu = this.controlkey;
+    vBmenu.activemenu = this.controlkey;
 
-	this.menuobj.style.display = '';
-	if (this.slide_open)
-	{
-		this.menuobj.style.clip = 'rect(auto, 0px, 0px, auto)';
-	}
+    this.menuobj.style.display = '';
+    if (this.slide_open)
+    {
+        this.menuobj.style.clip = 'rect(auto, 0px, 0px, auto)';
+    }
 
-	this.set_menu_position(obj);
+    this.set_menu_position(obj);
 
-	if (!instant && this.slide_open)
-	{
-		this.intervalX = Math.ceil(this.menuobj.offsetWidth / this.open_steps);
-		this.intervalY = Math.ceil(this.menuobj.offsetHeight / this.open_steps);
-		this.slide((this.direction == 'left' ? 0 : this.menuobj.offsetWidth), 0, 0);
-	}
-	else if (this.menuobj.style.clip && this.slide_open)
-	{
-		this.menuobj.style.clip = 'rect(auto, auto, auto, auto)';
-	}
+    if (!instant && this.slide_open)
+    {
+        this.intervalX = Math.ceil(this.menuobj.offsetWidth / this.open_steps);
+        this.intervalY = Math.ceil(this.menuobj.offsetHeight / this.open_steps);
+        this.slide((this.direction == 'left' ? 0 : this.menuobj.offsetWidth), 0, 0);
+    }
+    else if (this.menuobj.style.clip && this.slide_open)
+    {
+        this.menuobj.style.clip = 'rect(auto, auto, auto, auto)';
+    }
 
-	// deal with IE putting <select> elements on top of everything
-	this.handle_overlaps(true);
+    // deal with IE putting <select> elements on top of everything
+    this.handle_overlaps(true);
 
-	if (this.controlobj.editorid)
-	{
-		this.controlobj.state = true;
-		//this.controlobj.editor.menu_context(this.controlobj, 'mousedown');
-		vB_Editor[this.controlobj.editorid].menu_context(this.controlobj, 'mousedown');
-	}
+    if (this.controlobj.editorid)
+    {
+        this.controlobj.state = true;
+        //this.controlobj.editor.menu_context(this.controlobj, 'mousedown');
+        vB_Editor[this.controlobj.editorid].menu_context(this.controlobj, 'mousedown');
+    }
 
-	PMBT.events["vBmenuShow_" + this.controlkey].fire(this.controlkey);
-	PMBT.events.vBmenuShow.fire(this.controlkey);
+    PMBT.events["vBmenuShow_" + this.controlkey].fire(this.controlkey);
+    PMBT.events.vBmenuShow.fire(this.controlkey);
 };
 
 /**
 * Position the menu relative to a reference element
 *
-* @param	object	Reference HTML element
+* @param    object  Reference HTML element
 */
 vB_Popup_Menu.prototype.set_menu_position = function(obj)
 {
-	this.pos = this.fetch_offset(obj);
-	this.leftpx = this.pos['left'];
-	this.toppx = this.pos['top'] + obj.offsetHeight;
+    this.pos = this.fetch_offset(obj);
+    this.leftpx = this.pos['left'];
+    this.toppx = this.pos['top'] + obj.offsetHeight;
 
-	if ((this.leftpx + this.menuobj.offsetWidth) >= document.body.clientWidth && (this.leftpx + obj.offsetWidth - this.menuobj.offsetWidth) > 0)
-	{
-		this.leftpx = this.leftpx + obj.offsetWidth - this.menuobj.offsetWidth;
-		this.direction = 'right';
-	}
-	else
-	{
-		this.direction = 'left'
-	}
+    if ((this.leftpx + this.menuobj.offsetWidth) >= document.body.clientWidth && (this.leftpx + obj.offsetWidth - this.menuobj.offsetWidth) > 0)
+    {
+        this.leftpx = this.leftpx + obj.offsetWidth - this.menuobj.offsetWidth;
+        this.direction = 'right';
+    }
+    else
+    {
+        this.direction = 'left'
+    }
 
-	this.menuobj.style.left = this.leftpx + 'px';
-	this.menuobj.style.top  = this.toppx + 'px';
+    this.menuobj.style.left = this.leftpx + 'px';
+    this.menuobj.style.top  = this.toppx + 'px';
 };
 
 /**
@@ -387,30 +387,30 @@ vB_Popup_Menu.prototype.set_menu_position = function(obj)
 */
 vB_Popup_Menu.prototype.hide = function(e)
 {
-	if (e && e.button && e.button != 1)
-	{
-		// get around some context menu issues etc.
-		return true;
-	}
+    if (e && e.button && e.button != 1)
+    {
+        // get around some context menu issues etc.
+        return true;
+    }
 
-	console.log("vBmenu :: Hide '%s'", this.controlkey);
+    console.log("vBmenu :: Hide '%s'", this.controlkey);
 
-	this.stop_slide();
+    this.stop_slide();
 
-	this.menuobj.style.display = 'none';
+    this.menuobj.style.display = 'none';
 
-	this.handle_overlaps(false);
+    this.handle_overlaps(false);
 
-	if (this.controlobj.editorid)
-	{
-		this.controlobj.state = false;
-		vB_Editor[this.controlobj.editorid].menu_context(this.controlobj, 'mouseout');
-	}
+    if (this.controlobj.editorid)
+    {
+        this.controlobj.state = false;
+        vB_Editor[this.controlobj.editorid].menu_context(this.controlobj, 'mouseout');
+    }
 
-	vBmenu.activemenu = null;
+    vBmenu.activemenu = null;
 
-	PMBT.events["vBmenuHide_" + this.controlkey].fire(this.controlkey);
-	PMBT.events.vBmenuHide.fire(this.controlkey);
+    PMBT.events["vBmenuHide_" + this.controlkey].fire(this.controlkey);
+    PMBT.events.vBmenuHide.fire(this.controlkey);
 };
 
 /**
@@ -418,56 +418,56 @@ vB_Popup_Menu.prototype.hide = function(e)
 */
 vB_Popup_Menu.prototype.hover = function(obj)
 {
-	if (vBmenu.activemenu != null)
-	{
-		if (vBmenu.menus[vBmenu.activemenu].controlkey != this.id)
-		{
-			this.show(obj, true);
-		}
-	}
+    if (vBmenu.activemenu != null)
+    {
+        if (vBmenu.menus[vBmenu.activemenu].controlkey != this.id)
+        {
+            this.show(obj, true);
+        }
+    }
 };
 
 /**
 * Slides menu open
 *
-* @param	integer	Clip X
-* @param	integer	Clip Y
-* @param	integer	Opacity (0-100)
+* @param    integer Clip X
+* @param    integer Clip Y
+* @param    integer Opacity (0-100)
 */
 vB_Popup_Menu.prototype.slide = function(clipX, clipY, opacity)
 {
-	if (this.direction == 'left' && (clipX < this.menuobj.offsetWidth || clipY < this.menuobj.offsetHeight))
-	{
-		if (vBmenu.open_fade && is_ie)
-		{
-			opacity += 10;
-			this.menuobj.filters.item('DXImageTransform.Microsoft.alpha').opacity = opacity;
-		}
+    if (this.direction == 'left' && (clipX < this.menuobj.offsetWidth || clipY < this.menuobj.offsetHeight))
+    {
+        if (vBmenu.open_fade && is_ie)
+        {
+            opacity += 10;
+            this.menuobj.filters.item('DXImageTransform.Microsoft.alpha').opacity = opacity;
+        }
 
-		clipX += this.intervalX;
-		clipY += this.intervalY;
+        clipX += this.intervalX;
+        clipY += this.intervalY;
 
-		this.menuobj.style.clip = "rect(auto, " + clipX + "px, " + clipY + "px, auto)";
-		this.slidetimer = setTimeout("vBmenu.menus[vBmenu.activemenu].slide(" + clipX + ", " + clipY + ", " + opacity + ");", 0);
-	}
-	else if (this.direction == 'right' && (clipX > 0 || clipY < this.menuobj.offsetHeight))
-	{
-		if (vBmenu.open_fade && is_ie)
-		{
-			opacity += 10;
-			menuobj.filters.item('DXImageTransform.Microsoft.alpha').opacity = opacity;
-		}
+        this.menuobj.style.clip = "rect(auto, " + clipX + "px, " + clipY + "px, auto)";
+        this.slidetimer = setTimeout("vBmenu.menus[vBmenu.activemenu].slide(" + clipX + ", " + clipY + ", " + opacity + ");", 0);
+    }
+    else if (this.direction == 'right' && (clipX > 0 || clipY < this.menuobj.offsetHeight))
+    {
+        if (vBmenu.open_fade && is_ie)
+        {
+            opacity += 10;
+            menuobj.filters.item('DXImageTransform.Microsoft.alpha').opacity = opacity;
+        }
 
-		clipX -= this.intervalX;
-		clipY += this.intervalY;
+        clipX -= this.intervalX;
+        clipY += this.intervalY;
 
-		this.menuobj.style.clip = "rect(auto, " + this.menuobj.offsetWidth + "px, " + clipY + "px, " + clipX + "px)";
-		this.slidetimer = setTimeout("vBmenu.menus[vBmenu.activemenu].slide(" + clipX + ", " + clipY + ", " + opacity + ");", 0);
-	}
-	else
-	{
-		this.stop_slide();
-	}
+        this.menuobj.style.clip = "rect(auto, " + this.menuobj.offsetWidth + "px, " + clipY + "px, " + clipX + "px)";
+        this.slidetimer = setTimeout("vBmenu.menus[vBmenu.activemenu].slide(" + clipX + ", " + clipY + ", " + opacity + ");", 0);
+    }
+    else
+    {
+        this.stop_slide();
+    }
 };
 
 /**
@@ -475,139 +475,139 @@ vB_Popup_Menu.prototype.slide = function(clipX, clipY, opacity)
 */
 vB_Popup_Menu.prototype.stop_slide = function()
 {
-	clearTimeout(this.slidetimer);
+    clearTimeout(this.slidetimer);
 
-	this.menuobj.style.clip = 'rect(auto, auto, auto, auto)';
+    this.menuobj.style.clip = 'rect(auto, auto, auto, auto)';
 
-	if (vBmenu.open_fade && is_ie)
-	{
-		this.menuobj.filters.item('DXImageTransform.Microsoft.alpha').opacity = 100;
-	}
+    if (vBmenu.open_fade && is_ie)
+    {
+        this.menuobj.filters.item('DXImageTransform.Microsoft.alpha').opacity = 100;
+    }
 };
 
 /**
 * Fetch offset of an object
 *
-* @param	object	The object to be measured
+* @param    object  The object to be measured
 *
-* @return	array	The measured offsets left/top
+* @return   array   The measured offsets left/top
 */
 vB_Popup_Menu.prototype.fetch_offset = function(obj)
 {
-	if (obj.getBoundingClientRect)
-	{
-		// better, more accurate function for IE
-		var rect = obj.getBoundingClientRect();
+    if (obj.getBoundingClientRect)
+    {
+        // better, more accurate function for IE
+        var rect = obj.getBoundingClientRect();
 
-		var scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
-		var scrollLeft = Math.max(document.documentElement.scrollLeft, document.body.scrollLeft);
+        var scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+        var scrollLeft = Math.max(document.documentElement.scrollLeft, document.body.scrollLeft);
 
-		if (document.documentElement.dir == 'rtl')
-		{
-			// IE returns a positive scrollLeft, but we need a negative value to actually do proper calculations.
-			// This actually flips the scolloing to be relative to the distance scrolled from the default.
-			scrollLeft = scrollLeft + document.documentElement.clientWidth - document.documentElement.scrollWidth;
-		}
+        if (document.documentElement.dir == 'rtl')
+        {
+            // IE returns a positive scrollLeft, but we need a negative value to actually do proper calculations.
+            // This actually flips the scolloing to be relative to the distance scrolled from the default.
+            scrollLeft = scrollLeft + document.documentElement.clientWidth - document.documentElement.scrollWidth;
+        }
 
-		return { 'left' : rect.left + scrollLeft, 'top' : rect.top + scrollTop };
-	}
+        return { 'left' : rect.left + scrollLeft, 'top' : rect.top + scrollTop };
+    }
 
-	var left_offset = obj.offsetLeft;
-	var top_offset = obj.offsetTop;
+    var left_offset = obj.offsetLeft;
+    var top_offset = obj.offsetTop;
 
-	while ((obj = obj.offsetParent) != null)
-	{
-		left_offset += obj.offsetLeft;
-		top_offset += obj.offsetTop;
-	}
+    while ((obj = obj.offsetParent) != null)
+    {
+        left_offset += obj.offsetLeft;
+        top_offset += obj.offsetTop;
+    }
 
-	return { 'left' : left_offset, 'top' : top_offset };
+    return { 'left' : left_offset, 'top' : top_offset };
 };
 
 /**
 * Detect an overlap of an object and a menu
 *
-* @param	object	Object to be tested for overlap
-* @param	array	Array of dimensions for menu object
+* @param    object  Object to be tested for overlap
+* @param    array   Array of dimensions for menu object
 *
-* @return	boolean	True if overlap
+* @return   boolean True if overlap
 */
 vB_Popup_Menu.prototype.overlaps = function(obj, m)
 {
-	var s = new Array();
-	var pos = this.fetch_offset(obj);
-	s['L'] = pos['left'];
-	s['T'] = pos['top'];
-	s['R'] = s['L'] + obj.offsetWidth;
-	s['B'] = s['T'] + obj.offsetHeight;
+    var s = new Array();
+    var pos = this.fetch_offset(obj);
+    s['L'] = pos['left'];
+    s['T'] = pos['top'];
+    s['R'] = s['L'] + obj.offsetWidth;
+    s['B'] = s['T'] + obj.offsetHeight;
 
 
-	if (s['L'] > m['R'] || s['R'] < m['L'] || s['T'] > m['B'] || s['B'] < m['T'])
-	{
-		return false;
-	}
-	return true;
+    if (s['L'] > m['R'] || s['R'] < m['L'] || s['T'] > m['B'] || s['B'] < m['T'])
+    {
+        return false;
+    }
+    return true;
 };
 
 /**
 * Handle IE overlapping <select> elements
 *
-* @param	boolean	Hide (true) or show (false) overlapping <select> elements
+* @param    boolean Hide (true) or show (false) overlapping <select> elements
 */
 vB_Popup_Menu.prototype.handle_overlaps = function(dohide)
 {
-	if (is_ie && !is_ie7)
-	{
-		var selects = fetch_tags(document, 'select');
+    if (is_ie && !is_ie7)
+    {
+        var selects = fetch_tags(document, 'select');
 
-		if (dohide)
-		{
-			var menuarea = new Array(); menuarea = {
-				'L' : this.leftpx,
-				'R' : this.leftpx + this.menuobj.offsetWidth,
-				'T' : this.toppx,
-				'B' : this.toppx + this.menuobj.offsetHeight
-			};
+        if (dohide)
+        {
+            var menuarea = new Array(); menuarea = {
+                'L' : this.leftpx,
+                'R' : this.leftpx + this.menuobj.offsetWidth,
+                'T' : this.toppx,
+                'B' : this.toppx + this.menuobj.offsetHeight
+            };
 
-			for (var i = 0; i < selects.length; i++)
-			{
-				if (this.overlaps(selects[i], menuarea))
-				{
-					var hide = true;
-					var s = selects[i];
-					while (s = s.parentNode)
-					{
-						if (s.className == 'vbmenu_popup')
-						{
-							hide = false;
-							break;
-						}
-					}
+            for (var i = 0; i < selects.length; i++)
+            {
+                if (this.overlaps(selects[i], menuarea))
+                {
+                    var hide = true;
+                    var s = selects[i];
+                    while (s = s.parentNode)
+                    {
+                        if (s.className == 'vbmenu_popup')
+                        {
+                            hide = false;
+                            break;
+                        }
+                    }
 
-					if (hide)
-					{
-						selects[i].style.visibility = 'hidden';
-						vBmenu.hidden_selects.push(i);
-					}
-				}
-			}
-		}
-		else
-		{
-			while (true)
-			{
-				var i = vBmenu.hidden_selects.pop();
-				if (typeof i == 'undefined' || i == null)
-				{
-					break;
-				}
-				else
-				{
-					selects[i].style.visibility = 'visible';
-				}
-			}
-		}
-	}
+                    if (hide)
+                    {
+                        selects[i].style.visibility = 'hidden';
+                        vBmenu.hidden_selects.push(i);
+                    }
+                }
+            }
+        }
+        else
+        {
+            while (true)
+            {
+                var i = vBmenu.hidden_selects.pop();
+                if (typeof i == 'undefined' || i == null)
+                {
+                    break;
+                }
+                else
+                {
+                    selects[i].style.visibility = 'visible';
+                }
+            }
+        }
+    }
 };
 
 // #############################################################################
@@ -625,18 +625,18 @@ function vB_Popup_Events()
 */
 vB_Popup_Events.prototype.controlobj_onclick = function(e)
 {
-	if (typeof do_an_e == 'function')
-	{
-		do_an_e(e);
-		if (vBmenu.activemenu == null || vBmenu.menus[vBmenu.activemenu].controlkey != this.id)
-		{
-			vBmenu.menus[this.id].show(this);
-		}
-		else
-		{
-			vBmenu.menus[this.id].hide();
-		}
-	}
+    if (typeof do_an_e == 'function')
+    {
+        do_an_e(e);
+        if (vBmenu.activemenu == null || vBmenu.menus[vBmenu.activemenu].controlkey != this.id)
+        {
+            vBmenu.menus[this.id].show(this);
+        }
+        else
+        {
+            vBmenu.menus[this.id].hide();
+        }
+    }
 };
 
 /**
@@ -644,11 +644,11 @@ vB_Popup_Events.prototype.controlobj_onclick = function(e)
 */
 vB_Popup_Events.prototype.controlobj_onmouseover = function(e)
 {
-	if (typeof do_an_e == 'function')
-	{
-		do_an_e(e);
-		vBmenu.menus[this.id].hover(this);
-	}
+    if (typeof do_an_e == 'function')
+    {
+        do_an_e(e);
+        vBmenu.menus[this.id].hover(this);
+    }
 };
 
 /**
@@ -656,8 +656,8 @@ vB_Popup_Events.prototype.controlobj_onmouseover = function(e)
 */
 vB_Popup_Events.prototype.menuoption_onclick_function = function(e)
 {
-	this.ofunc(e);
-	vBmenu.menus[this.controlkey].hide();
+    this.ofunc(e);
+    vBmenu.menus[this.controlkey].hide();
 };
 
 /**
@@ -665,31 +665,31 @@ vB_Popup_Events.prototype.menuoption_onclick_function = function(e)
 */
 vB_Popup_Events.prototype.menuoption_onclick_link = function(e)
 {
-	e = e ? e : window.event;
+    e = e ? e : window.event;
 
-	if (e.shiftKey || (this.target != null && this.target != '' && this.target.toLowerCase() != '_self'))
-	{
-		if (this.target != null && this.target.charAt(0) != '_')
-		{
-			window.open(this.href, this.target);
-		}
-		else
-		{
-			window.open(this.href);
-		}
-	}
-	else
-	{
-		window.location = this.href;
-	}
+    if (e.shiftKey || (this.target != null && this.target != '' && this.target.toLowerCase() != '_self'))
+    {
+        if (this.target != null && this.target.charAt(0) != '_')
+        {
+            window.open(this.href, this.target);
+        }
+        else
+        {
+            window.open(this.href);
+        }
+    }
+    else
+    {
+        window.location = this.href;
+    }
 
-	// Safari has "issues" with resetting what was clicked on, super minor and I dont care
-	e.cancelBubble = true;
-	if (e.stopPropagation) e.stopPropagation();
-	if (e.preventDefault) e.preventDefault();
+    // Safari has "issues" with resetting what was clicked on, super minor and I dont care
+    e.cancelBubble = true;
+    if (e.stopPropagation) e.stopPropagation();
+    if (e.preventDefault) e.preventDefault();
 
-	vBmenu.menus[this.controlkey].hide();
-	return false;
+    vBmenu.menus[this.controlkey].hide();
+    return false;
 };
 
 /**
@@ -697,8 +697,8 @@ vB_Popup_Events.prototype.menuoption_onclick_link = function(e)
 */
 vB_Popup_Events.prototype.menuoption_onmouseover = function(e)
 {
-	this.className = 'vbmenu_hilite' + (this.islink ? ' vbmenu_hilite_alink' : '');
-	this.style.cursor = pointer_cursor;
+    this.className = 'vbmenu_hilite' + (this.islink ? ' vbmenu_hilite_alink' : '');
+    this.style.cursor = pointer_cursor;
 };
 
 /**
@@ -706,8 +706,8 @@ vB_Popup_Events.prototype.menuoption_onmouseover = function(e)
 */
 vB_Popup_Events.prototype.menuoption_onmouseout = function(e)
 {
-	this.className = 'vbmenu_option' + (this.islink ? ' vbmenu_option_alink' : '');
-	this.style.cursor = 'default';
+    this.className = 'vbmenu_option' + (this.islink ? ' vbmenu_option_alink' : '');
+    this.style.cursor = 'default';
 };
 
 /*======================================================================*\

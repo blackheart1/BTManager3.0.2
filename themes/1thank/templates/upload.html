@@ -1,5 +1,5 @@
 <!-- INCLUDE themes/1thank/templates/overall_header.html -->
-	<!-- DEFINE $TORRENT = 1 -->
+    <!-- DEFINE $TORRENT = 1 -->
 
 <!-- IF S_NOTICE -->
 {NOTICE}
@@ -55,11 +55,11 @@
 
     <form enctype="multipart/form-data" action="{SITE_URL}/upload.php?op=taketorrent" method="post" id="data" name="postform">
 <div class="panel">
-	<div class="inner"><span class="corners-top"><span></span></span>
+    <div class="inner"><span class="corners-top"><span></span></span>
 
-	<p align="center">{L_INTRO_TORRENT_EXP}</p>
+    <p align="center">{L_INTRO_TORRENT_EXP}</p>
 
-	<fieldset class="fields2">
+    <fieldset class="fields2">
         <dl>
             <dt><label>{L_UPLOAD_FILE}:</label></dt>
             <dd>
@@ -109,7 +109,7 @@
 
                         <script type="text/javascript">
                         var newpost_attachmentbit = '<!-' + '- BEGIN TEMPLATE: newpost_attachmentbit -' + '->\n<a href="#" onclick="insert_text(\'[img]%1$s[/img]\', true); return false;" style="line-height: 20px;"><img class="inlineimg" src="%1$s" alt="" border="0" /></a><!-' + '- END TEMPLATE: newpost_attachmentbit -' + '->';
-           				vB_Attachments = new vB_Attachment('333333', '');
+                        vB_Attachments = new vB_Attachment('333333', '');
                         </script>
                         <noscript>
                         <a rel="nofollow" href="bitbucket-upload.php" target="manageattach" title="{L_ADD_EDIT_ATTACHMENTS}" tabindex="1"><strong>{L_MANAGE_ATTACHMENTS}</strong></a>
@@ -123,7 +123,7 @@
         <dl>
             <dt><label>{L_CAT_SELECT}:</label></dt>
             <dd>
-			{S_CAT_SELECT}
+            {S_CAT_SELECT}
             </dd>
         </dl>
 <!-- IF ALOW_POSTER -->
@@ -259,11 +259,11 @@
         </dl>
 <!-- ENDIF -->
 </fieldset>
-	<span class="corners-bottom"><span></span></span></div>
+    <span class="corners-bottom"><span></span></span></div>
 </div>
 <fieldset class="submit-buttons">
-	{S_HIDDEN_FIELDS}<input type="reset" value="{L_RESET}" name="reset" class="button2" />&nbsp; 
-	<input type="submit" name="submit" value="{L_SUBMIT}" class="button1" />
+    {S_HIDDEN_FIELDS}<input type="reset" value="{L_RESET}" name="reset" class="button2" />&nbsp;
+    <input type="submit" name="submit" value="{L_SUBMIT}" class="button1" />
 </fieldset>
 </form>
 <!-- ELSEIF S_ACTION == link -->
@@ -272,11 +272,11 @@
 
     <form enctype="multipart/form-data" action="{SITE_URL}/upload.php?op=takelink" method="post" id="data" name="postform">
 <div class="panel">
-	<div class="inner"><span class="corners-top"><span></span></span>
+    <div class="inner"><span class="corners-top"><span></span></span>
 
-	<p>{L_INTRO_TORRENT_EXP}</p>
+    <p>{L_INTRO_TORRENT_EXP}</p>
 
-	<fieldset class="fields2">
+    <fieldset class="fields2">
         <dl>
             <dt><label>{L_UPLOAD_NAME}:</label></dt>
             <dd>
@@ -324,7 +324,7 @@
         <dl>
             <dt><label>{L_CAT_SELECT}:</label></dt>
             <dd>
-        		{S_CAT_SELECT}
+                {S_CAT_SELECT}
             </dd>
         </dl>
         <dl>
@@ -480,11 +480,11 @@
         </dl>
 <!-- ENDIF -->
 </fieldset>
-	<span class="corners-bottom"><span></span></span></div>
+    <span class="corners-bottom"><span></span></span></div>
 </div>
 <fieldset class="submit-buttons">
-	{S_HIDDEN_FIELDS}<input type="reset" value="{L_RESET}" name="reset" class="button2" />&nbsp; 
-	<input type="submit" name="submit" value="{L_SUBMIT}" class="button1" />
+    {S_HIDDEN_FIELDS}<input type="reset" value="{L_RESET}" name="reset" class="button2" />&nbsp;
+    <input type="submit" name="submit" value="{L_SUBMIT}" class="button1" />
 </fieldset>
 </form>
 <!-- ENDIF -->

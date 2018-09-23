@@ -39,44 +39,44 @@ var o3_centeroffset = '0';
 // PLUGIN FUNCTIONS
 ////////
 function setCenterPopupVariables() {
-	o3_centerpopup = ol_centerpopup;
-	o3_centeroffset = ol_centeroffset;
+    o3_centerpopup = ol_centerpopup;
+    o3_centeroffset = ol_centeroffset;
 }
 // Parses Shadow and Scroll commands
 function parseCenterPopupExtras(pf,i,ar) {
-	var k = i,v;
+    var k = i,v;
 
-	if (k < ar.length) {
-		if (ar[k] == CENTERPOPUP) { eval(pf + 'centerpopup = (' + pf + 'centerpopup == 0) ? 1 : 0'); return k; }
-		if (ar[k] == CENTEROFFSET) { k = opt_MULTIPLEARGS(++k,ar,(pf + 'centeroffset')); return k; }
-	}
+    if (k < ar.length) {
+        if (ar[k] == CENTERPOPUP) { eval(pf + 'centerpopup = (' + pf + 'centerpopup == 0) ? 1 : 0'); return k; }
+        if (ar[k] == CENTEROFFSET) { k = opt_MULTIPLEARGS(++k,ar,(pf + 'centeroffset')); return k; }
+    }
 
-	return -1;
+    return -1;
 }
 // Function which positions popup in Center of screen
 function centerPopupHorizontal(browserWidth, horizontalScrollAmount, widthFix) {
-	if (!o3_centerpopup) return void(0);
+    if (!o3_centerpopup) return void(0);
 
-	var vdisp = o3_centeroffset.split(',');
-	var placeX, iwidth = browserWidth, winoffset = horizontalScrollAmount;
+    var vdisp = o3_centeroffset.split(',');
+    var placeX, iwidth = browserWidth, winoffset = horizontalScrollAmount;
   var pWd = parseInt(o3_width);
 
-	placeX = winoffset + Math.round((iwidth - widthFix - pWd)/2) + parseInt(vdisp[0]);
-	if(typeof o3_followscroll != 'undefined' && o3_followscroll && o3_sticky) o3_relx = placeX;
+    placeX = winoffset + Math.round((iwidth - widthFix - pWd)/2) + parseInt(vdisp[0]);
+    if(typeof o3_followscroll != 'undefined' && o3_followscroll && o3_sticky) o3_relx = placeX;
 
-	return placeX;
+    return placeX;
 }
 function centerPopupVertical(browserHeight,verticalScrollAmount) {
-	if (!o3_centerpopup) return void(0);
+    if (!o3_centerpopup) return void(0);
 
-	var placeY, iheight = browserHeight, scrolloffset = verticalScrollAmount;
-	var vdisp = o3_centeroffset.split(',');
-	var pHeight = (o3_aboveheight ? parseInt(o3_aboveheight) : (olNs4 ? over.clip.height : over.offsetHeight));
+    var placeY, iheight = browserHeight, scrolloffset = verticalScrollAmount;
+    var vdisp = o3_centeroffset.split(',');
+    var pHeight = (o3_aboveheight ? parseInt(o3_aboveheight) : (olNs4 ? over.clip.height : over.offsetHeight));
 
-	placeY = scrolloffset + Math.round((iheight - pHeight)/2) + (vdisp.length > 1 ? parseInt(vdisp[1]) : 0);
-	if(typeof o3_followscroll != 'undefined' && o3_followscroll && o3_sticky) o3_rely = placeY;
+    placeY = scrolloffset + Math.round((iheight - pHeight)/2) + (vdisp.length > 1 ? parseInt(vdisp[1]) : 0);
+    if(typeof o3_followscroll != 'undefined' && o3_followscroll && o3_sticky) o3_rely = placeY;
 
-	return placeY;
+    return placeY;
 }
 ////////
 // PLUGIN REGISTRATIONS

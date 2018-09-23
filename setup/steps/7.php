@@ -1,24 +1,24 @@
 <?php
+
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
 ** Formerly Known As phpMyBitTorrent
 ** Created By Antonio Anzivino (aka DJ Echelon)
-** And Joe Robertson (aka joeroberts/Black_Heart)
-** Project Leaders: Black_Heart, Thor.
-** File 7.php 2018-02-18 10:18:00 Black_Heart
+** And Joe Robertson (aka joeroberts)
+** Project Leaders: Black_heart, Thor.
+** File steps/7.php 2018-09-21 00:00:00 Thor
 **
 ** CHANGES
 **
-** EXAMPLE 26-04-13 - Added Auto Ban
+** 2018-09-21 - Updated Masthead, Github, !defined('IN_BTM')
 **/
-
 
 echo "<p align=\"center\"><font size=\"5\">"._step7."</font></p>\n";
 echo "<p>&nbsp;</p>\n";
@@ -38,4 +38,5 @@ echo "<p align=\"center\"><font size=\"5\">"._thanks."</font></p>\n";
 echo "<p>&nbsp;</p>\n";
 
 echo "<p align=\"center\"><font size=\"3\"><a href=\"../index.php\">"._enter."</a></font></p>";
+
 ?>

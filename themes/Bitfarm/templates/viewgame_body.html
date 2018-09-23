@@ -256,15 +256,15 @@ eval;("wiz"+id+".window.moveTo((screen.width/2)-(PWidth/2),(screen.height/2)-(PH
                     <tr>
                         <td style="padding-top:10px; padding-left:10px; padding-right:10px; padding-bottom:10px; text-align:center">
                             <dt>
-                            	<h3>{L_COMMENT}</h3>
+                                <h3>{L_COMMENT}</h3>
                                 <a href="javascript: void(0);" onClick="var spoiler = this.parentNode.parentNode.getElementsByTagName('dd')[0]; if ( spoiler.style.display == 'none' ) { spoiler.style.display = 'block'; this.innerHTML = 'hide'; } else { spoiler.style.display = 'none'; this.innerHTML = 'show'; };">{L_SHOW}</a>
                             </dt>
                             <dd style="display: none;">
                                 <form name="post_form" id="post_form" method="post" action="{U_ACTION}">
                                 <div align="center">
-										<script type="text/javascript">
+                                        <script type="text/javascript">
                                             // <![CDATA[
-            
+
                                             var form_name = 'post_form';
                                             var text_name = 'message';
                                             // ]]>
@@ -289,8 +289,8 @@ eval;("wiz"+id+".window.moveTo((screen.width/2)-(PWidth/2),(screen.height/2)-(PH
 <!-- ENDIF -->
 
                             </table>
-                                	<table>
-										<!-- INCLUDE themes/Bitfarm/templates/posting_buttons.html -->
+                                    <table>
+                                        <!-- INCLUDE themes/Bitfarm/templates/posting_buttons.html -->
     <tr valign="middle" align="{S_CONTENT_FLOW_BEGIN}">
         <td colspan="2">
                         <script type="text/javascript">
@@ -300,8 +300,8 @@ eval;("wiz"+id+".window.moveTo((screen.width/2)-(PWidth/2),(screen.height/2)-(PH
                         </script>
         </td>
     </tr>
-									</table>
-								</div>
+                                    </table>
+                                </div>
                                 <fieldset class="submit-buttons">
                                 <textarea name="message" id="message" rows="10" cols="30" tabindex="3" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);" class="inputbox"></textarea>
                                 <br /><br />
@@ -310,7 +310,7 @@ eval;("wiz"+id+".window.moveTo((screen.width/2)-(PWidth/2),(screen.height/2)-(PH
                                 </fieldset>
                                 </form>
                           </dd>
-                            
+
 
                         </td>
                     </tr>

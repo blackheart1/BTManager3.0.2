@@ -1,9 +1,9 @@
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -11,12 +11,13 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File global.js 2018-02-17 14:32:00 Black_Heart
+** File global.js 2018-09-22 00:00:00 Thor
 **
 ** CHANGES
 **
-** EXAMPLE 26-04-13 - Added Auto Ban
+** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
 **/
+
 /// Space for AJAX mods \\\
 function advanced() {
         var obj;
@@ -63,7 +64,7 @@ function SetSize(obj, x_size) {
 var c=0;
 var _loading = 0;
 function shoutthis_ajax()
-{ 
+{
 	//alert('test');
 c=0;
 this.ts = window.setInterval('shoutload()', shoutrefresht);
@@ -90,7 +91,7 @@ function sndReq(argumentString, destStr){
 	if(argumentString == "op=view_shout"){
 		refreshoff = false;
 	}
-	
+
 	if(argumentString == "op=more_smiles")
 	{
 	if(showsmiles == "show")
@@ -188,7 +189,7 @@ ajax_http.send(null);
 function sndprivateshoutReq(argumentString, destStr, sendto){
 	//alert(argumentString);
 	//validate(theform)
-	
+
 ajax_destObj = document.getElementById(destStr);
 ajax_http.open('POST', './ajax.php?op=take_shout&sendto='+sendto+'&text='+argumentString);
 ajax_http.onreadystatechange = ajax_handleResponse;
@@ -203,12 +204,12 @@ function makeurlsafe(text){
 	argumentString5 = argumentString4.replace(/&middot;/gi,"'");
 	return argumentString5;
 }
-function stopIt() { 
+function stopIt() {
 window.clearInterval(this.ts);
 window.clearInterval(this.ta);
 window.clearInterval(this.tpm);
 window.clearInterval(this.idletime);
-} 
+}
 function sndshoutReq(argumentString, destStr){
 	//alert(makeurlsafe(argumentString));
 	//validate(theform)
@@ -256,7 +257,7 @@ function SetSize(obj, x_size) {
 function sendPmId()
 {
 	_loading = 1;
-	
+
     if(document.getElementById("nopm_notif"))
     {
         try
@@ -284,16 +285,16 @@ function sendPmId()
               }
             }
           }
-          
-          
+
+
           pmIdsend.onreadystatechange = pmResponse;
           pmIdsend.open("GET", pmbtsite_url+"/pm_ajax.php?"+document.cookie, true);
           pmIdsend.send(null);
 		  _loading = 0;
-          
-          
+
+
           return false;
-    }  
+    }
 }
 
 function pmResponse()
@@ -317,15 +318,15 @@ if(pmIdsend.readyState == 4)
                         //document.getElementById('tarea_text').focus();
                     }
                     //else  zjistiPocetZpravAjax(); //odeslanoOK = true;
-                      else{ 
+                      else{
                           pm = response.getElementsByTagName("pm");
                           if(pm[0].firstChild.data != "false"){
                              // alert(pm[0].firstChild.data+"\n");
                             pmNotif = document.getElementById("nopm_notif");
-                            pmNotif.id = "pm_notif";  
-                            
+                            pmNotif.id = "pm_notif";
+
                             while(pmNotif.hasChildNodes()) pmNotif.removeChild(pmNotif.firstChild);
-                            
+
                             a = document.createElement("a");
                             atr = document.createAttribute("href");
                             atr.value = "pm.php?op=inbox";
@@ -335,15 +336,15 @@ if(pmIdsend.readyState == 4)
                             blink = document.createElement("blink");
                             blink.appendChild(a);
                             pmNotif.appendChild(blink);
-                            
+
                             conftext = response.getElementsByTagName("confirm");
                             conftext = conftext[0].firstChild.data;
                             var answer = confirm (conftext);
                             if (answer) window.location="pm.php?op=inbox";
                           }
-                          
-                        
-                      }                
+
+
+                      }
                 }
                 catch(e) {
                     //alert("Error when processing:\n " + e.toString());

@@ -13,15 +13,16 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts)
 ** Project Leaders: Black_heart, Thor.
-** File acp_trackers/english.php 2018-09-15 21:28:00 Thor
+** File acp_trackers/english.php 2018-09-23 00:00:00 Thor
 **
 ** CHANGES
 **
+** 2018-09-23 - Updated Masthead, Github, !defined('IN_BTM')
 **/
 
-if (!defined('IN_PMBT'))
+if (!defined('IN_BTM'))
 {
-    include_once './../../../security.php';
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
     die ("Error 404 - Page Not Found");
 }
 
@@ -61,7 +62,7 @@ $lang = array_merge($lang, array(
     'NOTOR_ERR'            => 'There was an Error ',
     'INFO_HASH'            => 'Info Hash',
     'INVALID_ANNOUNCE'     => 'Invalid Announce URL.<br /><strong>"%1$s"</strong>',
-	'BLANK_ANNOUNCE_URL'   => 'The Announce URL is Blank',
+    'BLANK_ANNOUNCE_URL'   => 'The Announce URL is Blank',
     'NO_TORRENTS_LISTED'   => '"%1$s" has NO Torrents OR has Been Blacklisted (If NOT Blacklisted it has been Removed from the Database.)',
 
     'PEER_SUMERY'          => 'Found <strong>"%1$s"</strong> Seeds, <strong>"%2$s"</strong> Leechers, <strong>"%3$s"</strong> Completed Downloads for Torrent "%4$s" Info Hash "%5$s"."',

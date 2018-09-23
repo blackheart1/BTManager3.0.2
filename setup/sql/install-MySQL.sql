@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_acl_options` (
   `founder_only` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`auth_option_id`),
   UNIQUE KEY `auth_option` (`auth_option`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_acl_roles` (
   PRIMARY KEY (`role_id`),
   KEY `role_type` (`role_type`),
   KEY `role_order` (`role_order`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_ar_categories` (
   `category_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `category_name` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
   PRIMARY KEY (`category_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_ar_comments` (
   `enable_smilies` tinyint(1) unsigned NOT NULL DEFAULT '1',
   `enable_urls` tinyint(1) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`comment_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -121,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_ar_favorites` (
   `favorite_game` mediumint(8) unsigned NOT NULL,
   `favorite_user` mediumint(8) unsigned NOT NULL,
   PRIMARY KEY (`favorite_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -149,7 +149,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_ar_games` (
   `game_keyboard` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `game_mouse` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`game_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -176,7 +176,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_ar_hotlinks` (
   `hotlink_game` mediumint(8) unsigned NOT NULL,
   `hotlink_file` varchar(255) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`hotlink_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -189,7 +189,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_ar_played` (
   `played_user` mediumint(8) unsigned NOT NULL,
   `played_games` mediumtext COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`played_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -203,7 +203,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_ar_ratings` (
   `rating_user` mediumint(8) NOT NULL DEFAULT '0',
   `rating_score` mediumint(8) NOT NULL DEFAULT '0',
   PRIMARY KEY (`rating_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -216,7 +216,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_ar_settings` (
   `setting_name` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
   `setting_value` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '0',
   PRIMARY KEY (`setting_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -272,7 +272,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_attachments` (
   KEY `topic_id` (`topic_id`),
   KEY `poster_id` (`poster_id`),
   KEY `is_orphan` (`is_orphan`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -342,7 +342,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_bans` (
   `ban_give_reason` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
   `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -379,7 +379,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_bonus` (
   `art` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'traffic',
   `menge` bigint(20) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -438,7 +438,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_categories` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
   KEY `sort_index` (`sort_index`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -481,7 +481,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_comments` (
   PRIMARY KEY (`id`),
   KEY `user` (`user`),
   KEY `torrent` (`torrent`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -618,7 +618,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_countries` (
   `flagpic` varchar(50) COLLATE utf8_bin DEFAULT NULL,
   `domain` char(3) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -629,8 +629,8 @@ CREATE TABLE IF NOT EXISTS `#prefix#_countries` (
 CREATE TABLE IF NOT EXISTS `#prefix#_disallow` (
   `disallow_id` mediumint(8) unsigned NOT NULL auto_increment,
   `disallow_username` varchar(255) binary NOT NULL default '',
-  PRIMARY KEY  (`disallow_id`)
-) ENGINE=MyISAM  AUTO_INCREMENT=1 ;
+  PRIMARY KEY (`disallow_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1;
 
 -- --------------------------------------------------------
 
@@ -664,7 +664,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_drafts` (
   `torrent` mediumint(8) DEFAULT NULL,
   `user_to` mediumint(8) DEFAULT NULL,
   PRIMARY KEY (`draft_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -677,7 +677,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_extensions` (
   `group_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `extension` varchar(100) COLLATE utf8_bin NOT NULL DEFAULT '',
   PRIMARY KEY (`extension_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -696,7 +696,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_extension_groups` (
   `allowed_forums` text COLLATE utf8_bin NOT NULL,
   `allow_in_pm` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`group_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -734,7 +734,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_files` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `torrent_2` (`torrent`,`filename`),
   KEY `torrent` (`torrent`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -804,7 +804,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_forums` (
   PRIMARY KEY (`forum_id`),
   KEY `left_right_id` (`left_id`,`right_id`),
   KEY `forum_lastpost_id` (`forum_last_post_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -940,7 +940,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_hit_n_run` (
   `maxhitrun` int(10) NOT NULL DEFAULT '0',
   `warnlength` int(10) NOT NULL DEFAULT '0',
   `demote_hnr_users_to` varchar(225) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'user'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Config for Hit and Run system';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Config for Hit and Run System';
 
 -- --------------------------------------------------------
 
@@ -957,7 +957,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_icons` (
   `display_on_posting` tinyint(1) unsigned NOT NULL DEFAULT '1',
   PRIMARY KEY (`icons_id`),
   KEY `display_on_posting` (`display_on_posting`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -1117,7 +1117,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_level_privlages` (
   `descr` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `acc_point` (`acc_point`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -1150,7 +1150,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_level_settings` (
   `group_skip_auth` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`group_id`),
   KEY `group_legend_name` (`group_legend`,`group_name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -1173,7 +1173,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_log` (
   `log_type` tinyint(4) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`event`),
   KEY `datetime` (`datetime`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -1226,7 +1226,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_modules` (
   KEY `left_right_id` (`left_id`,`right_id`),
   KEY `module_enabled` (`module_enabled`),
   KEY `class_left_id` (`module_class`,`left_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -1291,7 +1291,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_peers` (
   KEY `torrent` (`torrent`),
   KEY `last_action` (`last_action`),
   KEY `torrent_2` (`torrent`,`seeder`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -1407,7 +1407,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_posts` (
   KEY `post_approved` (`post_approved`),
   KEY `post_username` (`post_username`),
   KEY `tid_post_time` (`topic_id`,`post_time`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -1487,7 +1487,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_private_messages` (
   KEY `from` (`sender`),
   KEY `root_level` (`root_level`,`author_ip`),
   FULLTEXT KEY `text` (`text`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -1583,7 +1583,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_ranks` (
   `rank_special` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `rank_image` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '',
   PRIMARY KEY (`rank_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -1659,7 +1659,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_reports_reasons` (
   `reason_description` mediumtext NOT NULL,
   `reason_order` smallint(4) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`reason_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -1820,7 +1820,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_shouts` (
    `f` mediumint(11) UNSIGNED DEFAULT NULL,
  PRIMARY KEY (`id`),
   KEY `posted` (`posted`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -1891,7 +1891,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_smiles` (
   `smiley_url` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `code` (`code`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -1931,7 +1931,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_snatched` (
   KEY `torrentid` (`userid`),
   KEY `torrentid_2` (`torrentid`),
   KEY `userid` (`userid`,`torrentid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -1945,7 +1945,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_thanks` (
   `torid` bigint(10) NOT NULL DEFAULT '0',
   `thank_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`tid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -1957,7 +1957,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_time_offset` (
   `id` smallint(4) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -2007,7 +2007,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_topics` (
   KEY `topic_approved` (`topic_approved`),
   KEY `forum_appr_last` (`forum_id`,`topic_approved`,`topic_last_post_id`),
   KEY `fid_time_moved` (`forum_id`,`topic_last_post_time`,`topic_moved_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -2131,7 +2131,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_torrents` (
   KEY `type` (`type`),
   FULLTEXT KEY `ft_search` (`search_text`),
   FULLTEXT KEY `filename` (`filename`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin PACK_KEYS=1 CHECKSUM=1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin PACK_KEYS=1 CHECKSUM=1;
 
 -- --------------------------------------------------------
 
@@ -2148,7 +2148,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_trackers` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `url` (`url`),
   KEY `update` (`updated`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -2288,7 +2288,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_users` (
   KEY `lastip` (`lastip`),
   KEY `lasthost` (`lasthost`),
   KEY `date` (`regdate`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -2319,7 +2319,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_warnings` (
   `log_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `warning_time` int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`warning_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 
@@ -2332,7 +2332,7 @@ CREATE TABLE IF NOT EXISTS `#prefix#_words` (
 	`word` varchar(255) DEFAULT '' NOT NULL,
 	`replacement` varchar(255) DEFAULT '' NOT NULL,
 	PRIMARY KEY (`word_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
 

@@ -2,10 +2,10 @@
 
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -13,17 +13,20 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File file.php 2018-05-30 07:02:00 Thor
+** File file.php 2018-09-22 00:00:00 Thor
 **
 ** CHANGES
 **
-** 2018-05-30 - Updated DOCTYPE
+** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
 **/
 
-if (defined('IN_PMBT'))
-    die ("You can't Include this File");
+if (defined('IN_BTM'))
+{
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
+    die ("Error 404 - Page Not Found");
+}
 
-define("IN_PMBT",true);
+define("IN_BTM",true);
 
 require_once("common.php");
 
@@ -199,7 +202,7 @@ if ((!$attachment['in_message'] && !$config['allow_attachments']) || ($attachmen
 
 if ($thumbnail)
 {
-	$attachment['physical_filename'] = 'thumb_' . $attachment['physical_filename'];
+    $attachment['physical_filename'] = 'thumb_' . $attachment['physical_filename'];
 }
 $row = array();
 $filename = $config['upload_path'] . '/' . $attachment['physical_filename'];
@@ -222,9 +225,9 @@ if (headers_sent() || !file_exists($filename) || !is_readable($filename))
 #Clear any unwanted blank spaces
 if (extension_loaded('zlib')){ ob_end_clean();}
 if (function_exists('ob_gzhandler') && !ini_get('zlib.output_compression'))
-	ob_start('ob_gzhandler');
+    ob_start('ob_gzhandler');
 else
-	ob_start();
+    ob_start();
 ob_implicit_flush(0);
 
 header('Pragma: public');

@@ -1,44 +1,44 @@
 <h2>{L_EDIT_PROFILE}</h2>
 
 <div class="panel">
-	<div class="inner"><span class="corners-top"><span></span></span>
-	<p>{L_EDIT_PROFILE_EXP}</p>
+    <div class="inner"><span class="corners-top"><span></span></span>
+    <p>{L_EDIT_PROFILE_EXP}</p>
 
-	<fieldset>
-	<!-- IF ERROR --><p class="error">{ERROR}</p><!-- ENDIF -->
-	<dl>
-		<dt><label for="icq">{L_ICQ_IM}:</label></dt>
-		<dd><input type="text" name="icq" id="icq" maxlength="15" value="{ICQ}" class="inputbox" /></dd>
-	</dl>
-	<dl>
-		<dt><label for="aim">{L_AOL_IM}:</label></dt>
-		<dd><input type="text" name="aim" id="aim" maxlength="255" value="{AIM}" class="inputbox" /></dd>
-	</dl>
-	<dl>
-		<dt><label for="msn">{L_MSN_IM}:</label></dt>
-		<dd><input type="text" name="msn" id="msn" maxlength="255" value="{MSN}" class="inputbox" /></dd>
-	</dl>
-	<dl>
-		<dt><label for="yim">{L_YH_IM}:</label></dt>
-		<dd><input type="text" name="yahoo" id="yahoo" maxlength="255" value="{YIM}" class="inputbox" /></dd>
-	</dl>
-	<dl>
-		<dt><label for="jabber">{L_JAB_IM}:</label></dt>
-		<dd><input type="text" name="jabber" id="jabber" maxlength="255" value="{JABBER}" class="inputbox" /></dd>
-	</dl>
-	<dl>
-		<dt><label for="jabber">{L_SKYPE_IM}:</label></dt>
-		<dd><input type="text" name="skype" id="skype" maxlength="255" value="{JABBER}" class="inputbox" /></dd>
-	</dl>
-	<dl>
-		<dt><label for="location">{L_LOCATION}:</label></dt>
-		<dd><select name="country">{LOCATION}</select></dd>
-	</dl>
-	<!-- IF S_BIRTHDAYS_ENABLED -->
-		<dl>
-			<dt><label for="bday_day">{L_BIRTHDAY}:</label><br /><span>{L_BIRTHDAY_EXPLAIN}</span></dt>
-			<dd>
-				<label for="bday_day">{L_DAY}: <select name="bday_day" id="bday_day" style="width: 4em;">
+    <fieldset>
+    <!-- IF ERROR --><p class="error">{ERROR}</p><!-- ENDIF -->
+    <dl>
+        <dt><label for="icq">{L_ICQ_IM}:</label></dt>
+        <dd><input type="text" name="icq" id="icq" maxlength="15" value="{ICQ}" class="inputbox" /></dd>
+    </dl>
+    <dl>
+        <dt><label for="aim">{L_AOL_IM}:</label></dt>
+        <dd><input type="text" name="aim" id="aim" maxlength="255" value="{AIM}" class="inputbox" /></dd>
+    </dl>
+    <dl>
+        <dt><label for="msn">{L_MSN_IM}:</label></dt>
+        <dd><input type="text" name="msn" id="msn" maxlength="255" value="{MSN}" class="inputbox" /></dd>
+    </dl>
+    <dl>
+        <dt><label for="yim">{L_YH_IM}:</label></dt>
+        <dd><input type="text" name="yahoo" id="yahoo" maxlength="255" value="{YIM}" class="inputbox" /></dd>
+    </dl>
+    <dl>
+        <dt><label for="jabber">{L_JAB_IM}:</label></dt>
+        <dd><input type="text" name="jabber" id="jabber" maxlength="255" value="{JABBER}" class="inputbox" /></dd>
+    </dl>
+    <dl>
+        <dt><label for="jabber">{L_SKYPE_IM}:</label></dt>
+        <dd><input type="text" name="skype" id="skype" maxlength="255" value="{JABBER}" class="inputbox" /></dd>
+    </dl>
+    <dl>
+        <dt><label for="location">{L_LOCATION}:</label></dt>
+        <dd><select name="country">{LOCATION}</select></dd>
+    </dl>
+    <!-- IF S_BIRTHDAYS_ENABLED -->
+        <dl>
+            <dt><label for="bday_day">{L_BIRTHDAY}:</label><br /><span>{L_BIRTHDAY_EXPLAIN}</span></dt>
+            <dd>
+                <label for="bday_day">{L_DAY}: <select name="bday_day" id="bday_day" style="width: 4em;">
                   <option <!-- IF U_BITH_D == 0 -->selected="selected" <!-- ENDIF -->value="0">--</option>
                   <option <!-- IF U_BITH_D == 1 -->selected="selected" <!-- ENDIF -->value="1">1</option>
                   <option <!-- IF U_BITH_D == 2 -->selected="selected" <!-- ENDIF -->value="2">2</option>
@@ -71,8 +71,8 @@
                   <option <!-- IF U_BITH_D == 29 -->selected="selected" <!-- ENDIF -->value="29">29</option>
                   <option <!-- IF U_BITH_D == 30 -->selected="selected" <!-- ENDIF -->value="30">30</option>
                   <option <!-- IF U_BITH_D == 31 -->selected="selected" <!-- ENDIF -->value="31">31</option>
-				</select></label> 
-				<label for="bday_month">{L_MONTH}: <select name="bday_month" id="bday_month" style="width: 4em;">
+                </select></label>
+                <label for="bday_month">{L_MONTH}: <select name="bday_month" id="bday_month" style="width: 4em;">
                     <option <!-- IF U_BITH_M == 0 -->selected="selected" <!-- ENDIF -->value="0">--</option>
                     <option <!-- IF U_BITH_M == 1 -->selected="selected" <!-- ENDIF -->value="1">1</option>
                     <option <!-- IF U_BITH_M == 2 -->selected="selected" <!-- ENDIF -->value="2">2</option>
@@ -86,8 +86,8 @@
                     <option <!-- IF U_BITH_M == 10 -->selected="selected" <!-- ENDIF -->value="10">10</option>
                     <option <!-- IF U_BITH_M == 11 -->selected="selected" <!-- ENDIF -->value="11">11</option>
                     <option <!-- IF U_BITH_M == 12 -->selected="selected" <!-- ENDIF -->value="12">12</option>
-                </select></label> 
-				<label for="bday_year">{L_YEAR}: <select name="bday_year" id="bday_year" style="width: 6em;">
+                </select></label>
+                <label for="bday_year">{L_YEAR}: <select name="bday_year" id="bday_year" style="width: 6em;">
                    <option <!-- IF U_BITH_Y == 1940 -->selected="selected" <!-- ENDIF -->value="1940">1940</option>
                    <option <!-- IF U_BITH_Y == 1941 -->selected="selected" <!-- ENDIF -->value="1941">1941</option>
                    <option <!-- IF U_BITH_Y == 1942 -->selected="selected" <!-- ENDIF -->value="1942">1942</option>
@@ -160,16 +160,16 @@
                    <option <!-- IF U_BITH_Y == 2009 -->selected="selected" <!-- ENDIF -->value="2009">2009</option>
                    <option <!-- IF U_BITH_Y == 2010 -->selected="selected" <!-- ENDIF -->value="2010">2010</option>
                 </select></label>
-			</dd>
-		</dl>
-	<!-- ENDIF -->
-	</fieldset>
+            </dd>
+        </dl>
+    <!-- ENDIF -->
+    </fieldset>
 
-	<span class="corners-bottom"><span></span></span></div>
+    <span class="corners-bottom"><span></span></span></div>
 </div>
 
 <fieldset class="submit-buttons">
-	<input type="reset" value="{L_RESET}" name="reset" class="button2" />&nbsp; 
-	<input type="submit" name="submit" value="{L_SUBMIT}" class="button1" />
+    <input type="reset" value="{L_RESET}" name="reset" class="button2" />&nbsp;
+    <input type="submit" name="submit" value="{L_SUBMIT}" class="button1" />
 </fieldset>
 </form>

@@ -2,10 +2,10 @@
 
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -13,20 +13,16 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts)
 ** Project Leaders: Black_heart, Thor.
-** File webupdate/english.php 2018-09-14 10:17:00 Thor
+** File webupdate/english.php 2018-09-23 00:00:00 Thor
 **
 ** CHANGES
 **
-** 2018-02-25 - Added New Masthead
-** 2018-02-25 - Added New !defined('IN_PMBT')
-** 2018-02-25 - Fixed Spelling
-** 2018-04-11 - Amended the Wording of some Sentences
-** 2018-04-11 - Amended !defined('IN_PMBT') Corrected Path
+** 2018-09-23 - Updated Masthead, Github, !defined('IN_BTM')
 **/
 
-if (!defined('IN_PMBT'))
+if (!defined('IN_BTM'))
 {
-    include_once './../../../security.php';
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
     die ("Error 404 - Page Not Found");
 }
 
@@ -54,7 +50,7 @@ $lang = array_merge($lang, array(
         <p>The Recommended way of Updating your Installation Listed here is Only Valid for the Automatic Update Package.  You are also able to Update your Installation using the Methods Listed within the INSTALL.html Document.  The Steps for Updating BTManager Automatically are:</p>
 
         <ul style="margin-left: 20px; font-size: 1.1em;">
-            <li>Go to the <a href=\'https://github.com/blackheart1/BTManager\' title=\'BTManager\'>BTManager Downloads Page</a> and Download the "Latest Version" Archive.<br /><br /></li>
+            <li>Go to the <a href=\'https://github.com/blackheart1/BTManager3.0.2\' title=\'BTManager\'>BTManager Downloads Page</a> and Download the "Latest Version" Archive.<br /><br /></li>
             <li>Unpack the Archive.<br /><br /></li>
             <li>Upload the Complete Uncompressed Install Folder to your BTManager Root Directory (where your config.php file is).<br /><br /></li>
         </ul>

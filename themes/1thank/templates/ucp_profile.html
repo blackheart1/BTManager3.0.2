@@ -4,7 +4,7 @@
 <h2>{L_USER_CPANNEL}</h2>
 
 <div class="panel">
-	<div class="inner"><span class="corners-top"><span></span></span>
+    <div class="inner"><span class="corners-top"><span></span></span>
     <div class="right-column">
             <h3>{L_PERSONAL}</h3>
             <p>
@@ -92,8 +92,8 @@
 
     <!-- IF S_TORRENTSMYU -->
 <div class="panel">
-	<div class="inner"><span class="corners-top"><span></span></span>
-		<h2>{L_YOUR_TORRENTS}</h2>
+    <div class="inner"><span class="corners-top"><span></span></span>
+        <h2>{L_YOUR_TORRENTS}</h2>
      <span>
       <strong>{L_PAGES} {CURENT_PAGEMYU}/{TOTTAL_PAGESMYU}</strong>
     </span>
@@ -109,25 +109,25 @@
     </span>
   </span>
 <br />
-	<ul class="topiclist">
-		<li class="header">
-			<dl class="icon">
-				<dt style="width: 60%; padding:0 0 0 5.5em;">{L_NAME}</dt>
+    <ul class="topiclist">
+        <li class="header">
+            <dl class="icon">
+                <dt style="width: 60%; padding:0 0 0 5.5em;">{L_NAME}</dt>
                 <dd class="posts"><img src="themes/1thank/pics/seeders.png" alt="{L_SEEDERS}" title="{L_SEEDERS}" border="0"></dd>
                 <dd class="posts"><img src="themes/1thank/pics/leechers.png" alt="{L_LEECHERS}" title="{L_LEECHERS}" border="0"></dd>
-			</dl>
-		</li>
-	</ul>
-	<ul class="topiclist cplist">
+            </dl>
+        </li>
+    </ul>
+    <ul class="topiclist cplist">
 <!-- BEGIN torrent_varmyu -->
-		<li class="row<!-- IF topicrow.S_ROW_COUNT is odd --> bg1<!-- ELSE --> bg2<!-- ENDIF -->">
-			<dl class="icon" style="background-image: url({torrent_varmyu.CAT_PIC}); background-repeat: no-repeat;">
-				<dt style="width: 60%; padding:0 0 0 5.5em;" title="{torrent_varmyu.TOPIC_FOLDER_IMG_ALT}">
+        <li class="row<!-- IF topicrow.S_ROW_COUNT is odd --> bg1<!-- ELSE --> bg2<!-- ENDIF -->">
+            <dl class="icon" style="background-image: url({torrent_varmyu.CAT_PIC}); background-repeat: no-repeat;">
+                <dt style="width: 60%; padding:0 0 0 5.5em;" title="{torrent_varmyu.TOPIC_FOLDER_IMG_ALT}">
       <!-- IF torrent_varmyu.NUKED --><img src="themes/1thank/pics/nuked.gif" alt="{L_NUKED_TORRENT}" title="{L_NUKED_TORRENT}" border="0"><!-- ENDIF -->
       <!-- IF torrent_varmyu.FREE_DL --><img src="themes/1thank/pics/magic.gif" alt="{L_FREE_TORRENT}" title="{L_FREE_TORRENT}" border="0"><!-- ENDIF -->
       <!-- IF torrent_varmyu.DHT_INABLED --><span class="overlib" onmouseover="return overlib('{L_DHT_EXPL}',CAPTION, '{L_DHT_SUPORT}',TEXTFONT,'Verdana',TEXTCOLOR,'#FFFFFF',CAPTIONFONT,'Lucida Console, Verdana',LEFT,FGCOLOR,'#000000',BGCOLOR,'#6F7578',CAPICON,'themes/1thank/pics/help.gif',BORDER,2,SHADOW,SHADOWOPACITY,40,SHADOWCOLOR,'#030303',SHADOWX,2,SHADOWY,2);" onmouseout="return nd();" style="cursor: help;">
       <img src="themes/1thank/pics/dht.gif" alt="{L_DHT_SUPORT}" title="{L_DHT_SUPORT}" border="0"></span><!-- ENDIF -->
-		<!-- IF torrent_varmyu.CAN_DOWN_LOAD --><a class="index" href="download.php?id={torrent_varmyu.ID}"><img style="border: medium none ;" alt="{L_DOWNLOAD}" title="{L_DOWNLOAD}" src="themes/1thank/pics/download2.gif" align="right"></a><!-- ENDIF -->
+        <!-- IF torrent_varmyu.CAN_DOWN_LOAD --><a class="index" href="download.php?id={torrent_varmyu.ID}"><img style="border: medium none ;" alt="{L_DOWNLOAD}" title="{L_DOWNLOAD}" src="themes/1thank/pics/download2.gif" align="right"></a><!-- ENDIF -->
         <br />
       <strong><a style="text-decoration: none;" href="details.php?id={torrent_varmyu.ID}<!-- IF HIT_COUNT -->&amp;hit=1<!-- ENDIF -->" title="{torrent_varmyu.FULL_NAME}">{torrent_varmyu.SHORTNAME}</a></strong>
       <br />
@@ -139,14 +139,14 @@
       <!-- IF not torrent_varmyu.LOCAL_T --><!-- IF torrent_varmyu.REFRESH_T --><a href="scrape-external.php?id={torrent_varmyu.ID}&amp;tracker={torrent_varmyu.TRACKER_URL}&amp;return=torrents.php"><img src="themes/1thank/pics/refresh.png" alt="{L_REFRESH_TORRENT}" title="{L_REFRESH_TORRENT}" border="0"></a>
       <!-- ELSE --><img src="themes/1thank/pics/refresh_gray.png" alt="{L_UPDATE_STATS}" title="{L_UPDATE_STATS}" border="0"><!-- ENDIF -->
       <!-- IF torrent_varmyu.NEED_AUTH -->{torrent_varmyu.AUTH_LINK}<!-- ENDIF --><!-- ENDIF -->
-                
-        		</dt>
-       		<dd class="posts">{torrent_varmyu.SEEDERS}</dd>
-			<dd class="posts">{torrent_varmyu.LEECHERS}</dd>
-	</dl>
+
+                </dt>
+            <dd class="posts">{torrent_varmyu.SEEDERS}</dd>
+            <dd class="posts">{torrent_varmyu.LEECHERS}</dd>
+    </dl>
 <!-- END torrent_varmyu -->
     </ul>
-	<span class="corners-bottom"><span></span></span></div>
+    <span class="corners-bottom"><span></span></span></div>
 </div>
 <br />
     <span>
@@ -521,6 +521,6 @@
 <br clear="all" />
 <!-- ENDIF -->
     </div>
-	<span class="corners-bottom"><span></span></span></div>
+    <span class="corners-bottom"><span></span></span></div>
 </div>
 <!-- INCLUDE themes/1thank/templates/overall_footer.html -->

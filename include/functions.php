@@ -2,10 +2,10 @@
 
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -13,20 +13,17 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File functions.php 2018-08-06 06:54:00 Thor
+** File include/functions.php 2018-09-22 00:00:00 Thor
 **
 ** CHANGES
 **
-** 04-15-2018 depricated e modifier
-** 04-16-2018 update make_clickable
-** 2018-05-30 - Updated DOCTYPE
-** 2018-08-05 - Added Missing Language
+** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
 **/
 
-if (!defined('IN_PMBT'))
+if (!defined('IN_BTM'))
 {
-    include_once './../security.php';
-    die ('Error 404 - Page Not Found');
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
+    die ("Error 404 - Page Not Found");
 }
 
 // This File Contains The Bittorrent Main Functions And Must Be Included
@@ -371,13 +368,13 @@ function get_preg_expression($mode)
 function generate_text_for_display($text, $uid, $bitfield, $flags)
 {
     static $bbcode;
-	global $user;
+    global $user;
 
     if (!$text)
     {
         return '';
     }
-	if(isset($user->lang[$text])) $text = $user->lang[$text];
+    if(isset($user->lang[$text])) $text = $user->lang[$text];
     $text = censor_text($text);
 
     // Parse BBCode If BBCode UID Stored And BBCode Enabled
@@ -942,24 +939,24 @@ function get_u_ratio($upload, $download)
 function bt_shout($from, $text, $id_to = 0, $f = false)
 {
         global $db, $db_prefix, $shout_config, $config;
-		include_once('include/function_posting.php');
-		include_once('include/message_parser.php');
-		include_once('include/class.bbcode.php');
-		$bbcode_status		= ($config['allow_bbcode'] && $config['auth_bbcode_pm']) ? true : false;
-		$smilies_status		= ($config['allow_smilies'] && $config['auth_smilies_pm']) ? true : false;
-		$img_status			= ($config['auth_img_pm']) ? true : false;
-		$flash_status		= ($config['auth_flash_pm']) ? true : false;
-		$url_status			= ($config['allow_post_links']) ? true : false;
-		$enable_sig			= ($config['allow_sig'] && $config['allow_sig_pm']);
-		$enable_smilies		= ($config['allow_smilies']);
-		$enable_bbcode		= ($config['allow_bbcode']);
-		$enable_urls		= ($shout_config['allow_url'] != "no")?true:false;
-		$shout_parser 		= new parse_message();
-		$shout_parser->message = $text;
-		$bbcode_uid 		= $shout_parser->bbcode_uid;
-		$shout_parser->parse($enable_bbcode, ($config['allow_post_links']) ? $enable_urls : false, $enable_smilies, $img_status, $flash_status, true, $config['allow_post_links'],true,true,true,'shout');
-		$shout = $db->sql_escape(stripslashes($shout_parser->message));
-		$f 					= ($f)? $f : 'NULL';
+        include_once('include/function_posting.php');
+        include_once('include/message_parser.php');
+        include_once('include/class.bbcode.php');
+        $bbcode_status      = ($config['allow_bbcode'] && $config['auth_bbcode_pm']) ? true : false;
+        $smilies_status     = ($config['allow_smilies'] && $config['auth_smilies_pm']) ? true : false;
+        $img_status         = ($config['auth_img_pm']) ? true : false;
+        $flash_status       = ($config['auth_flash_pm']) ? true : false;
+        $url_status         = ($config['allow_post_links']) ? true : false;
+        $enable_sig         = ($config['allow_sig'] && $config['allow_sig_pm']);
+        $enable_smilies     = ($config['allow_smilies']);
+        $enable_bbcode      = ($config['allow_bbcode']);
+        $enable_urls        = ($shout_config['allow_url'] != "no")?true:false;
+        $shout_parser       = new parse_message();
+        $shout_parser->message = $text;
+        $bbcode_uid         = $shout_parser->bbcode_uid;
+        $shout_parser->parse($enable_bbcode, ($config['allow_post_links']) ? $enable_urls : false, $enable_smilies, $img_status, $flash_status, true, $config['allow_post_links'],true,true,true,'shout');
+        $shout = $db->sql_escape(stripslashes($shout_parser->message));
+        $f                  = ($f)? $f : 'NULL';
 
         $db->sql_query("INSERT INTO " . $db_prefix . "_shouts (user, text, bbcode_bitfield, bbcode_uid, posted, id_to, f) VALUES ('" . $from . "', '" . $shout . "', '" . $shout_parser->bbcode_bitfield . "','" . $shout_parser->bbcode_uid . "', NOW(), '" . $id_to . "', " . $f . ");");
 }
@@ -3614,7 +3611,7 @@ function ratingpic($num)
 {   // Gets The Correct Star Rating Picture
     $r = round($num * 2) / 2;
     if ($r < 1) return;
-	if( $r > 5) return pic("5-rating.png");
+    if( $r > 5) return pic("5-rating.png");
     return pic($r . "-rating.png");
 }
 
@@ -3786,7 +3783,7 @@ function format_urls($s)
 
 function format_quotes($s)
 {
-	global $user;
+    global $user;
     preg_match_all('/\\[quote.*?\\]/', $s, $result, PREG_PATTERN_ORDER);
 
     $openquotecount = count($openquote = $result[0]);
@@ -4195,7 +4192,7 @@ function set_site_var($page_title = '')
     closedir($langhandle);
 
     unset($langdir, $langfile, $template->_tpldata['lang_var']);
-	unset($template->_tpldata['lang_var']);
+    unset($template->_tpldata['lang_var']);
 
     foreach ($languages as $key => $val)
     {
@@ -4216,10 +4213,10 @@ function set_site_var($page_title = '')
     while ($themedir = readdir($themehandle))
     {
         if (is_dir($thememaindir . "/" . $themedir) and $themedir != "." and $themedir != ".." and $themedir != "CVS")
-		{
-			if (file_exists($thememaindir . "/" . $themedir . "/main.php"))
+        {
+            if (file_exists($thememaindir . "/" . $themedir . "/main.php"))
             $themes[$themedir] = $themedir;
-		}
+        }
     }
 
     closedir($themehandle);
@@ -4321,7 +4318,7 @@ function set_site_var($page_title = '')
     $template->assign_vars(array(
             'SITE_NEWS'            => ($welcome_message != "") ? $welcome_message : '',
             'SITE_URL'             => $siteurl,
-			'U_INDEX'			   => $siteurl . '/index.' . $phpEx,
+            'U_INDEX'              => $siteurl . '/index.' . $phpEx,
             'PRIVATE_MODE'         => $pivate_mode,
             'PMBT_VER'             => $version,
             'PAGE_TITLE'           => $page_title,
@@ -4336,8 +4333,8 @@ function set_site_var($page_title = '')
             'S_MOST_USERS_WN'      => $most_users_online_when,
             'U_SHOW_ARCADE'        => $auth->acl_get('u_arcade_play_games') ? true : false,
             'U_USER'               => $user->user,
-			'U_MEMBERLIST'			=> append_sid("memberslist.$phpEx"),
-			'S_DISPLAY_MEMBERLIST'	=> (isset($auth)) ? $auth->acl_get('u_viewprofile') : 0,
+            'U_MEMBERLIST'          => append_sid("memberslist.$phpEx"),
+            'S_DISPLAY_MEMBERLIST'  => (isset($auth)) ? $auth->acl_get('u_viewprofile') : 0,
             'U_PREMIUM'            => $user->premium,
             'U_MODERATOR'          => $user->moderator,
             'U_ADMIN'              => $user->admin,
@@ -4746,7 +4743,7 @@ function getcomplaints()
 */
 function is_absolute($path)
 {
-	return (isset($path[0]) && $path[0] == '/' || preg_match('#^[a-z]:[/\\\]#i', $path)) ? true : false;
+    return (isset($path[0]) && $path[0] == '/' || preg_match('#^[a-z]:[/\\\]#i', $path)) ? true : false;
 }
 
 /**

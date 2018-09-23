@@ -75,47 +75,47 @@ var o3_closeweight="";
 
 // Function which sets runtime variables to their default values
 function setCSSStyleVariables() {
-	o3_padunit=ol_padunit;
-	o3_heightunit=ol_heightunit;
-	o3_widthunit=ol_widthunit;
-	o3_textsizeunit=ol_textsizeunit;
-	o3_textdecoration=ol_textdecoration;
-	o3_textstyle=ol_textstyle;
-	o3_textweight=ol_textweight;
-	o3_captionsizeunit=ol_captionsizeunit;
-	o3_captiondecoration=ol_captiondecoration;
-	o3_captionstyle=ol_captionstyle;
-	o3_captionweight=ol_captionweight;
-	o3_closesizeunit=ol_closesizeunit;
-	o3_closedecoration=ol_closedecoration;
-	o3_closestyle=ol_closestyle;
-	o3_closeweight=ol_closeweight;
+    o3_padunit=ol_padunit;
+    o3_heightunit=ol_heightunit;
+    o3_widthunit=ol_widthunit;
+    o3_textsizeunit=ol_textsizeunit;
+    o3_textdecoration=ol_textdecoration;
+    o3_textstyle=ol_textstyle;
+    o3_textweight=ol_textweight;
+    o3_captionsizeunit=ol_captionsizeunit;
+    o3_captiondecoration=ol_captiondecoration;
+    o3_captionstyle=ol_captionstyle;
+    o3_captionweight=ol_captionweight;
+    o3_closesizeunit=ol_closesizeunit;
+    o3_closedecoration=ol_closedecoration;
+    o3_closestyle=ol_closestyle;
+    o3_closeweight=ol_closeweight;
 }
 
 // Parses CSS Style commands.
 function parseCSSStyleExtras(pf, i, ar) {
-	var k = i;
-	
-	if (k < ar.length) {
-		if (ar[k]==CSSSTYLE) { eval(pf+'css='+ar[k]); return k; }
-		if (ar[k]==PADUNIT) { eval(pf+'padunit="'+ar[++k]+'"'); return k; }
-		if (ar[k]==HEIGHTUNIT) { eval(pf+'heightunit="'+ar[++k]+'"'); return k; }
-		if (ar[k]==WIDTHUNIT) { eval(pf+'widthunit="'+ar[++k]+'"'); return k; }
-		if (ar[k]==TEXTSIZEUNIT) { eval(pf+'textsizeunit="'+ar[++k]+'"'); return k; }
-		if (ar[k]==TEXTDECORATION) { eval(pf+'textdecoration="'+ar[++k]+'"'); return k; }
-		if (ar[k]==TEXTSTYLE) { eval(pf+'textstyle="'+ar[++k]+'"'); return k; }
-		if (ar[k]==TEXTWEIGHT) { eval(pf+'textweight="'+ar[++k]+'"'); return k; }
-		if (ar[k]==CAPTIONSIZEUNIT) { eval(pf+'captionsizeunit="'+ar[++k]+'"'); return k; }
-		if (ar[k]==CAPTIONDECORATION) { eval(pf+'captiondecoration="'+ar[++k]+'"'); return k; }
-		if (ar[k]==CAPTIONSTYLE) { eval(pf+'captionstyle="'+ar[++k]+'"'); return k; }
-		if (ar[k]==CAPTIONWEIGHT) { eval(pf+'captionweight="'+ar[++k]+'"'); return k; }
-		if (ar[k]==CLOSESIZEUNIT) { eval(pf+'closesizeunit="'+ar[++k]+'"'); return k; }
-		if (ar[k]==CLOSEDECORATION) { eval(pf+'closedecoration="'+ar[++k]+'"'); return k; }
-		if (ar[k]==CLOSESTYLE) { eval(pf+'closestyle="'+ar[++k]+'"'); return k; }
-		if (ar[k]==CLOSEWEIGHT) { eval(pf+'closeweight="'+ar[++k]+'"'); return k; }
-	}
-	
-	return -1;
+    var k = i;
+
+    if (k < ar.length) {
+        if (ar[k]==CSSSTYLE) { eval(pf+'css='+ar[k]); return k; }
+        if (ar[k]==PADUNIT) { eval(pf+'padunit="'+ar[++k]+'"'); return k; }
+        if (ar[k]==HEIGHTUNIT) { eval(pf+'heightunit="'+ar[++k]+'"'); return k; }
+        if (ar[k]==WIDTHUNIT) { eval(pf+'widthunit="'+ar[++k]+'"'); return k; }
+        if (ar[k]==TEXTSIZEUNIT) { eval(pf+'textsizeunit="'+ar[++k]+'"'); return k; }
+        if (ar[k]==TEXTDECORATION) { eval(pf+'textdecoration="'+ar[++k]+'"'); return k; }
+        if (ar[k]==TEXTSTYLE) { eval(pf+'textstyle="'+ar[++k]+'"'); return k; }
+        if (ar[k]==TEXTWEIGHT) { eval(pf+'textweight="'+ar[++k]+'"'); return k; }
+        if (ar[k]==CAPTIONSIZEUNIT) { eval(pf+'captionsizeunit="'+ar[++k]+'"'); return k; }
+        if (ar[k]==CAPTIONDECORATION) { eval(pf+'captiondecoration="'+ar[++k]+'"'); return k; }
+        if (ar[k]==CAPTIONSTYLE) { eval(pf+'captionstyle="'+ar[++k]+'"'); return k; }
+        if (ar[k]==CAPTIONWEIGHT) { eval(pf+'captionweight="'+ar[++k]+'"'); return k; }
+        if (ar[k]==CLOSESIZEUNIT) { eval(pf+'closesizeunit="'+ar[++k]+'"'); return k; }
+        if (ar[k]==CLOSEDECORATION) { eval(pf+'closedecoration="'+ar[++k]+'"'); return k; }
+        if (ar[k]==CLOSESTYLE) { eval(pf+'closestyle="'+ar[++k]+'"'); return k; }
+        if (ar[k]==CLOSEWEIGHT) { eval(pf+'closeweight="'+ar[++k]+'"'); return k; }
+    }
+
+    return -1;
 }
 
 ////////
@@ -124,51 +124,51 @@ function parseCSSStyleExtras(pf, i, ar) {
 
 // Makes simple table without caption
 function ol_content_simple_cssstyle(text) {
-	txt = '<table width="'+o3_width+ '" border="0" cellpadding="'+o3_border+'" cellspacing="0" style="background-color: '+o3_bgcolor+'; height: '+o3_height+o3_heightunit+';"><tr><td><table width="100%" border="0" cellpadding="' + o3_cellpad + '" cellspacing="0" style="color: '+o3_fgcolor+'; background-color: '+o3_fgcolor+'; height: '+o3_height+o3_heightunit+';"><tr><td valign="TOP"><font style="font-family: '+o3_textfont+'; color: '+o3_textcolor+'; font-size: '+o3_textsize+o3_textsizeunit+'; text-decoration: '+o3_textdecoration+'; font-weight: '+o3_textweight+'; font-style:'+o3_textstyle+'">'+text+'</font></td></tr></table></td></tr></table>';
-	set_background("");
-	
-	return txt;
+    txt = '<table width="'+o3_width+ '" border="0" cellpadding="'+o3_border+'" cellspacing="0" style="background-color: '+o3_bgcolor+'; height: '+o3_height+o3_heightunit+';"><tr><td><table width="100%" border="0" cellpadding="' + o3_cellpad + '" cellspacing="0" style="color: '+o3_fgcolor+'; background-color: '+o3_fgcolor+'; height: '+o3_height+o3_heightunit+';"><tr><td valign="TOP"><font style="font-family: '+o3_textfont+'; color: '+o3_textcolor+'; font-size: '+o3_textsize+o3_textsizeunit+'; text-decoration: '+o3_textdecoration+'; font-weight: '+o3_textweight+'; font-style:'+o3_textstyle+'">'+text+'</font></td></tr></table></td></tr></table>';
+    set_background("");
+
+    return txt;
 }
 
 // Makes table with caption and optional close link
 function ol_content_caption_cssstyle(text, title, close) {
-	var nameId;
-	closing = "";
-	closeevent = "onMouseOver";
-	
-	if (o3_closeclick == 1) closeevent= (o3_closetitle ? "title='" + o3_closetitle +"'" : "") + " onClick";
+    var nameId;
+    closing = "";
+    closeevent = "onMouseOver";
 
-	if (o3_capicon!="") {
-		nameId=' hspace=\"5\"'+' align=\"middle\" alt=\"\"';
-		if (typeof o3_dragimg != 'undefined' && o3_dragimg) nameId = ' hspace=\"5\"'+' name=\"'+o3_dragimg+'\" id=\"'+o3_dragimg+'\" align=\"middle\" alt=\"Drag Enabled\" title=\"Drag Enabled\"';
-		o3_capicon = '<img src=\"'+o3_capicon+'\"'+nameId+' />';
-	}
-	
-	if (close != "") {
-		closing = '<td align="RIGHT"><a href="javascript:return '+fnRef+'cClick();" '+closeevent+'="return '+fnRef+'cClick();" style="color: '+o3_closecolor+'; font-family: '+o3_closefont+'; font-size: '+o3_closesize+o3_closesizeunit+'; text-decoration: '+o3_closedecoration+'; font-weight: '+o3_closeweight+'; font-style:'+o3_closestyle+';">'+close+'</a></td>';
-	}
-	
-	txt = '<table width="'+o3_width+ '" border="0" cellpadding="'+o3_border+'" cellspacing="0" style="background-color: '+o3_bgcolor+'; background-image: url('+o3_bgbackground+'); height: '+o3_height+o3_heightunit+';"><tr><td><table width="100%" border="0" cellpadding="0" cellspacing="0"><tr><td><font style="font-family: '+o3_captionfont+'; color: '+o3_capcolor+'; font-size: '+o3_captionsize+o3_captionsizeunit+'; font-weight: '+o3_captionweight+'; font-style: '+o3_captionstyle+'; text-decoration: '+o3_captiondecoration+';">'+o3_capicon+title+'</font></td>'+closing+'</tr></table><table width="100%" border="0" cellpadding="' + o3_cellpad + '" cellspacing="0" style="color: '+o3_fgcolor+'; background-color: '+o3_fgcolor+'; height: '+o3_height+o3_heightunit+';"><tr><td valign="TOP"><font style="font-family: '+o3_textfont+'; color: '+o3_textcolor+'; font-size: '+o3_textsize+o3_textsizeunit+'; text-decoration: '+o3_textdecoration+'; font-weight: '+o3_textweight+'; font-style:'+o3_textstyle+'">'+text+'</font></td></tr></table></td></tr></table>';
-	set_background("");
+    if (o3_closeclick == 1) closeevent= (o3_closetitle ? "title='" + o3_closetitle +"'" : "") + " onClick";
 
-	return txt;
+    if (o3_capicon!="") {
+        nameId=' hspace=\"5\"'+' align=\"middle\" alt=\"\"';
+        if (typeof o3_dragimg != 'undefined' && o3_dragimg) nameId = ' hspace=\"5\"'+' name=\"'+o3_dragimg+'\" id=\"'+o3_dragimg+'\" align=\"middle\" alt=\"Drag Enabled\" title=\"Drag Enabled\"';
+        o3_capicon = '<img src=\"'+o3_capicon+'\"'+nameId+' />';
+    }
+
+    if (close != "") {
+        closing = '<td align="RIGHT"><a href="javascript:return '+fnRef+'cClick();" '+closeevent+'="return '+fnRef+'cClick();" style="color: '+o3_closecolor+'; font-family: '+o3_closefont+'; font-size: '+o3_closesize+o3_closesizeunit+'; text-decoration: '+o3_closedecoration+'; font-weight: '+o3_closeweight+'; font-style:'+o3_closestyle+';">'+close+'</a></td>';
+    }
+
+    txt = '<table width="'+o3_width+ '" border="0" cellpadding="'+o3_border+'" cellspacing="0" style="background-color: '+o3_bgcolor+'; background-image: url('+o3_bgbackground+'); height: '+o3_height+o3_heightunit+';"><tr><td><table width="100%" border="0" cellpadding="0" cellspacing="0"><tr><td><font style="font-family: '+o3_captionfont+'; color: '+o3_capcolor+'; font-size: '+o3_captionsize+o3_captionsizeunit+'; font-weight: '+o3_captionweight+'; font-style: '+o3_captionstyle+'; text-decoration: '+o3_captiondecoration+';">'+o3_capicon+title+'</font></td>'+closing+'</tr></table><table width="100%" border="0" cellpadding="' + o3_cellpad + '" cellspacing="0" style="color: '+o3_fgcolor+'; background-color: '+o3_fgcolor+'; height: '+o3_height+o3_heightunit+';"><tr><td valign="TOP"><font style="font-family: '+o3_textfont+'; color: '+o3_textcolor+'; font-size: '+o3_textsize+o3_textsizeunit+'; text-decoration: '+o3_textdecoration+'; font-weight: '+o3_textweight+'; font-style:'+o3_textstyle+'">'+text+'</font></td></tr></table></td></tr></table>';
+    set_background("");
+
+    return txt;
 }
 
 // Sets the background picture, padding and lots more. :)
 function ol_content_background_cssstyle(text, picture, hasfullhtml) {
-	if (hasfullhtml) {
-		txt = text;
-	} else {
-		var pU, hU, wU;
-		pU = (o3_padunit == '%' ? '%' : '');
-		hU = (o3_heightunit == '%' ? '%' : '');
-		wU = (o3_widthunit == '%' ? '%' : '');
-		txt = '<table width="'+o3_width+wu+'" border="0" cellpadding="0" cellspacing="0" height="'+o3_height+hu+'"><tr><td colspan="3" height="'+o3_padyt+pu+'"></td></tr><tr><td width="'+o3_padxl+pu+'"></td><td valign="TOP" width="'+(o3_width-o3_padxl-o3_padxr)+pu+'"><font style="font-family: '+o3_textfont+'; color: '+o3_textcolor+'; font-size: '+o3_textsize+o3_textsizeunit+';">'+text+'</font></td><td width="'+o3_padxr+pu+'"></td></tr><tr><td colspan="3" height="'+o3_padyb+pu+'"></td></tr></table>';
-	}
+    if (hasfullhtml) {
+        txt = text;
+    } else {
+        var pU, hU, wU;
+        pU = (o3_padunit == '%' ? '%' : '');
+        hU = (o3_heightunit == '%' ? '%' : '');
+        wU = (o3_widthunit == '%' ? '%' : '');
+        txt = '<table width="'+o3_width+wu+'" border="0" cellpadding="0" cellspacing="0" height="'+o3_height+hu+'"><tr><td colspan="3" height="'+o3_padyt+pu+'"></td></tr><tr><td width="'+o3_padxl+pu+'"></td><td valign="TOP" width="'+(o3_width-o3_padxl-o3_padxr)+pu+'"><font style="font-family: '+o3_textfont+'; color: '+o3_textcolor+'; font-size: '+o3_textsize+o3_textsizeunit+';">'+text+'</font></td><td width="'+o3_padxr+pu+'"></td></tr><tr><td colspan="3" height="'+o3_padyb+pu+'"></td></tr></table>';
+    }
 
-	set_background(picture);
+    set_background(picture);
 
-	return txt;
+    return txt;
 }
 
 ////////

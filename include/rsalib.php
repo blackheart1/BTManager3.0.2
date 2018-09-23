@@ -1,10 +1,11 @@
 <?php
+
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -12,17 +13,19 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File rsalib.php 2018-02-18 14:32:00 joeroberts
+** File include/rsalib.php 2018-09-22 00:00:00 Thor
 **
 ** CHANGES
 **
-** EXAMPLE 26-04-13 - Added Auto Ban
+** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
 **/
-if (!defined('IN_PMBT'))
+
+if (!defined('IN_BTM'))
 {
-	include_once './../security.php';
-	die ();
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
+    die ("Error 404 - Page Not Found");
 }
+
 class RSA {
         var $n; //modulo
         var $e; //public
@@ -48,10 +51,10 @@ class RSA {
                         return false;
                 }
         }
-	function RSA($n = 0, $e = 0, $d = 0)
-	{
-		$this->__construct($n, $e, $d);
-	}
+    function RSA($n = 0, $e = 0, $d = 0)
+    {
+        $this->__construct($n, $e, $d);
+    }
 
         /*
         CONVERSIONS STRING-BINARY
@@ -168,4 +171,5 @@ class RSA {
                 return $resultd;
         }
 }
+
 ?>

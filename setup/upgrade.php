@@ -1,10 +1,11 @@
 <?php
+
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -12,27 +13,34 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File upgrade.php 2018-08-18 10:18:00 Black_Heart
+** File upgrade.php 2018-09-21 00:00:00 Thor
 **
 ** CHANGES
 **
-** 18-08-18 - Created new file Black_heart
+** 2018-09-21 - Updated Masthead, Github, !defined('IN_BTM')
 **/
+
 if (!ini_get('display_errors'))
 {
     @ini_set('error_reporting', E_ALL);
     @ini_set('display_errors', 1);
 }
-define("IN_PMBT",true);
+
+define("IN_BTM",true);
 define('INSETUP',true);
 define('PMBT_ROOT',str_replace('setup','',__DIR__));
+
 set_include_path(PMBT_ROOT);
 ini_set('include_path',PMBT_ROOT);
+
 require_once("include/configdata.php");
 require_once("include/db/database.php");
+
 $phpEx = 'php';
 $data = '';
+
 $db = new sql_db($db_host, $db_user, $db_pass, $db_name, $db_persistency) or die("Class error");
+
 if(!$db->db_connect_id) {
         die("d14:failure reason26:Cannot connect to databasee");
 }
@@ -93,7 +101,7 @@ function backup_tables($tables = '*',$struc=false,$data=false,$name='backup')
 	{
 		$tables = is_array($tables) ? $tables : explode(',',$tables);
 	}
-	
+
 	//cycle through
 	foreach($tables as $table)
 	{
@@ -102,14 +110,14 @@ function backup_tables($tables = '*',$struc=false,$data=false,$name='backup')
 		if($struc)$return.= 'DROP TABLE '.$table.';';
 		$row2 = $db->sql_fetchrow($db->sql_query('SHOW CREATE TABLE '.$table));
 		if($struc)$return.= "\n\n".$row2['Create Table'].";\n\n";
-		
+
 		if($data){
-		for ($i = 0; $i < $num_fields; $i++) 
+		for ($i = 0; $i < $num_fields; $i++)
 		{
 			while($row = $db->fetch_array($result))
 			{
 				$return.= 'INSERT INTO '.$table.' VALUES(';
-				for($j=0; $j<$num_fields; $j++) 
+				for($j=0; $j<$num_fields; $j++)
 				{
 					$row[$j] = addslashes($row[$j]);
 					$row[$j] = preg_replace("/\\n/","\\n",$row[$j]);
@@ -135,7 +143,7 @@ function backup_tables($tables = '*',$struc=false,$data=false,$name='backup')
 	{
 		fclose($f);
 		return $name;
-	} 
+	}
 		return false;
 }
 function stepimage() {
@@ -189,7 +197,7 @@ if(!$auth->acl_get('a_server'))
 		'MESSAGE'   => $user->lang['LOGIN_SITE'],
 	));
 	$handle = 'message_body';
-	
+
 	$template->display($handle);
 	die();
 }

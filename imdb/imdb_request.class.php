@@ -1,4 +1,5 @@
 <?php
+
  #############################################################################
  # IMDBPHP                              (c) Giorgos Giagas & Itzchak Rehberg #
  # written by Giorgos Giagas                                                 #
@@ -21,14 +22,14 @@ if ( $PEAR ) { // Use the HTTP_Request class from the PEAR project.
       }
       $this->_allowRedirects = false;
       $this->addHeader("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
-    }	
- 
-	/*To not break everyone using your library, you have to keep backwards compatibility: 
-	Add the PHP5-style constructor, but keep the PHP4-style one. */
-	function IMDB_Request($url)
-	{
-		self::__construct($url);
-	}
+    }
+
+    /*To not break everyone using your library, you have to keep backwards compatibility:
+    Add the PHP5-style constructor, but keep the PHP4-style one. */
+    function IMDB_Request($url)
+    {
+        self::__construct($url);
+    }
  }
 } else { // Use the browseremu class
   require_once (dirname(__FILE__)."/browseremulator.class.php");
@@ -50,12 +51,12 @@ if ( $PEAR ) { // Use the HTTP_Request class from the PEAR project.
       $this->urltoopen = $url;
     }
 
-	/*To not break everyone using your library, you have to keep backwards compatibility: 
-	Add the PHP5-style constructor, but keep the PHP4-style one. */
-	function IMDB_Request($url = '')
-	{
-		self::__construct($url);
-	}
+    /*To not break everyone using your library, you have to keep backwards compatibility:
+    Add the PHP5-style constructor, but keep the PHP4-style one. */
+    function IMDB_Request($url = '')
+    {
+        self::__construct($url);
+    }
     /** Send a request to the IMDB site
      * @method sendRequest
      */
@@ -67,7 +68,7 @@ if ( $PEAR ) { // Use the HTTP_Request class from the PEAR project.
      * @return string page
      */
     function getResponseBody(){
-		$page = getUrlContent($this->urltoopen);
+        $page = getUrlContent($this->urltoopen);
      /* $page = "";
       while (!feof ($this->fpopened)) {
         $page .= fread ($this->fpopened, 1024);
@@ -96,7 +97,7 @@ if ( $PEAR ) { // Use the HTTP_Request class from the PEAR project.
       }
     }
   }
-}		
+}
 function getUrlContent($url){
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $url);
@@ -109,4 +110,5 @@ $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 curl_close($ch);
 return ($httpcode>=200 && $httpcode<300) ? $data : false;
 }
+
 ?>

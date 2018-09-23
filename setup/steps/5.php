@@ -1,28 +1,29 @@
 <?php
+
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
 ** Formerly Known As phpMyBitTorrent
 ** Created By Antonio Anzivino (aka DJ Echelon)
-** And Joe Robertson (aka joeroberts/Black_Heart)
-** Project Leaders: Black_Heart, Thor.
-** File 5.php 2018-02-18 10:18:00 Black_Heart
+** And Joe Robertson (aka joeroberts)
+** Project Leaders: Black_heart, Thor.
+** File steps/5.php 2018-09-21 00:00:00 Thor
 **
 ** CHANGES
 **
-** EXAMPLE 26-04-13 - Added Auto Ban
+** 2018-09-21 - Updated Masthead, Github, !defined('IN_BTM')
 **/
-
 
 require_once("../include/configdata.php");
 require_once("udl/database.php");
-require_once'../include/textarea.php';
+require_once("../include/textarea.php");
+
 echo"<script type=\"text/javascript\" src=\"../bbcode.js\"></script>";
 
 $db = new sql_db($db_host, $db_user, $db_pass, $db_name, $db_persistency);
@@ -73,7 +74,7 @@ function drawRow($param, $type, $options = NULL) {
         } elseif ($type == "textarea") {
                 echo $textarea->quick_bbcode('formdata',"sub_".$param);
                 echo $textarea->input("sub_".$param,'center','2','10','60',$cfgrow[$param]);
-				echo "</table>\n";
+                echo "</table>\n";
                 echo "</p>";
 
 
@@ -128,7 +129,7 @@ function drawConfig() {
         unset($themes);
         drawRow("welcome_message","textarea");
         drawRow("announce_text","text");
-		drawRow("announce_url","text3");
+        drawRow("announce_url","text3");
         drawRow("allow_html","checkbox");
         drawRow("allow_magnet","checkbox");
         drawRow("rewrite_engine","checkbox");
@@ -159,31 +160,31 @@ function drawConfig() {
         drawRow("max_share_size","text");
         drawRow("global_min_ratio","text");
         drawRow("autoscrape","checkbox");
-		drawrow("upload_dead","checkbox");
+        drawrow("upload_dead","checkbox");
         drawRow("min_num_seed_e","text");
         drawRow("min_size_seed_e","text");
         drawRow("minupload_file_size","text");
         drawRow("allow_backup_tracker","checkbox");
         drawRow("stealthmode","checkbox");
-		drawRow("invites_open","checkbox");
+        drawRow("invites_open","checkbox");
         drawRow("invite_only","checkbox");
         drawRow("max_members","text");
         drawRow("auto_clean","text");
         drawRow("free_dl","checkbox");
         drawRow("addprivate","checkbox");
-		drawRow("wait_time","checkbox");
-		drawRow("GIGSA","text");
-		drawRow("RATIOA","text");
-		drawRow("WAITA","text");
-		drawRow("GIGSB","text");
-		drawRow("RATIOB","text");
-		drawRow("WAITB","text");
-		drawRow("GIGSC","text");
-		drawRow("RATIOC","text");
-		drawRow("WAITC","text");
-		drawRow("GIGSD","text");
-		drawRow("RATIOD","text");
-		drawRow("WAITD","text");
+        drawRow("wait_time","checkbox");
+        drawRow("GIGSA","text");
+        drawRow("RATIOA","text");
+        drawRow("WAITA","text");
+        drawRow("GIGSB","text");
+        drawRow("RATIOB","text");
+        drawRow("WAITB","text");
+        drawRow("GIGSC","text");
+        drawRow("RATIOC","text");
+        drawRow("WAITC","text");
+        drawRow("GIGSD","text");
+        drawRow("RATIOD","text");
+        drawRow("WAITD","text");
 
         echo "</table>\n\n";
 }
@@ -195,7 +196,7 @@ if (!isset($postback)) { //Set default parameters
         if (preg_match("/(.*)\/setup\/index\.php/i",$pmbturl["path"],$pmreg)) $pmpath = $pmreg[1];
         else $pmpath = "/";
 
-        $cfgrow["sitename"] = "phpMyBitTorrent";
+        $cfgrow["sitename"] = "BT.Manager";
         $cfgrow["siteurl"] = $pmbturl["scheme"]."://".$pmbturl["host"].$pmpath;
         $cfgrow["cookiedomain"] = $pmbturl["host"];
         $cfgrow["cookiepath"] = $pmpath;
@@ -207,7 +208,7 @@ if (!isset($postback)) { //Set default parameters
         $cfgrow["announce_text"] = "";
         $cfgrow["announce_url"] = "";
         $cfgrow["allow_html"] = true;
-		$cfgrow["allow_magnet"] = true;
+        $cfgrow["allow_magnet"] = true;
         $cfgrow["rewrite_engine"] = false;
         $cfgrow["torrent_prefix"] = "";
         $cfgrow["torrent_per_page"] = 10;
@@ -241,9 +242,9 @@ if (!isset($postback)) { //Set default parameters
         $cfgrow["minupload_file_size"] = 0;
         $cfgrow["allow_backup_tracker"] = true;
         $cfgrow["stealthmode"] = false;
-		$cfgrow["upload_dead"] = false;
+        $cfgrow["upload_dead"] = false;
         $cfgrow["version"] = _VERSION;
-		$cfgrow["invites_open"] = false;
+        $cfgrow["invites_open"] = false;
         $cfgrow["invite_only"] = false;
         $cfgrow["max_members"] = 50000;
         $cfgrow["auto_clean"] = 600;
@@ -276,7 +277,7 @@ if (!isset($postback)) { //Set default parameters
         $cfgrow["announce_text"] = $sub_announce_text;
         $cfgrow["announce_url"] = $announce_url;
         $cfgrow["allow_html"] = (isset($sub_allow_html) AND $sub_allow_html == "true") ? true : false;
-		$cfgrow["allow_magnet"] = (isset($sub_allow_magnet) AND $sub_allow_magnet == "true") ? true : false;
+        $cfgrow["allow_magnet"] = (isset($sub_allow_magnet) AND $sub_allow_magnet == "true") ? true : false;
         $cfgrow["rewrite_engine"] = (isset($sub_rewrite_engine) AND $sub_rewrite_engine == "true") ? true : false;
         $cfgrow["torrent_prefix"] = $sub_torrent_prefix;
         $cfgrow["torrent_per_page"] = $sub_torrent_per_page;
@@ -310,8 +311,8 @@ if (!isset($postback)) { //Set default parameters
         $cfgrow["minupload_file_size"] = $sub_minupload_file_size;
         $cfgrow["allow_backup_tracker"] = (isset($sub_allow_backup_tracker) AND $sub_allow_backup_tracker == "true") ? true : false;
         $cfgrow["stealthmode"] = (isset($sub_stealthmode) AND $sub_stealthmode == "true") ? true : false;
-		$cfgrow["upload_dead"] = (isset($sub_upload_dead) And $sub_upload_dead == "true") ? true : false;
-		$cfgrow["invites_open"] = (isset($sub_invites_open) And $sub_invites_open == "true") ? true : false;
+        $cfgrow["upload_dead"] = (isset($sub_upload_dead) And $sub_upload_dead == "true") ? true : false;
+        $cfgrow["invites_open"] = (isset($sub_invites_open) And $sub_invites_open == "true") ? true : false;
         $cfgrow["invite_only"] = (isset($sub_invite_only) And $sub_invite_only == "true") ? true : false;
         $cfgrow["max_members"] = $sub_max_members;
         $cfgrow["auto_clean"] = $sub_auto_clean;
@@ -338,22 +339,22 @@ if (isset($postback)) {
         //First I create the two SQL arrays
         $params = Array();
         $values = Array();
-		$vallad_ann = array();
-		$announce_url = explode("\n", $sub_announce_url);
-		foreach($announce_url as $a)
-		{
-			if(is_url(strtolower($a)))array_push($vallad_ann,$a);
-		}
+        $vallad_ann = array();
+        $announce_url = explode("\n", $sub_announce_url);
+        foreach($announce_url as $a)
+        {
+            if(is_url(strtolower($a)))array_push($vallad_ann,$a);
+        }
 
         //Then I accurately check each parameter before inserting it in SQL statement
         //Some parameters that must be numeric have to be checked with an if clause because intval() function truncates to max integer
-		array_push($params,"announce_url"); array_push($values,serialize($vallad_ann));
+        array_push($params,"announce_url"); array_push($values,serialize($vallad_ann));
         array_push($params,"sitename"); array_push($values,$db->sql_escape($sub_sitename));
         if (is_url($sub_siteurl)) { array_push($params,"siteurl"); array_push($values,$db->sql_escape($sub_siteurl)); }
         array_push($params,"cookiedomain"); array_push($values,$sub_cookiedomain);
-		$cookiedomain = $sub_cookiedomain;
+        $cookiedomain = $sub_cookiedomain;
         if (preg_match('/^\/.*/', $sub_cookiepath)) { array_push($params,"cookiepath"); array_push($values,$db->sql_escape($sub_cookiepath)); }
-		$cookiepath = $sub_cookiedomain;
+        $cookiepath = $sub_cookiedomain;
         array_push($params,"sourcedir"); array_push($values,$db->sql_escape($sub_sourcedir));
         if (is_email($sub_admin_email)) { array_push($params,"admin_email"); array_push($values,$db->sql_escape($sub_admin_email)); }
         if (file_exists("../language/common/".$sub_language.".php")) { array_push($params,"language"); array_push($values,$sub_language); }
@@ -361,7 +362,7 @@ if (isset($postback)) {
         array_push($params,"welcome_message"); array_push($values,$db->sql_escape($sub_welcome_message));
         array_push($params,"announce_text"); array_push($values,$db->sql_escape($sub_announce_text));
         if ($sub_allow_html != "true") $sub_allow_html = "false"; array_push($params,"allow_html"); array_push($values,$sub_allow_html);
-		if ($sub_allow_magnet != "true") $sub_allow_magnet = "false"; array_push($params,"allow_magnet"); array_push($values,($sub_allow_magnet == 'true')? '1' : '0');
+        if ($sub_allow_magnet != "true") $sub_allow_magnet = "false"; array_push($params,"allow_magnet"); array_push($values,($sub_allow_magnet == 'true')? '1' : '0');
         if (!isset($sub_rewrite_engine) OR $sub_rewrite_engine != "true") $sub_rewrite_engine = "false"; array_push($params,"rewrite_engine"); array_push($values,$sub_rewrite_engine);
         array_push($params,"torrent_prefix"); array_push($values,$sub_torrent_prefix);
         array_push($params,"torrent_per_page"); array_push($values,intval($sub_torrent_per_page));
@@ -443,7 +444,7 @@ if (isset($postback)) {
 
                 echo "<p><input type=\"submit\" name=\"postback\" value=\""._nextstep."\" /><input type=\"reset\" value=\""._reset."\" /></p>\n";
         } else {
-			$db->sql_query('UPDATE '.$db_prefix.'_cache_con SET value = \'' . $sub_sourcedir . 'cache\' WHERE name = \'cache_dir\'');
+            $db->sql_query('UPDATE '.$db_prefix.'_cache_con SET value = \'' . $sub_sourcedir . 'cache\' WHERE name = \'cache_dir\'');
                 echo "<input type=\"hidden\" name=\"cookiepath\" value=\"{$cookiepath}\" />\n";
                 echo "<input type=\"hidden\" name=\"cookiedomain\" value=\"{$cookiedomain}\" />\n";
                 echo "<input type=\"hidden\" name=\"step\" value=\"6\" />\n";
@@ -465,4 +466,5 @@ if (isset($postback)) {
 
 //$db->sql_query("",END_TRANSACTION);
 $db->sql_close();
+
 ?>

@@ -2,10 +2,10 @@
 
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -13,20 +13,21 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File polls.php 2018-07-17 07:28:00 Thor
+** File polls.php 2018-09-22 00:00:00 Thor
 **
 ** CHANGES
 **
-** 2018-07-17 - Added Language
+** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
 **/
 
-if (defined('IN_PMBT'))
+if (defined('IN_BTM'))
 {
-    die ("You can't include this file");
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
+    die ("Error 404 - Page Not Found");
 }
 else
 {
-    define('IN_PMBT', true);
+    define('IN_BTM', true);
 }
 
 require_once("common.php");
@@ -154,7 +155,7 @@ while ($poll = $db->sql_fetchrow( $polls))
 
         // Now os is an Array like this:
         if ($poll['sort'] == "yes")
-    	usort($os, 'srt');
+        usort($os, 'srt');
             $i = 0;
 
         while ($a = $os[$i])

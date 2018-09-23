@@ -1,10 +1,11 @@
 <?php
+
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -12,17 +13,19 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File functions.php 2018-02-20 14:32:00 Black_Heart
+** File functions.php 2018-09-21 00:00:00 Thor
 **
 ** CHANGES
 **
-** EXAMPLE 26-04-13 - Added Auto Ban
+** 2018-09-21 - Updated Masthead, Github, !defined('IN_BTM')
 **/
-if (!defined('IN_PMBT'))
+
+if (!defined('IN_BTM'))
 {
-	include_once 'security.php';
-	die ("You can't access this file directly");
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
+    die ("Error 404 - Page Not Found");
 }
+
 /**
 * Generate back link for acp pages
 */
@@ -54,11 +57,11 @@ function tidy_database()
 	$db->sql_freeresult($result);
 
 	// Delete those rows from the acl tables not having listed the forums above
-	$sql = 'DELETE FROM ' . $db_prefix . '_acl_groups 
+	$sql = 'DELETE FROM ' . $db_prefix . '_acl_groups
 		WHERE ' . $db->sql_in_set('forum_id', $forum_ids, true);
 	$db->sql_query($sql);
 
-	$sql = 'DELETE FROM ' . $db_prefix . '_acl_users 
+	$sql = 'DELETE FROM ' . $db_prefix . '_acl_users
 		WHERE ' . $db->sql_in_set('forum_id', $forum_ids, true);
 	$db->sql_query($sql);
 	$local_query = "SHOW TABLE STATUS LIKE '".$db_prefix."_%';";
@@ -74,7 +77,7 @@ function tidy_database()
 	}
 	$db->sql_freeresult($result);
 	$db->sql_query("UPDATE ".$db_prefix."_torrents SET seeders = 0, leechers = 0, tot_peer = 0, speed = 0 WHERE tracker IS NULL;");
-	
+
 	$sql = "DELETE FROM ".$db_prefix."_peers WHERE UNIX_TIMESTAMP(last_action) < UNIX_TIMESTAMP(NOW()) - ".intval($announce_interval).";";
 	$res = $db->sql_query($sql) or btsqlerror($sql);
 	$sql = "SELECT count(*) as tot, torrent, seeder, (SUM(download_speed)+SUM(upload_speed))/2 as speed FROM ".$db_prefix."_peers GROUP BY torrent, seeder;";
@@ -84,7 +87,7 @@ function tidy_database()
 			else $sql = "UPDATE ".$db_prefix."_torrents SET leechers='".$row["tot"]."', speed = speed + '".intval($row["speed"])."' WHERE id='".$row["torrent"]."'; ";
 			$db->sql_query($sql);
 	}
-	
+
 	$db->sql_query("UPDATE ".$db_prefix."_torrents SET tot_peer = seeders + leechers;");
 	$db->sql_query("UPDATE ".$db_prefix."_snatched SET seeder = 'no';");
 	$sql = "SELECT uid, torrent FROM ".$db_prefix."_peers WHERE seeder = 'yes';";
@@ -963,7 +966,7 @@ function view_log($mode, &$log, &$log_count, $limit = 0, $offset = 0, $forum_id 
 	$sql = "SELECT l.*,UNIX_TIMESTAMP(l.datetime) AS datetime, u.username, u.clean_username, u.can_do , b.group_colour AS user_colour
 		FROM " . $db_prefix . "_log l, " . $db_prefix . "_users u, " . $db_prefix . "_level_settings b
 		WHERE l.log_type = $log_type
-			AND u.id = l.userid 
+			AND u.id = l.userid
 			AND b.group_id = u.can_do
 			" . (($limit_days) ? "AND UNIX_TIMESTAMP(l.datetime) >= $limit_days" : '') . "
 			$sql_forum
@@ -1134,7 +1137,7 @@ function view_log($mode, &$log, &$log_count, $limit = 0, $offset = 0, $forum_id 
 	$sql = 'SELECT COUNT(l.event) AS total_entries
 		FROM ' . $db_prefix . "_log l
 		WHERE l.log_type = $log_type
-			" . (($limit_days) ? "AND UNIX_TIMESTAMP(l.datetime) >= $limit_days" : '') . " 
+			" . (($limit_days) ? "AND UNIX_TIMESTAMP(l.datetime) >= $limit_days" : '') . "
 			$sql_forum";
 			//die($sql);
 	$result = $db->sql_query($sql) or btsqlerror($sql);
@@ -1707,7 +1710,7 @@ function num_files($directory='.'){
         closedir($handle);
         return $numFiles;
     }
-} 
+}
 function esc_magic($x) {
         if (!get_magic_quotes_gpc()) return escape($x);
         else return $x;
@@ -2148,7 +2151,7 @@ function group_select_options_id($group_ids, $exclude_ids = false, $manage_found
 {
 	global $db, $user, $config, $db_prefix;
 	$sql = 'SELECT group_id, group_name, group_founder_manage FROM `' . $db_prefix . '_level_settings` ';
-	$result = $db->sql_query($sql) or btsqlerror($sql); 
+	$result = $db->sql_query($sql) or btsqlerror($sql);
 	$s_group_options = '';
 	while ($row = $db->sql_fetchrow($result))
 	{
@@ -2165,7 +2168,7 @@ function group_select_options($group_id, $exclude_ids = false, $manage_founder =
 {
 	global $db, $user, $config, $db_prefix;
 	$sql = 'SELECT level, name FROM `' . $db_prefix . '_levels` ';
-	$result = $db->sql_query($sql) or btsqlerror($sql); 
+	$result = $db->sql_query($sql) or btsqlerror($sql);
 	$s_group_options = '';
 	while ($row = $db->sql_fetchrow($result))
 	{
@@ -2180,8 +2183,8 @@ function group_select_options($group_id, $exclude_ids = false, $manage_founder =
 function get_acc_edit_rights()
 {
 	global $db, $db_prefix, $user;
-	$sql = "SELECT COLUMN_NAME 
-		FROM INFORMATION_SCHEMA.Columns 
+	$sql = "SELECT COLUMN_NAME
+		FROM INFORMATION_SCHEMA.Columns
 		WHERE TABLE_NAME = '" . $db_prefix . "_levels'
 		AND COLUMN_NAME NOT IN ('level','name','group_id','group_type','color','group_desc')";
 	$result = $db->sql_query($sql) or btsqlerror($sql);
@@ -3707,11 +3710,11 @@ function view_warned_users(&$users, &$user_count, $limit = 0, $offset = 0, $limi
 
 	$sql = 'SELECT id, username, can_do, l.group_colour AS user_colour, user_warnings, user_last_warning
 		FROM ' . $db_prefix . '_users , ' . $db_prefix . '_level_settings l
-		WHERE 
-		l.group_id = can_do 
+		WHERE
+		l.group_id = can_do
 		AND user_warnings > 0
 		' . (($limit_days) ? "AND user_last_warning >= $limit_days" : '') . "
-		ORDER BY $sort_by 
+		ORDER BY $sort_by
 		LIMIT $offset, $limit";
 		//die($sql);
 	$result = $db->sql_query($sql);
@@ -3956,14 +3959,15 @@ function validateURL($url)
     $regex .= "(\:[0-9])?"; // Port
     $regex .= "(\/([a-z0-9+\$_-]\.?)+)*\/?"; // Path
     $regex .= "(\?[a-z+&\$_.-][a-z0-9;:@&%=+\/\$_.-]*)?"; // GET Query
-    $regex .= "(#[a-z_.-][a-z0-9+\$_.-]*)?"; // Anchor 
-	if(preg_match("/^$regex$/", $url)) 
-	{ 
+    $regex .= "(#[a-z_.-][a-z0-9+\$_.-]*)?"; // Anchor
+	if(preg_match("/^$regex$/", $url))
+	{
 		return true;
-	} 
+	}
 	else
 	{
 		return false;
 	}
 }
+
 ?>

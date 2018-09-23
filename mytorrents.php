@@ -1,10 +1,11 @@
 <?php
+
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -12,19 +13,21 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File mytorrents.php 2018-02-17 14:32:00 Black_Heart
+** File mytorrents.php 2018-09-22 00:00:00 Thor
 **
 ** CHANGES
 **
-** EXAMPLE 26-04-13 - Added Auto Ban
+** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
 **/
-if (defined('IN_PMBT'))
+
+if (defined('IN_BTM'))
 {
-	die ("You can't include this file");
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
+    die ("Error 404 - Page Not Found");
 }
 else
 {
-	define("IN_PMBT",true);
+    define("IN_BTM",true);
 }
 require_once("common.php");
 require_once("include/torrent_functions.php");
@@ -33,80 +36,80 @@ include_once('include/function_messenger.php');
 include_once("include/utf/utf_tools.php");
 $user->set_lang('my_torrents',$user->ulanguage);
 $template = new Template();
-$op		= request_var('op', '');
+$op     = request_var('op', '');
 set_site_var($user->lang['MY_TORRENTS']);
 if (!$user->user)
 {
-	loginrequired("user");
+    loginrequired("user");
 }
 switch ($op) {
         case "savetorrentgeneral": {
-				$id	= request_var('id', '0');
-				$private	= request_var('private', '');
-				$minratio	= request_var('minratio', '');
+                $id = request_var('id', '0');
+                $private    = request_var('private', '');
+                $minratio   = request_var('minratio', '');
                 if (!is_numeric($id))
-					{
-						$template->assign_vars(array(
-							'S_ERROR'			=> true,
-							'S_FORWARD'			=> false,
-							'TITTLE_M'			=> $user->lang['MY_TORRENTS'],
-							'MESSAGE'			=> $user->lang['ERROR_ENTERING_DATA'],
-						));
-						echo $template->fetch('message_body.html');
-						close_out();
-					}
+                    {
+                        $template->assign_vars(array(
+                            'S_ERROR'           => true,
+                            'S_FORWARD'         => false,
+                            'TITTLE_M'          => $user->lang['MY_TORRENTS'],
+                            'MESSAGE'           => $user->lang['ERROR_ENTERING_DATA'],
+                        ));
+                        echo $template->fetch('message_body.html');
+                        close_out();
+                    }
                 if (!isset($private) OR $private != "true") $private = "false";
                 if (!isset($minratio) OR !preg_match("/^[0-1]\.[0-9]0$/",$minratio))
-					{
-						$template->assign_vars(array(
-							'S_ERROR'			=> true,
-							'S_FORWARD'			=> false,
-							'TITTLE_M'			=> $user->lang['MY_TORRENTS'],
-							'MESSAGE'			=> $user->lang['ERROR_ENTERING_DATA'],
-						));
-						echo $template->fetch('message_body.html');
-						close_out();
-					}
+                    {
+                        $template->assign_vars(array(
+                            'S_ERROR'           => true,
+                            'S_FORWARD'         => false,
+                            'TITTLE_M'          => $user->lang['MY_TORRENTS'],
+                            'MESSAGE'           => $user->lang['ERROR_ENTERING_DATA'],
+                        ));
+                        echo $template->fetch('message_body.html');
+                        close_out();
+                    }
                 $sql = "UPDATE ".$db_prefix."_torrents SET private = '".$private."', min_ratio = '".$minratio."' WHERE id = '".$id."';";
                 $db->sql_query($sql) or btsqlerror($sql);
                 $op = "displaytorrent";
-				meta_refresh(5, $siteurl . '/mytorrents.php?op=displaytorrent&id=' . $id);
-				$template->assign_vars(array(
-						'S_SUCCESS'				=> true,
-						'TITTLE_M'				=>	 $user->lang['SUCCESS'],
-						'MESSAGE'				=>	 $user->lang['PRIVAZY_UPDATED'] . back_link($siteurl . '/mytorrents.php?op=displaytorrent&id='.$id),
-				));
-						echo $template->fetch('message_body.html');
-						close_out();
+                meta_refresh(5, $siteurl . '/mytorrents.php?op=displaytorrent&id=' . $id);
+                $template->assign_vars(array(
+                        'S_SUCCESS'             => true,
+                        'TITTLE_M'              =>   $user->lang['SUCCESS'],
+                        'MESSAGE'               =>   $user->lang['PRIVAZY_UPDATED'] . back_link($siteurl . '/mytorrents.php?op=displaytorrent&id='.$id),
+                ));
+                        echo $template->fetch('message_body.html');
+                        close_out();
         }
         case "savetorrent": {
-				$id	= request_var('id', '0');
+                $id = request_var('id', '0');
                 if (!is_numeric($id))
-					{
-						$template->assign_vars(array(
-							'S_ERROR'			=> true,
-							'S_FORWARD'			=> false,
-							'TITTLE_M'			=> $user->lang['MY_TORRENTS'],
-							'MESSAGE'			=> $user->lang['ERROR_ENTERING_DATA'],
-						));
-						echo $template->fetch('message_body.html');
-						close_out();
-					}
+                    {
+                        $template->assign_vars(array(
+                            'S_ERROR'           => true,
+                            'S_FORWARD'         => false,
+                            'TITTLE_M'          => $user->lang['MY_TORRENTS'],
+                            'MESSAGE'           => $user->lang['ERROR_ENTERING_DATA'],
+                        ));
+                        echo $template->fetch('message_body.html');
+                        close_out();
+                    }
                 $notifications = New MailingList();
-				$auth_users	= request_var('auth_users', '');
+                $auth_users = request_var('auth_users', '');
                 $auth_users = explode(",",$auth_users);
                 foreach ($auth_users as $auth) {
                         if (!is_numeric($auth))
-						{
-							$template->assign_vars(array(
-								'S_ERROR'			=> true,
-								'S_FORWARD'			=> false,
-								'TITTLE_M'			=> $user->lang['MY_TORRENTS'],
-								'MESSAGE'			=> $user->lang['ERROR_ENTERING_DATA'],
-							));
-							echo $template->fetch('message_body.html');
-							close_out();
-						}
+                        {
+                            $template->assign_vars(array(
+                                'S_ERROR'           => true,
+                                'S_FORWARD'         => false,
+                                'TITTLE_M'          => $user->lang['MY_TORRENTS'],
+                                'MESSAGE'           => $user->lang['ERROR_ENTERING_DATA'],
+                            ));
+                            echo $template->fetch('message_body.html');
+                            close_out();
+                        }
                         $uservar = "user".$auth;
                         switch ($$uservar) {
                                 case "grant": {
@@ -116,48 +119,48 @@ switch ($op) {
                                                 $sql = "UPDATE ".$db_prefix."_privacy_file SET status = 'granted' WHERE master = '".$user->id."' AND slave = '".$auth."' AND torrent = '".$id."';";
                                                 $db->sql_query($sql) or btsqlerror($sql);
                                                 $gr_sql = "SELECT U.email, U.language, U.username, T.name, T.id FROM ".$db_prefix."_users U LEFT JOIN ".$db_prefix."_torrents T ON T.id = '".$id."' WHERE U.id = ".$auth.";";
-												$gr_res = $db->sql_query($gr_sql);
-												list ($gr_email, $gr_language, $gr_name, $gr_tname, $gr_tid) = $db->fetch_array($gr_res);
-												if (!$gr_language OR !file_exists("language/email/".$gr_language."/authgrant.txt")) $lang_email = $language;
-												else $lang_email = $gr_language;
-												$messenger = new messenger();
-												$messenger->template('authgrant', $lang_email);
-												$messenger->to($gr_email, $gr_name);
-												$messenger->assign_vars(array(
-															'SUB_JECT'				=>	sprintf($user->lang['AUTH_EMAIL_SUB'],$sitename),
-															'GR_TNAME'				=>	$gr_name,
-															'GRANTER'				=>	$user->name,
-															'GR_NAME'				=>	$gr_name,
-															'GR_TID'				=>	$gr_tid,
-															));
-												$messenger->send(0);
-												$messenger->save_queue();
+                                                $gr_res = $db->sql_query($gr_sql);
+                                                list ($gr_email, $gr_language, $gr_name, $gr_tname, $gr_tid) = $db->fetch_array($gr_res);
+                                                if (!$gr_language OR !file_exists("language/email/".$gr_language."/authgrant.txt")) $lang_email = $language;
+                                                else $lang_email = $gr_language;
+                                                $messenger = new messenger();
+                                                $messenger->template('authgrant', $lang_email);
+                                                $messenger->to($gr_email, $gr_name);
+                                                $messenger->assign_vars(array(
+                                                            'SUB_JECT'              =>  sprintf($user->lang['AUTH_EMAIL_SUB'],$sitename),
+                                                            'GR_TNAME'              =>  $gr_name,
+                                                            'GRANTER'               =>  $user->name,
+                                                            'GR_NAME'               =>  $gr_name,
+                                                            'GR_TID'                =>  $gr_tid,
+                                                            ));
+                                                $messenger->send(0);
+                                                $messenger->save_queue();
                                         }
                                         break;
 
                                 }
                                 case "deny": {
-												$sql = "SELECT status FROM ".$db_prefix."_privacy_file WHERE master = '".$user->id."' AND slave = '".$auth."' AND torrent = '".$id."';";
-												$row = $db->sql_fetchrow($db->sql_query($sql));
-												if ($row["status"] != "denied") {
+                                                $sql = "SELECT status FROM ".$db_prefix."_privacy_file WHERE master = '".$user->id."' AND slave = '".$auth."' AND torrent = '".$id."';";
+                                                $row = $db->sql_fetchrow($db->sql_query($sql));
+                                                if ($row["status"] != "denied") {
                                                 $sql = "UPDATE ".$db_prefix."_privacy_file SET status = 'denied' WHERE master = '".$user->id."' AND slave = '".$auth."' AND torrent = '".$id."';";
                                                 $db->sql_query($sql) or btsqlerror($sql);
                                                 $gr_sql = "SELECT U.email, U.language, U.username, T.name, T.id FROM ".$db_prefix."_users U LEFT JOIN ".$db_prefix."_torrents T ON T.id = '".$id."' WHERE U.id = ".$auth.";";
-												$gr_res = $db->sql_query($gr_sql);
-												list ($gr_email, $gr_language, $gr_name, $gr_tname, $gr_tid) = $db->fetch_array($gr_res);
-												if (!$gr_language OR !file_exists("language/email/".$gr_language."/authdeny.txt")) $lang_email = $language;
-												else $lang_email = $gr_language;
-												$messenger = new messenger();
-												$messenger->template('authdeny', $lang_email);
-												$messenger->to($gr_email, $gr_name);
-												$messenger->assign_vars(array(
-															'SUB_JECT'				=>	sprintf($user->lang['AUTH_EMAIL_SUB'],$sitename),
-															'GR_TNAME'				=>	$gr_name,
-															'GRANTER'				=>	$user->name,
-															'GR_NAME'				=>	$gr_name,
-															));
-												$messenger->send(0);
-												$messenger->save_queue();
+                                                $gr_res = $db->sql_query($gr_sql);
+                                                list ($gr_email, $gr_language, $gr_name, $gr_tname, $gr_tid) = $db->fetch_array($gr_res);
+                                                if (!$gr_language OR !file_exists("language/email/".$gr_language."/authdeny.txt")) $lang_email = $language;
+                                                else $lang_email = $gr_language;
+                                                $messenger = new messenger();
+                                                $messenger->template('authdeny', $lang_email);
+                                                $messenger->to($gr_email, $gr_name);
+                                                $messenger->assign_vars(array(
+                                                            'SUB_JECT'              =>  sprintf($user->lang['AUTH_EMAIL_SUB'],$sitename),
+                                                            'GR_TNAME'              =>  $gr_name,
+                                                            'GRANTER'               =>  $user->name,
+                                                            'GR_NAME'               =>  $gr_name,
+                                                            ));
+                                                $messenger->send(0);
+                                                $messenger->save_queue();
                                         }
                                         break;
                                 }
@@ -174,20 +177,20 @@ switch ($op) {
                                         $sql = "DELETE FROM ".$db_prefix."_privacy_file WHERE master = '".$user->id."' AND slave = '".$auth."';";
                                         $db->sql_query($sql);
                                         $sql = "SELECT U.email, U.language, U.username FROM ".$db_prefix."_users U WHERE U.id = ".$auth.";";
-										$gr_res = $db->sql_query($gr_sql);
-										list ($gr_email, $gr_language, $gr_name) = $db->fetch_array($gr_res);
-												if (!$gr_language OR !file_exists("language/email/".$gr_language."/authallgrant.txt")) $lang_email = $language;
-												else $lang_email = $gr_language;
-												$messenger = new messenger();
-												$messenger->template('authallgrant', $lang_email);
-												$messenger->to($gr_email, $gr_name);
-												$messenger->assign_vars(array(
-															'SUB_JECT'				=>	sprintf($user->lang['AUTH_EMAIL_SUB'],$sitename),
-															'GR_TNAME'				=>	$gr_name,
-															'GRANTER'				=>	$user->name,
-															));
-												$messenger->send(0);
-												$messenger->save_queue();
+                                        $gr_res = $db->sql_query($gr_sql);
+                                        list ($gr_email, $gr_language, $gr_name) = $db->fetch_array($gr_res);
+                                                if (!$gr_language OR !file_exists("language/email/".$gr_language."/authallgrant.txt")) $lang_email = $language;
+                                                else $lang_email = $gr_language;
+                                                $messenger = new messenger();
+                                                $messenger->template('authallgrant', $lang_email);
+                                                $messenger->to($gr_email, $gr_name);
+                                                $messenger->assign_vars(array(
+                                                            'SUB_JECT'              =>  sprintf($user->lang['AUTH_EMAIL_SUB'],$sitename),
+                                                            'GR_TNAME'              =>  $gr_name,
+                                                            'GRANTER'               =>  $user->name,
+                                                            ));
+                                                $messenger->send(0);
+                                                $messenger->save_queue();
                                         break;
 
                                 }
@@ -204,20 +207,20 @@ switch ($op) {
                                         $sql = "DELETE FROM ".$db_prefix."_privacy_file WHERE master = '".$user->id."' AND slave = '".$auth."';";
                                         $db->sql_query($sql);
                                         $gr_sql = "SELECT U.email, U.language, U.username FROM ".$db_prefix."_users U WHERE U.id = ".$auth.";";
-										$gr_res = $db->sql_query($gr_sql);
-										list ($gr_email, $gr_language, $gr_name) = $db->fetch_array($gr_res);
-												if (!$gr_language OR !file_exists("language/email/".$gr_language."/authalldeny.txt")) $lang_email = $language;
-												else $lang_email = $gr_language;
-												$messenger = new messenger();
-												$messenger->template('authalldeny', $lang_email);
-												$messenger->to($gr_email, $gr_name);
-												$messenger->assign_vars(array(
-															'SUB_JECT'				=>	sprintf($user->lang['AUTH_EMAIL_SUB'],$sitename),
-															'GR_TNAME'				=>	$gr_name,
-															'GRANTER'				=>	$user->name,
-															));
-												$messenger->send(0);
-												$messenger->save_queue();
+                                        $gr_res = $db->sql_query($gr_sql);
+                                        list ($gr_email, $gr_language, $gr_name) = $db->fetch_array($gr_res);
+                                                if (!$gr_language OR !file_exists("language/email/".$gr_language."/authalldeny.txt")) $lang_email = $language;
+                                                else $lang_email = $gr_language;
+                                                $messenger = new messenger();
+                                                $messenger->template('authalldeny', $lang_email);
+                                                $messenger->to($gr_email, $gr_name);
+                                                $messenger->assign_vars(array(
+                                                            'SUB_JECT'              =>  sprintf($user->lang['AUTH_EMAIL_SUB'],$sitename),
+                                                            'GR_TNAME'              =>  $gr_name,
+                                                            'GRANTER'               =>  $user->name,
+                                                            ));
+                                                $messenger->send(0);
+                                                $messenger->save_queue();
                                         break;
                                 }
                         }
@@ -226,148 +229,148 @@ switch ($op) {
                 }
         }
         case "displaytorrent": {
-				$id	= request_var('id', '0');
+                $id = request_var('id', '0');
                 if (!is_numeric($id) OR $id < 1)
-				{
-					$template->assign_vars(array(
-						'S_ERROR'			=> true,
-						'S_FORWARD'			=> false,
-						'TITTLE_M'			=> $user->lang['BT_ERROR'],
-						'MESSAGE'			=> $user->lang['ERROR_NOT_NUMBER'],
-					));
-					echo $template->fetch('message_body.html');
-					close_out();
-				}
+                {
+                    $template->assign_vars(array(
+                        'S_ERROR'           => true,
+                        'S_FORWARD'         => false,
+                        'TITTLE_M'          => $user->lang['BT_ERROR'],
+                        'MESSAGE'           => $user->lang['ERROR_NOT_NUMBER'],
+                    ));
+                    echo $template->fetch('message_body.html');
+                    close_out();
+                }
                 $checkres = $db->sql_query("SELECT id, private, min_ratio FROM ".$db_prefix."_torrents WHERE id = '".$id."' AND owner = '".$user->id."';");
                 if ($db->sql_numrows($checkres) != 1)
-				{
-					$template->assign_vars(array(
-						'S_ERROR'			=> true,
-						'S_FORWARD'			=> false,
-						'TITTLE_M'			=> $user->lang['BT_ERROR'],
-						'MESSAGE'			=> $user->lang['CANT_VIEW_OTHER_AUTH'],
-					));
-					echo $template->fetch('message_body.html');
-					close_out();
-				}
+                {
+                    $template->assign_vars(array(
+                        'S_ERROR'           => true,
+                        'S_FORWARD'         => false,
+                        'TITTLE_M'          => $user->lang['BT_ERROR'],
+                        'MESSAGE'           => $user->lang['CANT_VIEW_OTHER_AUTH'],
+                    ));
+                    echo $template->fetch('message_body.html');
+                    close_out();
+                }
                 list ($tid, $private, $min_ratio) = $db->fetch_array($checkres);
-				//die($tid);
+                //die($tid);
                 $db->sql_freeresult($checkres);
 
-                $sql = "SELECT 
-							P.*, 
-							T.name as torrent, 
-							U.id as userid, 
-							U.uploaded, 
-							U.downloaded, 
-							IF(U.name IS NULL, U.username, U.name) as user_name, 
-							U.warn_kapta AS warn_kapta, 
-							U.warn_hossz AS warn_hossz, 
-							U.warned AS warned, 
-							U.uploaded/U.downloaded as ratio, 
-							U.aim AS aim, 
-							U.country AS country, 
-							U.icq AS icq, 
-							U.msn AS msn, 
-							U.yahoo AS yahoo, 
-							U.skype AS skype, 
-							U.jabber AS jabber, 
-							U.accept_mail AS accept_mail, 
-							U.ban as ban, 
-							U.regdate AS regdate, 
-							U.email AS email, 
-							U.avatar AS avatar, 
-							UNIX_TIMESTAMP(U.lastlogin) AS lststamp, 
-							U.lastlogin AS lastlogin, 
-							U.lastip AS lastip, 
-							U.lasthost AS lasthost, 
-							U.level as user_level, 
-							U.can_do as can_do, 
-							L.group_colour AS color, 
-							L.group_name AS co_name, 
-							C.name AS lname, 
-							C.flagpic AS flagpic 
-							FROM 
-							".$db_prefix."_privacy_file P 
-							LEFT JOIN ".$db_prefix."_users U ON U.id = P.slave 
-							LEFT JOIN ".$db_prefix."_torrents T ON P.torrent = T.id 
-						LEFT JOIN 
-							".$db_prefix."_level_settings L ON L.group_id = U.can_do 
-						LEFT JOIN 
-							".$db_prefix."_countries C ON C.id = U.country 
-							WHERE torrent = '".$id."';";
+                $sql = "SELECT
+                            P.*,
+                            T.name as torrent,
+                            U.id as userid,
+                            U.uploaded,
+                            U.downloaded,
+                            IF(U.name IS NULL, U.username, U.name) as user_name,
+                            U.warn_kapta AS warn_kapta,
+                            U.warn_hossz AS warn_hossz,
+                            U.warned AS warned,
+                            U.uploaded/U.downloaded as ratio,
+                            U.aim AS aim,
+                            U.country AS country,
+                            U.icq AS icq,
+                            U.msn AS msn,
+                            U.yahoo AS yahoo,
+                            U.skype AS skype,
+                            U.jabber AS jabber,
+                            U.accept_mail AS accept_mail,
+                            U.ban as ban,
+                            U.regdate AS regdate,
+                            U.email AS email,
+                            U.avatar AS avatar,
+                            UNIX_TIMESTAMP(U.lastlogin) AS lststamp,
+                            U.lastlogin AS lastlogin,
+                            U.lastip AS lastip,
+                            U.lasthost AS lasthost,
+                            U.level as user_level,
+                            U.can_do as can_do,
+                            L.group_colour AS color,
+                            L.group_name AS co_name,
+                            C.name AS lname,
+                            C.flagpic AS flagpic
+                            FROM
+                            ".$db_prefix."_privacy_file P
+                            LEFT JOIN ".$db_prefix."_users U ON U.id = P.slave
+                            LEFT JOIN ".$db_prefix."_torrents T ON P.torrent = T.id
+                        LEFT JOIN
+                            ".$db_prefix."_level_settings L ON L.group_id = U.can_do
+                        LEFT JOIN
+                            ".$db_prefix."_countries C ON C.id = U.country
+                            WHERE torrent = '".$id."';";
                 $privacyres = $db->sql_query($sql);
                 $auth_users = array();
                 while ($privacyrow = $db->sql_fetchrow($privacyres))
-				{
-					$auth_users[] = $privacyrow["userid"];
-							if (($privacyrow['accept_mail'] == 'yes') || checkaccess('u_can_view_others_email'))
-							{
-								$email = $privacyrow["email"];
-							}
-							else
-							{
-								$email = false;
-							}
-							$template->assign_block_vars('users', array(
-												'U_ID'							=>	$privacyrow["userid"],
-												'U_NAME'						=>	$privacyrow["user_name"],
-												'U_BANNED'						=>	(($privacyrow["ban"] == '0') ? false : true),
-												'U_LEVEL'						=>	$privacyrow["user_level"],
-												'U_GROUP'						=>	$privacyrow["lname"],
-												'U_COLOR'						=>	$privacyrow["color"],
-												'U_YAHOO'						=>	(!empty($privacyrow["yahoo"])) ? $privacyrow["yahoo"] : false,
-												'U_SKYPE'						=>	(!empty($privacyrow["skype"])) ? $privacyrow["skype"] : false,
-												'U_MSN'							=>	(!empty($privacyrow["msn"])) ? $privacyrow["msn"] : false,
-												'U_AIM'							=>	(!empty($privacyrow["aim"])) ? $privacyrow["aim"] : false,
-												'U_ICQ'							=>	(!empty($privacyrow["icq"])) ? $privacyrow["icq"] : false,
-												'U_JABBER'						=>	(!empty($privacyrow["jabber"])) ? $privacyrow["jabber"] : false,
-												'U_REG'							=>	formatTimeStamp($privacyrow["regdate"]),
-												'U_LAST_SEEN'					=>	formatTimeStamp($privacyrow["lastlogin"]),
-												'U_IP'							=>  (checkaccess('a_see_ip'))? '<a href="javascript:popUp(\'whois.php?ip='.$privacyrow['lastip'].'\')">'.long2ip($privacyrow['lastip']).'</a>' : false,
-												'U_HOST'						=>  (checkaccess('a_see_ip'))? $privacyrow['lasthost'] : false,
-												'U_EMAIL'						=>	$email,
-												'U_FROM'						=>	$privacyrow["co_name"],
-												'U_FLAG'						=>	$privacyrow["flagpic"],
-												'U_WARREND'						=>	($privacyrow["warned"]) ? true : false,
-												'U_AVATAR'						=>	gen_avatar($privacyrow["u_id"]),
-												'U_UPL'							=>	mksize($privacyrow["uploaded"]),
-												'U_DL'							=>	mksize($privacyrow["downloaded"]),
-												'U_RATIO'						=>	$privacyrow["ratio"],
-												'U_RATIO_COLOR'					=>	get_u_ratio($privacyrow["uploaded"], $privacyrow["downloaded"]),
-												'U_AUTH_STAT'					=>	$privacyrow["status"],
-									   ));
-				}
+                {
+                    $auth_users[] = $privacyrow["userid"];
+                            if (($privacyrow['accept_mail'] == 'yes') || checkaccess('u_can_view_others_email'))
+                            {
+                                $email = $privacyrow["email"];
+                            }
+                            else
+                            {
+                                $email = false;
+                            }
+                            $template->assign_block_vars('users', array(
+                                                'U_ID'                          =>  $privacyrow["userid"],
+                                                'U_NAME'                        =>  $privacyrow["user_name"],
+                                                'U_BANNED'                      =>  (($privacyrow["ban"] == '0') ? false : true),
+                                                'U_LEVEL'                       =>  $privacyrow["user_level"],
+                                                'U_GROUP'                       =>  $privacyrow["lname"],
+                                                'U_COLOR'                       =>  $privacyrow["color"],
+                                                'U_YAHOO'                       =>  (!empty($privacyrow["yahoo"])) ? $privacyrow["yahoo"] : false,
+                                                'U_SKYPE'                       =>  (!empty($privacyrow["skype"])) ? $privacyrow["skype"] : false,
+                                                'U_MSN'                         =>  (!empty($privacyrow["msn"])) ? $privacyrow["msn"] : false,
+                                                'U_AIM'                         =>  (!empty($privacyrow["aim"])) ? $privacyrow["aim"] : false,
+                                                'U_ICQ'                         =>  (!empty($privacyrow["icq"])) ? $privacyrow["icq"] : false,
+                                                'U_JABBER'                      =>  (!empty($privacyrow["jabber"])) ? $privacyrow["jabber"] : false,
+                                                'U_REG'                         =>  formatTimeStamp($privacyrow["regdate"]),
+                                                'U_LAST_SEEN'                   =>  formatTimeStamp($privacyrow["lastlogin"]),
+                                                'U_IP'                          =>  (checkaccess('a_see_ip'))? '<a href="javascript:popUp(\'whois.php?ip='.$privacyrow['lastip'].'\')">'.long2ip($privacyrow['lastip']).'</a>' : false,
+                                                'U_HOST'                        =>  (checkaccess('a_see_ip'))? $privacyrow['lasthost'] : false,
+                                                'U_EMAIL'                       =>  $email,
+                                                'U_FROM'                        =>  $privacyrow["co_name"],
+                                                'U_FLAG'                        =>  $privacyrow["flagpic"],
+                                                'U_WARREND'                     =>  ($privacyrow["warned"]) ? true : false,
+                                                'U_AVATAR'                      =>  gen_avatar($privacyrow["u_id"]),
+                                                'U_UPL'                         =>  mksize($privacyrow["uploaded"]),
+                                                'U_DL'                          =>  mksize($privacyrow["downloaded"]),
+                                                'U_RATIO'                       =>  $privacyrow["ratio"],
+                                                'U_RATIO_COLOR'                 =>  get_u_ratio($privacyrow["uploaded"], $privacyrow["downloaded"]),
+                                                'U_AUTH_STAT'                   =>  $privacyrow["status"],
+                                       ));
+                }
 
 
-					$template->assign_vars(array(
-							'AUTH_USERS'            =>	implode(",",$auth_users),
-							'AUTH_TID'				=>	$id,
-							'ACTION'            	=>	$op,
-							'AUTH_PRIVATE'			=>	(($private == "true")? true : false),
-							'AUTH_RATIO'			=>	$min_ratio,
-					));
-				echo $template->fetch('mytorrents.html');
-					close_out();
+                    $template->assign_vars(array(
+                            'AUTH_USERS'            =>  implode(",",$auth_users),
+                            'AUTH_TID'              =>  $id,
+                            'ACTION'                =>  $op,
+                            'AUTH_PRIVATE'          =>  (($private == "true")? true : false),
+                            'AUTH_RATIO'            =>  $min_ratio,
+                    ));
+                echo $template->fetch('mytorrents.html');
+                    close_out();
                 $db->sql_freeresult($privacyres);
                 break;
         }
         case "saveglobals": {
                 $notifications = new MailingList();
-				$auth_users	= request_var('auth_users', '');
+                $auth_users = request_var('auth_users', '');
                 $auth_users = explode(",",$auth_users);
                 foreach ($auth_users as $auth) {
                         if ($auth != intval($auth))
-						{
-							$template->assign_vars(array(
-								'S_ERROR'			=> true,
-								'S_FORWARD'			=> false,
-								'TITTLE_M'			=> $user->lang['MY_TORRENTS'],
-								'MESSAGE'			=> $user->lang['ERROR_ENTERING_DATA'],
-							));
-							echo $template->fetch('message_body.html');
-							close_out();
-						}
+                        {
+                            $template->assign_vars(array(
+                                'S_ERROR'           => true,
+                                'S_FORWARD'         => false,
+                                'TITTLE_M'          => $user->lang['MY_TORRENTS'],
+                                'MESSAGE'           => $user->lang['ERROR_ENTERING_DATA'],
+                            ));
+                            echo $template->fetch('message_body.html');
+                            close_out();
+                        }
                         $auth = intval($auth);
                         $uservar = "user".$auth;
                         switch ($$uservar) {
@@ -375,40 +378,40 @@ switch ($op) {
                                         $sql = "UPDATE ".$db_prefix."_privacy_global SET status = 'whitelist' WHERE master = '".$user->id."' AND slave = '".$auth."';";
                                         $db->sql_query($sql) or btsqlerror($sql);
                                         $gr_sql = "SELECT U.email, U.language, U.username FROM ".$db_prefix."_users U WHERE U.id = ".$auth.";";
-										$gr_res = $db->sql_query($gr_sql);
-										list ($gr_email, $gr_language, $gr_name) = $db->fetch_array($gr_res);
-												if (!$gr_language OR !file_exists("language/email/".$gr_language."/authallgrant.txt")) $lang_email = $language;
-												else $lang_email = $gr_language;
-												$messenger = new messenger();
-												$messenger->template('authallgrant', $lang_email);
-												$messenger->to($gr_email, $gr_name);
-												$messenger->assign_vars(array(
-															'SUB_JECT'				=>	sprintf($user->lang['AUTH_EMAIL_SUB'],$sitename),
-															'GRANTER'				=>	$user->name,
-															'GR_NAME'				=>	$gr_name,
-															));
-												$messenger->send(0);
-												$messenger->save_queue();
+                                        $gr_res = $db->sql_query($gr_sql);
+                                        list ($gr_email, $gr_language, $gr_name) = $db->fetch_array($gr_res);
+                                                if (!$gr_language OR !file_exists("language/email/".$gr_language."/authallgrant.txt")) $lang_email = $language;
+                                                else $lang_email = $gr_language;
+                                                $messenger = new messenger();
+                                                $messenger->template('authallgrant', $lang_email);
+                                                $messenger->to($gr_email, $gr_name);
+                                                $messenger->assign_vars(array(
+                                                            'SUB_JECT'              =>  sprintf($user->lang['AUTH_EMAIL_SUB'],$sitename),
+                                                            'GRANTER'               =>  $user->name,
+                                                            'GR_NAME'               =>  $gr_name,
+                                                            ));
+                                                $messenger->send(0);
+                                                $messenger->save_queue();
                                         break;
                                 }
                                 case "alwaysdeny": {
                                         $sql = "UPDATE ".$db_prefix."_privacy_global SET status = 'blacklist' WHERE master = '".$user->id."' AND slave = '".$auth."';";
                                         $db->sql_query($sql) or btsqlterror($sql);
                                         $gr_sql = "SELECT U.email, U.language, U.username FROM ".$db_prefix."_users U WHERE U.id = ".$auth.";";
-										$gr_res = $db->sql_query($gr_sql);
-										list ($gr_email, $gr_language, $gr_name) = $db->fetch_array($gr_res);
-												if (!$gr_language OR !file_exists("language/email/".$gr_language."/authalldeny.txt")) $lang_email = $language;
-												else $lang_email = $gr_language;
-												$messenger = new messenger();
-												$messenger->template('authalldeny', $lang_email);
-												$messenger->to($gr_email, $gr_name);
-												$messenger->assign_vars(array(
-															'SUB_JECT'				=>	sprintf($user->lang['AUTH_EMAIL_SUB'],$sitename),
-															'GRANTER'				=>	$user->name,
-															'GR_NAME'				=>	$gr_name,
-															));
-												$messenger->send(0);
-												$messenger->save_queue();
+                                        $gr_res = $db->sql_query($gr_sql);
+                                        list ($gr_email, $gr_language, $gr_name) = $db->fetch_array($gr_res);
+                                                if (!$gr_language OR !file_exists("language/email/".$gr_language."/authalldeny.txt")) $lang_email = $language;
+                                                else $lang_email = $gr_language;
+                                                $messenger = new messenger();
+                                                $messenger->template('authalldeny', $lang_email);
+                                                $messenger->to($gr_email, $gr_name);
+                                                $messenger->assign_vars(array(
+                                                            'SUB_JECT'              =>  sprintf($user->lang['AUTH_EMAIL_SUB'],$sitename),
+                                                            'GRANTER'               =>  $user->name,
+                                                            'GR_NAME'               =>  $gr_name,
+                                                            ));
+                                                $messenger->send(0);
+                                                $messenger->save_queue();
                                         break;
                                 }
                                 case "reset": {
@@ -421,20 +424,20 @@ switch ($op) {
                                         $sql = "DELETE FROM ".$db_prefix."_privacy_backup WHERE master = '".$user->id."' AND slave = '".$auth."';";
                                         $db->sql_query($sql) or btsqlerror($sql);
                                         $sql = "SELECT U.email, U.language, U.username FROM ".$db_prefix."_users U WHERE U.id = ".$auth.";";
-										$gr_res = $db->sql_query($gr_sql);
-										list ($gr_email, $gr_language, $gr_name) = $db->fetch_array($gr_res);
-												if (!$gr_language OR !file_exists("language/email/".$gr_language."/authreset.txt")) $lang_email = $language;
-												else $lang_email = $gr_language;
-												$messenger = new messenger();
-												$messenger->template('authreset', $lang_email);
-												$messenger->to($gr_email, $gr_name);
-												$messenger->assign_vars(array(
-															'SUB_JECT'				=>	sprintf($user->lang['AUTH_EMAIL_SUB'],$sitename),
-															'GRANTER'				=>	$user->name,
-															'GR_NAME'				=>	$gr_name,
-															));
-												$messenger->send(0);
-												$messenger->save_queue();
+                                        $gr_res = $db->sql_query($gr_sql);
+                                        list ($gr_email, $gr_language, $gr_name) = $db->fetch_array($gr_res);
+                                                if (!$gr_language OR !file_exists("language/email/".$gr_language."/authreset.txt")) $lang_email = $language;
+                                                else $lang_email = $gr_language;
+                                                $messenger = new messenger();
+                                                $messenger->template('authreset', $lang_email);
+                                                $messenger->to($gr_email, $gr_name);
+                                                $messenger->assign_vars(array(
+                                                            'SUB_JECT'              =>  sprintf($user->lang['AUTH_EMAIL_SUB'],$sitename),
+                                                            'GRANTER'               =>  $user->name,
+                                                            'GR_NAME'               =>  $gr_name,
+                                                            ));
+                                                $messenger->send(0);
+                                                $messenger->save_queue();
                                         break;
                                 }
                         }
@@ -452,145 +455,146 @@ switch ($op) {
                 list ($tot) = $db->fetch_array($totres);
                 $db->sql_freeresult($totres);
                 $pages = ceil($tot / $torrent_per_page);
-				$sql = "SELECT 
-							".$db_prefix."_torrents.*, 
-							IF(".$db_prefix."_torrents.numratings < '".$minvotes."', NULL, ROUND(".$db_prefix."_torrents.ratingsum / ".$db_prefix."_torrents.numratings, 1)) AS rating, 
-							".$db_prefix."_categories.name AS cat_name, 
-							".$db_prefix."_categories.image AS cat_pic, 
-							U.username, 
-							IF(U.name IS NULL, U.username, U.name) as user_name, 
-							U.level as user_level, 
-							U.can_do as can_do, 
-							L.group_colour AS color, 
-							L.group_name AS lname 
-						FROM 
-							".$db_prefix."_torrents 
-						LEFT JOIN 
-							".$db_prefix."_categories ON category = ".$db_prefix."_categories.id 
-						LEFT JOIN 
-							".$db_prefix."_users U ON ".$db_prefix."_torrents.owner = U.id 
-						LEFT JOIN 
-							".$db_prefix."_level_settings L ON L.group_id = U.can_do 
-						WHERE 
-							".$db_prefix."_torrents.owner = '".$user->id."' 
-						GROUP BY 
-							".$db_prefix."_torrents.id 
-						ORDER BY 
-							".$db_prefix."_torrents.added DESC 
-						LIMIT 
-							".$from.",".$torrent_per_page.";";
+                $sql = "SELECT
+                            ".$db_prefix."_torrents.*,
+                            IF(".$db_prefix."_torrents.numratings < '".$minvotes."', NULL, ROUND(".$db_prefix."_torrents.ratingsum / ".$db_prefix."_torrents.numratings, 1)) AS rating,
+                            ".$db_prefix."_categories.name AS cat_name,
+                            ".$db_prefix."_categories.image AS cat_pic,
+                            U.username,
+                            IF(U.name IS NULL, U.username, U.name) as user_name,
+                            U.level as user_level,
+                            U.can_do as can_do,
+                            L.group_colour AS color,
+                            L.group_name AS lname
+                        FROM
+                            ".$db_prefix."_torrents
+                        LEFT JOIN
+                            ".$db_prefix."_categories ON category = ".$db_prefix."_categories.id
+                        LEFT JOIN
+                            ".$db_prefix."_users U ON ".$db_prefix."_torrents.owner = U.id
+                        LEFT JOIN
+                            ".$db_prefix."_level_settings L ON L.group_id = U.can_do
+                        WHERE
+                            ".$db_prefix."_torrents.owner = '".$user->id."'
+                        GROUP BY
+                            ".$db_prefix."_torrents.id
+                        ORDER BY
+                            ".$db_prefix."_torrents.added DESC
+                        LIMIT
+                            ".$from.",".$torrent_per_page.";";
                 $myres = $db->sql_query($sql);
                 if (!$myres) btsqlerror($sql);
                 if ($db->sql_numrows($myres) < 1) {
-					$template->assign_vars(array(
-							'S_TORRENTS'            => false,
-					));
+                    $template->assign_vars(array(
+                            'S_TORRENTS'            => false,
+                    ));
                 } else {
-					$template->assign_vars(array(
-							'S_TORRENTS'            => true,
-					));
-	                get_tor_vars($myres);
-                	generate_torrentpager('mytorrents.php?page=', $page, $pages);
+                    $template->assign_vars(array(
+                            'S_TORRENTS'            => true,
+                    ));
+                    get_tor_vars($myres);
+                    generate_torrentpager('mytorrents.php?page=', $page, $pages);
                 }
                 $db->sql_freeresult($myres);
 
                 #My Global Authorizations
                 if ($torrent_global_privacy) {
-                        $sql = "SELECT 
-									A.slave, 
-									A.status, 
-									B.id as u_id,
-									B.uploaded, 
-									B.downloaded, 
-									IF(B.name IS NULL, B.username, B.name) as user_name, 
-									B.warn_kapta AS warn_kapta, 
-									B.warn_hossz AS warn_hossz, 
-									B.warned AS warned, 
-									B.uploaded/B.downloaded as ratio, 
-									B.aim AS aim, 
-									B.country AS country, 
-									B.icq AS icq, 
-									B.msn AS msn, 
-									B.yahoo AS yahoo, 
-									B.skype AS skype, 
-									B.jabber AS jabber, 
-									B.accept_mail AS accept_mail, 
-									B.ban as ban, 
-									B.regdate AS regdate, 
-									B.email AS email, 
-									B.avatar AS avatar, 
-									UNIX_TIMESTAMP(B.lastlogin) AS lststamp, 
-									B.lastlogin AS lastlogin, 
-									B.lastip AS lastip, 
-									B.lasthost AS lasthost, 
-									B.level as user_level, 
-									B.can_do as can_do, 
-									L.group_colour AS color, 
-									L.group_name AS co_name, 
-									C.name AS lname, 
-									C.flagpic AS flagpic 
-								FROM 
-									".$db_prefix."_privacy_global A 
-								LEFT JOIN 
-									".$db_prefix."_users B ON B.id = A.slave 
-								LEFT JOIN 
-									".$db_prefix."_level_settings L ON L.group_id = B.can_do 
-								LEFT JOIN 
-									".$db_prefix."_countries C ON C.id = B.country 
-								WHERE 
-									A.master = '".$user->id."';";
+                        $sql = "SELECT
+                                    A.slave,
+                                    A.status,
+                                    B.id as u_id,
+                                    B.uploaded,
+                                    B.downloaded,
+                                    IF(B.name IS NULL, B.username, B.name) as user_name,
+                                    B.warn_kapta AS warn_kapta,
+                                    B.warn_hossz AS warn_hossz,
+                                    B.warned AS warned,
+                                    B.uploaded/B.downloaded as ratio,
+                                    B.aim AS aim,
+                                    B.country AS country,
+                                    B.icq AS icq,
+                                    B.msn AS msn,
+                                    B.yahoo AS yahoo,
+                                    B.skype AS skype,
+                                    B.jabber AS jabber,
+                                    B.accept_mail AS accept_mail,
+                                    B.ban as ban,
+                                    B.regdate AS regdate,
+                                    B.email AS email,
+                                    B.avatar AS avatar,
+                                    UNIX_TIMESTAMP(B.lastlogin) AS lststamp,
+                                    B.lastlogin AS lastlogin,
+                                    B.lastip AS lastip,
+                                    B.lasthost AS lasthost,
+                                    B.level as user_level,
+                                    B.can_do as can_do,
+                                    L.group_colour AS color,
+                                    L.group_name AS co_name,
+                                    C.name AS lname,
+                                    C.flagpic AS flagpic
+                                FROM
+                                    ".$db_prefix."_privacy_global A
+                                LEFT JOIN
+                                    ".$db_prefix."_users B ON B.id = A.slave
+                                LEFT JOIN
+                                    ".$db_prefix."_level_settings L ON L.group_id = B.can_do
+                                LEFT JOIN
+                                    ".$db_prefix."_countries C ON C.id = B.country
+                                WHERE
+                                    A.master = '".$user->id."';";
                         $myres = $db->sql_query($sql);
                         if (!$myres) btsqlerror($sql);
                         if ($db->sql_numrows($myres) > 0)
-						{
+                        {
                                 while ($myauth = $db->sql_fetchrow($myres)) {
                                         $auth_users[] = $myauth["slave"];
-							if (($myauth['accept_mail'] == 'yes') || checkaccess('u_can_view_others_email'))
-							{
-								$email = $myauth["email"];
-							}
-							else
-							{
-								$email = false;
-							}
-							$template->assign_block_vars('users', array(
-												'U_ID'							=>	$myauth["u_id"],
-												'U_NAME'						=>	$myauth["user_name"],
-												'U_BANNED'						=>	(($myauth["ban"] == '0') ? false : true),
-												'U_LEVEL'						=>	$myauth["user_level"],
-												'U_GROUP'						=>	$myauth["lname"],
-												'U_COLOR'						=>	$myauth["color"],
-												'U_YAHOO'						=>	(!empty($myauth["yahoo"])) ? $myauth["yahoo"] : false,
-												'U_SKYPE'						=>	(!empty($myauth["skype"])) ? $myauth["skype"] : false,
-												'U_MSN'							=>	(!empty($myauth["msn"])) ? $myauth["msn"] : false,
-												'U_AIM'							=>	(!empty($myauth["aim"])) ? $myauth["aim"] : false,
-												'U_ICQ'							=>	(!empty($myauth["icq"])) ? $myauth["icq"] : false,
-												'U_JABBER'						=>	(!empty($myauth["jabber"])) ? $myauth["jabber"] : false,
-												'U_REG'							=>	formatTimeStamp($myauth["regdate"]),
-												'U_LAST_SEEN'					=>	formatTimeStamp($myauth["lastlogin"]),
-												'U_IP'							=>  (checkaccess('a_see_ip'))? '<a href="javascript:popUp(\'whois.php?ip='.$myauth['lastip'].'\')">'.long2ip($myauth['lastip']).'</a>' : false,
-												'U_HOST'						=>  (checkaccess('a_see_ip'))? $myauth['lasthost'] : false,
-												'U_EMAIL'						=>	$email,
-												'U_FROM'						=>	$myauth["co_name"],
-												'U_FLAG'						=>	$myauth["flagpic"],
-												'U_WARREND'						=>	($myauth["warned"]) ? true : false,
-												'U_AVATAR'						=>	gen_avatar($myauth["u_id"]),
-												'U_UPL'							=>	mksize($myauth["uploaded"]),
-												'U_DL'							=>	mksize($myauth["downloaded"]),
-												'U_RATIO'						=>	$myauth["ratio"],
-												'U_RATIO_COLOR'					=>	get_u_ratio($myauth["uploaded"], $myauth["downloaded"]),
-												'U_AUTH_STAT'					=>	$myauth["status"],
-									   ));
-								}
+                            if (($myauth['accept_mail'] == 'yes') || checkaccess('u_can_view_others_email'))
+                            {
+                                $email = $myauth["email"];
+                            }
+                            else
+                            {
+                                $email = false;
+                            }
+                            $template->assign_block_vars('users', array(
+                                                'U_ID'                          =>  $myauth["u_id"],
+                                                'U_NAME'                        =>  $myauth["user_name"],
+                                                'U_BANNED'                      =>  (($myauth["ban"] == '0') ? false : true),
+                                                'U_LEVEL'                       =>  $myauth["user_level"],
+                                                'U_GROUP'                       =>  $myauth["lname"],
+                                                'U_COLOR'                       =>  $myauth["color"],
+                                                'U_YAHOO'                       =>  (!empty($myauth["yahoo"])) ? $myauth["yahoo"] : false,
+                                                'U_SKYPE'                       =>  (!empty($myauth["skype"])) ? $myauth["skype"] : false,
+                                                'U_MSN'                         =>  (!empty($myauth["msn"])) ? $myauth["msn"] : false,
+                                                'U_AIM'                         =>  (!empty($myauth["aim"])) ? $myauth["aim"] : false,
+                                                'U_ICQ'                         =>  (!empty($myauth["icq"])) ? $myauth["icq"] : false,
+                                                'U_JABBER'                      =>  (!empty($myauth["jabber"])) ? $myauth["jabber"] : false,
+                                                'U_REG'                         =>  formatTimeStamp($myauth["regdate"]),
+                                                'U_LAST_SEEN'                   =>  formatTimeStamp($myauth["lastlogin"]),
+                                                'U_IP'                          =>  (checkaccess('a_see_ip'))? '<a href="javascript:popUp(\'whois.php?ip='.$myauth['lastip'].'\')">'.long2ip($myauth['lastip']).'</a>' : false,
+                                                'U_HOST'                        =>  (checkaccess('a_see_ip'))? $myauth['lasthost'] : false,
+                                                'U_EMAIL'                       =>  $email,
+                                                'U_FROM'                        =>  $myauth["co_name"],
+                                                'U_FLAG'                        =>  $myauth["flagpic"],
+                                                'U_WARREND'                     =>  ($myauth["warned"]) ? true : false,
+                                                'U_AVATAR'                      =>  gen_avatar($myauth["u_id"]),
+                                                'U_UPL'                         =>  mksize($myauth["uploaded"]),
+                                                'U_DL'                          =>  mksize($myauth["downloaded"]),
+                                                'U_RATIO'                       =>  $myauth["ratio"],
+                                                'U_RATIO_COLOR'                 =>  get_u_ratio($myauth["uploaded"], $myauth["downloaded"]),
+                                                'U_AUTH_STAT'                   =>  $myauth["status"],
+                                       ));
+                                }
                         }
                         $db->sql_freeresult($myres);
-					$template->assign_vars(array(
-							'AUTH_USERS'            => implode(",",$auth_users),
-					));
+                    $template->assign_vars(array(
+                            'AUTH_USERS'            => implode(",",$auth_users),
+                    ));
 
         }
 echo $template->fetch('mytorrents.html');
-	close_out();
-	}
+    close_out();
+    }
 }
+
 ?>

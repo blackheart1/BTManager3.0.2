@@ -13,16 +13,16 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts)
 ** Project Leaders: Black_heart, Thor.
-** File install/english.php 2018-09-18 18:54:00 Thor
+** File install/english.php 2018-09-23 00:00:00 Thor
 **
 ** CHANGES
 **
-** 2018-09-18 - Created New
+** 2018-09-23 - Updated Masthead, Github, !defined('IN_BTM')
 **/
 
-if (!defined('IN_PMBT'))
+if (!defined('IN_BTM'))
 {
-    include_once './../../../security.php';
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
     die ("Error 404 - Page Not Found");
 }
 

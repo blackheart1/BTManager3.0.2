@@ -1,10 +1,11 @@
 <?php
+
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -12,33 +13,35 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File filter.php 2018-02-23 14:32:00 Black_Heart
+** File files/filter.php 2018-09-22 00:00:00 Thor
 **
 ** CHANGES
 **
-** EXAMPLE 26-04-13 - Added Auto Ban
+** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
 **/
-if (!defined('IN_PMBT'))
+
+if (!defined('IN_BTM'))
 {
-	include_once './../../security.php';
-	die ("You can't access this file directly");
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
+    die ("Error 404 - Page Not Found");
 }
+
 $user->set_lang('admin/mcp_filter',$user->ulanguage);
-		$page_title = $user->lang['INTRO'];
-				$template->assign_vars(array(
-					'PAGE_TITLE'       => $page_title,
-				));
+        $page_title = $user->lang['INTRO'];
+                $template->assign_vars(array(
+                    'PAGE_TITLE'       => $page_title,
+                ));
 $is_edit = false;
 $banedit_key = Array("keyword" => "", "reason" => "");
-		$postback_client					= request_var('postback_client', '');
-		$id									= request_var('id', 0);
-		$do									= request_var('do', '');
+        $postback_client                    = request_var('postback_client', '');
+        $id                                 = request_var('id', 0);
+        $do                                 = request_var('do', '');
 switch ($do) {
 
         case "addfilter": {
 
-						$keyword					= request_var('keyword', '');
-						$whatfor					= request_var('whatfor', '');
+                        $keyword                    = request_var('keyword', '');
+                        $whatfor                    = request_var('whatfor', '');
                 $errors = Array();
 
                 if (!$keyword) $errors[] = $user->lang['MISSING_KEYWORD'];
@@ -47,20 +50,20 @@ switch ($do) {
 
                 if (count($errors) > 0) {
 
-					$err = "<ul>\n";
-					foreach ($errors as $msg)
-					{
-						$err .= "<li>".$msg."</li>\n";
-					}
-					$err .= "</ul>\n";
+                    $err = "<ul>\n";
+                    foreach ($errors as $msg)
+                    {
+                        $err .= "<li>".$msg."</li>\n";
+                    }
+                    $err .= "</ul>\n";
 
 
                                 $template->assign_vars(array(
-											'S_MESSAGE'				=> true,
-											'S_USER_NOTICE'			=> false,
-											'MESSAGE_TITLE'			=> $user->lang['BT_ERROR'],
-											'MESSAGE_TEXT'			=> $err,
-											));
+                                            'S_MESSAGE'             => true,
+                                            'S_USER_NOTICE'         => false,
+                                            'MESSAGE_TITLE'         => $user->lang['BT_ERROR'],
+                                            'MESSAGE_TEXT'          => $err,
+                                            ));
                         break;
 
                 }
@@ -74,20 +77,20 @@ switch ($do) {
                 if (strlen($whatfor) > 255) $errors[] = $user->lang['BAD_REASON'];
 
                 if (count($errors) > 0) {
-					$err = "<ul>\n";
-					foreach ($errors as $msg)
-					{
-						$err .= "<li>".$msg."</li>\n";
-					}
-					$err .= "</ul>\n";
+                    $err = "<ul>\n";
+                    foreach ($errors as $msg)
+                    {
+                        $err .= "<li>".$msg."</li>\n";
+                    }
+                    $err .= "</ul>\n";
 
 
                                 $template->assign_vars(array(
-											'S_MESSAGE'				=> true,
-											'S_USER_NOTICE'			=> false,
-											'MESSAGE_TITLE'			=> $user->lang['BT_ERROR'],
-											'MESSAGE_TEXT'			=> $err,
-											));
+                                            'S_MESSAGE'             => true,
+                                            'S_USER_NOTICE'         => false,
+                                            'MESSAGE_TITLE'         => $user->lang['BT_ERROR'],
+                                            'MESSAGE_TEXT'          => $err,
+                                            ));
                         break;
 
                 }
@@ -95,13 +98,13 @@ switch ($do) {
                 $sql = "INSERT INTO ".$db_prefix."_filter (keyword, reason) VALUES ('" . $keyword . "','" . $whatfor . "');";
 
                 $db->sql_query($sql) or btsqlerror($sql);
-				add_log('admin', 'LOG_FILTER_ADD', $keyword);
+                add_log('admin', 'LOG_FILTER_ADD', $keyword);
                                 $template->assign_vars(array(
-											'S_MESSAGE'				=> true,
-											'S_USER_NOTICE'			=> true,
-											'MESSAGE_TITLE'			=> $user->lang['SUCCESS'],
-											'MESSAGE_TEXT'			=> $user->lang['KEYWORD_ADDED'],
-											));
+                                            'S_MESSAGE'             => true,
+                                            'S_USER_NOTICE'         => true,
+                                            'MESSAGE_TITLE'         => $user->lang['SUCCESS'],
+                                            'MESSAGE_TEXT'          => $user->lang['KEYWORD_ADDED'],
+                                            ));
 
                 break;
 
@@ -110,37 +113,37 @@ switch ($do) {
         case "editfilter": {
 
                 if ($id AND is_numeric($id))
-				{
-						$keyword					= request_var('keyword', '');
-						$whatfor					= request_var('whatfor', '');
+                {
+                        $keyword                    = request_var('keyword', '');
+                        $whatfor                    = request_var('whatfor', '');
                         if ($keyword AND $whatfor)
-						{
+                        {
 
                                 $sql = "UPDATE ".$db_prefix."_filter SET keyword = '".strtolower(escape($keyword))."', reason = '".htmlspecialchars(escape(trim($whatfor)))."' WHERE id = '".$id."'";
 
                                 $db->sql_query($sql) or btsqlerror($sql);
-								add_log('admin', 'LOG_FILTER_EDIT', $keyword);
+                                add_log('admin', 'LOG_FILTER_EDIT', $keyword);
                                 $template->assign_vars(array(
-											'S_MESSAGE'				=> true,
-											'S_USER_NOTICE'			=> true,
-											'MESSAGE_TITLE'			=> $user->lang['SUCCESS'],
-											'MESSAGE_TEXT'			=> $user->lang['KEYWORD_UPDATED'],
-											));
+                                            'S_MESSAGE'             => true,
+                                            'S_USER_NOTICE'         => true,
+                                            'MESSAGE_TITLE'         => $user->lang['SUCCESS'],
+                                            'MESSAGE_TEXT'          => $user->lang['KEYWORD_UPDATED'],
+                                            ));
 
                         }
-						else
-						{
+                        else
+                        {
                             $sql = "SELECT * FROM ".$db_prefix."_filter WHERE id = '".$id."';";
                             if (!$res_edit = $db->sql_query($sql)) btsqlerror($sql);
                             if ($db->sql_numrows($res_edit) == 1)
-							{
-								$row = $db->sql_fetchrow($res_edit);
-								$db->sql_freeresult($res_edit);
-								$banedit_key["keyword"] = $row["keyword"];
-								$banedit_key["reason"] = $row["reason"];
-								$is_edit = true;
-								break;
-							}
+                            {
+                                $row = $db->sql_fetchrow($res_edit);
+                                $db->sql_freeresult($res_edit);
+                                $banedit_key["keyword"] = $row["keyword"];
+                                $banedit_key["reason"] = $row["reason"];
+                                $is_edit = true;
+                                break;
+                            }
                         }
                 }
                 break;
@@ -149,24 +152,24 @@ switch ($do) {
         case "delfilter": {
                 if ($id AND is_numeric($id)) {
 
-					$sql = 'SELECT keyword
-						FROM ' . $db_prefix . "_filter
-						WHERE id = $id";
-					$result = $db->sql_query($sql);
-					$deleted_word = $db->sql_fetchfield('keyword');
-					$db->sql_freeresult($result);
+                    $sql = 'SELECT keyword
+                        FROM ' . $db_prefix . "_filter
+                        WHERE id = $id";
+                    $result = $db->sql_query($sql);
+                    $deleted_word = $db->sql_fetchfield('keyword');
+                    $db->sql_freeresult($result);
                 $sql = "DELETE FROM ".$db_prefix."_filter WHERE id = '".intval($id)."'";
 
                 $db->sql_query($sql) or btsqlerror($sql);
-					add_log('admin', 'LOG_FILTER_DELETE', $deleted_word);
-				}
+                    add_log('admin', 'LOG_FILTER_DELETE', $deleted_word);
+                }
 
                                 $template->assign_vars(array(
-											'S_MESSAGE'				=> true,
-											'S_USER_NOTICE'			=> true,
-											'MESSAGE_TITLE'			=> $user->lang['SUCCESS'],
-											'MESSAGE_TEXT'			=> $user->lang['KEYWORD_REMOVED'],
-											));
+                                            'S_MESSAGE'             => true,
+                                            'S_USER_NOTICE'         => true,
+                                            'MESSAGE_TITLE'         => $user->lang['SUCCESS'],
+                                            'MESSAGE_TEXT'          => $user->lang['KEYWORD_REMOVED'],
+                                            ));
                 break;
 
         }
@@ -176,38 +179,38 @@ $sql = "SELECT * FROM ".$db_prefix."_filter ORDER BY id ASC;";
 $res = $db->sql_query($sql);
 if ($db->sql_numrows($res) > 0) {
         while ($row = $db->sql_fetchrow($res)) {
-			$template->assign_block_vars('kyewords', array(
-				'KEYWORD'				=> $row["keyword"],
-				'WHATFOR'				=> htmlspecialchars($row["reason"]),
-				'ID'							=> $row["id"],
-				));
+            $template->assign_block_vars('kyewords', array(
+                'KEYWORD'               => $row["keyword"],
+                'WHATFOR'               => htmlspecialchars($row["reason"]),
+                'ID'                            => $row["id"],
+                ));
         }
 }
 $db->sql_freeresult($res);
 if (!$is_edit)
 {
-	$hidden = array(
-			'op'		=> 'filter',
-			'i'			=> 'torrentinfo',
-			"do" 		=> "addfilter"
-			);
+    $hidden = array(
+            'op'        => 'filter',
+            'i'         => 'torrentinfo',
+            "do"        => "addfilter"
+            );
 }
 else
 {
-	$hidden = array(
-			'op'		=> 'filter',
-			'i'			=> 'torrentinfo',
-			"do" 		=> "editfilter",
-			"id" 		=> intval($id),
-			);
+    $hidden = array(
+            'op'        => 'filter',
+            'i'         => 'torrentinfo',
+            "do"        => "editfilter",
+            "id"        => intval($id),
+            );
 }
                                 $template->assign_vars(array(
-								'KEYWORD'		=> $banedit_key["keyword"],
-								'WHATFOR'		=> $banedit_key["reason"],
-								'HIDDEN'				=> build_hidden_fields($hidden),
-								'U_ACTION'				=> './admin.php',
-								));
+                                'KEYWORD'       => $banedit_key["keyword"],
+                                'WHATFOR'       => $banedit_key["reason"],
+                                'HIDDEN'                => build_hidden_fields($hidden),
+                                'U_ACTION'              => './admin.php',
+                                ));
 echo $template->fetch('admin/mcp_filter.html');
-		close_out();
+        close_out();
 
 ?>

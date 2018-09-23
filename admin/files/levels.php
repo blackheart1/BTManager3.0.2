@@ -2,10 +2,10 @@
 
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -13,20 +13,17 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File levels.php 2018-07-28 08:27:00 Thor
+** File files/levels.php 2018-09-22 00:00:00 Thor
 **
 ** CHANGES
 **
-** 2018-05-10 - Added Languages Back In
-** 2018-05-10 - Fixed Images
-** 2018-05-10 - Added New Languages
-** 2018-07-28 - Added Language to bterror()
+** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
 **/
 
-if (!defined('IN_PMBT'))
+if (!defined('IN_BTM'))
 {
-    include_once './../../security.php';
-    die ("You can't access this file directly");
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
+    die ("Error 404 - Page Not Found");
 }
 
 include_once 'include/class.bbcode.php';
@@ -1504,8 +1501,8 @@ switch ($action)
         else
         {
             $group_name = $group_row['group_name'];
-			$gourpdesc = ((isset($user->lang[$group_row['group_desc']]))? $user->lang[$group_row['group_desc']] : $group_row['group_desc']);
-			if($gourpdesc == $group_row['group_desc']) $gourpdesc = false;
+            $gourpdesc = ((isset($user->lang[$group_row['group_desc']]))? $user->lang[$group_row['group_desc']] : $group_row['group_desc']);
+            if($gourpdesc == $group_row['group_desc']) $gourpdesc = false;
 
             $group_desc_data = generate_text_for_edit($group_row['group_desc'], $group_row['group_desc_uid'], $group_row['group_desc_options']);
 
@@ -1556,7 +1553,7 @@ switch ($action)
                 $u_back = $u_action;
             break;
         }
-		//die($group_desc_data['text']);
+        //die($group_desc_data['text']);
 
         $template->assign_vars(array(
                 'S_EDIT'            => true,
@@ -1575,7 +1572,7 @@ switch ($action)
                 'GROUP_NAME'           => ($group_type == 3) ? $user->lang['G_' . $group_name] : $group_name,
                 'GROUP_INTERNAL_NAME'  => $group_name,
                 'GROUP_DESC'           => $group_desc_data['text'],
-				'GROUP_DESC_FILE'		=> $gourpdesc,
+                'GROUP_DESC_FILE'       => $gourpdesc,
 
                 'GROUP_RECEIVE_PM'     => (isset($group_row['group_receive_pm']) && $group_row['group_receive_pm']) ? ' checked="checked"' : '',
 

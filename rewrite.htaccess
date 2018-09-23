@@ -8,7 +8,6 @@
 deny from all
 </FilesMatch>
 
-
 <Limit GET POST>
   Order Allow,Deny
   Allow from all
@@ -196,7 +195,6 @@ RewriteRule ^.*$ httperror?errid=403
 
 RewriteCond %{HTTP_USER_AGENT}  ^-?$
 
-
 RewriteRule ^index.htm index.php
 RewriteRule ^home$ /index.php
 RewriteRule ^announce announce.php
@@ -224,4 +222,3 @@ RewriteRule ^msg-delall.html pm.php?op=delall
 RewriteRule ^msg-([0-9]*)-del.html pm.php?op=del&mid=$1
 RewriteRule ^msg-reply-([0-9]*).html pm.php?op=send&replyto=$1
 RewriteRule ^chat.html chat.php
-

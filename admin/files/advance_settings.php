@@ -2,28 +2,28 @@
 
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
 ** Formerly Known As phpMyBitTorrent
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
-** Project Leaders: Black_Heart, Thor.
-** File advance_settings.php 2018-07-29 07:27:00
+** Project Leaders: Black_Heart, Thor
+** File files/advance_settings.php 2018-09-22 00:00:00 Thor
 **
 ** CHANGES
 **
-** 2018-07-29 - Add Language to drawRow & Code Tidy
+** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
 **/
 
-if (!defined('IN_PMBT'))
+if (!defined('IN_BTM'))
 {
-	include_once './../../security.php';
-	die ("You can't access this file directly");
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
+    die ("Error 404 - Page Not Found");
 }
 
 $sql = 'SELECT * FROM `' . $db_prefix . '_settings`';
@@ -32,11 +32,11 @@ $avres  = $db->sql_query($sql) OR btsqlerror($avsql);
 $cfgrow = array();
 
 while($adv_sett = $db->sql_fetchrow($avres))$cfgrow[$adv_sett['config_name']] = $adv_sett['config_value'] ;
-	$do = request_var('do', '');
+    $do = request_var('do', '');
 
 if (isset($do) && $do == "save")
 {
-	$new_config = array();
+    $new_config = array();
     $allow_privmsg      = request_var('sub_allow_privmsg', 0);
     $pm_max_boxes       = request_var('sub_pm_max_boxes', 0);
     $pm_max_msgs        = request_var('sub_pm_max_msgs', 0);
@@ -73,7 +73,7 @@ if (isset($do) && $do == "save")
 
     foreach($new_config AS $config_name => $value)
     {
-    	set_config($config_name, $value);
+        set_config($config_name, $value);
     }
 
     $template->assign_vars(array(

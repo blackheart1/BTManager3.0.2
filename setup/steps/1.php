@@ -1,22 +1,23 @@
 <?php
+
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
 ** Formerly Known As phpMyBitTorrent
 ** Created By Antonio Anzivino (aka DJ Echelon)
-** And Joe Robertson (aka joeroberts/Black_Heart)
-** Project Leaders: Black_Heart, Thor.
-** File 1.php 2018-02-17 14:32:00 joeroberts
+** And Joe Robertson (aka joeroberts)
+** Project Leaders: Black_heart, Thor.
+** File steps/1.php 2018-09-21 00:00:00 Thor
 **
 ** CHANGES
 **
-** EXAMPLE 26-04-13 - Added Auto Ban
+** 2018-09-21 - Updated Masthead, Github, !defined('IN_BTM')
 **/
 
 echo "<input type=\"hidden\" name=\"step\" value=\"2\" />\n";
@@ -69,14 +70,14 @@ if (!extension_loaded("mysql") AND !extension_loaded("mysqli")) {
 } else {
         ok();
         echo " - ";
-		if(extension_loaded("mysql"))
-		{
-			echo "MySql " . mysql_get_client_info();
-		}
-		else
-		{
-			echo "MySqli " . mysqli_get_client_info();
-		}
+        if(extension_loaded("mysql"))
+        {
+            echo "MySql " . mysql_get_client_info();
+        }
+        else
+        {
+            echo "MySqli " . mysqli_get_client_info();
+        }
 }
 
 echo "<br />";
@@ -133,10 +134,10 @@ echo _cachefolder;
 echo " - ";
 if (!is__writable('./../cache/'))
 {
-	err();
-	$error = true;
-	echo '<br />';
-	echo _cache_fail;
+    err();
+    $error = true;
+    echo '<br />';
+    echo _cache_fail;
 }
 else
 ok();
@@ -215,4 +216,5 @@ if (!$error) {
         if ($warn) echo "<p>"._step1warn."</p>\n";
         echo "<p><input type=\"submit\" value=\""._nextstep."\" /></p>\n";
 } else echo "<p align=\"center\">"._step1fail."</p>\n;";
+
 ?>

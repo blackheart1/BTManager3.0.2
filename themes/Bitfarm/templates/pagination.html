@@ -2,14 +2,14 @@
 // <![CDATA[
 function jumpto()
 {
-	var page = prompt('{LA_JUMP_PAGE}:', '{ON_PAGE}');
-	var perpage = '{PER_PAGE}';
-	var base_url = '{A_BASE_URL}';
+    var page = prompt('{LA_JUMP_PAGE}:', '{ON_PAGE}');
+    var perpage = '{PER_PAGE}';
+    var base_url = '{A_BASE_URL}';
 
-	if (page !== null && !isNaN(page) && page > 0)
-	{
-		document.location.href = base_url.replace(/&amp;/g, '&') + '&start=' + ((page - 1) * perpage);
-	}
+    if (page !== null && !isNaN(page) && page > 0)
+    {
+        document.location.href = base_url.replace(/&amp;/g, '&') + '&start=' + ((page - 1) * perpage);
+    }
 }
 // ]]>
 </script>

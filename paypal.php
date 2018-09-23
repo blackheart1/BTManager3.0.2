@@ -1,10 +1,11 @@
 <?php
+
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -12,14 +13,20 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File paypal.php 2018-02-17 14:32:00 Black_Heart
+** File paypal.php 2018-09-22 00:00:00 Thor
 **
 ** CHANGES
 **
-** EXAMPLE 26-04-13 - Added Auto Ban
+** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
 **/
-if (defined('IN_PMBT'))die ("You can't include this file");
-define("IN_PMBT",true);
+
+if (defined('IN_BTM'))
+{
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
+    die ("Error 404 - Page Not Found");
+}
+
+define("IN_BTM",true);
 
 include("include/config_lite.php");
 require_once'include/class.cache.php';
@@ -65,19 +72,19 @@ function get_date_time($timestamp = 0)
 }
 
 // read the post from PayPal system and add 'cmd'
-// Read the post from PayPal and add 'cmd' 
-$req = 'cmd=_notify-validate'; 
-if(function_exists('get_magic_quotes_gpc')) 
-  { $get_magic_quotes_exits = true;} 
-foreach ($_POST as $key => $value) 
-  // Handle escape characters, which depends on setting of magic quotes 
-  { if($get_magic_quotes_exists == true && get_magic_quotes_gpc() == 1) 
-    {  $value = urlencode(stripslashes($value)); 
-  } else { 
-    $value = urlencode($value); 
-  }  
-  $req .= "&$key=$value";  
-} 
+// Read the post from PayPal and add 'cmd'
+$req = 'cmd=_notify-validate';
+if(function_exists('get_magic_quotes_gpc'))
+  { $get_magic_quotes_exits = true;}
+foreach ($_POST as $key => $value)
+  // Handle escape characters, which depends on setting of magic quotes
+  { if($get_magic_quotes_exists == true && get_magic_quotes_gpc() == 1)
+    {  $value = urlencode(stripslashes($value));
+  } else {
+    $value = urlencode($value);
+  }
+  $req .= "&$key=$value";
+}
 logerror($req,'Donation');
 // post back to PayPal system to validate
 $header .= "POST /cgi-bin/webscr HTTP/1.0\r\n";
@@ -129,7 +136,7 @@ $donatedate = $user['dondate'];
   $db->sql_query("UPDATE ".$db_prefix."_paypal SET reseaved_donations = $donatein + '$payment_amount' ");
   $db->sql_query("INSERT INTO ".$db_prefix."_private_messages (sent, sender, recipient, subject, text) VALUES (NOW(), 0, $item_number, 'Donation', ':thankyou:\nFor your donation of $".$payment_amount."\n".$gift_message."')");
   if($ftp_gift)$db->sql_query("INSERT INTO ".$db_prefix."_private_messages (sent, sender, recipient, subject, text) VALUES (NOW(), 0, 145, 'Donation For FTP', '".$item_number." has dontaed and requested FTP access')");
-		$pmbt_cache->remove_file("sql_".md5("paypal").".php");
+        $pmbt_cache->remove_file("sql_".md5("paypal").".php");
 
 }
 else if (strcmp ($res, "INVALID") == 0) {
@@ -139,4 +146,5 @@ else if (strcmp ($res, "INVALID") == 0) {
 }
 fclose ($fp);
 }
+
 ?>

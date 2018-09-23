@@ -1,9 +1,9 @@
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -11,82 +11,83 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File browse.js 2018-02-19 14:32:00 Black_Heart
+** File browse.js 2018-09-22 00:00:00 Thor
 **
 ** CHANGES
 **
-** EXAMPLE 26-04-13 - Added Auto Ban
+** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
 **/
+
 function ShowHideMainCats(tableCount)
 {
-	var MainCats = document.getElementById('cats');
-	var MainCatsPic = document.getElementById('pic');
-	var DefCats = document.getElementById('defcats');
+    var MainCats = document.getElementById('cats');
+    var MainCatsPic = document.getElementById('pic');
+    var DefCats = document.getElementById('defcats');
 
-	if (MainCats.style.display == 'none') {
-	  MainCats.style.display = 'block';
-	  DefCats.style.display = 'block';
-	  MainCatsPic.src = 'images/noncross.gif';
-	}
-	else {
-	  MainCats.style.display = 'none';
-	  DefCats.style.display = 'none';
-	  MainCatsPic.src = 'images/cross.gif';
-	}
-	
-	for(i = 1; i <= tableCount; i++) {
-		tableID = 'tabletype' + i;
-		tabletype = document.getElementById(tableID);
-		picID = 'pic' + i;
-		picture = document.getElementById(picID);
-		tabletype.style.display = 'none';
-		picture.src = 'images/cross.gif';
-	}
-	
+    if (MainCats.style.display == 'none') {
+      MainCats.style.display = 'block';
+      DefCats.style.display = 'block';
+      MainCatsPic.src = 'images/noncross.gif';
+    }
+    else {
+      MainCats.style.display = 'none';
+      DefCats.style.display = 'none';
+      MainCatsPic.src = 'images/cross.gif';
+    }
+
+    for(i = 1; i <= tableCount; i++) {
+        tableID = 'tabletype' + i;
+        tabletype = document.getElementById(tableID);
+        picID = 'pic' + i;
+        picture = document.getElementById(picID);
+        tabletype.style.display = 'none';
+        picture.src = 'images/cross.gif';
+    }
+
 }
 
 
 function ShowHideMainSubCats(tableNum,tableCount){
-	
-	//Modified http://lists.evolt.org/pipermail/javascript/2006-May/010443.html
-	
-	if(tableCount > 1)
-	for(i = 1; i <= tableCount; i++) {
-		tableID = 'tabletype' + i;
-		tabletype = document.getElementById(tableID);
-		picID = 'pic' + i;
-		picture = document.getElementById(picID);
-		
-		if(i == tableNum){
-			if(tabletype.style.display == 'none')
-			{
-			tabletype.style.display = 'block';
-			picture.src = 'images/noncross.gif';
-		    }
-			else
-			{
-			tabletype.style.display = 'none';
-			picture.src = 'images/cross.gif';
-		}
-		}
-		else
-		{
-		tabletype.style.display = 'none';
-		picture.src = 'images/cross.gif';
-	}
 
-	}
+    //Modified http://lists.evolt.org/pipermail/javascript/2006-May/010443.html
+
+    if(tableCount > 1)
+    for(i = 1; i <= tableCount; i++) {
+        tableID = 'tabletype' + i;
+        tabletype = document.getElementById(tableID);
+        picID = 'pic' + i;
+        picture = document.getElementById(picID);
+
+        if(i == tableNum){
+            if(tabletype.style.display == 'none')
+            {
+            tabletype.style.display = 'block';
+            picture.src = 'images/noncross.gif';
+            }
+            else
+            {
+            tabletype.style.display = 'none';
+            picture.src = 'images/cross.gif';
+        }
+        }
+        else
+        {
+        tabletype.style.display = 'none';
+        picture.src = 'images/cross.gif';
+    }
+
+    }
 }
 
 function checkAllFields(ref,tabletype) {
-	
-	//Modified http://www.dustindiaz.com/check-one-check-all-javascript/
-	
-	checkAllID = 'checkAll' + tabletype;
+
+    //Modified http://www.dustindiaz.com/check-one-check-all-javascript/
+
+    checkAllID = 'checkAll' + tabletype;
     var chkAll = document.getElementById(checkAllID);
-	CatsID = 'cats' + tabletype + '[]';
+    CatsID = 'cats' + tabletype + '[]';
     var checks = document.getElementsByName(CatsID);
- 
+
     var boxLength = checks.length;
     var allChecked = false;
     var totalChecked = 0;
@@ -230,4 +231,3 @@ thisbrowser="NN6";
 }
 }
 // -->
-

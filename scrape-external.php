@@ -1,10 +1,11 @@
 <?php
+
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -12,39 +13,41 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File scrape-external.php 2018-02-17 14:32:00 Black_Heart
+** File scrape-external.php 2018-09-22 00:00:00 Thor
 **
 ** CHANGES
 **
-** EXAMPLE 26-04-13 - Added Auto Ban
+** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
 **/
-if (defined('IN_PMBT'))
+
+if (defined('IN_BTM'))
 {
-	die ("You can't include this file");
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
+    die ("Error 404 - Page Not Found");
 }
 else
 {
-	define("IN_PMBT",true);
+    define("IN_BTM",true);
 }
 require_once("common.php");
 $user->set_lang('scrape_ext',$user->ulanguage);
 $template = new Template();
 set_site_var($user->lang['TITLE']);
-$id2	= request_var('id', 0);
+$id2    = request_var('id', 0);
 $url2 =  request_var('tracker', '');
 $home =  request_var('return', '');
 $back =  request_var('back', '');
 require_once("include/functions.php");
 require_once("include/torrent_functions.php");
 if(!checkaccess("u_update_peers")){
-				$template->assign_vars(array(
-					'S_ERROR'			=> true,
-					'S_FORWARD'			=> false,
-					'TITTLE_M'			=> $user->lang['AUTH_FAILD'],
-					'MESSAGE'			=> $user->lang['GROUP_NOT_AU'],
-				));
-				echo $template->fetch('message_body.html');
-				close_out();
+                $template->assign_vars(array(
+                    'S_ERROR'           => true,
+                    'S_FORWARD'         => false,
+                    'TITTLE_M'          => $user->lang['AUTH_FAILD'],
+                    'MESSAGE'           => $user->lang['GROUP_NOT_AU'],
+                ));
+                echo $template->fetch('message_body.html');
+                close_out();
 }
         do { //I can use break to exit
 
@@ -56,10 +59,10 @@ if(!checkaccess("u_update_peers")){
         $res = $db->sql_query($sql) or btsqlerror($sql);
         if ($db->sql_numrows($res) < 1) {
                 $db->sql_freeresult($res);
-				$template->assign_vars(array(
-                        'S_ERROR'				=> true,
-						'L_WARNING'				=>	$user->lang['TRACKER_MISSING'],
-						'ERROR_MSG'				=>	sprintf($user->lang['ERROR_TRACKER_MIS'],$url2),
+                $template->assign_vars(array(
+                        'S_ERROR'               => true,
+                        'L_WARNING'             =>  $user->lang['TRACKER_MISSING'],
+                        'ERROR_MSG'             =>  sprintf($user->lang['ERROR_TRACKER_MIS'],$url2),
                 ));
                 break;
         }
@@ -87,8 +90,8 @@ if(!checkaccess("u_update_peers")){
         1ST ATTEMPT: SELECTIVE SCRAPE
         2ND ATTEMPT: GLOBAL SCRAPE
         3RD ATTEMPT: SINGLE SCRAPE
-        
-        
+
+
 */
         if ($support == "selective" AND  count($infohashes) > 1) {
                 /*
@@ -100,8 +103,8 @@ if(!checkaccess("u_update_peers")){
                 for ($i = 1; $i < count($infohashes); $i++) {
                         $url .= "&info_hash=".urlencode($infohashes[$i]);
                 }
-			  $gethash = array();
-			  foreach($infohashes as $k => $hash)$gethash[$hash]=preg_replace_callback('/./s', "hex_esc", str_pad($hash,20));
+              $gethash = array();
+              foreach($infohashes as $k => $hash)$gethash[$hash]=preg_replace_callback('/./s', "hex_esc", str_pad($hash,20));
                 $scrape = getscrapedata($scrapeurl,true, $gethash);
                 $scrape_valid = false;
                 //Checking if returned scrape is valid scrape data
@@ -115,20 +118,20 @@ if(!checkaccess("u_update_peers")){
                 } else {
                         $support = "global";
                         $db->sql_query("UPDATE ".$db_prefix."_trackers SET support = 'global' WHERE url = '".$url2."';");
-						meta_refresh(0, $_SERVER['QUERY_STRING']);
-				$template->assign_vars(array(
-					'S_ERROR'			=> true,
-					'S_FORWARD'			=> false,
-					'TITTLE_M'			=> $user->lang['AUTH_FAILD'],
-					'MESSAGE'			=> $user->lang['GROUP_NOT_AU'],
-				));
-				echo $template->fetch('message_body.html');
-				close_out();                }
+                        meta_refresh(0, $_SERVER['QUERY_STRING']);
+                $template->assign_vars(array(
+                    'S_ERROR'           => true,
+                    'S_FORWARD'         => false,
+                    'TITTLE_M'          => $user->lang['AUTH_FAILD'],
+                    'MESSAGE'           => $user->lang['GROUP_NOT_AU'],
+                ));
+                echo $template->fetch('message_body.html');
+                close_out();                }
         }
-		//die('test');
+        //die('test');
         if ($support == "global" ) {
-			  $gethash = array();
-				foreach($infohashes as $k => $hash)$gethash[$hash]=preg_replace_callback('/./s', "hex_esc", str_pad($hash,20));
+              $gethash = array();
+                foreach($infohashes as $k => $hash)$gethash[$hash]=preg_replace_callback('/./s', "hex_esc", str_pad($hash,20));
                 $scrape_valid = false;
                 $scrape = getscrapedata($scrapeurl,true,$gethash);
                 if ($scrape) {
@@ -140,16 +143,16 @@ if(!checkaccess("u_update_peers")){
                 } else {
                         $support = "single";
                         $db->sql_query("UPDATE ".$db_prefix."_trackers SET support = 'single' WHERE url = '".$url2."';");
- 						meta_refresh(0, $siteurl . '/scrape-external.php?' . $_SERVER['QUERY_STRING']);
-				$template->assign_vars(array(
-					'S_ERROR'			=> true,
-					'S_FORWARD'			=> false,
-					'TITTLE_M'			=> $user->lang['AUTH_FAILD'],
-					'MESSAGE'			=> $user->lang['GROUP_NOT_AU'],
-				));
-				echo $template->fetch('message_body.html');
-				close_out();
-				}
+                        meta_refresh(0, $siteurl . '/scrape-external.php?' . $_SERVER['QUERY_STRING']);
+                $template->assign_vars(array(
+                    'S_ERROR'           => true,
+                    'S_FORWARD'         => false,
+                    'TITTLE_M'          => $user->lang['AUTH_FAILD'],
+                    'MESSAGE'           => $user->lang['GROUP_NOT_AU'],
+                ));
+                echo $template->fetch('message_body.html');
+                close_out();
+                }
         }
 //die(count($infohashes));
         if ($support == "single" OR count($infohashes) == 1) {
@@ -169,7 +172,7 @@ if(!checkaccess("u_update_peers")){
                 foreach ($infohashes as $hash) {
                          if(!$scr = getscrapedata ($scrapeurl.((strpos($scrapeurl,"?")) ? "&" : "?")."info_hash=".urlencode($hash), true,array($hash=>preg_replace_callback('/./s', "hex_esc", str_pad($hash,20))))) continue;
                         $hash_hex = preg_replace_callback('/./s', "hex_esc", str_pad($hash,20));
-						$hash_hex = "a".$hash_hex;
+                        $hash_hex = "a".$hash_hex;
 
                         if (entry_exists($scr,"files/".$hash_hex."(Dictionary)","Scrape")) {
                                 #Create the XML node for fake global scrape
@@ -206,12 +209,12 @@ if(!checkaccess("u_update_peers")){
                 $scrape->append_child($root);
         }
 
-				$template->assign_block_vars('trackers_resp', array(
-											'SCRAPE'  => str_replace(Array(" ","\n"),Array("&nbsp;","<br />\n"),htmlspecialchars($scrape->dump_mem(true,"UTF-8"))),
-										));
+                $template->assign_block_vars('trackers_resp', array(
+                                            'SCRAPE'  => str_replace(Array(" ","\n"),Array("&nbsp;","<br />\n"),htmlspecialchars($scrape->dump_mem(true,"UTF-8"))),
+                                        ));
         foreach ($infohashes as $hash) {
                 $hash_hex = preg_replace_callback('/./s', "hex_esc", str_pad($hash,20));
-						$hash_hex = "a".$hash_hex;
+                        $hash_hex = "a".$hash_hex;
                 if (!entry_exists($scrape,"files/".$hash_hex."(Dictionary)","Scrape")) {
                         $seed = $leech = $completed = 0;
                 } else {
@@ -223,14 +226,14 @@ if(!checkaccess("u_update_peers")){
                 }
                 if (($seed + $leech) > 0) $visible = "yes";
                 else $visible = "no";
-				
-				$template->assign_vars(array(
-											'SEEDERS'		=> $seed,
-											'LEECHERS'  	=> $leech,
-											'COMPLETED'  	=> $completed,
-											'NAME'  		=> htmlspecialchars(stripslashes(get_tor_name_from_has(utf8_encode($hash)))),
-											'INFO_HASH'  	=> $hash_hex,
-										));
+
+                $template->assign_vars(array(
+                                            'SEEDERS'       => $seed,
+                                            'LEECHERS'      => $leech,
+                                            'COMPLETED'     => $completed,
+                                            'NAME'          => htmlspecialchars(stripslashes(get_tor_name_from_has(utf8_encode($hash)))),
+                                            'INFO_HASH'     => $hash_hex,
+                                        ));
                 $sql = "UPDATE ".$db_prefix."_torrents SET seeders = ". $seed .", leechers = ".$leech.", tot_peer = ". ($seed + $leech) .", completed = ". $completed .", visible = '".$visible."', tracker_update = NOW(), last_action = NOW() WHERE info_hash = '".addslashes(utf8_encode($hash))."';";
                 $db->sql_query($sql) or btsqlerror($sql);
         }
@@ -239,12 +242,13 @@ if(!checkaccess("u_update_peers")){
 
 
         } while (false);
-		
-		if ($back==""){
-		meta_refresh(15,$home);
-		}else{
-		meta_refresh(15,"details.php?id=".$id2);
-		}
+
+        if ($back==""){
+        meta_refresh(15,$home);
+        }else{
+        meta_refresh(15,"details.php?id=".$id2);
+        }
 echo $template->fetch('scrape-external.html');
 close_out();
+
 ?>

@@ -1,6 +1,6 @@
 
 INSERT INTO `#prefix#_reports_reasons` (`reason_id`, `reason_title`, `reason_description`, `reason_order`) VALUES
-(1, 'warez', 'The reported post contains links to pirated or illegal software', 1),
-(2, 'spam', 'The reported post has for only purpose to advertise for a website or another product', 2),
-(3, 'off_topic', 'The reported post is off topic', 3),
-(4, 'other', 'The reported post does not fit into any other category (please use the description field)', 4);
+(1, 'warez', 'The Reported Post contains Links to Pirated or Illegal Software', 1),
+(2, 'spam', 'The Reported Post Only Purpose was to Advertise a Website or Other Product', 2),
+(3, 'off_topic', 'The Reported Post is Off Topic', 3),
+(4, 'other', 'The Reported Post Does Not Fit into any other Category (Please use the Description Field)', 4);

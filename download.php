@@ -1,10 +1,11 @@
 <?php
+
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -12,19 +13,21 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File download.php 2018-02-17 14:32:00 Black_Heart
+** File download.php 2018-09-22 00:00:00 Thor
 **
 ** CHANGES
 **
-** EXAMPLE 26-04-13 - Added Auto Ban
+** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
 **/
-if (defined('IN_PMBT'))
+
+if (defined('IN_BTM'))
 {
-	die ("You can't include this file");
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
+    die ("Error 404 - Page Not Found");
 }
 else
 {
-	define("IN_PMBT",true);
+    define("IN_BTM",true);
 }
 require_once("common.php");
 include_once("include/utf/utf_tools.php");
@@ -35,31 +38,31 @@ $rsskey = request_var('rsskey', '');
 $user->set_lang('download',$user->ulanguage);
 
 if(!$auth->acl_get('u_download_torrents')){
-				$template->assign_vars(array(
-					'S_ERROR'			=> true,
-					'S_FORWARD'			=> false,
-					'TITTLE_M'			=> $user->lang['BT_ERROR'],
-					'MESSAGE'			=> $user->lang['NOT_AUTH_DOWNLOAD'],
-				));
-				echo $template->fetch('message_body.html');
-				close_out();
+                $template->assign_vars(array(
+                    'S_ERROR'           => true,
+                    'S_FORWARD'         => false,
+                    'TITTLE_M'          => $user->lang['BT_ERROR'],
+                    'MESSAGE'           => $user->lang['NOT_AUTH_DOWNLOAD'],
+                ));
+                echo $template->fetch('message_body.html');
+                close_out();
 }
 
 
 function str_replcae_tracker($mystring)
 {
-	global $user, $site_announce, $export;
-	$new_ann = $mystring;
-	foreach($site_announce as $row)
-	{
-		$query_char = (strpos($row,"?")) ? "&" : "?";
-		if ($user->passkey != "" AND !$export)$passkey = $query_char."passkey=".urlencode($user->passkey);
-		else
-		$passkey = "";
-		$pos = ($mystring === $row)?true:false;
-		if ($pos !== false)$new_ann = $row.$passkey;
-	}
-	return $new_ann;
+    global $user, $site_announce, $export;
+    $new_ann = $mystring;
+    foreach($site_announce as $row)
+    {
+        $query_char = (strpos($row,"?")) ? "&" : "?";
+        if ($user->passkey != "" AND !$export)$passkey = $query_char."passkey=".urlencode($user->passkey);
+        else
+        $passkey = "";
+        $pos = ($mystring === $row)?true:false;
+        if ($pos !== false)$new_ann = $row.$passkey;
+    }
+    return $new_ann;
 }
 function replace_content( &$node, $new_content )
 {
@@ -77,36 +80,36 @@ $res = $db->sql_query($sql);
 $row = $db->sql_fetchrow($res);
 if (!$row) { //Torrent not present
         header("HTTP/1.0 404 Not found");
-				$template->assign_vars(array(
-					'S_ERROR'			=> true,
-					'S_FORWARD'			=> false,
-					'TITTLE_M'			=> $user->lang['BT_ERROR'],
-					'MESSAGE'			=> $user->lang['NO_SUCH_TORRENT'],
-				));
-				echo $template->fetch('message_body.html');
-				close_out();
+                $template->assign_vars(array(
+                    'S_ERROR'           => true,
+                    'S_FORWARD'         => false,
+                    'TITTLE_M'          => $user->lang['BT_ERROR'],
+                    'MESSAGE'           => $user->lang['NO_SUCH_TORRENT'],
+                ));
+                echo $template->fetch('message_body.html');
+                close_out();
 }
 if($user->parked)
 {
-				$template->assign_vars(array(
-					'S_ERROR'			=> true,
-					'S_FORWARD'			=> false,
-					'TITTLE_M'			=> $user->lang['BT_ERROR'],
-					'MESSAGE'			=> $user->lang['ACCOUNT_PARKED'],
-				));
-				echo $template->fetch('message_body.html');
-				close_out();
+                $template->assign_vars(array(
+                    'S_ERROR'           => true,
+                    'S_FORWARD'         => false,
+                    'TITTLE_M'          => $user->lang['BT_ERROR'],
+                    'MESSAGE'           => $user->lang['ACCOUNT_PARKED'],
+                ));
+                echo $template->fetch('message_body.html');
+                close_out();
 }
 if($user->disabled)
 {
-				$template->assign_vars(array(
-					'S_ERROR'			=> true,
-					'S_FORWARD'			=> false,
-					'TITTLE_M'			=> $user->lang['BT_ERROR'],
-					'MESSAGE'			=> sprintf($user->lang['ACCOUNT_DISABLED'], $user->disabled_reason),
-				));
-				echo $template->fetch('message_body.html');
-				close_out();
+                $template->assign_vars(array(
+                    'S_ERROR'           => true,
+                    'S_FORWARD'         => false,
+                    'TITTLE_M'          => $user->lang['BT_ERROR'],
+                    'MESSAGE'           => sprintf($user->lang['ACCOUNT_DISABLED'], $user->disabled_reason),
+                ));
+                echo $template->fetch('message_body.html');
+                close_out();
 }
 
 $row_id_torrent = $row["id"];
@@ -125,49 +128,49 @@ $id_user = $user->id;
 $name_user = $user->name;
 if ($row_banned == "yes" AND !$user->moderator) { //Stealth for Banned Torrent if not admin
         header("HTTP/1.0 404 Not found");
-				$template->assign_vars(array(
-					'S_ERROR'			=> true,
-					'S_FORWARD'			=> false,
-					'TITTLE_M'			=> $user->lang['BT_ERROR'],
-					'MESSAGE'			=> $user->lang['NO_SUCH_TORRENT'],
-				));
-				echo $template->fetch('message_body.html');
-				close_out();
+                $template->assign_vars(array(
+                    'S_ERROR'           => true,
+                    'S_FORWARD'         => false,
+                    'TITTLE_M'          => $user->lang['BT_ERROR'],
+                    'MESSAGE'           => $user->lang['NO_SUCH_TORRENT'],
+                ));
+                echo $template->fetch('message_body.html');
+                close_out();
 }
 
 if ($download_level == "user" AND !$user->user) {
 meta_refresh(0, $siteurl . "/login.php");
-				$template->assign_vars(array(
-					'S_ERROR'			=> true,
-					'S_FORWARD'			=> false,
-					'TITTLE_M'			=> $user->lang['BT_ERROR'],
-					'MESSAGE'			=> $user->lang['LOGIN_SITE'],
-				));
-				echo $template->fetch('message_body.html');
-				close_out();
+                $template->assign_vars(array(
+                    'S_ERROR'           => true,
+                    'S_FORWARD'         => false,
+                    'TITTLE_M'          => $user->lang['BT_ERROR'],
+                    'MESSAGE'           => $user->lang['LOGIN_SITE'],
+                ));
+                echo $template->fetch('message_body.html');
+                close_out();
 }
 if ($download_level == "premium" AND !$user->premium) {
 meta_refresh(3, $siteurl . "/login.php");
-				$template->assign_vars(array(
-					'S_ERROR'			=> true,
-					'S_FORWARD'			=> false,
-					'TITTLE_M'			=> $user->lang['BT_ERROR'],
-					'MESSAGE'			=> $user->lang['LOGIN_GROUP'],
-				));
-				echo $template->fetch('message_body.html');
-				close_out();
+                $template->assign_vars(array(
+                    'S_ERROR'           => true,
+                    'S_FORWARD'         => false,
+                    'TITTLE_M'          => $user->lang['BT_ERROR'],
+                    'MESSAGE'           => $user->lang['LOGIN_GROUP'],
+                ));
+                echo $template->fetch('message_body.html');
+                close_out();
 }
 
 if (!$user->premium AND $row_password != "" AND $password != $row_password AND ($row_owner != $id_user OR $id_user == 0)) {
 meta_refresh(3, $siteurl . "/details.php?id=".$row_id_torrent);
-				$template->assign_vars(array(
-					'S_ERROR'			=> true,
-					'S_FORWARD'			=> false,
-					'TITTLE_M'			=> $user->lang['BT_ERROR'],
-					'MESSAGE'			=> $user->lang['PASS_WORD_REQ'],
-				));
-				echo $template->fetch('message_body.html');
-				close_out();
+                $template->assign_vars(array(
+                    'S_ERROR'           => true,
+                    'S_FORWARD'         => false,
+                    'TITTLE_M'          => $user->lang['BT_ERROR'],
+                    'MESSAGE'           => $user->lang['PASS_WORD_REQ'],
+                ));
+                echo $template->fetch('message_body.html');
+                close_out();
 }
 
 
@@ -216,29 +219,29 @@ if (!$user->premium AND $row_owner != $id_user AND $row_tracker == "") {
                         elseif ($status == "denied") $errmsg[] = $user->lang['ERROR_PRIVATE_DENIDE']; //Owner denied download
                 } elseif (!$ratio_authorized) { //User has not requested Download Authorization and his ratio is not compliant. Error and authorization request.
                         $sql = "INSERT INTO ".$db_prefix."_privacy_file (master, slave, torrent) VALUES (".$row_owner.", ".$id_user.",".$row_id_torrent.");";
-						require_once("include/class.email.php");
-						include_once('include/function_messenger.php');
+                        require_once("include/class.email.php");
+                        include_once('include/function_messenger.php');
                         $db->sql_query($sql) or btsqlerror($sql);
                         $owner_sql = "SELECT username, language, email, user_notify_type, jabber FROM ".$db_prefix."_users WHERE id = '".$row_owner."' LIMIT 1;";
                         $owner_res = $db->sql_query($owner_sql) or btsqlerror($owner_sql);
                         list ($master_name, $master_language, $email_to, $method, $jabber) = $db->fetch_array($owner_res);
                         $db->sql_freeresult($owner_res);
-						//$user->set_lang('download',$user->ulanguage);
+                        //$user->set_lang('download',$user->ulanguage);
                         if (empty($master_language) OR !file_exists("language/email/".$master_language."/authreq.txt")) $lang_email = $language;
                         else $lang_email = $master_language;
-						$slave = $user->name;
-						$messenger = new messenger();
-						$messenger->template('authreq', $lang_email);
-						$messenger->to($email_to, $master_name);
-						$messenger->assign_vars(array(
-									'SUB_JECT'				=>	sprintf($user->lang['AUTH_REQ_MAIL_SUB'],$sitename),
-									'TOR_URL'				=>	$siteurl . '/mytorrents.php?op=displaytorrent&id=' . $id,
-									'TOR_NAME'				=>	$row_name ,
-									'MASTER'				=>	$master_name,
-									'SLAVE'					=>	$slave,
-									));
-						$messenger->send($method);
-						$messenger->save_queue();
+                        $slave = $user->name;
+                        $messenger = new messenger();
+                        $messenger->template('authreq', $lang_email);
+                        $messenger->to($email_to, $master_name);
+                        $messenger->assign_vars(array(
+                                    'SUB_JECT'              =>  sprintf($user->lang['AUTH_REQ_MAIL_SUB'],$sitename),
+                                    'TOR_URL'               =>  $siteurl . '/mytorrents.php?op=displaytorrent&id=' . $id,
+                                    'TOR_NAME'              =>  $row_name ,
+                                    'MASTER'                =>  $master_name,
+                                    'SLAVE'                 =>  $slave,
+                                    ));
+                        $messenger->send($method);
+                        $messenger->save_queue();
                         $errmsg[] = $user->lang['ERROR_PRIVATE_REQ_SENT']; //Page will return error
                 }
                 $db->sql_freeresult($privacy_res);
@@ -246,7 +249,7 @@ if (!$user->premium AND $row_owner != $id_user AND $row_tracker == "") {
         }
 }
 if (count($errmsg) > 0) {
-				$msg = '';
+                $msg = '';
                 $msg .= "<p>".$user->lang['ALERT_ERROR']."</p>\n";
                 $msg .= "<ul>\n";
                 foreach ($error as $msg) {
@@ -254,26 +257,26 @@ if (count($errmsg) > 0) {
                 }
                 $msg .= "</ul>\n";
         //bterror($errmsg,_btdownload);
-				$template->assign_vars(array(
-					'S_ERROR'			=> true,
-					'S_FORWARD'			=> false,
-					'TITTLE_M'			=> $user->lang['BT_ERROR'],
-					'MESSAGE'			=> $msg,
-				));
-				echo $template->fetch('message_body.html');
-				close_out();
+                $template->assign_vars(array(
+                    'S_ERROR'           => true,
+                    'S_FORWARD'         => false,
+                    'TITTLE_M'          => $user->lang['BT_ERROR'],
+                    'MESSAGE'           => $msg,
+                ));
+                echo $template->fetch('message_body.html');
+                close_out();
 }
 $fn = "$torrent_dir/".$row_id_torrent.".torrent";
 if (!is_file($fn) OR !is_readable($fn)) {
         header("HTTP/1.0 500 Internal Server Error");
-				$template->assign_vars(array(
-					'S_ERROR'			=> true,
-					'S_FORWARD'			=> false,
-					'TITTLE_M'			=> $user->lang['BT_ERROR'],
-					'MESSAGE'			=> $user->lang['FILE_UNAVAILABLE'],
-				));
-				echo $template->fetch('message_body.html');
-				close_out();
+                $template->assign_vars(array(
+                    'S_ERROR'           => true,
+                    'S_FORWARD'         => false,
+                    'TITTLE_M'          => $user->lang['BT_ERROR'],
+                    'MESSAGE'           => $user->lang['FILE_UNAVAILABLE'],
+                ));
+                echo $template->fetch('message_body.html');
+                close_out();
 }
 if (!isset($export) OR $export == 0) $export = false;
 else $export = true;
@@ -298,9 +301,9 @@ header("Content-Disposition: attachment; filename=\"".$row_filename."\"");
         $ann = $anns[0];
         $ann->remove_child($ann->first_child());
         $ann->set_content($new_ann);
-		//Patch Backup
-		if(entry_exists($torrent,"announce-list(List)","Torrent"))
-		{
+        //Patch Backup
+        if(entry_exists($torrent,"announce-list(List)","Torrent"))
+        {
         $anns = $root->get_elements_by_tagname("announce-list");
         $ann = $anns[0];
         $uploaded = $torrent->create_element("Item");
@@ -313,21 +316,21 @@ header("Content-Disposition: attachment; filename=\"".$row_filename."\"");
                 $trackers_in_group = Array();
                 foreach ($group->child_nodes() as $tracker_node) {
                         $tracker = $tracker_node->get_content();
-						replace_content( $tracker_node, str_replcae_tracker($tracker) );
+                        replace_content( $tracker_node, str_replcae_tracker($tracker) );
                 }
 
         }
-		}
+        }
         $page = Bencode($torrent);
         unset($torrent, $root, $anns, $ann);
 
         #Writing to output
-		$buffer = ob_get_clean();
-		if (function_exists('ob_gzhandler') && !ini_get('zlib.output_compression'))
-		ob_start('ob_gzhandler');
-		else
+        $buffer = ob_get_clean();
+        if (function_exists('ob_gzhandler') && !ini_get('zlib.output_compression'))
+        ob_start('ob_gzhandler');
+        else
         ob_start();
-		ob_implicit_flush(0);
+        ob_implicit_flush(0);
         echo $page;
 
         unset($page);

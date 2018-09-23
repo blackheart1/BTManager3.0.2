@@ -1,10 +1,11 @@
 <?php
+
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -12,52 +13,54 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File torrent_functions.php 2018-02-18 14:32:00 joeroberts
+** File include/torrent_functions.php 2018-09-22 00:00:00 Thor
 **
 ** CHANGES
 **
-** EXAMPLE 26-04-13 - Added Auto Ban
+** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
 **/
-if (!defined('IN_PMBT'))
+
+if (!defined('IN_BTM'))
 {
-	include_once './../security.php';
-	die ();
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
+    die ("Error 404 - Page Not Found");
 }
+
 function generate_torrentpager($link, $page, $pages, $cat = false, $sort1 = '', $sort2 = '', $extra = ''){
 global $template;
            $template->assign_vars(array(
-		   'TOTTAL_PAGES'.$extra  =>  $pages,
-		   'CURENT_PAGE'.$extra  =>  $page,
-		   ));
+           'TOTTAL_PAGES'.$extra  =>  $pages,
+           'CURENT_PAGE'.$extra  =>  $page,
+           ));
 
-				if($page < $pages AND $cat) {
+                if($page < $pages AND $cat) {
            $template->assign_vars(array(
-		   'NEXT_PAGE'.$extra  =>  ($page+1)."&cat=".$cat.$sort1,
-		   ));
+           'NEXT_PAGE'.$extra  =>  ($page+1)."&cat=".$cat.$sort1,
+           ));
                 } elseif($page < $pages ) {
            $template->assign_vars(array(
-		   'NEXT_PAGE'.$extra  =>  ($page+1).$sort1,
-		   ));
-						
+           'NEXT_PAGE'.$extra  =>  ($page+1).$sort1,
+           ));
+
                 }else{
            $template->assign_vars(array(
-		   'NEXT_PAGE'.$extra  =>  false,
-		   ));
-				}
-				if($page > 1 AND $cat) {
+           'NEXT_PAGE'.$extra  =>  false,
+           ));
+                }
+                if($page > 1 AND $cat) {
            $template->assign_vars(array(
-		   'PREV_PAGE'.$extra  =>  "page=".($page-1)."&cat=".$cat.$sort1,
-		   ));
+           'PREV_PAGE'.$extra  =>  "page=".($page-1)."&cat=".$cat.$sort1,
+           ));
                 } elseif($page > 1) {
            $template->assign_vars(array(
-		   'PREV_PAGE'.$extra  =>  ($page-1).$sort1,
-		   ));
-						
+           'PREV_PAGE'.$extra  =>  ($page-1).$sort1,
+           ));
+
                 }else{
            $template->assign_vars(array(
-		   'PREV_PAGE'.$extra  =>  false,
-		   ));
-				}
+           'PREV_PAGE'.$extra  =>  false,
+           ));
+                }
                 if($cat){
                 $pager = "<a href=\"" . $link . "".$cat.$sort1."\">".(($page == 1) ? "<strong>1</strong>" : "1")."</a><span class=\"page-sep\">, </span>";
 
@@ -69,9 +72,9 @@ global $template;
                 if (($page + 5) < $pages) $pager .= "...";
                 $pager .= "<a href=\"" . $link . "".$pages."&cat=".$cat.$sort1."\">".(($page == $pages) ? "<strong>".$pages."</strong>" : $pages)."</a>";
            $template->assign_vars(array(
-		   'GENERATED_PAGES'.$extra  =>  "<span>".(($pages > 1) ? $pager : "")."</span>",
-		   ));
-				}else {
+           'GENERATED_PAGES'.$extra  =>  "<span>".(($pages > 1) ? $pager : "")."</span>",
+           ));
+                }else {
                 $pager = "<a href=\"" . $link . "".$sort2."\">".(($page == 1) ? "<strong>1</strong>" : "1")."</a><span class=\"page-sep\">, </span>";
 
                 if (($page - 5) > 1) $pager .= "...";
@@ -82,75 +85,75 @@ global $template;
                 if (($page + 5) < $pages) $pager .= "...";
                 $pager .= "<a href=\"" . $link . "".$pages.$sort1."\">".(($page == $pages) ? "<strong>".$pages."</strong>" : $pages)."</a>";
            $template->assign_vars(array(
-		   'GENERATED_PAGES'.$extra  =>  "<span>".(($pages > 1) ? $pager : "")."</span>",
-		   ));
-				}
+           'GENERATED_PAGES'.$extra  =>  "<span>".(($pages > 1) ? $pager : "")."</span>",
+           ));
+                }
 }
 function get_tor_id_from_has($hash)
 {
         global $db, $db_prefix, $user;
                 $sql = "SELECT id FROM ".$db_prefix."_torrents WHERE info_hash = '".addslashes($hash)."' LIMIT 1;";
                 $trkres = $db->sql_query($sql);
-                if (!$trkrow = $db->sql_fetchrow($trkres)) 
-				{
-					return '0';
-				}
-				else
-				{
-					return $trkrow[0];
-				}
+                if (!$trkrow = $db->sql_fetchrow($trkres))
+                {
+                    return '0';
+                }
+                else
+                {
+                    return $trkrow[0];
+                }
 }
 function get_tor_name_from_has($hash)
 {
         global $db, $db_prefix, $user;
                 $sql = "SELECT name FROM ".$db_prefix."_torrents WHERE info_hash = '".$db->sql_escape($hash)."' LIMIT 1;";
                 $trkres = $db->sql_query($sql);
-                if (!$trkrow = $db->fetch_array($trkres)) 
-				{
-					return $user->lang['UNKNOWN'];
-				}
-				else
-				{
-				// die(print_r($trkrow));
-					return $trkrow[0];
-				}
+                if (!$trkrow = $db->fetch_array($trkres))
+                {
+                    return $user->lang['UNKNOWN'];
+                }
+                else
+                {
+                // die(print_r($trkrow));
+                    return $trkrow[0];
+                }
 }
 function get_tor_vars($res, $variant = "index", $user = "", $block = "", $extra = '') {
         global $db, $template, $name, $search, $user, $download_level, $torrent_global_privacy, $onlysearch, $db_prefix, $autoscrape, $theme, $btback1, $btback2, $btback3, $free_dl,$page, $prev, $pages, $pager, $next;
         while ($row = $db->sql_fetchrow($res))
-		{       #Category
+        {       #Category
                 if (isset($row["cat_name"])) {
                         if (isset($row["cat_pic"]) AND $row["cat_pic"] != "" AND is_readable("themes/".$theme."/pics/cat_pics/".$row["cat_pic"]))
-						{
+                        {
                                 $catimg = "themes/".$theme."/pics/cat_pics/".$row["cat_pic"];
                                 $catigory = "<img border=\"0\" src=\"themes/" . $theme . "/pics/cat_pics/". $row["cat_pic"] . "\" alt=\"" . $row["cat_name"] . "\" >";
-						}
+                        }
                         elseif (isset($row["cat_pic"]) AND $row["cat_pic"] != "" AND is_readable("cat_pics/".$row["cat_pic"]))
-						{
+                        {
                                 $catimg = "cat_pics/".$row["cat_pic"];
                                 $catigory =  "<img border=\"0\" src=\"cat_pics/" . $row["cat_pic"] . "\" alt=\"" . $row["cat_name"] . "\" >";
-						}
+                        }
                         else
                                 $catigory =  $row["cat_name"];
                 } else $catigory =  "-";
-				#ShortName
+                #ShortName
                 $dispname = htmlspecialchars($row["name"]);
                 $dispname = str_replace("_", " ", $dispname);
                 $dispname = str_replace(".", " ", $dispname);
                 //Permission Administration
-				$alt = $auth_link = $pic = '';
+                $alt = $auth_link = $pic = '';
                 if ($torrent_global_privacy AND $user->user AND $row["type"] != "link") {
                         if ($row["owner"] == $user->id) {
                                 $pic = "auth_none.gif";
-								$alt = 'AUTH_PENDING_NONE';
+                                $alt = 'AUTH_PENDING_NONE';
                                 $authsql = "SELECT status FROM ".$db_prefix."_privacy_file WHERE torrent = '".$row["id"]."' AND status = 'pending';";
                                 $authres = $db->sql_query($authsql) or btsqlerror($authsql);
                                 if ($db->sql_numrows($authres) > 0)
-								{
-									$pic = "auth_pending.gif";
-									$alt = 'AUTH_PENDING';
-								}
-								//echo $pic;
+                                {
+                                    $pic = "auth_pending.gif";
+                                    $alt = 'AUTH_PENDING';
+                                }
+                                //echo $pic;
                                 $auth_link = pic($pic,"mytorrents.php?op=displaytorrent&id=".$row["id"],$user->lang[$alt]);
                         } elseif (!can_download($user,$row)) {
                                 $authres = $db->sql_query("SELECT status FROM ".$db_prefix."_privacy_file WHERE torrent = '".$row["id"]."' AND slave = '".$user->id."' LIMIT 1;");
@@ -158,7 +161,7 @@ function get_tor_vars($res, $variant = "index", $user = "", $block = "", $extra 
                                 else $auth_link = pic("lock.gif",null,$user->lang['ALT_LOCKED_T']);
                         }
                 }
-				#Rating
+                #Rating
                 if (!isset($row["rating"]))
                         $rating = pic("0-rating.png");
                 else {
@@ -167,13 +170,13 @@ function get_tor_vars($res, $variant = "index", $user = "", $block = "", $extra 
                         if (!isset($rating))
                                 $rating = pic("0-rating.png");
                 }
-				#Snatched
+                #Snatched
                 $totsql = "SELECT count(`torrentid`)as `snatch` FROM `".$db_prefix."_snatched` WHERE `torrentid` = '".$row["id"]."'";
                 $totres = $db->sql_query($totsql);
                 $sncount = $db->sql_fetchrow($totres);
-				#Peer speed
-				$speed_leech = "--";
-				$edt = "--";
+                #Peer speed
+                $speed_leech = "--";
+                $edt = "--";
                 if ($row["type"] != "link" AND $row["tracker"] == "") {
                         if ($row["leechers"] > 0 AND $row["speed"] > 0) {
                                 $ro = $row["seeders"]/$row["leechers"];
@@ -189,92 +192,92 @@ function get_tor_vars($res, $variant = "index", $user = "", $block = "", $extra 
                         }
                 }
 
-		$refreshable = false;
-		if ($row["tracker"] != "") {
-			if ($user->user){
-				if ((time()- sql_timestamp_to_unix_timestamp($row["tracker_update"]))> 1800) {
-				$refreshable = true;
-				}else{
-				$refreshable = false;
-				}
-			}elseif ($user->moderator){
-				$refreshable = true;
-			}else{
-				$refreshable = false;
-               		}
-		}
-		$can_edit=$can_delete=true;
-		$can_ban = false;
-		if ($row['owner'] == $user->id AND !checkaccess("u_edit_own_torrents"))
-		{
-		$can_edit=false;
-		} 
-		if ($row['owner'] == $user->id AND !checkaccess("u_delete_own_torrents"))
-		{
-		$can_delete=false;
-		} 
-		if ($row['owner'] != $user->id AND !checkaccess("m_delete_others_torrents"))
-		{
-		$can_delete=false;
-		} 
-		if ($row['owner'] != $user->id AND !checkaccess("m_can_edit_others_torrents"))
-		{
-		$can_edit=false;
-		} 
-		if (checkaccess("m_bann_torrents"))$can_ban = true;
+        $refreshable = false;
+        if ($row["tracker"] != "") {
+            if ($user->user){
+                if ((time()- sql_timestamp_to_unix_timestamp($row["tracker_update"]))> 1800) {
+                $refreshable = true;
+                }else{
+                $refreshable = false;
+                }
+            }elseif ($user->moderator){
+                $refreshable = true;
+            }else{
+                $refreshable = false;
+                    }
+        }
+        $can_edit=$can_delete=true;
+        $can_ban = false;
+        if ($row['owner'] == $user->id AND !checkaccess("u_edit_own_torrents"))
+        {
+        $can_edit=false;
+        }
+        if ($row['owner'] == $user->id AND !checkaccess("u_delete_own_torrents"))
+        {
+        $can_delete=false;
+        }
+        if ($row['owner'] != $user->id AND !checkaccess("m_delete_others_torrents"))
+        {
+        $can_delete=false;
+        }
+        if ($row['owner'] != $user->id AND !checkaccess("m_can_edit_others_torrents"))
+        {
+        $can_edit=false;
+        }
+        if (checkaccess("m_bann_torrents"))$can_ban = true;
            $template->assign_block_vars('torrent_var'.$extra, array(
-		   'ID'          => $row["id"],
-		   'CAN_EDIT'    => ($can_edit) ? true : false,
-		   'CAN_DEL'     => ($can_delete) ? true : false,
-		   'CAN_BAN'     => ($can_ban) ? true : false,
-		   'CAT_ID'      => $row["category"],
-		   'CAT_PID'      => $row["parent_id"],
-		   'CATEGORY'    => $catigory,
-		   'CAT_PIC'		=> $catimg,
-		   'REFRESH_T'   => $refreshable,
-		   'FREE_DL'     => ($row["ratiobuild"] == "yes" || $free_dl) ? true : false,
-		   'NUKED'       => ($row["nuked"] == "yes") ? true : false,
-		   'EVIDENCE'    => ($row["evidence"] != 0) ? true :false,
-		   'BANNED'      => ($row["banned"] == "yes") ?  true : false,
-		   'LINK'        => ($row["type"]=="link") ? true : false,
-		   'TRACKER_URL' => $row["tracker"],
-		   'LOCAL_T'     => ($row["tracker"] != "" AND $row["tracker"] != "dht:") ? false : true,
-		   'DHT_INABLED' => ($row["dht"] == "yes") ? true : false,
-		   'SHORTNAME'   => ((strlen($dispname) <= 21) ? search_word($dispname, $search): search_word(substr($dispname,0,20)."...", $search)),
-		   'FULL_NAME'   => $dispname,
-		   'TIMES_T_DOWNLOADED'   => $row["downloaded"],
-		   'HIT_COUNT'   => ($row["owner"] != $user->id) ? true: false,
-		   'CAN_DOWN_LOAD' => ((checkaccess("u_download")) AND $row["type"] != "link") ? true : false,
-		   'PEERS_UPDATE'  => (($row["tracker"] != "") AND ((time()- sql_timestamp_to_unix_timestamp($row["tracker_update"]))> 1800)) ? true : false,
-		   'LAST_TIME_SCR' => get_formatted_timediff(sql_timestamp_to_unix_timestamp($row["tracker_update"])),
-		   'AUTH_LINK'     => $auth_link,
-		   'NEED_AUTH'     => $torrent_global_privacy,
-		   'MULTY_FILES'   => ($row["type"] == "single" OR $row["numfiles"] <= 1) ? false : true,
-		   'NUM_FILE'      => $row["numfiles"],
-		   'NUM_COMENTS'   => $row["comments"],
-		   'RATEING_PIC'   => $rating,
-		   'DATE_ADDED'    => $user->format_date(sql_timestamp_to_unix_timestamp($row['added'])),
-		   'TIMES_SNATHED' => $sncount['snatch'],
-		   'DOWNLOAD_SP'   => mksize($row["speed"]),
-		   'DOWNLOAD_SIZE' => mksize($row["size"]),
-		   'SEEDERS'       => $row["seeders"],
-		   'LEECHERS'      => $row["leechers"],
-		   'TOTAL_SPEED'   => $speed_leech,
-		   'EST_DL_SPD'    => $edt,
-		   'ANONUMUS_UPLO' => (isset($row["username"]) AND $row["ownertype"]==0) ? false : true,
-		   'UPLOADERS_NAM' => ($row['owner'] == 0) ? $user->lang['UNKNOWN'] : username_is($row['owner']),
-		   'UPLODER_ID'    => $row['owner'],
-		   'UPLDER_COLOR'  => getusercolor(getlevel_name($row['owner'])),
+           'ID'          => $row["id"],
+           'CAN_EDIT'    => ($can_edit) ? true : false,
+           'CAN_DEL'     => ($can_delete) ? true : false,
+           'CAN_BAN'     => ($can_ban) ? true : false,
+           'CAT_ID'      => $row["category"],
+           'CAT_PID'      => $row["parent_id"],
+           'CATEGORY'    => $catigory,
+           'CAT_PIC'        => $catimg,
+           'REFRESH_T'   => $refreshable,
+           'FREE_DL'     => ($row["ratiobuild"] == "yes" || $free_dl) ? true : false,
+           'NUKED'       => ($row["nuked"] == "yes") ? true : false,
+           'EVIDENCE'    => ($row["evidence"] != 0) ? true :false,
+           'BANNED'      => ($row["banned"] == "yes") ?  true : false,
+           'LINK'        => ($row["type"]=="link") ? true : false,
+           'TRACKER_URL' => $row["tracker"],
+           'LOCAL_T'     => ($row["tracker"] != "" AND $row["tracker"] != "dht:") ? false : true,
+           'DHT_INABLED' => ($row["dht"] == "yes") ? true : false,
+           'SHORTNAME'   => ((strlen($dispname) <= 21) ? search_word($dispname, $search): search_word(substr($dispname,0,20)."...", $search)),
+           'FULL_NAME'   => $dispname,
+           'TIMES_T_DOWNLOADED'   => $row["downloaded"],
+           'HIT_COUNT'   => ($row["owner"] != $user->id) ? true: false,
+           'CAN_DOWN_LOAD' => ((checkaccess("u_download")) AND $row["type"] != "link") ? true : false,
+           'PEERS_UPDATE'  => (($row["tracker"] != "") AND ((time()- sql_timestamp_to_unix_timestamp($row["tracker_update"]))> 1800)) ? true : false,
+           'LAST_TIME_SCR' => get_formatted_timediff(sql_timestamp_to_unix_timestamp($row["tracker_update"])),
+           'AUTH_LINK'     => $auth_link,
+           'NEED_AUTH'     => $torrent_global_privacy,
+           'MULTY_FILES'   => ($row["type"] == "single" OR $row["numfiles"] <= 1) ? false : true,
+           'NUM_FILE'      => $row["numfiles"],
+           'NUM_COMENTS'   => $row["comments"],
+           'RATEING_PIC'   => $rating,
+           'DATE_ADDED'    => $user->format_date(sql_timestamp_to_unix_timestamp($row['added'])),
+           'TIMES_SNATHED' => $sncount['snatch'],
+           'DOWNLOAD_SP'   => mksize($row["speed"]),
+           'DOWNLOAD_SIZE' => mksize($row["size"]),
+           'SEEDERS'       => $row["seeders"],
+           'LEECHERS'      => $row["leechers"],
+           'TOTAL_SPEED'   => $speed_leech,
+           'EST_DL_SPD'    => $edt,
+           'ANONUMUS_UPLO' => (isset($row["username"]) AND $row["ownertype"]==0) ? false : true,
+           'UPLOADERS_NAM' => ($row['owner'] == 0) ? $user->lang['UNKNOWN'] : username_is($row['owner']),
+           'UPLODER_ID'    => $row['owner'],
+           'UPLDER_COLOR'  => getusercolor(getlevel_name($row['owner'])),
            ));
 }
 return;
 }
 function getscrapedata($url, $display=false, $info = false) {
-	if (preg_match("/thepiratebay.org/i", $url))$url = 'udp://tracker.openbittorrent.com:80';
-		if(preg_match('%udp://([^:/]*)(?::([0-9]*))?(?:/)?%si', $url, $m))
-			{
-				$tracker = 'udp://' . $m[1];
-				$port = isset($m[2]) ? $m[2] : 80;
+    if (preg_match("/thepiratebay.org/i", $url))$url = 'udp://tracker.openbittorrent.com:80';
+        if(preg_match('%udp://([^:/]*)(?::([0-9]*))?(?:/)?%si', $url, $m))
+            {
+                $tracker = 'udp://' . $m[1];
+                $port = isset($m[2]) ? $m[2] : 80;
 $ports = array(21, 25, 80, 81, 110, 443, 3306, $port);
 foreach ($ports as $port)
 {
@@ -290,82 +293,82 @@ foreach ($ports as $port)
     }
 }
 //exit();
-				$page = "d5:filesd";
-				$transaction_id = mt_rand(0,65535);
-				$fp = fsockopen($tracker, $port, $errno, $errstr);
-				stream_set_timeout($fp, 100);
-				if(!$fp)
-					{
-						return false;
-					}
-				$current_connid = "\x00\x00\x04\x17\x27\x10\x19\x80";
-				//Connection request
-				$packet = $current_connid . pack("N", 0) . pack("N", $transaction_id);
-				fwrite($fp,$packet);
-				//Connection response
-				$ret = fread($fp, 16);
-				//die($errno . $errstr);
-				if(strlen($ret) < 1 OR strlen($ret) < 16)
-					{
-						return false;
-					}
-				$retd = unpack("Naction/Ntransid",$ret);
-				if($retd['action'] != 0 || $retd['transid'] != $transaction_id)
-					{
-						return false;
-					}
-				$current_connid = substr($ret,8,8);
-				//Scrape request
-				$hashes = '';
-				foreach($info as $hash)
-					{
-						$hashes .= pack('H*', $hash);
-					}
-				$packet = $current_connid . pack("N", 2) . pack("N", $transaction_id) . $hashes;
-				fwrite($fp,$packet);
-				//Scrape response
-				$readlength = 8 + (12 * count($info));
-				$ret = fread($fp, $readlength);
-				//echo $ret;
-				if(strlen($ret) < 1 OR strlen($ret) < 8)
-					{
-						return false;
-					}
-				$retd = unpack("Naction/Ntransid",$ret);
-				// Todo check for error string if response = 3
-				if($retd['action'] != 2 || $retd['transid'] != $transaction_id || strlen($ret) < $readlength)
-					{
-						return false;
-					}
-				$torrents = array();
-				$index = 8;
-				foreach($info as $k => $hash)
-					{
-						$retd = unpack("Nseeders/Ncompleted/Nleechers",substr($ret,$index,12));
-						$retd['infohash'] = $k;
-						$torrents[$hash] = $retd;
-						$index = $index + 12;
-					}
-				foreach($torrents as $retb)$page .= "20:".str_pad($retb['infohash'], 20)."d".
-				"8:completei".$retb['seeders']."e".
-				"10:downloadedi".$retb['completed']."e".
-				"10:incompletei".$retb['leechers']."e".
-				"e";
-				$page .= "ee";
-			}
-			else
-			{
-				if (!$fp = @fopen($url,"rb")) return false; //Warnings are shown
-					@stream_set_timeout($fp, 10);
-				$page = "";
-				while (!feof($fp)) $page .= @fread($fp,10000);
-				@fclose($fp);
-			}
-					//die($url);
-				if(strlen($page) < 1 OR strlen($page) < 16)
-					{
-						return false;
-					}
+                $page = "d5:filesd";
+                $transaction_id = mt_rand(0,65535);
+                $fp = fsockopen($tracker, $port, $errno, $errstr);
+                stream_set_timeout($fp, 100);
+                if(!$fp)
+                    {
+                        return false;
+                    }
+                $current_connid = "\x00\x00\x04\x17\x27\x10\x19\x80";
+                //Connection request
+                $packet = $current_connid . pack("N", 0) . pack("N", $transaction_id);
+                fwrite($fp,$packet);
+                //Connection response
+                $ret = fread($fp, 16);
+                //die($errno . $errstr);
+                if(strlen($ret) < 1 OR strlen($ret) < 16)
+                    {
+                        return false;
+                    }
+                $retd = unpack("Naction/Ntransid",$ret);
+                if($retd['action'] != 0 || $retd['transid'] != $transaction_id)
+                    {
+                        return false;
+                    }
+                $current_connid = substr($ret,8,8);
+                //Scrape request
+                $hashes = '';
+                foreach($info as $hash)
+                    {
+                        $hashes .= pack('H*', $hash);
+                    }
+                $packet = $current_connid . pack("N", 2) . pack("N", $transaction_id) . $hashes;
+                fwrite($fp,$packet);
+                //Scrape response
+                $readlength = 8 + (12 * count($info));
+                $ret = fread($fp, $readlength);
+                //echo $ret;
+                if(strlen($ret) < 1 OR strlen($ret) < 8)
+                    {
+                        return false;
+                    }
+                $retd = unpack("Naction/Ntransid",$ret);
+                // Todo check for error string if response = 3
+                if($retd['action'] != 2 || $retd['transid'] != $transaction_id || strlen($ret) < $readlength)
+                    {
+                        return false;
+                    }
+                $torrents = array();
+                $index = 8;
+                foreach($info as $k => $hash)
+                    {
+                        $retd = unpack("Nseeders/Ncompleted/Nleechers",substr($ret,$index,12));
+                        $retd['infohash'] = $k;
+                        $torrents[$hash] = $retd;
+                        $index = $index + 12;
+                    }
+                foreach($torrents as $retb)$page .= "20:".str_pad($retb['infohash'], 20)."d".
+                "8:completei".$retb['seeders']."e".
+                "10:downloadedi".$retb['completed']."e".
+                "10:incompletei".$retb['leechers']."e".
+                "e";
+                $page .= "ee";
+            }
+            else
+            {
+                if (!$fp = @fopen($url,"rb")) return false; //Warnings are shown
+                    @stream_set_timeout($fp, 10);
+                $page = "";
+                while (!feof($fp)) $page .= @fread($fp,10000);
+                @fclose($fp);
+            }
+                    //die($url);
+                if(strlen($page) < 1 OR strlen($page) < 16)
+                    {
+                        return false;
+                    }
 
         $scrapef = BDecode($page,"Scrape");
         unset($page);
@@ -388,7 +391,7 @@ function ResolveTracker($url, &$resp) {
 
         $fp = @fsockopen($server["host"],'',$errno,$errstr,1.0);
         $fp2 = @fsockopen($server["host"],'80',$errno,$errstr,1.0);
-		$fp3 = @fsockopen($server["host"],$server["port"],$errno,$errstr,1.0);
+        $fp3 = @fsockopen($server["host"],$server["port"],$errno,$errstr,1.0);
         if (!$fp) $fp = $fp2;
         if (!$fp) $fp = $fp3;
         if (!$fp) {
@@ -418,7 +421,7 @@ function multiscrape() {
         $db->sql_freeresult($trkres);
         $announce = $trkrow["url"];
         $support = $trkrow["support"];
-		$id = $trkrow['id'];
+        $id = $trkrow['id'];
 
         $sql = "SELECT info_hash FROM ".$db_prefix."_torrents WHERE tracker = '".$announce."';";
         $hashres = $db->sql_query($sql);
@@ -443,7 +446,7 @@ function multiscrape() {
         2ND ATTEMPT: GLOBAL SCRAPE
         3RD ATTEMPT: SINGLE SCRAPE
         */
-		/*removed for now
+        /*removed for now
         if (!ResolveTracker($scrapeurl, $resp)) {
                 //echo "Debug: Impossibile collegarsi al tracker\n";
                // if ($resp) //echo $resp;
@@ -453,7 +456,7 @@ function multiscrape() {
                 $db->sql_query($sql);
                 return;
         }
-		*/
+        */
 
         //echo "Debug: il tracker è pronto\n";
 
@@ -469,7 +472,7 @@ function multiscrape() {
                         $url .= "&info_hash=".urlencode($infohashes[$i]);
 
                 }
-			  foreach($infohashes as $k => $hash)$gethash[$hash]=preg_replace_callback('/./s', "hex_esc", str_pad($hash,20));
+              foreach($infohashes as $k => $hash)$gethash[$hash]=preg_replace_callback('/./s', "hex_esc", str_pad($hash,20));
                 $scrape = getscrapedata($url,false, $gethash);
                 $scrape_valid = false;
 
@@ -487,8 +490,8 @@ function multiscrape() {
         }
 
         if ($support == "global" AND count($infohashes) >= 1) {
- 			  $gethash = array();
-				foreach($infohashes as $k => $hash)$gethash[$hash]=preg_replace_callback('/./s', "hex_esc", str_pad($hash,20));
+              $gethash = array();
+                foreach($infohashes as $k => $hash)$gethash[$hash]=preg_replace_callback('/./s', "hex_esc", str_pad($hash,20));
                //echo "Debug: Tento il globale\n";
                 $scrape_valid = false;
                 $scrape = getscrapedata($scrapeurl,false, $gethash);
@@ -522,7 +525,7 @@ function multiscrape() {
                 foreach ($infohashes as $hash) {
                          if(!$scr = getscrapedata ($scrapeurl.((strpos($scrapeurl,"?")) ? "&" : "?")."info_hash=".urlencode($hash), false,array($hash=>preg_replace_callback('/./s', "hex_esc", str_pad($hash,20))))) continue;
                         $hash_hex = preg_replace_callback('/./s', "hex_esc", str_pad($hash,20));
-						$hash_hex = 'a'.$hash_hex;
+                        $hash_hex = 'a'.$hash_hex;
 
                         if (entry_exists($scr,"files/".$hash_hex."(Dictionary)","Scrape")) {
                                 #Create the XML node for fake global scrape
@@ -562,10 +565,10 @@ function multiscrape() {
         }
 
         //echo "Debug: Ho fatto lo scrape\n";
-		$c = 0;
+        $c = 0;
         foreach ($infohashes as $hash) {
                 $hash_hex = preg_replace_callback('/./s', "hex_esc", str_pad($hash,20));
-				$hash_hex = 'a'.$hash_hex;
+                $hash_hex = 'a'.$hash_hex;
                 if (!entry_exists($scrape,"files/".$hash_hex."(Dictionary)","Scrape")) {
                         $seed = $leech = $completed = 0;
                 } else {
@@ -579,11 +582,11 @@ function multiscrape() {
                 else $visible = "no";
                 $sql = "UPDATE ".$db_prefix."_torrents SET seeders = ". $seed .", leechers = ".$leech.", tot_peer = ". ($seed + $leech) .", completed = ". $completed .", visible = '".$visible."', tracker_update = NOW(), last_action = NOW() WHERE info_hash = '".$db->sql_escape(utf8_encode($hash))."';";
                 $db->sql_query($sql);
-				$c++;
+                $c++;
         }
         unset($scrape);
         $db->sql_query("UPDATE ".$db_prefix."_trackers SET updated = NOW(), status = 'active' WHERE id = '".$id."';");
-		     if(defined('PMBT_DEBUG'))logerror('multysxrape done for tracker #' . $id . 'With ' . $c . ' Torrents updated' , "system",get_tor_id_from_has($hash));
+             if(defined('PMBT_DEBUG'))logerror('multysxrape done for tracker #' . $id . 'With ' . $c . ' Torrents updated' , "system",get_tor_id_from_has($hash));
 
 
         //echo "Debug: Scrape completato\n";
@@ -690,4 +693,5 @@ function checkmagnet($link, $fname, &$out) {
         }
         return INVALID_LINK;
 }
+
 ?>

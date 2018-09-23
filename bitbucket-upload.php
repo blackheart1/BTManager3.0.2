@@ -1,10 +1,11 @@
-<?php 
+<?php
+
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -12,19 +13,21 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File bitbucket_upload.php 2018-02-19 14:32:00 Black_Heart
+** File bitbucket_upload.php 2018-09-22 00:00:00 Thor
 **
 ** CHANGES
 **
-** EXAMPLE 26-04-13 - Added Auto Ban
+** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
 **/
-if (defined('IN_PMBT'))
+
+if (defined('IN_BTM'))
 {
-	die ("You can't include this file");
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
+    die ("Error 404 - Page Not Found");
 }
 else
 {
-	define("IN_PMBT",true);
+    define("IN_BTM",true);
 }
 require_once("common.php");
 require_once("include/torrent_functions.php");
@@ -72,7 +75,7 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
         14 => 'aiff',
         15 => 'wbmp',
         16 => 'xbm',
-		17 => 'JPG',
+        17 => 'JPG',
       );
 
       // We are expecting an integer between 1 and 16.
@@ -101,137 +104,137 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
 }
 if(!$pmbt_cache->get_sql("bitbucket_config"))
 {
-	$sql = "SELECT * FROM `".$db_prefix."_img_bucket` LIMIT 0, 30 ";
-	$res = $db->sql_query($sql);
-	$bucketrow = $db->sql_fetchrow($res);
-	$db->sql_freeresult($res);
-	$pmbt_cache->set_sql("bitbucket_config", $bucketrow);
+    $sql = "SELECT * FROM `".$db_prefix."_img_bucket` LIMIT 0, 30 ";
+    $res = $db->sql_query($sql);
+    $bucketrow = $db->sql_fetchrow($res);
+    $db->sql_freeresult($res);
+    $pmbt_cache->set_sql("bitbucket_config", $bucketrow);
 }
 else
 {
-	$bucketrow = $pmbt_cache->get_sql("bitbucket_config");
+    $bucketrow = $pmbt_cache->get_sql("bitbucket_config");
 }
 
 if ($bucketrow["allow"]!='true')
 {
-				$template->assign_vars(array(
-					'S_ERROR'			=> true,
-					'S_FORWARD'			=> false,
-					'TITTLE_M'			=> $user->lang['BITBUCKET_CLOSED'],
-					'MESSAGE'			=> $user->lang['BITBUCKET_CLOSED_EXP'],
-				));
-				echo $template->fetch('message_body.html');
-				close_out();
-} 
+                $template->assign_vars(array(
+                    'S_ERROR'           => true,
+                    'S_FORWARD'         => false,
+                    'TITTLE_M'          => $user->lang['BITBUCKET_CLOSED'],
+                    'MESSAGE'           => $user->lang['BITBUCKET_CLOSED_EXP'],
+                ));
+                echo $template->fetch('message_body.html');
+                close_out();
+}
 if(!checkaccess("u_can_use_bitbucket"))
 {
-				$template->assign_vars(array(
-					'S_ERROR'			=> true,
-					'S_FORWARD'			=> false,
-					'TITTLE_M'			=> $user->lang['BT_ERROR'],
-					'MESSAGE'			=> $user->lang['ERROR_NOT_U_AUTH'],
-				));
-				echo $template->fetch('message_body.html');
-				close_out();
-} 
+                $template->assign_vars(array(
+                    'S_ERROR'           => true,
+                    'S_FORWARD'         => false,
+                    'TITTLE_M'          => $user->lang['BT_ERROR'],
+                    'MESSAGE'           => $user->lang['ERROR_NOT_U_AUTH'],
+                ));
+                echo $template->fetch('message_body.html');
+                close_out();
+}
 $max_size = $bucketrow['max_file_size'];          //maximum filesize71096
 $outtopage = '';
-$attachment	= request_var('attachment', '',true,false,true);
+$attachment = request_var('attachment', '',true,false,true);
 //if($error = codeToMessage($attachment['error']))die($error);
 //die(print_r($attachment));
-//$attachment	= $_FILES['attachment'];
+//$attachment   = $_FILES['attachment'];
 if (is_uploaded_file($attachment['tmp_name']))
 {
-	if ($attachment['size'] > $max_size)
-	{
-					$template->assign_vars(array(
-						'S_ERROR'			=> true,
-						'S_FORWARD'			=> false,
-						'TITTLE_M'			=> $user->lang['BIT_FILE_TO_BIG'],
-						'MESSAGE'			=> sprintf($user->lang['BIT_FILE_TO_BIG_EXP'],$attachment['size'],$max_size),
-					));
-					echo $template->fetch('message_body.html');
-					close_out();
-	}
-	if (($attachment['type']=="image/gif") || ($attachment['type']=="image/bmp") || ($attachment['type']=="image/png") || ($attachment['type']=="image/pjpeg") || ($attachment['type']=="image/jpeg") || ($attachment['type']=="image/JPG")) 
-	{
-	
-		if(!is_dir("UserFiles/".$user->name))
-		{
-			@mkdir("UserFiles/".$user->name,0777);
-		}
-		if (GetFolderSize("UserFiles/".$user->name) > $bucketrow["max_folder_size"])
-		{
-					$template->assign_vars(array(
-						'S_ERROR'			=> true,
-						'S_FORWARD'			=> false,
-						'TITTLE_M'			=> $user->lang['BITBUCKET_FULL'],
-						'MESSAGE'			=> $user->lang['BITBUCKET_FULL_EXP'],
-					));
-					echo $template->fetch('message_body.html');
-					close_out();
-		}
-		$res = copy($attachment['tmp_name'], "UserFiles/".$user->name .'/' .$attachment['name']);
-	
-		if (!$res)
-		{ 
-					$template->assign_vars(array(
-						'S_ERROR'			=> true,
-						'S_FORWARD'			=> false,
-						'TITTLE_M'			=> $user->lang['SERVER_ERROR'],
-						'MESSAGE'			=> $user->lang['SERVER_ERROR_EXP'],
-					));
-					echo $template->fetch('message_body.html');
-					close_out();
-		}
-		else
-		{
-			@chmod("UserFiles/".$user->name .'/' .$attachment['name'], 0777);
-			$upcount=1;
-			//$outtopage = "window.opener.vB_Attachments.add(".$upcount.", '".$attachment['name']."', '".mksize($attachment['size'])."','UserFiles/".$user->name."/".$attachment['name']."');";
-			preg_match_all('/imgsize=([^&]*)/i', $_SERVER["QUERY_STRING"], $imgsize_array);
-			$imgsize_array = str_replace('imgsize=','',$imgsize_array[0]);
-			preg_match_all('/img=([^&]*)/i', $_SERVER["QUERY_STRING"], $img_array);
-			$img_array = str_replace('img=','',$img_array[0]);
-			if (count($img_array) < 1)
-			{
-				$allimage = "?img=".$attachment['name'];
-			}
-			else
-			{
-				$allimage = "?img=".implode("&amp;img=", $img_array)."&amp;img=".$attachment['name'];
-			}
-		}
-		foreach($img_array as $imgupd)
-		{
-			$upcount=$upcount+1;
-			$imgupsize = filesize("UserFiles/".$user->name."/".$imgupd);
-			//print_r($imgupsize);
-			$outtopage .= "window.opener.vB_Attachments.add(".$upcount.", '".$imgupd."', '".mksize($imgupsize)."', 'UserFiles/".$user->name."/".$imgupd."');";
-		}
-		$outtopage .= "window.close();";
-		echo "<br>";
-		echo sprintf($user->lang['FILE_NAME'],$attachment['name'])." <br>\n";
-		echo sprintf($user->lang['FILE_SIZE'],$attachment['size'])." <br>\n";
-		echo sprintf($user->lang['FILE_TYPE'],$attachment['type'])."<br>\n";
-		echo "</font>";
-	}
-	else
-	{ 
-					$template->assign_vars(array(
-						'S_ERROR'			=> true,
-						'S_FORWARD'			=> false,
-						'TITTLE_M'			=> $user->lang['INVALID_FILE'],
-						'MESSAGE'			=> $user->lang['INVALID_FILE_EXP'],
-					));
-					echo $template->fetch('message_body.html');
-					close_out();
-	}
+    if ($attachment['size'] > $max_size)
+    {
+                    $template->assign_vars(array(
+                        'S_ERROR'           => true,
+                        'S_FORWARD'         => false,
+                        'TITTLE_M'          => $user->lang['BIT_FILE_TO_BIG'],
+                        'MESSAGE'           => sprintf($user->lang['BIT_FILE_TO_BIG_EXP'],$attachment['size'],$max_size),
+                    ));
+                    echo $template->fetch('message_body.html');
+                    close_out();
+    }
+    if (($attachment['type']=="image/gif") || ($attachment['type']=="image/bmp") || ($attachment['type']=="image/png") || ($attachment['type']=="image/pjpeg") || ($attachment['type']=="image/jpeg") || ($attachment['type']=="image/JPG"))
+    {
+
+        if(!is_dir("UserFiles/".$user->name))
+        {
+            @mkdir("UserFiles/".$user->name,0777);
+        }
+        if (GetFolderSize("UserFiles/".$user->name) > $bucketrow["max_folder_size"])
+        {
+                    $template->assign_vars(array(
+                        'S_ERROR'           => true,
+                        'S_FORWARD'         => false,
+                        'TITTLE_M'          => $user->lang['BITBUCKET_FULL'],
+                        'MESSAGE'           => $user->lang['BITBUCKET_FULL_EXP'],
+                    ));
+                    echo $template->fetch('message_body.html');
+                    close_out();
+        }
+        $res = copy($attachment['tmp_name'], "UserFiles/".$user->name .'/' .$attachment['name']);
+
+        if (!$res)
+        {
+                    $template->assign_vars(array(
+                        'S_ERROR'           => true,
+                        'S_FORWARD'         => false,
+                        'TITTLE_M'          => $user->lang['SERVER_ERROR'],
+                        'MESSAGE'           => $user->lang['SERVER_ERROR_EXP'],
+                    ));
+                    echo $template->fetch('message_body.html');
+                    close_out();
+        }
+        else
+        {
+            @chmod("UserFiles/".$user->name .'/' .$attachment['name'], 0777);
+            $upcount=1;
+            //$outtopage = "window.opener.vB_Attachments.add(".$upcount.", '".$attachment['name']."', '".mksize($attachment['size'])."','UserFiles/".$user->name."/".$attachment['name']."');";
+            preg_match_all('/imgsize=([^&]*)/i', $_SERVER["QUERY_STRING"], $imgsize_array);
+            $imgsize_array = str_replace('imgsize=','',$imgsize_array[0]);
+            preg_match_all('/img=([^&]*)/i', $_SERVER["QUERY_STRING"], $img_array);
+            $img_array = str_replace('img=','',$img_array[0]);
+            if (count($img_array) < 1)
+            {
+                $allimage = "?img=".$attachment['name'];
+            }
+            else
+            {
+                $allimage = "?img=".implode("&amp;img=", $img_array)."&amp;img=".$attachment['name'];
+            }
+        }
+        foreach($img_array as $imgupd)
+        {
+            $upcount=$upcount+1;
+            $imgupsize = filesize("UserFiles/".$user->name."/".$imgupd);
+            //print_r($imgupsize);
+            $outtopage .= "window.opener.vB_Attachments.add(".$upcount.", '".$imgupd."', '".mksize($imgupsize)."', 'UserFiles/".$user->name."/".$imgupd."');";
+        }
+        $outtopage .= "window.close();";
+        echo "<br>";
+        echo sprintf($user->lang['FILE_NAME'],$attachment['name'])." <br>\n";
+        echo sprintf($user->lang['FILE_SIZE'],$attachment['size'])." <br>\n";
+        echo sprintf($user->lang['FILE_TYPE'],$attachment['type'])."<br>\n";
+        echo "</font>";
+    }
+    else
+    {
+                    $template->assign_vars(array(
+                        'S_ERROR'           => true,
+                        'S_FORWARD'         => false,
+                        'TITTLE_M'          => $user->lang['INVALID_FILE'],
+                        'MESSAGE'           => $user->lang['INVALID_FILE_EXP'],
+                    ));
+                    echo $template->fetch('message_body.html');
+                    close_out();
+    }
 }
 $i = 0;
 $imgdir = "UserFiles/".$user->name; // the directory, where your images are stored
   $allowed_types = array('png','jpg','jpeg','gif','JPG'); // list of filetypes you want to show
-if (!is_dir($imgdir))@mkdir($imgdir,0777);  
+if (!is_dir($imgdir))@mkdir($imgdir,0777);
   $dimg = @opendir($imgdir);
   while($imgfile = @readdir($dimg))
   {
@@ -246,35 +249,36 @@ if (!is_dir($imgdir))@mkdir($imgdir,0777);
   $img_jpg = 0;
   $img_jpeg = 0;
   $img_gif = 0;
- $imagtotnum = 1; 
+ $imagtotnum = 1;
   $totimg = count($a_img); // total image number
-   
+
   for($x=0; $x < $totimg; $x++)
   {
-	$size = getimagesize($imgdir.'/'.$a_img[$x]);
-	$img_png = 0;
-	$img_jpg = 0;
-	$img_jpeg = 0;
-	$img_gif = 0;
-	//echo get_image_extension("./".$imgdir.'/'.$a_img[$x],0);
-	$imagtotnum = $imagtotnum + 1;
-	$template->assign_block_vars('u_images', array(
-   'IMAGE_SOURCE'					=>	$siteurl . '/' . $imgdir . '/' . $a_img[$x],
-   'IMAGE_NAME'						=>	$a_img[$x],
-   'IMAGE_ID'						=>	$imagtotnum,
-   'IMAGE_SIZE'						=>	mksize(filesize("./".$imgdir.'/'.$a_img[$x])),
-   'IMAGE_HEIGHT'					=>	$size[1],
-   'IMAGE_WIDTH'					=>	$size[0],
+    $size = getimagesize($imgdir.'/'.$a_img[$x]);
+    $img_png = 0;
+    $img_jpg = 0;
+    $img_jpeg = 0;
+    $img_gif = 0;
+    //echo get_image_extension("./".$imgdir.'/'.$a_img[$x],0);
+    $imagtotnum = $imagtotnum + 1;
+    $template->assign_block_vars('u_images', array(
+   'IMAGE_SOURCE'                   =>  $siteurl . '/' . $imgdir . '/' . $a_img[$x],
+   'IMAGE_NAME'                     =>  $a_img[$x],
+   'IMAGE_ID'                       =>  $imagtotnum,
+   'IMAGE_SIZE'                     =>  mksize(filesize("./".$imgdir.'/'.$a_img[$x])),
+   'IMAGE_HEIGHT'                   =>  $size[1],
+   'IMAGE_WIDTH'                    =>  $size[0],
    ));
-  } 
+  }
 $template->assign_vars(array(
-        'I_FILES'            =>	$totimg, //sprintf($user->lang['BANNED_FOR'],$reson),
-		'I_FOLDER_SIZE'		=>	mksize(GetFolderSize("UserFiles/".$user->name)),
-		'I_MAX_FOLDER_SIZE'	=>	mksize($bucketrow["max_folder_size"]),
-		'L_BTMNGR_EXP'		=>	sprintf($user->lang['BTMNGR_EXP'],'bmp, png, jpeg, jpeg, gif'),
-		'L_BTGALLERY_EXP'	=>	sprintf($user->lang['BTGALLERY_EXP'],$siteurl . '/UserFiles/' . $user->name . '/image'),
-		'L_IMAGE_STATS'		=>	sprintf($user->lang['IMAGE_STATS'],mksize(GetFolderSize("UserFiles/".$user->name)),$totimg),
+        'I_FILES'            => $totimg, //sprintf($user->lang['BANNED_FOR'],$reson),
+        'I_FOLDER_SIZE'     =>  mksize(GetFolderSize("UserFiles/".$user->name)),
+        'I_MAX_FOLDER_SIZE' =>  mksize($bucketrow["max_folder_size"]),
+        'L_BTMNGR_EXP'      =>  sprintf($user->lang['BTMNGR_EXP'],'bmp, png, jpeg, jpeg, gif'),
+        'L_BTGALLERY_EXP'   =>  sprintf($user->lang['BTGALLERY_EXP'],$siteurl . '/UserFiles/' . $user->name . '/image'),
+        'L_IMAGE_STATS'     =>  sprintf($user->lang['IMAGE_STATS'],mksize(GetFolderSize("UserFiles/".$user->name)),$totimg),
 ));
-		echo $template->fetch('bitbucket.html');
-		close_out();
+        echo $template->fetch('bitbucket.html');
+        close_out();
+
 ?>

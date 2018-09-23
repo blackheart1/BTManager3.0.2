@@ -1,10 +1,11 @@
 <?php
+
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -12,14 +13,20 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File rate.php 2018-02-17 14:32:00 Black_Heart
+** File rate.php 2018-09-22 00:00:00 Thor
 **
 ** CHANGES
 **
-** EXAMPLE 26-04-13 - Added Auto Ban
+** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
 **/
-if (defined('IN_PMBT'))die ("You can't include this file");
-define("IN_PMBT",true);
+
+if (defined('IN_BTM'))
+{
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
+    die ("Error 404 - Page Not Found");
+}
+
+define("IN_BTM",true);
 require_once("common.php");
 include_once('include/function_posting.php');
 $user->set_lang('rate',$user->ulanguage);
@@ -28,22 +35,22 @@ if (!$user->user){
 pmbt_trigger_error($user->lang['LOGIN_SITE'],$user->lang['BT_ERROR'],$siteurl."/login.php&returnto=" . $_SERVER['QUERY_STRING'],'3');
 die();
 }
-$op									= request_var('op', '');
-$id									= (int)request_var('id', '0');
-$rating								= (int)request_var('rating', '0');
-$complaints							= request_var('complaint', '0');
+$op                                 = request_var('op', '');
+$id                                 = (int)request_var('id', '0');
+$rating                             = (int)request_var('rating', '0');
+$complaints                         = request_var('complaint', '0');
 if (!is_numeric($id) || $id == 0)
-	{
-								set_site_var($user->lang['BT_ERROR']);
+    {
+                                set_site_var($user->lang['BT_ERROR']);
                                 $template->assign_vars(array(
-										'S_ERROR'			=> true,
-										'S_FORWARD'			=> $siteurl.'/torrents.php',
-								        'TITTLE_M'          => $user->lang['BT_ERROR'],
+                                        'S_ERROR'           => true,
+                                        'S_FORWARD'         => $siteurl.'/torrents.php',
+                                        'TITTLE_M'          => $user->lang['BT_ERROR'],
                                         'MESSAGE'           => $user->lang['INVALID_ID'].back_link($siteurl.'/torrents.php'),
                                 ));
-		echo $template->fetch('message_body.html');
-		close_out();
-	}
+        echo $template->fetch('message_body.html');
+        close_out();
+    }
 
 switch ($op) {
         case "star": {
@@ -51,60 +58,60 @@ switch ($op) {
                 $rating = intval($rating);
 
                 if ($rating <= 0 || $rating > 5)
-				{
-								set_site_var($user->lang['BT_ERROR']);
-						meta_refresh(5, $siteurl . "/details.php?id=" . $id );
+                {
+                                set_site_var($user->lang['BT_ERROR']);
+                        meta_refresh(5, $siteurl . "/details.php?id=" . $id );
                                 $template->assign_vars(array(
-										'S_ERROR'			=> true,
-										'S_FORWARD'			=> false,
-								        'TITTLE_M'          => $user->lang['VOTE_FAIL'],
+                                        'S_ERROR'           => true,
+                                        'S_FORWARD'         => false,
+                                        'TITTLE_M'          => $user->lang['VOTE_FAIL'],
                                         'MESSAGE'           => $user->lang['INVALID_VOTE'].back_link($siteurl . "/details.php?id=" . $id),
                                 ));
-						echo $template->fetch('message_body.html');
-						close_out();
-				}
+                        echo $template->fetch('message_body.html');
+                        close_out();
+                }
 
                 $res = $db->sql_query("SELECT owner FROM ".$db_prefix."_torrents WHERE id = '".$id."'") or btsqlerror("SELECT owner FROM ".$db_prefix."_torrents WHERE id = '".$id."'");
                 if (!$row = $db->sql_fetchrow($res))
-				{
-								set_site_var($user->lang['BT_ERROR']);
+                {
+                                set_site_var($user->lang['BT_ERROR']);
                                 $template->assign_vars(array(
-										'S_ERROR'			=> true,
-										'S_FORWARD'			=> false,
-								        'TITTLE_M'          => $user->lang['VOTE_FAIL'],
+                                        'S_ERROR'           => true,
+                                        'S_FORWARD'         => false,
+                                        'TITTLE_M'          => $user->lang['VOTE_FAIL'],
                                         'MESSAGE'           => $user->lang['INVALID_ID'],
                                 ));
-						echo $template->fetch('message_body.html');
-						close_out();
-				}
+                        echo $template->fetch('message_body.html');
+                        close_out();
+                }
                 $db->sql_freeresult($res);
                 if (($row["owner"] == $user->id))
-				{
-								set_site_var($user->lang['BT_ERROR']);
+                {
+                                set_site_var($user->lang['BT_ERROR']);
                                 $template->assign_vars(array(
-										'S_ERROR'			=> true,
-										'S_FORWARD'			=> false,
-								        'TITTLE_M'          => $user->lang['VOTE_FAIL'],
+                                        'S_ERROR'           => true,
+                                        'S_FORWARD'         => false,
+                                        'TITTLE_M'          => $user->lang['VOTE_FAIL'],
                                         'MESSAGE'           => $user->lang['CANT_RATE_OWN'],
                                 ));
-						echo $template->fetch('message_body.html');
-						close_out();
-				}
+                        echo $template->fetch('message_body.html');
+                        close_out();
+                }
                 $sql = "SELECT * FROM ".$db_prefix."_ratings WHERE torrent = '".$id."' AND user = '".$user->id."' LIMIT 1;";
                 $res = $db->sql_query($sql) or btsqlerror($sql);
 
                 if ($db->sql_numrows($res) > 0 )
-				{
-								set_site_var($user->lang['BT_ERROR']);
+                {
+                                set_site_var($user->lang['BT_ERROR']);
                                 $template->assign_vars(array(
-										'S_ERROR'			=> true,
-										'S_FORWARD'			=> false,
-								        'TITTLE_M'          => $user->lang['VOTE_FAIL'],
+                                        'S_ERROR'           => true,
+                                        'S_FORWARD'         => false,
+                                        'TITTLE_M'          => $user->lang['VOTE_FAIL'],
                                         'MESSAGE'           => $user->lang['CANT_RATE_TWICE'],
                                 ));
-						echo $template->fetch('message_body.html');
-						close_out();
-				}
+                        echo $template->fetch('message_body.html');
+                        close_out();
+                }
                 $db->sql_freeresult($res);
                 $sql = "INSERT INTO ".$db_prefix."_ratings (torrent, user, rating, added) VALUES ('$id', '" . $user->id . "', '$rating', NOW())";
                 $db->sql_query($sql) or btsqlerror($sql);
@@ -112,47 +119,47 @@ switch ($op) {
                 $sql = "UPDATE ".$db_prefix."_torrents SET numratings = numratings + 1, ratingsum = ratingsum + '$rating' WHERE id = '$id'";
                 $db->sql_query($sql) or btsqlerror($sql);
 
-						meta_refresh(5, $siteurl . "/details.php?id=" . $id );
-				$template->assign_vars(array(
-					'S_SUCCESS'			=> true,
-					'S_FORWARD'			=> false,
-					'TITTLE_M'			=> $user->lang['SUCCESS'],
-					'MESSAGE'			=> $user->lang['VOTE_TAKEN'],
-				));
-				echo $template->fetch('message_body.html');
-				close_out();
+                        meta_refresh(5, $siteurl . "/details.php?id=" . $id );
+                $template->assign_vars(array(
+                    'S_SUCCESS'         => true,
+                    'S_FORWARD'         => false,
+                    'TITTLE_M'          => $user->lang['SUCCESS'],
+                    'MESSAGE'           => $user->lang['VOTE_TAKEN'],
+                ));
+                echo $template->fetch('message_body.html');
+                close_out();
         }
         case "complaint": {
-		//die($complaints);
+        //die($complaints);
                 if ($complaints < 0 || $complaints > 5)
-				{
-								set_site_var($user->lang['BT_ERROR']);
+                {
+                                set_site_var($user->lang['BT_ERROR']);
                                 $template->assign_vars(array(
-										'S_ERROR'			=> true,
-										'S_FORWARD'			=> false,
-								        'TITTLE_M'          => $user->lang['VOTE_FAIL'],
+                                        'S_ERROR'           => true,
+                                        'S_FORWARD'         => false,
+                                        'TITTLE_M'          => $user->lang['VOTE_FAIL'],
                                         'MESSAGE'           => $user->lang['NO_COMPLAINT_ERR'],
                                 ));
-						echo $template->fetch('message_body.html');
-						close_out();
-				}
-				$banned = false;
+                        echo $template->fetch('message_body.html');
+                        close_out();
+                }
+                $banned = false;
                 #Complaint Rating
                 $complaint = intval($complaint);
                 $sqlcheck = "SELECT * FROM ".$db_prefix."_complaints WHERE torrent = '".$id."' AND user = '".$user->id."';";
 
                 if ($db->sql_numrows($db->sql_query($sqlcheck)) != 0 )
-				{ //Have you voted yet?
-								set_site_var($user->lang['BT_ERROR']);
+                { //Have you voted yet?
+                                set_site_var($user->lang['BT_ERROR']);
                                 $template->assign_vars(array(
-										'S_ERROR'			=> true,
-										'S_FORWARD'			=> false,
-								        'TITTLE_M'          => $user->lang['VOTE_FAIL'],
+                                        'S_ERROR'           => true,
+                                        'S_FORWARD'         => false,
+                                        'TITTLE_M'          => $user->lang['VOTE_FAIL'],
                                         'MESSAGE'           => $user->lang['TWO_COMPLAINTS_ERR'],
                                 ));
-						echo $template->fetch('message_body.html');
-						close_out();
-				}
+                        echo $template->fetch('message_body.html');
+                        close_out();
+                }
 
                 $addsql = "INSERT INTO ".$db_prefix."_complaints (user, torrent, datetime, host, score) VALUES (".$user->id.",".intval($id).",NOW(),'".gethostbyaddr($_SERVER["REMOTE_ADDR"])."',".$complaint.");";
                 $db->sql_query($addsql) or btsqlerror($sql);
@@ -182,16 +189,16 @@ switch ($op) {
                        $msg .= $user->lang['COMPLAINT_REG'];
                 }
                 $msg .= $user->lang['COMPLAINT_TAKEN'];
-								set_site_var($user->lang['SUCCESS']);
-				meta_refresh(5, $siteurl . "/details.php?id=" . $id );
-				$template->assign_vars(array(
-					'S_SUCCESS'			=> true,
-					'S_FORWARD'			=> false,
-					'TITTLE_M'			=> $user->lang['SUCCESS'],
-					'MESSAGE'			=> $msg . back_link("/details.php?id=" . $id ),
-				));
-				echo $template->fetch('message_body.html');
-				close_out();
+                                set_site_var($user->lang['SUCCESS']);
+                meta_refresh(5, $siteurl . "/details.php?id=" . $id );
+                $template->assign_vars(array(
+                    'S_SUCCESS'         => true,
+                    'S_FORWARD'         => false,
+                    'TITTLE_M'          => $user->lang['SUCCESS'],
+                    'MESSAGE'           => $msg . back_link("/details.php?id=" . $id ),
+                ));
+                echo $template->fetch('message_body.html');
+                close_out();
         }
 }
 ?>

@@ -2,10 +2,10 @@
 
 <form id="confirm" action="{S_CONFIRM_ACTION}" method="post">
 <div class="panel">
-	<div class="inner" align="center"><span class="corners-top"><span></span></span>
+    <div class="inner" align="center"><span class="corners-top"><span></span></span>
 
-	<h2 align="left">{MESSAGE_TITLE}</h2>
-	<p>{MESSAGE_TEXT}</p>
+    <h2 align="left">{MESSAGE_TITLE}</h2>
+    <p>{MESSAGE_TEXT}</p>
 <!-- IF S_GFX -->
 <!-- IF RECAPTCHA -->
         <div class="g-recaptcha" data-sitekey="{RECAPTCHA}"></div><br />
@@ -15,13 +15,13 @@
 <!-- ENDIF -->
 <!-- ENDIF -->
 
-	<fieldset class="submit-buttons">
-		{S_HIDDEN_FIELDS}
-		<input type="submit" name="confirm" value="{L_YES}" class="button2" />&nbsp;
-		<input type="submit" name="cancel" value="{L_NO}" class="button2" />
-	</fieldset>
+    <fieldset class="submit-buttons">
+        {S_HIDDEN_FIELDS}
+        <input type="submit" name="confirm" value="{L_YES}" class="button2" />&nbsp;
+        <input type="submit" name="cancel" value="{L_NO}" class="button2" />
+    </fieldset>
 
-	<span class="corners-bottom"><span></span></span></div>
+    <span class="corners-bottom"><span></span></span></div>
 </div>
 </form>
 

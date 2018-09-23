@@ -2,10 +2,10 @@
 
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -13,18 +13,16 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts)
 ** Project Leaders: Black_heart, Thor.
-** File shouts/english.php 2018-03-20 15:48:00 Thor
+** File shouts/english.php 2018-09-23 00:00:00 Thor
 **
 ** CHANGES
 **
-** 2018-03-02 - Added New Masthead
-** 2018-03-02 - Added New !defined('IN_PMBT')
-** 2018-03-02 - Fixed Spelling
+** 2018-09-23 - Updated Masthead, Github, !defined('IN_BTM')
 **/
 
-if (!defined('IN_PMBT'))
+if (!defined('IN_BTM'))
 {
-    include_once './../../security.php';
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
     die ('Error 404 - Page Not Found');
 }
 
@@ -65,6 +63,9 @@ $lang = array_merge($lang, array(
     'SEARCH_CONTAINS'     => 'Shout Contains',
     'SEARCH_TERM'         => 'Search Terms',
     'SEARCH_SHOUTS'       => 'Search Shouts',
+    'LEGEND_ADMIN'        => 'Legend: Admin ',
+    'LEGEND_MODERATOR'    => ', Moderator',
+    'LEGEND_PREMIUM'      => ', Premium',
 ));
 
 ?>

@@ -1,10 +1,11 @@
 <?php
+
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -12,32 +13,34 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File functions_announce.php 2018-02-18 14:32:00 joeroberts
+** File include/functions_announce.php 2018-09-22 00:00:00 Thor
 **
 ** CHANGES
 **
-** EXAMPLE 26-04-13 - Added Auto Ban
+** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
 **/
-if (!defined('IN_PMBT'))
+
+if (!defined('IN_BTM'))
 {
-	include_once './../security.php';
-	die ();
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
+    die ("Error 404 - Page Not Found");
 }
+
 function hash_where($name, $hash) {
 global $db;
         $shhash = preg_replace('/ *$/s', "", $hash);
         $shhash2 = preg_replace('/ *$/s', "", iconv( 'ISO-8859-7','UTF-8', "$hash"));
 //return "($name = '" . $db->sql_escape(iconv( 'UTF-8','ISO-8859-7', "$hash")) . "'  OR  $name = '" . $db->sql_escape($hash) . "'  OR  $name = '" . $db->sql_escape(urldecode($hash)) . "'  OR  $name = '" . $db->sql_escape(utf8_clean_string(bin2hex($hash))) . "'  OR $name = '" . $db->sql_escape(utf8_clean_string($hash)) . "'  OR $name = '" . $db->sql_escape($shhash) . "'  OR $name = '" . $db->sql_escape(utf8_clean_string($shhash)) . "')";
-return 		"(
-			HEX(`$name`) = HEX('" . $db->sql_escape(iconv( 'ISO-8859-7','UTF-8', "$hash")) . "')  OR   
-			$name = '" . $db->sql_escape(stripslashes(iconv( 'ISO-8859-7','UTF-8', "$hash"))) . "'  OR   
-			$name = '" . $db->sql_escape(iconv( 'UTF-8','ISO-8859-7', "$hash")) . "'  OR 
-			$name = '" . $db->sql_escape($hash) . "'  OR  
-			$name = '" . $db->sql_escape(utf8_encode_ncr($hash)) . "'  OR 
-			$name = '" . $db->sql_escape(utf8_clean_string($hash)) . "' OR 
-			$name = '" . $db->sql_escape(utf8_clean_string(iconv( 'ISO-8859-7','UTF-8', "$hash"))) . "' OR 
-			$name = '" . $db->sql_escape($shhash2) . "'  OR  
-			$name = '" . $db->sql_escape($shhash) . "')";
+return      "(
+            HEX(`$name`) = HEX('" . $db->sql_escape(iconv( 'ISO-8859-7','UTF-8', "$hash")) . "')  OR
+            $name = '" . $db->sql_escape(stripslashes(iconv( 'ISO-8859-7','UTF-8', "$hash"))) . "'  OR
+            $name = '" . $db->sql_escape(iconv( 'UTF-8','ISO-8859-7', "$hash")) . "'  OR
+            $name = '" . $db->sql_escape($hash) . "'  OR
+            $name = '" . $db->sql_escape(utf8_encode_ncr($hash)) . "'  OR
+            $name = '" . $db->sql_escape(utf8_clean_string($hash)) . "' OR
+            $name = '" . $db->sql_escape(utf8_clean_string(iconv( 'ISO-8859-7','UTF-8', "$hash"))) . "' OR
+            $name = '" . $db->sql_escape($shhash2) . "'  OR
+            $name = '" . $db->sql_escape($shhash) . "')";
 }
 function unesc_magic($x) {
         return (get_magic_quotes_gpc()) ? stripslashes($x) : $x;
@@ -104,12 +107,12 @@ function hex2bin($h)
   return $r;
   }
   function benc_resp_raw($x){
-	$buffer = ob_get_clean();
-	ob_start("ob_gzhandler");
-	ob_implicit_flush(0);
-	header("Content-Type: text/plain");
-	header("Pragma: no-cache");
-	print($x);
+    $buffer = ob_get_clean();
+    ob_start("ob_gzhandler");
+    ob_implicit_flush(0);
+    header("Content-Type: text/plain");
+    header("Pragma: no-cache");
+    print($x);
 }
 function GetUserAgent($pid) {
         $strAgent = "Unknown";
@@ -130,7 +133,7 @@ function GetUserAgent($pid) {
                 elseif ($ltrs == "XT") $strAgent = "XanTorrent";
                 elseif ($ltrs == "BB") $strAgent = "BitBuddy";
                 elseif ($ltrs == "TN") $strAgent = "TorrentDOTnet";
-				elseif ($ltrs == "BC") $strAgent = "BitComet";
+                elseif ($ltrs == "BC") $strAgent = "BitComet";
                 //else; Unknown client using this naming.
         } elseif ($pid[4] == '-' AND $pid[5] == '-' AND $pid[6] == '-' AND $pid[7] == '-' ) {
                 $strversion = sprintf(" %i%i%i", $pid[1] - '0', $pid[2] - '0', $pid[3] - '0' );

@@ -2,10 +2,10 @@
 
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -13,22 +13,14 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts)
 ** Project Leaders: Black_heart, Thor.
-** File acp_permissions/english.php 2018-09-15 07:49:00 Thor
+** File acp_permissions/english.php 2018-09-23 00:00:00 Thor
 **
 ** CHANGES
 **
-** 2018-02-23 - Added New Masthead
-** 2018-02-23 - Added New !defined('IN_PMBT')
-** 2018-02-23 - Fixed Spelling
-** 2018-03-28 - Amended the Wording of some Sentences
-** 2018-03-28 - Amended !defined('IN_PMBT') Corrected Path
-** 2018-04-14 - Added Missing Languages
-** 2018-04-14 - Amended !defined('IN_PMBT') New Version
-** 2018-07-05 - Amended the Wording of some Sentences and Spell Checked
-** 2018-07-05 - Added Missing Language
+** 2018-09-23 - Updated Masthead, Github, !defined('IN_BTM')
 **/
 
-if (!defined('IN_PMBT'))
+if (!defined('IN_BTM'))
 {
     require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
     die ('Error 404 - Page Not Found');

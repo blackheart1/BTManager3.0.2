@@ -19,8 +19,8 @@ function PopMoreSmiles(form,text) {
 {HIDDEN}
 
 <div class="panel">
-	<div class="inner"><span class="corners-top"><span></span></span>
-	<fieldset class="fields2">
+    <div class="inner"><span class="corners-top"><span></span></span>
+    <fieldset class="fields2">
 <!-- IF ALOW_NFO -->
         <dl>
             <dt><label>{L_UPLOAD_NFO}:</label></dt>
@@ -140,41 +140,41 @@ function PopMoreSmiles(form,text) {
 
                                 var form_name = 'add';
                                 var text_name = 'descr';
-								// Define the bbCode tags
-								var bbcode = new Array();
-								var bbtags = new Array('[b]','[/b]','[i]','[/i]','[u]','[/u]','[quote]','[/quote]','[code]','[/code]','[list]','[/list]','[list=]','[/list]','[img]','[/img]','[url]','[/url]','[flash=]', '[/flash]','[size=]','[/size]'<!-- BEGIN custom_tags -->, {custom_tags.BBCODE_NAME}<!-- END custom_tags -->);
-								var imageTag = false;
-							
-								// Helpline messages
-								var help_line = {
-									b: '{LA_BBCODE_B_HELP}',
-									i: '{LA_BBCODE_I_HELP}',
-									u: '{LA_BBCODE_U_HELP}',
-									q: '{LA_BBCODE_Q_HELP}',
-									c: '{LA_BBCODE_C_HELP}',
-									l: '{LA_BBCODE_L_HELP}',
-									o: '{LA_BBCODE_O_HELP}',
-									p: '{LA_BBCODE_P_HELP}',
-									w: '{LA_BBCODE_W_HELP}',
-									a: '{LA_BBCODE_A_HELP}',
-									s: '{LA_BBCODE_S_HELP}',
-									f: '{LA_BBCODE_F_HELP}',
-									e: '{LA_BBCODE_E_HELP}',
-									d: '{LA_BBCODE_D_HELP}'
-									<!-- BEGIN custom_tags -->
-										,cb_{custom_tags.BBCODE_ID}: '{custom_tags.A_BBCODE_HELPLINE}'
-									<!-- END custom_tags -->
-								}
-							
-								var panels = new Array('options-panel', 'attach-panel', 'poll-panel');
-								var show_panel = 'options-panel';
+                                // Define the bbCode tags
+                                var bbcode = new Array();
+                                var bbtags = new Array('[b]','[/b]','[i]','[/i]','[u]','[/u]','[quote]','[/quote]','[code]','[/code]','[list]','[/list]','[list=]','[/list]','[img]','[/img]','[url]','[/url]','[flash=]', '[/flash]','[size=]','[/size]'<!-- BEGIN custom_tags -->, {custom_tags.BBCODE_NAME}<!-- END custom_tags -->);
+                                var imageTag = false;
+
+                                // Helpline messages
+                                var help_line = {
+                                    b: '{LA_BBCODE_B_HELP}',
+                                    i: '{LA_BBCODE_I_HELP}',
+                                    u: '{LA_BBCODE_U_HELP}',
+                                    q: '{LA_BBCODE_Q_HELP}',
+                                    c: '{LA_BBCODE_C_HELP}',
+                                    l: '{LA_BBCODE_L_HELP}',
+                                    o: '{LA_BBCODE_O_HELP}',
+                                    p: '{LA_BBCODE_P_HELP}',
+                                    w: '{LA_BBCODE_W_HELP}',
+                                    a: '{LA_BBCODE_A_HELP}',
+                                    s: '{LA_BBCODE_S_HELP}',
+                                    f: '{LA_BBCODE_F_HELP}',
+                                    e: '{LA_BBCODE_E_HELP}',
+                                    d: '{LA_BBCODE_D_HELP}'
+                                    <!-- BEGIN custom_tags -->
+                                        ,cb_{custom_tags.BBCODE_ID}: '{custom_tags.A_BBCODE_HELPLINE}'
+                                    <!-- END custom_tags -->
+                                }
+
+                                var panels = new Array('options-panel', 'attach-panel', 'poll-panel');
+                                var show_panel = 'options-panel';
                                 // ]]>
                             </script>
-							 <script type="text/javascript" src="themes/1thank/templates/editor.js"></script>
+                             <script type="text/javascript" src="themes/1thank/templates/editor.js"></script>
 
                             <table width="100%" cellspacing="0" cellpadding="0" border="0">
                             <tr>
-                            	<td colspan="2">
+                                <td colspan="2">
                                     <!-- IF S_BBCODE_ALLOWED -->
                                     <div id="colour_palette" style="display: none;">
                                         <dl style="clear: left;">
@@ -186,7 +186,7 @@ function PopMoreSmiles(form,text) {
                                                 {
                                                     dE('colour_palette');
                                                     e = document.getElementById('colour_palette');
-                                                    
+
                                                     if (e.style.display == 'block')
                                                     {
                                                         document.getElementById('bbpalette').value = '{LA__FONT_COLOR_HIDE}';
@@ -196,14 +196,14 @@ function PopMoreSmiles(form,text) {
                                                         document.getElementById('bbpalette').value = '{LA__FONT_COLOR}';
                                                     }
                                                 }
-                                    
+
                                                 colorPalette('h', 15, 10);
                                             // ]]>
                                             </script>
                                             </dd>
                                         </dl>
                                     </div>
-                                    
+
                                     <div id="format-buttons">
                                         <input type="button" class="button2" accesskey="b" name="addbbcode0" value=" B " style="font-weight:bold; width: 30px" onclick="bbstyle(0)" title="{L__BBCODE_B_HELP}" />
                                         <input type="button" class="button2" accesskey="i" name="addbbcode2" value=" i " style="font-style:italic; width: 30px" onclick="bbstyle(2)" title="{L__BBCODE_I_HELP}" />
@@ -279,11 +279,11 @@ function PopMoreSmiles(form,text) {
         </dl>
 <!-- ENDIF -->
 </fieldset>
-	<span class="corners-bottom"><span></span></span></div>
+    <span class="corners-bottom"><span></span></span></div>
 </div>
 <fieldset class="submit-buttons">
-	{S_HIDDEN_FIELDS}<input type="reset" value="{L_RESET}" name="reset" class="button2" />&nbsp; 
-	<input type="submit" name="submit" value="{L_SUBMIT}" class="button1" />
+    {S_HIDDEN_FIELDS}<input type="reset" value="{L_RESET}" name="reset" class="button2" />&nbsp;
+    <input type="submit" name="submit" value="{L_SUBMIT}" class="button1" />
 </fieldset>
 </form>
 <br clear="all" />
@@ -292,8 +292,8 @@ function PopMoreSmiles(form,text) {
 <form name="add" method="post" action="{U_ACTION}">
 {HIDDEN}
 <div class="panel">
-	<div class="inner"><span class="corners-top"><span></span></span>
-	<fieldset class="fields2">
+    <div class="inner"><span class="corners-top"><span></span></span>
+    <fieldset class="fields2">
          <dl>
             <dt><label>{L_COMMENT}:</label></dt>
             <dd>
@@ -323,41 +323,41 @@ function PopMoreSmiles(form,text) {
 
                                 var form_name = 'add';
                                 var text_name = 'msg';
-								// Define the bbCode tags
-								var bbcode = new Array();
-								var bbtags = new Array('[b]','[/b]','[i]','[/i]','[u]','[/u]','[quote]','[/quote]','[code]','[/code]','[list]','[/list]','[list=]','[/list]','[img]','[/img]','[url]','[/url]','[flash=]', '[/flash]','[size=]','[/size]'<!-- BEGIN custom_tags -->, {custom_tags.BBCODE_NAME}<!-- END custom_tags -->);
-								var imageTag = false;
-							
-								// Helpline messages
-								var help_line = {
-									b: '{LA_BBCODE_B_HELP}',
-									i: '{LA_BBCODE_I_HELP}',
-									u: '{LA_BBCODE_U_HELP}',
-									q: '{LA_BBCODE_Q_HELP}',
-									c: '{LA_BBCODE_C_HELP}',
-									l: '{LA_BBCODE_L_HELP}',
-									o: '{LA_BBCODE_O_HELP}',
-									p: '{LA_BBCODE_P_HELP}',
-									w: '{LA_BBCODE_W_HELP}',
-									a: '{LA_BBCODE_A_HELP}',
-									s: '{LA_BBCODE_S_HELP}',
-									f: '{LA_BBCODE_F_HELP}',
-									e: '{LA_BBCODE_E_HELP}',
-									d: '{LA_BBCODE_D_HELP}'
-									<!-- BEGIN custom_tags -->
-										,cb_{custom_tags.BBCODE_ID}: '{custom_tags.A_BBCODE_HELPLINE}'
-									<!-- END custom_tags -->
-								}
-							
-								var panels = new Array('options-panel', 'attach-panel', 'poll-panel');
-								var show_panel = 'options-panel';
+                                // Define the bbCode tags
+                                var bbcode = new Array();
+                                var bbtags = new Array('[b]','[/b]','[i]','[/i]','[u]','[/u]','[quote]','[/quote]','[code]','[/code]','[list]','[/list]','[list=]','[/list]','[img]','[/img]','[url]','[/url]','[flash=]', '[/flash]','[size=]','[/size]'<!-- BEGIN custom_tags -->, {custom_tags.BBCODE_NAME}<!-- END custom_tags -->);
+                                var imageTag = false;
+
+                                // Helpline messages
+                                var help_line = {
+                                    b: '{LA_BBCODE_B_HELP}',
+                                    i: '{LA_BBCODE_I_HELP}',
+                                    u: '{LA_BBCODE_U_HELP}',
+                                    q: '{LA_BBCODE_Q_HELP}',
+                                    c: '{LA_BBCODE_C_HELP}',
+                                    l: '{LA_BBCODE_L_HELP}',
+                                    o: '{LA_BBCODE_O_HELP}',
+                                    p: '{LA_BBCODE_P_HELP}',
+                                    w: '{LA_BBCODE_W_HELP}',
+                                    a: '{LA_BBCODE_A_HELP}',
+                                    s: '{LA_BBCODE_S_HELP}',
+                                    f: '{LA_BBCODE_F_HELP}',
+                                    e: '{LA_BBCODE_E_HELP}',
+                                    d: '{LA_BBCODE_D_HELP}'
+                                    <!-- BEGIN custom_tags -->
+                                        ,cb_{custom_tags.BBCODE_ID}: '{custom_tags.A_BBCODE_HELPLINE}'
+                                    <!-- END custom_tags -->
+                                }
+
+                                var panels = new Array('options-panel', 'attach-panel', 'poll-panel');
+                                var show_panel = 'options-panel';
                                 // ]]>
                             </script>
-							 <script type="text/javascript" src="themes/1thank/templates/editor.js"></script>
+                             <script type="text/javascript" src="themes/1thank/templates/editor.js"></script>
 
                             <table width="100%" cellspacing="0" cellpadding="0" border="0">
                             <tr>
-                            	<td colspan="2">
+                                <td colspan="2">
                                     <!-- IF S_BBCODE_ALLOWED -->
                                     <div id="colour_palette" style="display: none;">
                                         <dl style="clear: left;">
@@ -369,7 +369,7 @@ function PopMoreSmiles(form,text) {
                                                 {
                                                     dE('colour_palette');
                                                     e = document.getElementById('colour_palette');
-                                                    
+
                                                     if (e.style.display == 'block')
                                                     {
                                                         document.getElementById('bbpalette').value = '{LA__FONT_COLOR_HIDE}';
@@ -379,14 +379,14 @@ function PopMoreSmiles(form,text) {
                                                         document.getElementById('bbpalette').value = '{LA__FONT_COLOR}';
                                                     }
                                                 }
-                                    
+
                                                 colorPalette('h', 15, 10);
                                             // ]]>
                                             </script>
                                             </dd>
                                         </dl>
                                     </div>
-                                    
+
                                     <div id="format-buttons">
                                         <input type="button" class="button2" accesskey="b" name="addbbcode0" value=" B " style="font-weight:bold; width: 30px" onclick="bbstyle(0)" title="{L__BBCODE_B_HELP}" />
                                         <input type="button" class="button2" accesskey="i" name="addbbcode2" value=" i " style="font-style:italic; width: 30px" onclick="bbstyle(2)" title="{L__BBCODE_I_HELP}" />
@@ -428,12 +428,12 @@ function PopMoreSmiles(form,text) {
                             </table>
             </dd>
         </dl>
-	</fieldset>
-	<span class="corners-bottom"><span></span></span></div>
+    </fieldset>
+    <span class="corners-bottom"><span></span></span></div>
 </div>
 <fieldset class="submit-buttons">
-	{S_HIDDEN_FIELDS}<input type="reset" value="{L_RESET}" name="reset" class="button2" />&nbsp; 
-	<input type="submit" name="submit" value="{L_SUBMIT}" class="button1" />
+    {S_HIDDEN_FIELDS}<input type="reset" value="{L_RESET}" name="reset" class="button2" />&nbsp;
+    <input type="submit" name="submit" value="{L_SUBMIT}" class="button1" />
 </fieldset>
 </form>
 
@@ -442,8 +442,8 @@ function PopMoreSmiles(form,text) {
 <form name="add" method="post" action="{U_ACTION}">
 {HIDDEN}
 <div class="panel">
-	<div class="inner"><span class="corners-top"><span></span></span>
-	<fieldset class="fields2">
+    <div class="inner"><span class="corners-top"><span></span></span>
+    <fieldset class="fields2">
          <dl>
             <dt><label>{L_COMMENT}:</label></dt>
             <dd>
@@ -473,41 +473,41 @@ function PopMoreSmiles(form,text) {
 
                                 var form_name = 'add';
                                 var text_name = 'msg';
-								// Define the bbCode tags
-								var bbcode = new Array();
-								var bbtags = new Array('[b]','[/b]','[i]','[/i]','[u]','[/u]','[quote]','[/quote]','[code]','[/code]','[list]','[/list]','[list=]','[/list]','[img]','[/img]','[url]','[/url]','[flash=]', '[/flash]','[size=]','[/size]'<!-- BEGIN custom_tags -->, {custom_tags.BBCODE_NAME}<!-- END custom_tags -->);
-								var imageTag = false;
-							
-								// Helpline messages
-								var help_line = {
-									b: '{LA_BBCODE_B_HELP}',
-									i: '{LA_BBCODE_I_HELP}',
-									u: '{LA_BBCODE_U_HELP}',
-									q: '{LA_BBCODE_Q_HELP}',
-									c: '{LA_BBCODE_C_HELP}',
-									l: '{LA_BBCODE_L_HELP}',
-									o: '{LA_BBCODE_O_HELP}',
-									p: '{LA_BBCODE_P_HELP}',
-									w: '{LA_BBCODE_W_HELP}',
-									a: '{LA_BBCODE_A_HELP}',
-									s: '{LA_BBCODE_S_HELP}',
-									f: '{LA_BBCODE_F_HELP}',
-									e: '{LA_BBCODE_E_HELP}',
-									d: '{LA_BBCODE_D_HELP}'
-									<!-- BEGIN custom_tags -->
-										,cb_{custom_tags.BBCODE_ID}: '{custom_tags.A_BBCODE_HELPLINE}'
-									<!-- END custom_tags -->
-								}
-							
-								var panels = new Array('options-panel', 'attach-panel', 'poll-panel');
-								var show_panel = 'options-panel';
+                                // Define the bbCode tags
+                                var bbcode = new Array();
+                                var bbtags = new Array('[b]','[/b]','[i]','[/i]','[u]','[/u]','[quote]','[/quote]','[code]','[/code]','[list]','[/list]','[list=]','[/list]','[img]','[/img]','[url]','[/url]','[flash=]', '[/flash]','[size=]','[/size]'<!-- BEGIN custom_tags -->, {custom_tags.BBCODE_NAME}<!-- END custom_tags -->);
+                                var imageTag = false;
+
+                                // Helpline messages
+                                var help_line = {
+                                    b: '{LA_BBCODE_B_HELP}',
+                                    i: '{LA_BBCODE_I_HELP}',
+                                    u: '{LA_BBCODE_U_HELP}',
+                                    q: '{LA_BBCODE_Q_HELP}',
+                                    c: '{LA_BBCODE_C_HELP}',
+                                    l: '{LA_BBCODE_L_HELP}',
+                                    o: '{LA_BBCODE_O_HELP}',
+                                    p: '{LA_BBCODE_P_HELP}',
+                                    w: '{LA_BBCODE_W_HELP}',
+                                    a: '{LA_BBCODE_A_HELP}',
+                                    s: '{LA_BBCODE_S_HELP}',
+                                    f: '{LA_BBCODE_F_HELP}',
+                                    e: '{LA_BBCODE_E_HELP}',
+                                    d: '{LA_BBCODE_D_HELP}'
+                                    <!-- BEGIN custom_tags -->
+                                        ,cb_{custom_tags.BBCODE_ID}: '{custom_tags.A_BBCODE_HELPLINE}'
+                                    <!-- END custom_tags -->
+                                }
+
+                                var panels = new Array('options-panel', 'attach-panel', 'poll-panel');
+                                var show_panel = 'options-panel';
                                 // ]]>
                             </script>
-							 <script type="text/javascript" src="themes/1thank/templates/editor.js"></script>
+                             <script type="text/javascript" src="themes/1thank/templates/editor.js"></script>
 
                             <table width="100%" cellspacing="0" cellpadding="0" border="0">
                             <tr>
-                            	<td colspan="2">
+                                <td colspan="2">
                                     <!-- IF S_BBCODE_ALLOWED -->
                                     <div id="colour_palette" style="display: none;">
                                         <dl style="clear: left;">
@@ -519,7 +519,7 @@ function PopMoreSmiles(form,text) {
                                                 {
                                                     dE('colour_palette');
                                                     e = document.getElementById('colour_palette');
-                                                    
+
                                                     if (e.style.display == 'block')
                                                     {
                                                         document.getElementById('bbpalette').value = '{LA__FONT_COLOR_HIDE}';
@@ -529,14 +529,14 @@ function PopMoreSmiles(form,text) {
                                                         document.getElementById('bbpalette').value = '{LA__FONT_COLOR}';
                                                     }
                                                 }
-                                    
+
                                                 colorPalette('h', 15, 10);
                                             // ]]>
                                             </script>
                                             </dd>
                                         </dl>
                                     </div>
-                                    
+
                                     <div id="format-buttons">
                                         <input type="button" class="button2" accesskey="b" name="addbbcode0" value=" B " style="font-weight:bold; width: 30px" onclick="bbstyle(0)" title="{L__BBCODE_B_HELP}" />
                                         <input type="button" class="button2" accesskey="i" name="addbbcode2" value=" i " style="font-style:italic; width: 30px" onclick="bbstyle(2)" title="{L__BBCODE_I_HELP}" />
@@ -578,12 +578,12 @@ function PopMoreSmiles(form,text) {
                             </table>
             </dd>
         </dl>
-	</fieldset>
-	<span class="corners-bottom"><span></span></span></div>
+    </fieldset>
+    <span class="corners-bottom"><span></span></span></div>
 </div>
 <fieldset class="submit-buttons">
-	{S_HIDDEN_FIELDS}<input type="reset" value="{L_RESET}" name="reset" class="button2" />&nbsp; 
-	<input type="submit" name="submit" value="{L_SUBMIT}" class="button1" />
+    {S_HIDDEN_FIELDS}<input type="reset" value="{L_RESET}" name="reset" class="button2" />&nbsp;
+    <input type="submit" name="submit" value="{L_SUBMIT}" class="button1" />
 </fieldset>
 </form>
 <br clear="all" />

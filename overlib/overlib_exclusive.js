@@ -46,23 +46,23 @@ var o3_exclusivestatus = '';
 
 // Set runtime variables
 function setExclusiveVariables() {
-	o3_exclusive = ol_exclusive;
-	o3_exclusivestatus = ol_exclusivestatus;
+    o3_exclusive = ol_exclusive;
+    o3_exclusivestatus = ol_exclusivestatus;
 }
 
 // Parses Exclusive Parameters
 function parseExclusiveExtras(pf,i,ar) {
-	var k = i,v;
+    var k = i,v;
 
-	olOverrideIsSet = false;  // a global variable
+    olOverrideIsSet = false;  // a global variable
 
-	if (k < ar.length) {
-		if (ar[k] == EXCLUSIVEOVERRIDE) { if(pf !=  'ol_') olOverrideIsSet = true; return k; }
-		if (ar[k] == EXCLUSIVE) { eval(pf +  'exclusive = (' +  pf + 'exclusive == 0) ? 1 : 0'); return k; }
-		if (ar[k] == EXCLUSIVESTATUS) { eval(pf + "exclusivestatus = '" + escSglQuote(ar[++k]) + "'"); return k; }
-	}
+    if (k < ar.length) {
+        if (ar[k] == EXCLUSIVEOVERRIDE) { if(pf !=  'ol_') olOverrideIsSet = true; return k; }
+        if (ar[k] == EXCLUSIVE) { eval(pf +  'exclusive = (' +  pf + 'exclusive == 0) ? 1 : 0'); return k; }
+        if (ar[k] == EXCLUSIVESTATUS) { eval(pf + "exclusivestatus = '" + escSglQuote(ar[++k]) + "'"); return k; }
+    }
 
-	return -1;
+    return -1;
 }
 
 ///////
@@ -70,45 +70,45 @@ function parseExclusiveExtras(pf,i,ar) {
 ///////
 // set status message and indicate whether popup is exclusive
 function isExclusive(args) {
-	var rtnVal = false;
+    var rtnVal = false;
 
-	if(args != null) rtnVal = hasCommand(args, EXCLUSIVEOVERRIDE);
+    if(args != null) rtnVal = hasCommand(args, EXCLUSIVEOVERRIDE);
 
-	if(rtnVal) return false;
-	else {
-		self.status = (o3_exclusive) ? o3_exclusivestatus : '';
-		return o3_exclusive;
-	}
+    if(rtnVal) return false;
+    else {
+        self.status = (o3_exclusive) ? o3_exclusivestatus : '';
+        return o3_exclusive;
+    }
 
 }
 
 // checks overlib argument list to see if it has a COMMAND argument
 function hasCommand(args, COMMAND) {
-	var rtnFlag = false;
+    var rtnFlag = false;
 
-	for (var i=0; i<args.length; i++) {
-		if (typeof args[i] == 'number' &&  args[i] == COMMAND) {
-			rtnFlag = true;
-			break;
-		}
-	}
+    for (var i=0; i<args.length; i++) {
+        if (typeof args[i] == 'number' &&  args[i] == COMMAND) {
+            rtnFlag = true;
+            break;
+        }
+    }
 
-	return rtnFlag;
+    return rtnFlag;
 }
 
 // makes sure exclusive setting is off
 function clearExclusive() {
-	o3_exclusive = 0;
+    o3_exclusive = 0;
 }
 
 function setExclusive() {
-	o3_exclusive = (o3_showingsticky &&  o3_exclusive);
+    o3_exclusive = (o3_showingsticky &&  o3_exclusive);
 }
 
 function chkForExclusive() {
-	if (olOverrideIsSet) o3_exclusive = 0;  // turn it off in case it's been set.
+    if (olOverrideIsSet) o3_exclusive = 0;  // turn it off in case it's been set.
 
-	return true;
+    return true;
 }
 
 ////////

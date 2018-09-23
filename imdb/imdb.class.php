@@ -1,10 +1,11 @@
 <?php
+
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -12,7 +13,7 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File imdb.class.php 2018-07-07 14:32:00 joeroberts
+** File imdb.class.php 2018-07-07 14:32:00 Black_heart
 **
 ** CHANGES
 **
@@ -148,7 +149,7 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
       $this->debug_scalar("Unknown page identifier: $wt");
       return;
    }
-   
+
    if ($this->usecache) {
     $fname = $this->cachedir . 'imdb_' . $this->imdbID . $wt;
     if ( $this->usezip ) {
@@ -167,13 +168,13 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
       return;
      }
     } else { // no zip
-	//die($fname);
+    //die($fname);
      @$fp = fopen ($fname, "r");
      if ($fp) {
       $temp="";
       while (!feof ($fp)) {
-	 $temp .= fread ($fp, 1024);
-	 $this->page[$wt] = $temp;
+     $temp .= fread ($fp, 1024);
+     $this->page[$wt] = $temp;
       }
       return;
      }
@@ -305,14 +306,14 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
    * @method purge
    */
   function purge() {
-	  return;
+      return;
     if (is_dir($this->cachedir))  {
       $thisdir = dir($this->cachedir);
       $now = time();
       while( $file=$thisdir->read() ) {
         if ($file!="." && $file!="..") {
           $fname = $this->cachedir . $file;
-	  if (is_dir($fname)) continue;
+      if (is_dir($fname)) continue;
           $mod = filemtime($fname);
           if ($mod && ($now - $mod > $this->cache_expire)) unlink($fname);
         }
@@ -338,7 +339,7 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
   function title_year() {
     if ($this->page["Title"] == "") $this->openpage ("Title");
     if (preg_match("/<title>(.*?)\((.*?)\) - IMDb<\/title>/",$this->page["Title"],$match)) {
-		//die(print_r($match));
+        //die(print_r($match));
       $this->main_title = $match[1];
       $this->main_year  = $match[2];
     }
@@ -372,7 +373,7 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
       if ($this->page["Title"] == "") $this->openpage ("Title");
       if (@preg_match("/<time (.*?)>(.*?)min<\/time/m",$this->page["Title"],$match))
         $this->main_runtime = $match[2];
-		//die(print_r($match));
+        //die(print_r($match));
     }
     return $this->main_runtime;
   }
@@ -407,13 +408,13 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
    */
   function rate_vote() {
     if ($this->page["Title"] == "") $this->openpage ("Title");
-	
-	if(preg_match("/<div class=\"ratingValue\"><strong title=\"(.*?)><span>(.*?)<\/strong\>/m",$this->page["Title"],$match)){
+
+    if(preg_match("/<div class=\"ratingValue\"><strong title=\"(.*?)><span>(.*?)<\/strong\>/m",$this->page["Title"],$match)){
       $this->main_rating = $match[2];
-	}
-	if(preg_match("/<div class=\"ratingValue\"><strong title=\"(.*?)><span>(.*?)<\/strong\>(.*?)<span class=\"small\">(.*?)<\/span>/m",$this->page["Title"],$match)){
+    }
+    if(preg_match("/<div class=\"ratingValue\"><strong title=\"(.*?)><span>(.*?)<\/strong\>(.*?)<span class=\"small\">(.*?)<\/span>/m",$this->page["Title"],$match)){
       $this->main_votes = $match[4];
-	}
+    }
   }
 
   /** Get movie rating
@@ -443,8 +444,8 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
     if ($this->main_comment == "") {
       if ($this->page["Title"] == "") $this->openpage ("Title");
       if (@preg_match("/\<div class=\"comment-meta\">(.*?)&ndash;(.*?)<\/div>(.*?)<div>(.*?)<\/div>/ms",$this->page["Title"],$match))
-	  //print_r($match);
-	  $this->main_comment = $match[0];
+      //print_r($match);
+      $this->main_comment = $match[0];
         //$this->main_comment = preg_replace("/a href\=\"\//i","a href=\"http://".$this->imdbsite."/",$match[2]);
     }
     return $this->main_comment;
@@ -486,7 +487,7 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
    if (empty($this->langs)) {
     if ($this->page["Title"] == "") $this->openpage ("Title");
     if (preg_match_all("/<a href=\"\/language\/(.*?)>(.*?)<\/a>/",$this->page["Title"],$matches))
-	//print_r($matches); 
+    //print_r($matches);
       $this->langs = array($matches[2][0]);
    }
    return $this->langs;
@@ -518,7 +519,7 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
       if ($this->page["Title"] == "") $this->openpage ("Title");
     if (preg_match_all("/\<h4 class=\"inline\">Genres:<\/h4>(.*?)<\/div>/",$this->page["Title"],$matches))
         $this->moviegenres = $matches[1];
-		//print_r($matches);
+        //print_r($matches);
     }
     return $this->moviegenres;
   }
@@ -583,14 +584,14 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
     }
     return $this->main_plotoutline;
   }
-	function release_date () {
+    function release_date () {
       if ($this->page["Title"] == "") $this->openpage ("Title");
-	 // die($this->page["Title"]);
+     // die($this->page["Title"]);
       preg_match("/\<h4 class=\"inline\">Release Date:<\/h4>(.*?)<span class=\"see-more inline\">/ms",$this->page["Title"],$match);
       if (empty($match[1])) return FALSE;
-	  //print_r($match);
-	  return $match[1];
-	}
+      //print_r($match);
+      return $match[1];
+    }
  #--------------------------------------------------------[ Photo specific ]---
   /** Get cover photo
    * @method photo
@@ -601,7 +602,7 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
       if ($this->page["Title"] == "") $this->openpage ("Title");
       preg_match("/\<div class=\"poster\">(.*?)<a href(.*?)\>(.*?)<img(.*?)src\=\"(.*?)\"/ms",$this->page["Title"],$match);
       if (empty($match[5])) return FALSE;
-	  //die(print_r($match));
+      //die(print_r($match));
       $this->main_photo = $match[5];
     }
     return $this->main_photo;
@@ -621,10 +622,10 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
     if (strpos($req->getResponseHeader("Content-Type"),'image/jpeg') === 0
       || strpos($req->getResponseHeader("Content-Type"),'image/gif') === 0
       || strpos($req->getResponseHeader("Content-Type"), 'image/bmp') === 0 ){
-	$fp = $req->getResponseBody();
+    $fp = $req->getResponseBody();
     }else{
-	$this->debug_scalar("<BR>*photoerror* ".$photo_url.": Content Type is '".$req->getResponseHeader("Content-Type")."'<BR>");
-	return false;
+    $this->debug_scalar("<BR>*photoerror* ".$photo_url.": Content Type is '".$req->getResponseHeader("Content-Type")."'<BR>");
+    return false;
     }
     $fp2 = fopen ($path, "w");
     if ((!$fp) || (!$fp2)){
@@ -679,7 +680,7 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
     $alsoknow_all = substr($this->page["Title"], $ak_s, $alsoknow_end - $ak_s);
     if (preg_match_all("/([^&]*)<span/",$alsoknow_all,$matches))
       for ($i=0;$i<count($matches[0]);++$i) $this->akas[] = array("title"=>$matches[1][$i],"year"=>$matches[2][$i],"country"=>$matches[3][$i],"comment"=>$matches[4][$i]);
-	if (preg_match_all("/<i class=\"transl\">([^\[\(]+?) (\(\d{4}\) |)(\([^\[]+)\s*\[(.*?)\]<\/i><br>/",$alsoknow_all,$matches)) { // localized variants on akas.imdb.com
+    if (preg_match_all("/<i class=\"transl\">([^\[\(]+?) (\(\d{4}\) |)(\([^\[]+)\s*\[(.*?)\]<\/i><br>/",$alsoknow_all,$matches)) { // localized variants on akas.imdb.com
       for ($i=0;$i<count($matches[0]);++$i) {
         $country = ""; $comment = "";
         if (preg_match_all("/\((.*?)\)/",$matches[3][$i],$countries)) {
@@ -715,7 +716,7 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
   function mpaa () {
    if (empty($this->mpaas)) {
     if ($this->page["MPAA"] == "") $this->openpage ("MPAA");
-	//echo $this->page["MPAA"];
+    //echo $this->page["MPAA"];
     if (preg_match_all("/\/title\?certificates.*?>(.*?):(.*?)</",$this->page["MPAA"],$matches)) {
       $cc = count($matches[0]);
       for ($i=0;$i<$cc;++$i) $this->mpaas[$matches[1][$i]] = $matches[2][$i];
@@ -733,9 +734,9 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
    if (empty($this->plot_plot)) {
     if ( $this->page["Title"] == "" ) $this->openpage ("Title");
     if ( $this->page["Title"] == "" ) return array(); // no such page
-	//echo $this->page["Title"];
+    //echo $this->page["Title"];
     if (preg_match_all("/\<div class=\"inline canwrap\" itemprop=\"description\">.*?<p>(.*?)<\/p>.*?<\/div>/ms",$this->page["Title"],$matches))
-	// print_r($matches);
+    // print_r($matches);
       for ($i=0;$i<count($matches[1]);++$i)
         $this->plot_plot[$i] = strip_tags($matches[1][$i]);
    }
@@ -821,7 +822,7 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
    * @see used by the methods director, cast, writing, producer, composer
    */
   function get_row_cels ( $row ){
-	  //die($row);
+      //die($row);
    if (preg_match_all("/<td.*?>(.*?)<\/td>/",$row,$matches))
    //die(print_r($matches));
    return $matches[1];
@@ -839,7 +840,7 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
    $name_s = 15;
    $name_e = strpos ( $href, '"', $name_s);
    if ( $name_e != 0) return substr( $href, $name_s, $name_e -1 - $name_s);
-   else	return $href;
+   else return $href;
   }
 
   /** Get the director(s) of the movie
@@ -854,42 +855,42 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
    //die($this->page["Credits"]);
    $director_rows = $this->get_table_rows($this->page["Credits"], "Directed by&nbsp;");
    if(!is_array($director_rows))$director_rows = $this->get_table_rows($this->page["Credits"], "Series Directed by&nbsp;");
-	if(!is_array($director_rows))$director_rows = array($director_rows);
+    if(!is_array($director_rows))$director_rows = array($director_rows);
    for ( $i = 0; $i < count ($director_rows); $i++){
-	$cels = $this->get_row_cels ($director_rows[$i]);
-	if (!isset ($cels[0])) return array();
-	$dir["imdb"] = $this->get_imdbname($cels[0]);
-	$dir["name"] = strip_tags($cels[0]);
-	$role = trim(strip_tags($cels[2]));
-	if ( $role == "") $dir["role"] = NULL;
-	else $dir["role"] = $role;
-	$this->credits_director[$i] = $dir;
+    $cels = $this->get_row_cels ($director_rows[$i]);
+    if (!isset ($cels[0])) return array();
+    $dir["imdb"] = $this->get_imdbname($cels[0]);
+    $dir["name"] = strip_tags($cels[0]);
+    $role = trim(strip_tags($cels[2]));
+    if ( $role == "") $dir["role"] = NULL;
+    else $dir["role"] = $role;
+    $this->credits_director[$i] = $dir;
    }
    return $this->credits_director;
   }
-  
+
   function store_cast_image($img,$path)
   {
-	  if($img != '')
-	  {
-			$pretype = preg_replace('/(gif|jpg|jpeg|png)/','',$img);
-			$type = str_replace ($pretype,'',$img);
-			if(!file_exists($this->photodir.urlencode($path) . '.' . $type))
-			{
-				$OUTPUT = file_get_contents($img);
-				$fp = fopen($this->photodir.urlencode($path) . '.' . $type,"w");
-				fputs($fp, $OUTPUT);
-				fclose($fp);
-				@chmod($this->photodir.urlencode($path) . '.' . $type, 0755);
-			}
-			return $this->photodir.urlencode($path) . '.' . $type;
-		}
-	
+      if($img != '')
+      {
+            $pretype = preg_replace('/(gif|jpg|jpeg|png)/','',$img);
+            $type = str_replace ($pretype,'',$img);
+            if(!file_exists($this->photodir.urlencode($path) . '.' . $type))
+            {
+                $OUTPUT = file_get_contents($img);
+                $fp = fopen($this->photodir.urlencode($path) . '.' . $type,"w");
+                fputs($fp, $OUTPUT);
+                fclose($fp);
+                @chmod($this->photodir.urlencode($path) . '.' . $type, 0755);
+            }
+            return $this->photodir.urlencode($path) . '.' . $type;
+        }
+
   }
-  
+
   function get_cast_image($herf, $offset)
   {
-	  $html = $this->page["Credits"];
+      $html = $this->page["Credits"];
     $row_s = strpos ( $html, '<h4 name="cast" id="cast" class="dataHeaderWithBorder">');
    $row_e = $row_s;
    if ( $row_s == 0 )  return FALSE;
@@ -898,9 +899,9 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
   $pattern = str_replace(array('  ',"\r\n", "\r", "\n"), '',substr($html,$row_s,$endtable - $row_s));
  // die($pattern);
        if (preg_match_all("/<img .*?loadlate=\"(.*?)\".*?>/",$this->page["Credits"],$match)){
-		//die(print_r($match[1]));
-		return $match[1];
-		}
+        //die(print_r($match[1]));
+        return $match[1];
+        }
   }
 
   /** Get the actors
@@ -913,20 +914,20 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
     if ( $this->page["Credits"] == "cannot open page" ) return array(); // no such page
    }
    $cast_rows = $this->get_table_rows_cast($this->page["Credits"], "Cast");
-	$cast_imgs = $this->get_cast_image(strip_tags($cels[0]), $i);
+    $cast_imgs = $this->get_cast_image(strip_tags($cels[0]), $i);
    for ( $i = 0; $i < count ($cast_rows); $i++){
                if ($i > 9) {
                 break;
                }
-	$cels = $this->get_row_cels ($cast_rows[$i]);
-	if (!isset ($cels[0])) return array();
-	$dir["imdb"] = $this->get_imdbname($cels[0]);
-	$dir["name"] = strip_tags($cels[1]);
-	if($cast_imgs[$i] != '' )$dir["img"] = $this->store_cast_image($cast_imgs[$i],strip_tags($cels[1]));
-	$role = strip_tags($cels[3]);
-	if ( $role == "") $dir["role"] = NULL;
-	else $dir["role"] = $role;
-	$this->credits_cast[$i] = $dir;
+    $cels = $this->get_row_cels ($cast_rows[$i]);
+    if (!isset ($cels[0])) return array();
+    $dir["imdb"] = $this->get_imdbname($cels[0]);
+    $dir["name"] = strip_tags($cels[1]);
+    if($cast_imgs[$i] != '' )$dir["img"] = $this->store_cast_image($cast_imgs[$i],strip_tags($cels[1]));
+    $role = strip_tags($cels[3]);
+    if ( $role == "") $dir["role"] = NULL;
+    else $dir["role"] = $role;
+    $this->credits_cast[$i] = $dir;
    }
    return $this->credits_cast;
   }
@@ -942,8 +943,8 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
    }
    $this->credits_writing = array();
    $writing_rows = $this->get_table_rows($this->page["Credits"], "Writing Credits");
-	if($writing_rows == '')$writing_rows = $this->get_table_rows($this->page["Credits"], "Series Writing Credits");
-	if(!is_array($writing_rows))$writing_rows = array($writing_rows);
+    if($writing_rows == '')$writing_rows = $this->get_table_rows($this->page["Credits"], "Series Writing Credits");
+    if(!is_array($writing_rows))$writing_rows = array($writing_rows);
    for ( $i = 0; $i < count ($writing_rows); $i++){
      $cels = $this->get_row_cels ($writing_rows[$i]);
      if ( count ( $cels) > 2){
@@ -1040,7 +1041,7 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
       if ( $this->page["Episodes"] == "" ) $this->openpage("Episodes");
       if ( $this->page["Episodes"] == "cannot open page" ) return array(); // no such page
       if ( preg_match_all('|<h4>Season (\d+), Episode (\d+): <a href="/title/tt(\d{7})/">(.*)</a></h4><b>Original Air Date: (.*)</b><br>(.*)<br/><br/>|Ui',$this->page["Episodes"],$matches) ) {
-	for ( $i = 0 ; $i < count($matches[0]); $i++ ) {
+    for ( $i = 0 ; $i < count($matches[0]); $i++ ) {
           $this->season_episodes[$matches[1][$i]][$matches[2][$i]] = array("imdbid" => $matches[3][$i],"title" => $matches[4][$i], "airdate" => $matches[5][$i], "plot" => $matches[6][$i]);
         }
       }
@@ -1099,7 +1100,7 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
         $trail = substr($this->page["Trailers"], $tag_s, $tag_e - $tag_s +1);
         if (preg_match_all("/<a href=\"(.*?)\"/",$trail,$matches))
           for ($i=0;$i<count($matches[0]);++$i) $this->trailers[] = "https://".$this->imdbsite.$matches[1][$i];
-		//die(print_r($this->trailers));
+        //die(print_r($this->trailers));
       }
       $tag_s = strpos($this->page["Trailers"], "<h3>Trailers on Other Sites</h3>");
       if (empty($tag_s)) return FALSE;
@@ -1255,10 +1256,10 @@ function trailer () {
     $this->imdb_config();
     $this->search_episodes(FALSE);
   }
-	function imdbsearch()
-	{
-		self::__construct();
-	}
+    function imdbsearch()
+    {
+        self::__construct();
+    }
 
   /** Search for episodes or movies
    * @method search_episodes

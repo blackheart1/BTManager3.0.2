@@ -1,4 +1,5 @@
 <?php
+
  #############################################################################
  # IMDBPHP                              (c) Giorgos Giagas & Itzchak Rehberg #
  # written by Giorgos Giagas                                                 #
@@ -305,4 +306,5 @@ if (isset ($_GET["mid"])) {
 
   echo '</TABLE><BR>';
 }
+
 ?>

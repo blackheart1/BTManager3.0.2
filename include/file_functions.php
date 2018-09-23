@@ -1,10 +1,11 @@
 <?php
+
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -12,456 +13,458 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File file_functions.php 2018-02-18 14:32:00 joeroberts
+** File include/file_functions.php 2018-09-22 00:00:00 Thor
 **
 ** CHANGES
 **
-** EXAMPLE 26-04-13 - Added Auto Ban
+** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
 **/
-if (!defined('IN_PMBT'))
+
+if (!defined('IN_BTM'))
 {
-	include_once './../security.php';
-	die ();
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
+    die ("Error 404 - Page Not Found");
 }
+
 function file_md5($file)
 {
-	$contents = file_contents($file);
-	if (isset($contents))
-	{
-		$md5 = md5($contents);
-		return $md5;
-	}
-	else
-	{
-		return(false);
-	}
+    $contents = file_contents($file);
+    if (isset($contents))
+    {
+        $md5 = md5($contents);
+        return $md5;
+    }
+    else
+    {
+        return(false);
+    }
 }
 function file_create($file, $contents, $overwrite = false)
 {
-	if (!file_exists($file))
-	{
-		//opens the file for editing
-		$editfile = fopen($file, "w");
-		//writes to the file
-		fwrite($editfile, $contents);
-		//saves the file
-		fclose($editfile);
-		return(true);
-	}
-	elseif ($overwrite)
-	{
-		//opens the file for editing
-		$editfile = fopen($file, "w");
-		//writes to the file
-		fwrite($editfile, $contents);
-		//saves the file
-		fclose($editfile);
-		return(true);
-	}
-	else
-	{
-		return(false);
-	}
+    if (!file_exists($file))
+    {
+        //opens the file for editing
+        $editfile = fopen($file, "w");
+        //writes to the file
+        fwrite($editfile, $contents);
+        //saves the file
+        fclose($editfile);
+        return(true);
+    }
+    elseif ($overwrite)
+    {
+        //opens the file for editing
+        $editfile = fopen($file, "w");
+        //writes to the file
+        fwrite($editfile, $contents);
+        //saves the file
+        fclose($editfile);
+        return(true);
+    }
+    else
+    {
+        return(false);
+    }
 }
 
 function file_copy($source, $destination)
 {
-	if (file_exists($destination))
-	{
-		unlink($destination);
-	}
-	copy($source, $destination);
+    if (file_exists($destination))
+    {
+        unlink($destination);
+    }
+    copy($source, $destination);
 }
 
 function file_contents($file)
 {
-	if (file_exists($file))
-	{
-		return file_get_contents($file);
-	}
-	else
-	{
-		return(false);
-	}
+    if (file_exists($file))
+    {
+        return file_get_contents($file);
+    }
+    else
+    {
+        return(false);
+    }
 }
 
 function file_edited_check($file, $find)
 {
-	if (file_exists($file))
-	{
-		//request for all the text inside the file
-		$viewfile = file_get_contents($file);
-		//checks if the file has already been changed
-		$test = explode($find, $viewfile);
-		if (@$test['1'])
-		{
-			return(true);
-		}
-		else
-		{
-			return(false);
-		}
-	}
-	else
-	{
-		return('error');
-	}
+    if (file_exists($file))
+    {
+        //request for all the text inside the file
+        $viewfile = file_get_contents($file);
+        //checks if the file has already been changed
+        $test = explode($find, $viewfile);
+        if (@$test['1'])
+        {
+            return(true);
+        }
+        else
+        {
+            return(false);
+        }
+    }
+    else
+    {
+        return('error');
+    }
 }
 
 function file_add_after($file, $find, $add)
 {
-	if (file_exists($file))
-	{
-		//request for all the text inside the file
-		$viewfile = file_get_contents($file);
-		//checks if the file has already been changed
-		$test = explode($add, $viewfile);
-		if (@!$test['1'])
-		{
-			//splits the document where the find value is in the document
-			$split = explode($find, $viewfile);
-			if (@$split ['1'])
-			{
-				//builds the file back together with the new text
-				$newfile = $split['0'] . $find . "\n\n" . $add . $split['1'];
-				if (@$split ['2'])
-				{
-					$newfile .= $find . $split['2'];
-				}
-				if (@$split ['3'])
-				{
-					$newfile .= $find . $split['2'];
-				}
-				if (@$split ['4'])
-				{
-					$newfile .= $find . $split['2'];
-				}
-				if (@$split ['5'])
-				{
-					$newfile .= $find . $split['2'];
-				}
-				//opens the file for editing
-				$editfile = fopen($file, "w");
-				//writes to the file
-				fwrite($editfile, $newfile);
-				//saves the file
-				fclose($editfile);
-				return(true);
-			}
-			else
-			{
-				return('error');
-			}
-		}
-	}
-	else
-	{
-		return(false);
-	}
+    if (file_exists($file))
+    {
+        //request for all the text inside the file
+        $viewfile = file_get_contents($file);
+        //checks if the file has already been changed
+        $test = explode($add, $viewfile);
+        if (@!$test['1'])
+        {
+            //splits the document where the find value is in the document
+            $split = explode($find, $viewfile);
+            if (@$split ['1'])
+            {
+                //builds the file back together with the new text
+                $newfile = $split['0'] . $find . "\n\n" . $add . $split['1'];
+                if (@$split ['2'])
+                {
+                    $newfile .= $find . $split['2'];
+                }
+                if (@$split ['3'])
+                {
+                    $newfile .= $find . $split['2'];
+                }
+                if (@$split ['4'])
+                {
+                    $newfile .= $find . $split['2'];
+                }
+                if (@$split ['5'])
+                {
+                    $newfile .= $find . $split['2'];
+                }
+                //opens the file for editing
+                $editfile = fopen($file, "w");
+                //writes to the file
+                fwrite($editfile, $newfile);
+                //saves the file
+                fclose($editfile);
+                return(true);
+            }
+            else
+            {
+                return('error');
+            }
+        }
+    }
+    else
+    {
+        return(false);
+    }
 }
 
 function file_add_before($file, $find, $add)
 {
-	if (file_exists($file))
-	{
-		//request for all the text inside the file
-		$viewfile = file_get_contents($file);
-		//checks if the file has already been changed
-		$test = explode($add, $viewfile);
-		if (@!$test['1'])
-		{
-			//splits the document where the find value is in the document
-			$split = explode($find, $viewfile);
-			if (@$split ['1'])
-			{
-				//builds the file back together with the new text
-				$newfile = $split['0'] . $add . "\n\n" . $find . $split['1'];
-				if (@$split ['2'])
-				{
-					$newfile .= $find . $split['2'];
-				}
-				if (@$split ['3'])
-				{
-					$newfile .= $find . $split['2'];
-				}
-				if (@$split ['4'])
-				{
-					$newfile .= $find . $split['2'];
-				}
-				if (@$split ['5'])
-				{
-					$newfile .= $find . $split['2'];
-				}
-				//opens the file for editing
-				$editfile = fopen($file, "w");
-				//writes to the file
-				fwrite($editfile, $newfile);
-				//saves the file
-				fclose($editfile);
-				return(true);
-			}
-			else
-			{
-				return('error');
-			}
-		}
-	}
-	else
-	{
-		return(false);
-	}
+    if (file_exists($file))
+    {
+        //request for all the text inside the file
+        $viewfile = file_get_contents($file);
+        //checks if the file has already been changed
+        $test = explode($add, $viewfile);
+        if (@!$test['1'])
+        {
+            //splits the document where the find value is in the document
+            $split = explode($find, $viewfile);
+            if (@$split ['1'])
+            {
+                //builds the file back together with the new text
+                $newfile = $split['0'] . $add . "\n\n" . $find . $split['1'];
+                if (@$split ['2'])
+                {
+                    $newfile .= $find . $split['2'];
+                }
+                if (@$split ['3'])
+                {
+                    $newfile .= $find . $split['2'];
+                }
+                if (@$split ['4'])
+                {
+                    $newfile .= $find . $split['2'];
+                }
+                if (@$split ['5'])
+                {
+                    $newfile .= $find . $split['2'];
+                }
+                //opens the file for editing
+                $editfile = fopen($file, "w");
+                //writes to the file
+                fwrite($editfile, $newfile);
+                //saves the file
+                fclose($editfile);
+                return(true);
+            }
+            else
+            {
+                return('error');
+            }
+        }
+    }
+    else
+    {
+        return(false);
+    }
 }
 
 function file_replace($file, $find, $replace)
 {
-	if (file_exists($file))
-	{
-		//request for all the text inside the file
-		$viewfile = file_get_contents($file);
-		//checks if the file has already been changed
-		$test = @explode($replace, $viewfile);
-		if (@!$test['1'])
-		{
-			//splits the document where the find value is in the document
-			$split = explode($find, $viewfile);
-			//builds the file back together with the new text in place of the old text
-			@$newfile = $split['0'] . $replace . $split['1'];
-			//opens the file for editing
-			$editfile = fopen($file, "w");
-			//writes to the file
-			fwrite($editfile, $newfile);
-			//saves the file
-			fclose($editfile);
-			return(true);
-		}
-	}
-	else
-	{
-		return(false);
-	}
+    if (file_exists($file))
+    {
+        //request for all the text inside the file
+        $viewfile = file_get_contents($file);
+        //checks if the file has already been changed
+        $test = @explode($replace, $viewfile);
+        if (@!$test['1'])
+        {
+            //splits the document where the find value is in the document
+            $split = explode($find, $viewfile);
+            //builds the file back together with the new text in place of the old text
+            @$newfile = $split['0'] . $replace . $split['1'];
+            //opens the file for editing
+            $editfile = fopen($file, "w");
+            //writes to the file
+            fwrite($editfile, $newfile);
+            //saves the file
+            fclose($editfile);
+            return(true);
+        }
+    }
+    else
+    {
+        return(false);
+    }
 }
 
 function file_remove($file, $remove)
 {
-	if (file_exists($file))
-	{
-		//request for all the text inside the file
-		$viewfile = file_get_contents($file);
-		//splits the document where the find value is in the document
-		$split = @explode($remove, $viewfile);
-		if (@$split['1'])
-		{
-			//builds the file back together with the new text in place of the old text
-			@$newfile = $split['0'] . $split['1'];
-			//opens the file for editing
-			$editfile = fopen($file, "w");
-			//writes to the file
-			fwrite($editfile, $newfile);
-			//saves the file
-			fclose($editfile);
-			return(true);
-		}
-	}
-	else
-	{
-		return(false);
-	}
+    if (file_exists($file))
+    {
+        //request for all the text inside the file
+        $viewfile = file_get_contents($file);
+        //splits the document where the find value is in the document
+        $split = @explode($remove, $viewfile);
+        if (@$split['1'])
+        {
+            //builds the file back together with the new text in place of the old text
+            @$newfile = $split['0'] . $split['1'];
+            //opens the file for editing
+            $editfile = fopen($file, "w");
+            //writes to the file
+            fwrite($editfile, $newfile);
+            //saves the file
+            fclose($editfile);
+            return(true);
+        }
+    }
+    else
+    {
+        return(false);
+    }
 }
 
 function file_compare($file, $file2)
 {
-	if (file_exists($file) && file_exists($file))
-	{
-		$viewfile = file_get_contents($file);
-		$viewfile2 = file_get_contents($file2);
-		if ($viewfile == $viewfile2)
-		{
-			return(true);
-		}
-	}
-	else
-	{
-		return(false);
-	}
+    if (file_exists($file) && file_exists($file))
+    {
+        $viewfile = file_get_contents($file);
+        $viewfile2 = file_get_contents($file2);
+        if ($viewfile == $viewfile2)
+        {
+            return(true);
+        }
+    }
+    else
+    {
+        return(false);
+    }
 }
 
 function file_temp_name($ext)
 {
-	$name = md5(rand() * time());
-	$s = rand(1, 10) . '-';
-	$l = rand(5, 10) . '-';
-	$name = substr($name, $s, $l);
-	$name .= $ext;
-	return($name);
+    $name = md5(rand() * time());
+    $s = rand(1, 10) . '-';
+    $l = rand(5, 10) . '-';
+    $name = substr($name, $s, $l);
+    $name .= $ext;
+    return($name);
 }
 
 function file_rename($file, $new_file, $overwrite = false)
 {
-	if (file_exists($file))
-	{
-		if (!file_exists($new_file))
-		{
-			rename($file, $new_file);
-			return(true);
-		}
-		elseif ($overwrite)
-		{
-			unlink($new_file);
-			rename($file, $new_file);
-			return(true);
-		}
-		else
-		{
-			return(false);
-		}
-	}
-	else
-	{
-		return(false);
-	}
+    if (file_exists($file))
+    {
+        if (!file_exists($new_file))
+        {
+            rename($file, $new_file);
+            return(true);
+        }
+        elseif ($overwrite)
+        {
+            unlink($new_file);
+            rename($file, $new_file);
+            return(true);
+        }
+        else
+        {
+            return(false);
+        }
+    }
+    else
+    {
+        return(false);
+    }
 }
 
 function dir_create($dir)
 {
-	if (!file_exists($dir))
-	{
-		mkdir($dir);
-		return(true);
-	}
-	else
-	{
-		return(false);
-	}
+    if (!file_exists($dir))
+    {
+        mkdir($dir);
+        return(true);
+    }
+    else
+    {
+        return(false);
+    }
 }
 
 function dir_get_files($dir)
 {
-	$count = 0;
-	$files = scan_dir($dir);
-	foreach($files as $file)
-	{
-		if (is_file($dir . '/' . $file))
-		{
-			$file_list[$count] = $file;
-			$count += 1;
-		}
-	}
-	if (isset($file_list))
-	{
-		return($file_list);
-	}
+    $count = 0;
+    $files = scan_dir($dir);
+    foreach($files as $file)
+    {
+        if (is_file($dir . '/' . $file))
+        {
+            $file_list[$count] = $file;
+            $count += 1;
+        }
+    }
+    if (isset($file_list))
+    {
+        return($file_list);
+    }
 }
 
 function dir_get_dirs($dir)
 {
-	$count = 0;
-	$dirs = scan_dir($dir);
-	foreach($dirs as $dir2)
-	{
-		if (is_dir($dir . '/' . $dir2))
-		{
-			$dir_list[$count] = $dir2;
-			$count += 1;
-		}
-	}
-	if (isset($dir_list))
-	{
-		return($dir_list);
-	}
+    $count = 0;
+    $dirs = scan_dir($dir);
+    foreach($dirs as $dir2)
+    {
+        if (is_dir($dir . '/' . $dir2))
+        {
+            $dir_list[$count] = $dir2;
+            $count += 1;
+        }
+    }
+    if (isset($dir_list))
+    {
+        return($dir_list);
+    }
 }
 
 function dir_count_files($dir)
 {
-	if (is_dir($dir))
-	{
-		$count = 0;
-		$files = scan_dir($dir);
-		foreach($files as $file)
-		{
-			if (is_file($dir . '/' . $file))
-			{
-				$count += 1;
-			}
-		}
-		return($count);
-	}
+    if (is_dir($dir))
+    {
+        $count = 0;
+        $files = scan_dir($dir);
+        foreach($files as $file)
+        {
+            if (is_file($dir . '/' . $file))
+            {
+                $count += 1;
+            }
+        }
+        return($count);
+    }
 }
 
 function dir_count_dirs($dir)
 {
-	if (is_dir($dir))
-	{
-		$count = 0;
-		$files = scan_dir($dir);
-		foreach($files as $file)
-		{
-			if (is_dir($dir . '/' . $file))
-			{
-				$count += 1;
-			}
-		}
-		$count -= 2;
-		return($count);
-	}
+    if (is_dir($dir))
+    {
+        $count = 0;
+        $files = scan_dir($dir);
+        foreach($files as $file)
+        {
+            if (is_dir($dir . '/' . $file))
+            {
+                $count += 1;
+            }
+        }
+        $count -= 2;
+        return($count);
+    }
 }
 function scan_dir($dir)
 {
-	$dir_contents = array();
-	if ($handle = opendir($dir)) {
-		while (false !== ($file = readdir($handle))) {
-			if ($file != "." && $file != "..") {
-				array_push($dir_contents, $file);
-			}
-		}
-		return $dir_contents;
-		closedir($handle);
-	}
+    $dir_contents = array();
+    if ($handle = opendir($dir)) {
+        while (false !== ($file = readdir($handle))) {
+            if ($file != "." && $file != "..") {
+                array_push($dir_contents, $file);
+            }
+        }
+        return $dir_contents;
+        closedir($handle);
+    }
 }
 
 function dir_delete($dir, $deletefiles = false)
 {
-	if (@rmdir($dir))
-	{
-		return(true);
-	}
-	elseif (file_exists($dir))
-	{
-		if ($deletefiles)
-		{
-			$files = scan_dir($dir);
-	
-			foreach($files as $file)
-			{
-				$file2 = $dir . '/' . $file;
-				if (!is_dir($file2))
-				{
-					if (is_file($file2))
-					{
-						unlink($file2);
-					}
-				}
-				else
-				{
-					if ($file != '.' && $file != '..')
-					{
-						dir_delete($dir . '/' . $file, true);
-					}
-				}
-			}
-			if (@rmdir($dir))
-			{
-				return(true);
-			}
-			else
-			{
-				return(false);
-			}
-		}
-		else
-		{
-			return(false);
-		}
-	}
+    if (@rmdir($dir))
+    {
+        return(true);
+    }
+    elseif (file_exists($dir))
+    {
+        if ($deletefiles)
+        {
+            $files = scan_dir($dir);
+
+            foreach($files as $file)
+            {
+                $file2 = $dir . '/' . $file;
+                if (!is_dir($file2))
+                {
+                    if (is_file($file2))
+                    {
+                        unlink($file2);
+                    }
+                }
+                else
+                {
+                    if ($file != '.' && $file != '..')
+                    {
+                        dir_delete($dir . '/' . $file, true);
+                    }
+                }
+            }
+            if (@rmdir($dir))
+            {
+                return(true);
+            }
+            else
+            {
+                return(false);
+            }
+        }
+        else
+        {
+            return(false);
+        }
+    }
 }
 
 function get_file_size($file) {
@@ -469,30 +472,30 @@ function get_file_size($file) {
     $mb = 1024 * $kb;
     $gb = 1024 * $mb;
     $tb = 1024 * $gb;
-	if ($file) {
-		$size = filesize($file);
-		if ($size < $kb) {
-			$file_size = "$size Bytes";
-		}
-		elseif ($size < $mb) {
-			$final = round($size/$kb, 2);
-			$file_size = "$final KB";
-		}
-		elseif ($size < $gb) {
-			$final = round($size/$mb, 2);
-			$file_size = "$final MB";
-		}
-		elseif($size < $tb) {
-			$final = round($size/$gb, 2);
-			$file_size = "$final GB";
-		} else {
-			$final = round($size/$tb, 2);
-			$file_size = "$final TB";
-		}
-	} else {
-		return(false);
-	}
-	return($file_size);
+    if ($file) {
+        $size = filesize($file);
+        if ($size < $kb) {
+            $file_size = "$size Bytes";
+        }
+        elseif ($size < $mb) {
+            $final = round($size/$kb, 2);
+            $file_size = "$final KB";
+        }
+        elseif ($size < $gb) {
+            $final = round($size/$mb, 2);
+            $file_size = "$final MB";
+        }
+        elseif($size < $tb) {
+            $final = round($size/$gb, 2);
+            $file_size = "$final GB";
+        } else {
+            $final = round($size/$tb, 2);
+            $file_size = "$final TB";
+        }
+    } else {
+        return(false);
+    }
+    return($file_size);
 }
 
 function convert_file_size($size) {
@@ -500,25 +503,25 @@ function convert_file_size($size) {
     $mb = 1024 * $kb;
     $gb = 1024 * $mb;
     $tb = 1024 * $gb;
-	if ($size < $kb) {
-		$file_size = "$size Bytes";
-	}
-	elseif ($size < $mb) {
-		$final = round($size/$kb, 2);
-		$file_size = "$final KB";
-	}
-	elseif ($size < $gb) {
-		$final = round($size/$mb, 2);
-		$file_size = "$final MB";
-	}
-	elseif($size < $tb) {
-		$final = round($size/$gb, 2);
-		$file_size = "$final GB";
-	} else {
-		$final = round($size/$tb, 2);
-		$file_size = "$final TB";
-	}
-	return($file_size);
+    if ($size < $kb) {
+        $file_size = "$size Bytes";
+    }
+    elseif ($size < $mb) {
+        $final = round($size/$kb, 2);
+        $file_size = "$final KB";
+    }
+    elseif ($size < $gb) {
+        $final = round($size/$mb, 2);
+        $file_size = "$final MB";
+    }
+    elseif($size < $tb) {
+        $final = round($size/$gb, 2);
+        $file_size = "$final GB";
+    } else {
+        $final = round($size/$tb, 2);
+        $file_size = "$final TB";
+    }
+    return($file_size);
 }
 
 function getmod($filename) {
@@ -528,12 +531,12 @@ function getmod($filename) {
    $val += (($perms & 0x0100) ? 0x0100 : 0x0000); //Read
    $val += (($perms & 0x0080) ? 0x0080 : 0x0000); //Write
    $val += (($perms & 0x0040) ? 0x0040 : 0x0000); //Execute
- 
+
    // Group
    $val += (($perms & 0x0020) ? 0x0020 : 0x0000); //Read
    $val += (($perms & 0x0010) ? 0x0010 : 0x0000); //Write
    $val += (($perms & 0x0008) ? 0x0008 : 0x0000); //Execute
- 
+
    // Global; World
    $val += (($perms & 0x0004) ? 0x0004 : 0x0000); //Read
    $val += (($perms & 0x0002) ? 0x0002 : 0x0000); //Write
@@ -552,78 +555,78 @@ function getmod($filename) {
 
 function create_thumb($src_image, $dest_file, $max_size)
 {
-	if (file_exists($src_image))
-	{
-		$size = getimagesize($src_image);
-		
-		if($size[0] > $size[1]) {
-		  $divisor = $size[0] / $max_size;
-		}
-		else {
-		  $divisor = $size[1] / $max_size;
-		}
-	
-		$new_width = $size[0] / $divisor;
-		$new_height = $size[1] / $divisor;
-		
-		settype($new_width, 'integer');
-		settype($new_height, 'integer');
-		
-		$src_type = filetype($src_image);
-		
-		$src_type = array_pop(explode('.', $dest_file));
+    if (file_exists($src_image))
+    {
+        $size = getimagesize($src_image);
 
-		if ($src_type == 'jpeg' || $src_type == 'jpg' || $src_type == 'pjpeg')
-		{
-			$src_image_big = imagecreatefromjpeg($src_image);
-		}
-		elseif ($src_type == 'png')
-		{
-			$src_image_big = imagecreatefrompng($src_image);
-		}
-		elseif ($src_type == 'gif')
-		{
-			$src_image_big = imagecreatefromgif($src_image);
-		}
-		else
-		{
-			return false;
-		}
+        if($size[0] > $size[1]) {
+          $divisor = $size[0] / $max_size;
+        }
+        else {
+          $divisor = $size[1] / $max_size;
+        }
 
-		$src_image_small = imagecreatetruecolor($new_width, $new_height);
+        $new_width = $size[0] / $divisor;
+        $new_height = $size[1] / $divisor;
 
-		imagecopyresampled($src_image_small, $src_image_big, 0,0, 0,0, $new_width,$new_height, $size[0],$size[1]);
+        settype($new_width, 'integer');
+        settype($new_height, 'integer');
 
-		imagedestroy($src_image_big);		
+        $src_type = filetype($src_image);
 
-		if ($src_type == 'jpeg' || $src_type == 'jpg' || $src_type == 'pjpeg')
-		{
-			imagejpeg($src_image_small, $dest_file, 100);
-		}
-		elseif ($src_type == 'png')
-		{
-			imagepng($src_image_small, $dest_file, 100);
-		}
-		elseif ($src_type == 'gif')
-		{
-			imagegif($src_image_small, $dest_file, 100);
-		}
-		else
-		{
-			return false;
-		}
-		
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+        $src_type = array_pop(explode('.', $dest_file));
+
+        if ($src_type == 'jpeg' || $src_type == 'jpg' || $src_type == 'pjpeg')
+        {
+            $src_image_big = imagecreatefromjpeg($src_image);
+        }
+        elseif ($src_type == 'png')
+        {
+            $src_image_big = imagecreatefrompng($src_image);
+        }
+        elseif ($src_type == 'gif')
+        {
+            $src_image_big = imagecreatefromgif($src_image);
+        }
+        else
+        {
+            return false;
+        }
+
+        $src_image_small = imagecreatetruecolor($new_width, $new_height);
+
+        imagecopyresampled($src_image_small, $src_image_big, 0,0, 0,0, $new_width,$new_height, $size[0],$size[1]);
+
+        imagedestroy($src_image_big);
+
+        if ($src_type == 'jpeg' || $src_type == 'jpg' || $src_type == 'pjpeg')
+        {
+            imagejpeg($src_image_small, $dest_file, 100);
+        }
+        elseif ($src_type == 'png')
+        {
+            imagepng($src_image_small, $dest_file, 100);
+        }
+        elseif ($src_type == 'gif')
+        {
+            imagegif($src_image_small, $dest_file, 100);
+        }
+        else
+        {
+            return false;
+        }
+
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 function get_file_type($file)
-{		
-	return array_pop(explode('.', $file));
+{
+    return array_pop(explode('.', $file));
 }
 
 /**
@@ -722,53 +725,54 @@ function xml2array($contents, $get_attributes=1) {
 }
 function get_remote_file($host, $directory, $filename, &$errstr, &$errno, $port = 80, $timeout = 10)
 {
-	global $user;
+    global $user;
 
-	if ($fsock = @fsockopen($host, $port, $errno, $errstr, $timeout))
-	{
-		@fputs($fsock, "GET $directory/$filename HTTP/1.1\r\n");
-		@fputs($fsock, "HOST: $host\r\n");
-		@fputs($fsock, "Connection: close\r\n\r\n");
+    if ($fsock = @fsockopen($host, $port, $errno, $errstr, $timeout))
+    {
+        @fputs($fsock, "GET $directory/$filename HTTP/1.1\r\n");
+        @fputs($fsock, "HOST: $host\r\n");
+        @fputs($fsock, "Connection: close\r\n\r\n");
 
-		$file_info = '';
-		$get_info = false;
+        $file_info = '';
+        $get_info = false;
 
-		while (!@feof($fsock))
-		{
-			if ($get_info)
-			{
-				$file_info .= @fread($fsock, 1024);
-			}
-			else
-			{
-				$line = @fgets($fsock, 1024);
-				if ($line == "\r\n")
-				{
-					$get_info = true;
-				}
-				else if (stripos($line, '404 not found') !== false)
-				{
-					$errstr = $user->lang['FILE_NOT_FOUND'] . ': ' . $filename;
-					return false;
-				}
-			}
-		}
-		@fclose($fsock);
-	}
-	else
-	{
-		if ($errstr)
-		{
-			$errstr = utf8_convert_message($errstr);
-			return false;
-		}
-		else
-		{
-			$errstr = $user->lang['FSOCK_DISABLED'];
-			return false;
-		}
-	}
+        while (!@feof($fsock))
+        {
+            if ($get_info)
+            {
+                $file_info .= @fread($fsock, 1024);
+            }
+            else
+            {
+                $line = @fgets($fsock, 1024);
+                if ($line == "\r\n")
+                {
+                    $get_info = true;
+                }
+                else if (stripos($line, '404 not found') !== false)
+                {
+                    $errstr = $user->lang['FILE_NOT_FOUND'] . ': ' . $filename;
+                    return false;
+                }
+            }
+        }
+        @fclose($fsock);
+    }
+    else
+    {
+        if ($errstr)
+        {
+            $errstr = utf8_convert_message($errstr);
+            return false;
+        }
+        else
+        {
+            $errstr = $user->lang['FSOCK_DISABLED'];
+            return false;
+        }
+    }
 
-	return $file_info;
+    return $file_info;
 }
+
 ?>

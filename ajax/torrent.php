@@ -2,10 +2,10 @@
 
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -13,20 +13,20 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts)
 ** Project Leaders: Black_heart, Thor.
-** File ajax/torrent.php 2018-08-27 07:36:00 Thor
+** File ajax/torrent.php 2018-09-22 00:00:00 Thor
 **
 ** CHANGES
 **
-** 2018-08-31 - Added New Masthead
+** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
 **/
 
-if (!defined('IN_PMBT'))
+if (!defined('IN_BTM'))
 {
-    include_once './../security.php';
-    die ("You can't access this file directly");
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
+    die ("Error 404 - Page Not Found");
 }
 
-if($op == 'edit_torrent_descr')
+if ($op == 'edit_torrent_descr')
     {
         $torrent        = request_var('torrent', '0');
         if( !isset( $torrent ) || !is_numeric($torrent) )
@@ -252,4 +252,5 @@ if($op == 'delete_torrent_comment')
 $db->sql_close();
 die();
     }
+
 ?>

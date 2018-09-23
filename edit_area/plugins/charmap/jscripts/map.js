@@ -2,9 +2,9 @@ var editArea;
 
 
 /**
- *  UTF-8 list taken from http://www.utf8-chartable.de/unicode-utf8-table.pl?utf8=dec 
- */  
- 
+ *  UTF-8 list taken from http://www.utf8-chartable.de/unicode-utf8-table.pl?utf8=dec
+ */
+
 
 /*
 var char_range_list={
@@ -317,57 +317,57 @@ var char_range_list={
 var insert="charmap_insert";
 
 function map_load(){
-	editArea=opener.editArea;
-	// translate the document
-	insert= editArea.get_translation(insert, "word");
-	//alert(document.title);
-	document.title= editArea.get_translation(document.title, "template");
-	document.body.innerHTML= editArea.get_translation(document.body.innerHTML, "template");
-	//document.title= editArea.get_translation(document.getElementBytitle, "template");
-	
-	var selected_lang=opener.EditArea_charmap.default_language.toLowerCase();
-	var selected=0;
-	
-	var select= document.getElementById("select_range")
-	for(var i in char_range_list){
-		if(i.toLowerCase()==selected_lang)
-			selected=select.options.length;
-		select.options[select.options.length]=new Option(i, char_range_list[i]);
-	}
-	select.options[selected].selected=true;
-/*	start=0;
-	end=127;
-	content="";
-	for(var i=start; i<end; i++){
-		content+="&#"+i+"; ";
-	}
-	document.getElementById("char_list").innerHTML=content;*/
-	renderCharMapHTML();
+    editArea=opener.editArea;
+    // translate the document
+    insert= editArea.get_translation(insert, "word");
+    //alert(document.title);
+    document.title= editArea.get_translation(document.title, "template");
+    document.body.innerHTML= editArea.get_translation(document.body.innerHTML, "template");
+    //document.title= editArea.get_translation(document.getElementBytitle, "template");
+
+    var selected_lang=opener.EditArea_charmap.default_language.toLowerCase();
+    var selected=0;
+
+    var select= document.getElementById("select_range")
+    for(var i in char_range_list){
+        if(i.toLowerCase()==selected_lang)
+            selected=select.options.length;
+        select.options[select.options.length]=new Option(i, char_range_list[i]);
+    }
+    select.options[selected].selected=true;
+/*  start=0;
+    end=127;
+    content="";
+    for(var i=start; i<end; i++){
+        content+="&#"+i+"; ";
+    }
+    document.getElementById("char_list").innerHTML=content;*/
+    renderCharMapHTML();
 }
 
 
 function renderCharMapHTML() {
-	range= document.getElementById("select_range").value.split(",");
+    range= document.getElementById("select_range").value.split(",");
 
-	start= parseInt(range[0],16);
-	end= parseInt(range[1],16);
-	var charsPerRow = 20, tdWidth=20, tdHeight=20;
-	html="";
-	for (var i=start; i<end; i++) {
-		html+="<a class='char' onmouseover='previewChar(\""+ i + "\");' onclick='insertChar(\""+ i + "\");' title='"+ insert +"'>"+ String.fromCharCode(i) +"</a>";
-	}
-	document.getElementById("char_list").innerHTML= html;
-	document.getElementById("preview_char").innerHTML="";
+    start= parseInt(range[0],16);
+    end= parseInt(range[1],16);
+    var charsPerRow = 20, tdWidth=20, tdHeight=20;
+    html="";
+    for (var i=start; i<end; i++) {
+        html+="<a class='char' onmouseover='previewChar(\""+ i + "\");' onclick='insertChar(\""+ i + "\");' title='"+ insert +"'>"+ String.fromCharCode(i) +"</a>";
+    }
+    document.getElementById("char_list").innerHTML= html;
+    document.getElementById("preview_char").innerHTML="";
 }
 
 function previewChar(i){
-	document.getElementById("preview_char").innerHTML= String.fromCharCode(i);
-	document.getElementById("preview_code").innerHTML= "&amp;#"+ i +";";
+    document.getElementById("preview_char").innerHTML= String.fromCharCode(i);
+    document.getElementById("preview_code").innerHTML= "&amp;#"+ i +";";
 }
 
 function insertChar(i){
-	opener.parent.editAreaLoader.setSelectedText(editArea.id, String.fromCharCode( i));
-	range= opener.parent.editAreaLoader.getSelectionRange(editArea.id);
-	opener.parent.editAreaLoader.setSelectionRange(editArea.id, range["end"], range["end"]);
-	window.focus();
+    opener.parent.editAreaLoader.setSelectedText(editArea.id, String.fromCharCode( i));
+    range= opener.parent.editAreaLoader.getSelectionRange(editArea.id);
+    opener.parent.editAreaLoader.setSelectionRange(editArea.id, range["end"], range["end"]);
+    window.focus();
 }

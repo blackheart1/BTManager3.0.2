@@ -13,12 +13,18 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts)
 ** Project Leaders: Black_heart, Thor.
-** File setup/english.php 2018-09-18 08:15:00 Thor
+** File language/english.php 2018-09-21 00:00:00 Thor
 **
 ** CHANGES
 **
-** 2018-09-18 - Reworded to Match Site Settings
+** 2018-09-21 - Updated Masthead, Github, !defined('IN_BTM')
 **/
+
+if (!defined('IN_BTM'))
+{
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
+    die ("Error 404 - Page Not Found");
+}
 
 define("_ok", "OK");
 define("_error", "Error");

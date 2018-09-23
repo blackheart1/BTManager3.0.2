@@ -1,77 +1,73 @@
 <?php
-/*
-*----------------------------phpMyBitTorrent V 2.0-beta4-----------------------*
-*--- The Ultimate BitTorrent Tracker and BMS (Bittorrent Management System) ---*
-*--------------   Created By Antonio Anzivino (aka DJ Echelon)   --------------*
-*-------------               http://www.p2pmania.it               -------------*
-*------------ Based on the Bit Torrent Protocol made by Bram Cohen ------------*
-*-------------              http://www.bittorrent.com             -------------*
-*------------------------------------------------------------------------------*
-*------------------------------------------------------------------------------*
-*--   This program is free software; you can redistribute it and/or modify   --*
-*--   it under the terms of the GNU General Public License as published by   --*
-*--   the Free Software Foundation; either version 2 of the License, or      --*
-*--   (at your option) any later version.                                    --*
-*--                                                                          --*
-*--   This program is distributed in the hope that it will be useful,        --*
-*--   but WITHOUT ANY WARRANTY; without even the implied warranty of         --*
-*--   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          --*
-*--   GNU General Public License for more details.                           --*
-*--                                                                          --*
-*--   You should have received a copy of the GNU General Public License      --*
-*--   along with this program; if not, write to the Free Software            --*
-*-- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA --*
-*--                                                                          --*
-*------------------------------------------------------------------------------*
-*------              ©2005 phpMyBitTorrent Development Team              ------*
-*-----------               http://phpmybittorrent.com               -----------*
-*------------------------------------------------------------------------------*
-*-----------------   Sunday, September 14, 2008 9:05 PM   ---------------------*
-*/
 
-if (!defined('IN_PMBT')) die ("You can't access this file directly");
+/**
+**********************
+** BTManager v3.0.2 **
+**********************
+** http://www.btmanager.org/
+** https://github.com/blackheart1/BTManager3.0.2
+** http://demo.btmanager.org/index.php
+** Licence Info: GPL
+** Copyright (C) 2018
+** Formerly Known As phpMyBitTorrent
+** Created By Antonio Anzivino (aka DJ Echelon)
+** And Joe Robertson (aka joeroberts/Black_Heart)
+** Project Leaders: Black_Heart, Thor.
+** File include/textarea.php 2018-09-22 00:00:00 Thor
+**
+** CHANGES
+**
+** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
+**/
+
+if (!defined('IN_BTM'))
+{
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
+    die ("Error 404 - Page Not Found");
+}
+
 $textarea = new textarea();
 
 class textarea {
-				function open_textarea($open, $forum_name, $method, $action)
-				{
-				$open_text = '';
+                function open_textarea($open, $forum_name, $method, $action)
+                {
+                $open_text = '';
                  $open_text .= "<table border=\"0\" cellpadding=\"2\" cellspacing=\"3\" width=\"100%\">\n";
                  $open_text .= "<tr><td><HR SIZE=1 NOSHADE></td></tr>\n";
-	             $open_text .= "<tr><td><p>".$open."</p></td><td>";
+                 $open_text .= "<tr><td><p>".$open."</p></td><td>";
                  $open_text .= "<form name=\"" . $forum_name . "\" method=\"" . $method . "\" action=\"" . $action . "\">";
-				 return $open_text;
-				}
-				function input($descr, $align='center', $colspan="2", $rows="10", $cols="80", $text="")
-				{
-				//$preview = str_replace('_','',$descr);
-				$textarea = "<tr><td align=" . $align . " colspan=" . $colspan . "><p><textarea type=\"hidden\" id=\"" . $descr . "\"  name=\"" . $descr . "\" rows=" . $rows . " cols=" . $cols . ">" . $text . "</textarea><input type=\"button\" onclick=\"mypopup(" . $descr . ".value)\" value=\"preview!\"></p></td></tr>";
-				return $textarea;
-				}
-				function quick_smilies($area = 'descr',$return = 'forumdata')
-				{
+                 return $open_text;
+                }
+                function input($descr, $align='center', $colspan="2", $rows="10", $cols="80", $text="")
+                {
+                //$preview = str_replace('_','',$descr);
+                $textarea = "<tr><td align=" . $align . " colspan=" . $colspan . "><p><textarea type=\"hidden\" id=\"" . $descr . "\"  name=\"" . $descr . "\" rows=" . $rows . " cols=" . $cols . ">" . $text . "</textarea><input type=\"button\" onclick=\"mypopup(" . $descr . ".value)\" value=\"preview!\"></p></td></tr>";
+                return $textarea;
+                }
+                function quick_smilies($area = 'descr',$return = 'forumdata')
+                {
                         global $db, $db_prefix;
-						if(defined('INSETUP')) $root_dir = './../';
-						else
-						$root_dir = './';
-				        $sql = "SELECT * FROM ".$db_prefix."_smiles ORDER BY id ASC LIMIT 14;";
+                        if(defined('INSETUP')) $root_dir = './../';
+                        else
+                        $root_dir = './';
+                        $sql = "SELECT * FROM ".$db_prefix."_smiles ORDER BY id ASC LIMIT 14;";
                         $smile_res = $db->sql_query($sql);
                         if ($db->sql_numrows($smile_res) > 0) {
                         $smile_rows = $db->sql_fetchrowset($smile_res);
-						$q_smile = '';
+                        $q_smile = '';
                         foreach ($smile_rows as $smile) {
                              $q_smile .= "<a onclick=\"comment_smile('".$smile["code"]."',".$return.".".$area.");\"><img src=\"{$root_dir}smiles/".$smile["file"]."\" border=\"0\" alt=\"".$smile["alt"]."\"></a>\n";
                              }
                          }
 
-				return $q_smile;
-				}
-				function quick_bbcode($return,$area)
-				{
+                return $q_smile;
+                }
+                function quick_bbcode($return,$area)
+                {
                         global $db, $db_prefix, $textarea;
-						if(defined('INSETUP')) $root_dir = './../';
-						else
-						$root_dir = './';
+                        if(defined('INSETUP')) $root_dir = './../';
+                        else
+                        $root_dir = './';
 
                         $quick_bb = '
                         <table width="56%" style="background-color:#C9C299" cellspacing=0 cellpadding=0>
@@ -84,7 +80,7 @@ class textarea {
                         </tr>
                         <tr>
                         <td align=center>';
-                        $quick_bb .= "<select id=fontselect".$area." 
+                        $quick_bb .= "<select id=fontselect".$area."
                         onchange=fontformat(".$return.",this.options[this.selectedIndex].value,'font',".$area.")>
                         <option value=0>FONT</option>
                         <option value=arial><font face=\"arial\">Arial</font></option>
@@ -104,7 +100,7 @@ class textarea {
                         <option value=4>Large</option>
                         <option value=5>X-Large</option>
                         </select>
-                        <select id=colorselect".$area." 
+                        <select id=colorselect".$area."
                         onchange=fontformat(".$return.",this.options[this.selectedIndex].value,'color',".$area.")>
                         <option value=0>COLOR</option>
                         <option value=skyblue style=color:skyblue>sky blue</option>
@@ -133,7 +129,7 @@ class textarea {
                         <option value=silver style=color:silver>silver</option>
                         </select>
                         </td>
-  
+
                         </tr>
                         <tr>
                         <td align=center colspan=2>
@@ -149,13 +145,13 @@ class textarea {
                         <img src={$root_dir}images/textfield.gif alt=Insert&nbsp;Syntax&nbsp;Highlighted&nbsp;PHP&nbsp;CODE title=Insert&nbsp;Syntax&nbsp;Highlighted&nbsp;PHP&nbsp;CODE border=0 onclick=bbcode(document." . $return .",'php',''," . $return .".".$area.") onmouseover=this.style.cursor='pointer'; /></td></tr><tr><td align=center>";
                                 #Smiles
                         $quick_bb .= $textarea->quick_smilies($area,$return);
-                        $quick_bb .= " </td></tr>";	
-                        return $quick_bb;		
-                        }	
-						function text_close($type, $value, $type2, $name, $value2, $type3, $name2, $value3)
-						{
-						$close_text = '';
-						$close_text .= "</table>\n";
+                        $quick_bb .= " </td></tr>";
+                        return $quick_bb;
+                        }
+                        function text_close($type, $value, $type2, $name, $value2, $type3, $name2, $value3)
+                        {
+                        $close_text = '';
+                        $close_text .= "</table>\n";
                         $close_text .= "</p>";
                         $close_text .= "<p><input type=\"".$type."\" value=\"".$value."\"></p>";
                         $close_text .= "<input type=\"".$type2."\" name=\"".$name."\" value=\"".$value2."\"><input type=\"".$type3."\" name=\"".$name2."\" value=\"".$value3."\">";
@@ -163,6 +159,7 @@ class textarea {
                         $close_text .= "</td></tr>";
                         $close_text .= "</table>";
                         return $close_text;
-						}
+                        }
 }
+
 ?>

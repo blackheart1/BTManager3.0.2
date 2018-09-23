@@ -1,10 +1,10 @@
 <?php
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -12,15 +12,15 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File utf_tools.php 2018-02-18 14:32:00 joeroberts
+** File utf_tools.php 2018-02-18 14:32:00 Black_heart
 **
 ** CHANGES
 **
 ** EXAMPLE 26-04-13 - Added Auto Ban
 **/
-if (!defined('IN_PMBT'))
+if (!defined('IN_BTM'))
 {
-	include_once './../../security.php';
+	require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
 	die ();
 }
 
@@ -79,7 +79,7 @@ if (!extension_loaded('xml'))
 		$pos = 0;
 		$len = strlen($str);
 		$ret = '';
-	
+
 		while ($pos < $len)
 		{
 			$ord = ord($str[$pos]) & 0xF0;
@@ -261,7 +261,7 @@ else
 		if (is_null($offset))
 		{
 			$ar	= explode($needle, $str);
-			
+
 			if (sizeof($ar) > 1)
 			{
 				// Pop off the end of the string where the last	match was made
@@ -536,7 +536,7 @@ else
 			$op = '^(?:' . $op . '.{' . $oy . '})';
 		}
 		else
-		{	
+		{
 			// offset == 0; just anchor the pattern
 			$op = '^';
 		}
@@ -569,7 +569,7 @@ else
 
 				$lx = (int) ($length / 65535);
 				$ly = $length % 65535;
-				
+
 				// negative length requires a captured group
 				// of length characters
 				if ($lx)
@@ -641,7 +641,7 @@ function utf8_str_split($str, $split_len = 1)
 	{
 		return array($str);
 	}
-	
+
 	preg_match_all('/.{' . $split_len . '}|[^\x00]{1,' . $split_len . '}$/us', $str, $ar);
 	return $ar[0];
 }

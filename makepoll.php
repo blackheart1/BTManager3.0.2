@@ -2,10 +2,10 @@
 
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -13,23 +13,21 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File makepoll.php 2018-07-23 21:10:00 Black_Heart
+** File makepoll.php 2018-09-22 00:00:00 Thor
 **
 ** CHANGES
 **
-** 2018-07-17 - Added Language
-** 2018-07-23 - Added SQL security
-** 2018-07-23 - Repaired notice for edit time on poll
-** 2018-07-23 - Added notice for new and edit poll
+** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
 **/
 
-if (defined('IN_PMBT'))
+if (defined('IN_BTM'))
 {
-    die ("You can't include this file");
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
+    die ("Error 404 - Page Not Found");
 }
 else
 {
-    define('IN_PMBT', true);
+    define('IN_BTM', true);
 }
 
 require_once("common.php");
@@ -45,22 +43,22 @@ function is_valid_id($id)
 }
 
 $timestamp = time();
-$timeout		= $timestamp - $timeoutseconds = 300;
-$action			= request_var("action", '', true);
-$pollid			= request_var('pollid', 0);
-$question		= request_var("question", '', true);
-$option0		= request_var("option0", '', true);
-$option1		= request_var("option1", '', true);
-$option2		= request_var("option2", '', true);
-$option3		= request_var("option3", '', true);
-$option4		= request_var("option4", '', true);
-$option5		= request_var("option5", '', true);
-$option6		= request_var("option6", '', true);
-$option7		= request_var("option7", '', true);
-$option8		= request_var("option8", '', true);
-$option9		= request_var("option9", '', true);
-$sort			= request_var("sort", '', true);
-$returnto		= request_var("returnto", '', true);
+$timeout        = $timestamp - $timeoutseconds = 300;
+$action         = request_var("action", '', true);
+$pollid         = request_var('pollid', 0);
+$question       = request_var("question", '', true);
+$option0        = request_var("option0", '', true);
+$option1        = request_var("option1", '', true);
+$option2        = request_var("option2", '', true);
+$option3        = request_var("option3", '', true);
+$option4        = request_var("option4", '', true);
+$option5        = request_var("option5", '', true);
+$option6        = request_var("option6", '', true);
+$option7        = request_var("option7", '', true);
+$option8        = request_var("option8", '', true);
+$option9        = request_var("option9", '', true);
+$sort           = request_var("sort", '', true);
+$returnto       = request_var("returnto", '', true);
 
 $template->assign_vars(array(
                         'HEADER' => $user->lang['MAKE_POLL'],
@@ -81,18 +79,18 @@ if ($action == "edit")
 
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
-	$sql_ary = array("question"		=> $question,
-					"option0"		=> $option0,
-					"option1"		=> $option1,
-					"option2"		=> $option2,
-					"option3"		=> $option3,
-					"option4"		=> $option4,
-					"option5"		=> $option5,
-					"option6"		=> $option6,
-					"option7"		=> $option7,
-					"option8"		=> $option8,
-					"option9"		=> $option9,
-					"sort"			=> $sort,);
+    $sql_ary = array("question"     => $question,
+                    "option0"       => $option0,
+                    "option1"       => $option1,
+                    "option2"       => $option2,
+                    "option3"       => $option3,
+                    "option4"       => $option4,
+                    "option5"       => $option5,
+                    "option6"       => $option6,
+                    "option7"       => $option7,
+                    "option8"       => $option8,
+                    "option9"       => $option9,
+                    "sort"          => $sort,);
 
     if ($question == '' || $option0 == '' || $option1 == '')
         bterror($user->lang['MISSING_FORM_DATA'], $user->lang['BT_ERROR']);
@@ -100,13 +98,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     if ($pollid)
     {
         $sql = "UPDATE " . $db_prefix . "_polls SET " . $db->sql_build_array('UPDATE', $sql_ary) . "WHERE id = $pollid";
-		$message = 'POLL_EDITED';
+        $message = 'POLL_EDITED';
     }
     else
     {
-		$sql_ary += array("added"		=> gmdate("Y-m-d H:i:s", time()));
+        $sql_ary += array("added"       => gmdate("Y-m-d H:i:s", time()));
         $sql = "INSERT INTO " . $db_prefix . "_polls " . $db->sql_build_array('INSERT', $sql_ary);
-		$message = 'POLL_TAKEN';
+        $message = 'POLL_TAKEN';
     }
         $db->sql_query($sql);
 
@@ -114,7 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         $link = "$siteurl/polls.php#$pollid";
     else
         $link = "$siteurl";
- 	trigger_error($user->lang[$message] . back_link($link));
+    trigger_error($user->lang[$message] . back_link($link));
    die;
 }
 
@@ -142,20 +140,20 @@ else
             $hours -= $days * 24;
 
             if ($days)
-			{
-            	$t = $days . ' ' . $user->lang['DAY' . ($days > 1 ? "S" : "")];
-			}
+            {
+                $t = $days . ' ' . $user->lang['DAY' . ($days > 1 ? "S" : "")];
+            }
             else
-			{
-            	$t = $hours . ' ' . $user->lang['HOUR' . ($hours > 1 ? "S" : "")];
-			}
+            {
+                $t = $hours . ' ' . $user->lang['HOUR' . ($hours > 1 ? "S" : "")];
+            }
 
-		    $template->assign_vars(array(
-			'S_NOTICE'		=> true,
-			'S_ERROR'		=> true,
-			'L_MESSAGE'		=> $user->lang['WARNING'],
-			'S_ERROR_MESS'	=> sprintf($user->lang['NEW_POLL_NOTICE'],$arr['question'],$t),
-			));
+            $template->assign_vars(array(
+            'S_NOTICE'      => true,
+            'S_ERROR'       => true,
+            'L_MESSAGE'     => $user->lang['WARNING'],
+            'S_ERROR_MESS'  => sprintf($user->lang['NEW_POLL_NOTICE'],$arr['question'],$t),
+            ));
         }
     }
 }
@@ -177,4 +175,5 @@ $template->assign_vars(array(
 
 echo $template->fetch('managepolls.html');
 close_out();
+
 ?>

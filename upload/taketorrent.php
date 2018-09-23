@@ -1,10 +1,11 @@
 <?php
+
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -12,17 +13,19 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File taketorrent.php 2018-02-18 14:32:00 joeroberts
+** File taketorrent.php 2018-09-22 00:00:00 Thor
 **
 ** CHANGES
 **
-** EXAMPLE 26-04-13 - Added Auto Ban
+** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
 **/
-if (!defined('IN_PMBT'))
+
+if (!defined('IN_BTM'))
 {
-	include_once './../security.php';
-	die ();
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
+    die ("Error 404 - Page Not Found");
 }
+
 @ini_set("upload_max_filesize",$max_torrent_size);
 @set_time_limit(60);
 @ini_set("memory_limit","64M");
@@ -35,19 +38,19 @@ include_once("include/utf/utf_tools.php");
 $torrent_edited = false;
 $notice = false;
 $errmsg = Array();
-		$category			= request_var('torrent_category', 0);
+        $category           = request_var('torrent_category', 0);
 if (!isset($_FILES["filex"]))
         $errmsg[] = $user->lang['ERROR_INUPLOAD'];
 if (!$category)
 {
-				$template->assign_vars(array(
-					'S_ERROR'			=> true,
-					'S_FORWARD'			=> false,
-					'TITTLE_M'			=> $user->lang['BT_ERROR'],
-					'MESSAGE'			=> $user->lang['NO_CAT_SELECTED'] . '<br /><br /><a href="javascript:history.go(-1)"  onMouseOver="self.status=document.referrer;return true">' . $user->lang['GO_BACK'] . '</a>',
-				));
-				echo $template->fetch('message_body.html');
-				close_out();
+                $template->assign_vars(array(
+                    'S_ERROR'           => true,
+                    'S_FORWARD'         => false,
+                    'TITTLE_M'          => $user->lang['BT_ERROR'],
+                    'MESSAGE'           => $user->lang['NO_CAT_SELECTED'] . '<br /><br /><a href="javascript:history.go(-1)"  onMouseOver="self.status=document.referrer;return true">' . $user->lang['GO_BACK'] . '</a>',
+                ));
+                echo $template->fetch('message_body.html');
+                close_out();
 }
 $cats = catlist();
 $in_cat = false;
@@ -55,7 +58,7 @@ while ($cat = @each($cats) AND !$in_cat) {
         if ($category == $cat[1]["id"]) $in_cat = true;
 }
 if (!$in_cat) $errmsg[] = $user->lang['INVALID_CATEGORY'];
-		$imdb_info			= request_var('imdb_info', '');
+        $imdb_info          = request_var('imdb_info', '');
 if(strlen($imdb_info) > 1)$imdb = $db->sql_escape(stripslashes($imdb_info));
 else
 $imdb = '';
@@ -86,14 +89,14 @@ if ($nfname != "") {
 #Return Error
 if (count($errmsg) > 0)
 {
-				$template->assign_vars(array(
-					'S_ERROR'			=> true,
-					'S_FORWARD'			=> false,
-					'TITTLE_M'			=> $user->lang['BT_ERROR'],
-					'MESSAGE'			=> $user->lang['ERROR_IN_UPLOAD'] . '<br />' . implode("<br />",$errmsg) . '<br /><br /><a href="javascript:history.go(-1)"  onMouseOver="self.status=document.referrer;return true">' . $user->lang['GO_BACK'] . '</a>',
-				));
-				echo $template->fetch('message_body.html');
-				close_out();
+                $template->assign_vars(array(
+                    'S_ERROR'           => true,
+                    'S_FORWARD'         => false,
+                    'TITTLE_M'          => $user->lang['BT_ERROR'],
+                    'MESSAGE'           => $user->lang['ERROR_IN_UPLOAD'] . '<br />' . implode("<br />",$errmsg) . '<br /><br /><a href="javascript:history.go(-1)"  onMouseOver="self.status=document.referrer;return true">' . $user->lang['GO_BACK'] . '</a>',
+                ));
+                echo $template->fetch('message_body.html');
+                close_out();
 }
 $shortfname = $torrentname = $matches[1];
 $namex = utf8_normalize_nfc(request_var('namex', '',true));
@@ -110,14 +113,14 @@ if (!filesize($tmpname))
 #Return Error
 if (count($errmsg) > 0)
 {
-				$template->assign_vars(array(
-					'S_ERROR'			=> true,
-					'S_FORWARD'			=> false,
-					'TITTLE_M'			=> $user->lang['BT_ERROR'],
-					'MESSAGE'			=> $user->lang['ERROR_IN_UPLOAD'] . '<br />' . implode("<br />",$errmsg) . '<br /><br /><a href="javascript:history.go(-1)"  onMouseOver="self.status=document.referrer;return true">' . $user->lang['GO_BACK'] . '</a>',
-				));
-				echo $template->fetch('message_body.html');
-				close_out();
+                $template->assign_vars(array(
+                    'S_ERROR'           => true,
+                    'S_FORWARD'         => false,
+                    'TITTLE_M'          => $user->lang['BT_ERROR'],
+                    'MESSAGE'           => $user->lang['ERROR_IN_UPLOAD'] . '<br />' . implode("<br />",$errmsg) . '<br /><br /><a href="javascript:history.go(-1)"  onMouseOver="self.status=document.referrer;return true">' . $user->lang['GO_BACK'] . '</a>',
+                ));
+                echo $template->fetch('message_body.html');
+                close_out();
 }
 
 
@@ -138,25 +141,25 @@ $torrent = Bdecode($pagetorrent);
 unset($pagetorrent);
 if (!entry_exists($torrent,"info(Dictionary)"))
 {
-				$template->assign_vars(array(
-					'S_ERROR'			=> true,
-					'S_FORWARD'			=> false,
-					'TITTLE_M'			=> $user->lang['BT_ERROR'],
-					'MESSAGE'			=> $user->lang['MISSING_INFO_DICTIONARY'],
-				));
-				echo $template->fetch('message_body.html');
-				close_out();
+                $template->assign_vars(array(
+                    'S_ERROR'           => true,
+                    'S_FORWARD'         => false,
+                    'TITTLE_M'          => $user->lang['BT_ERROR'],
+                    'MESSAGE'           => $user->lang['MISSING_INFO_DICTIONARY'],
+                ));
+                echo $template->fetch('message_body.html');
+                close_out();
 }
 if (!entry_exists($torrent,"announce(String)"))
 {
-				$template->assign_vars(array(
-					'S_ERROR'			=> true,
-					'S_FORWARD'			=> false,
-					'TITTLE_M'			=> $user->lang['BT_ERROR'],
-					'MESSAGE'			=> $user->lang['MISSING_ANNOUNCE_STRING'],
-				));
-				echo $template->fetch('message_body.html');
-				close_out();
+                $template->assign_vars(array(
+                    'S_ERROR'           => true,
+                    'S_FORWARD'         => false,
+                    'TITTLE_M'          => $user->lang['BT_ERROR'],
+                    'MESSAGE'           => $user->lang['MISSING_ANNOUNCE_STRING'],
+                ));
+                echo $template->fetch('message_body.html');
+                close_out();
 }
 $info = entry_get($torrent,"info");
 $announce = entry_read($torrent,"announce(String)");
@@ -215,7 +218,7 @@ if (isset($adv_opts) AND $adv_opts == 1 OR $addprivate) {
         $priv_enabled = ($priv_exists AND entry_read($torrent,"info/private(Integer)") == 1);
 
         if ($private_torrent == 1 OR $addprivate) {
-		if(in_array($announce, $site_announce)){
+        if(in_array($announce, $site_announce)){
                 //Force enabling Private Torrent
                 if (!$priv_enabled ) {
                         $info_intact = false;
@@ -232,7 +235,7 @@ if (isset($adv_opts) AND $adv_opts == 1 OR $addprivate) {
                         }
                         $info->append_child($private);
                 }
-			}
+            }
         } elseif ($private_torrent == 2) {
                 if ($priv_exists) {
                         $info_intact = false;
@@ -246,25 +249,25 @@ if (isset($adv_opts) AND $adv_opts == 1 OR $addprivate) {
 
 if (!entry_exists($torrent,"info/piece length(Integer)"))
 {
-				$template->assign_vars(array(
-					'S_ERROR'			=> true,
-					'S_FORWARD'			=> false,
-					'TITTLE_M'			=> $user->lang['BT_ERROR'],
-					'MESSAGE'			=> $user->lang['MISSING_LENGTH_STRING'],
-				));
-				echo $template->fetch('message_body.html');
-				close_out();
+                $template->assign_vars(array(
+                    'S_ERROR'           => true,
+                    'S_FORWARD'         => false,
+                    'TITTLE_M'          => $user->lang['BT_ERROR'],
+                    'MESSAGE'           => $user->lang['MISSING_LENGTH_STRING'],
+                ));
+                echo $template->fetch('message_body.html');
+                close_out();
 }
 if (!entry_exists($torrent,"info/pieces(String)"))
 {
-				$template->assign_vars(array(
-					'S_ERROR'			=> true,
-					'S_FORWARD'			=> false,
-					'TITTLE_M'			=> $user->lang['BT_ERROR'],
-					'MESSAGE'			=> $user->lang['MISSING_PIECES_STRING'],
-				));
-				echo $template->fetch('message_body.html');
-				close_out();
+                $template->assign_vars(array(
+                    'S_ERROR'           => true,
+                    'S_FORWARD'         => false,
+                    'TITTLE_M'          => $user->lang['BT_ERROR'],
+                    'MESSAGE'           => $user->lang['MISSING_PIECES_STRING'],
+                ));
+                echo $template->fetch('message_body.html');
+                close_out();
 }
 $dname = (entry_exists($torrent,"info/name(String)")) ? $dname = entry_read($torrent,"info/name(String)") : "";
 $plen = entry_read($torrent,"info/piece length(Integer)");
@@ -272,75 +275,75 @@ $pieces = entry_read($torrent,"info/pieces(String)");
 
 if (strlen($pieces) % 20 != 0)
 {
-				$template->assign_vars(array(
-					'S_ERROR'			=> true,
-					'S_FORWARD'			=> false,
-					'TITTLE_M'			=> $user->lang['BT_ERROR'],
-					'MESSAGE'			=> $user->lang['INVALID_PEASES'] . '<br /><br /><a href="javascript:history.go(-1)"  onMouseOver="self.status=document.referrer;return true">' . $user->lang['GO_BACK'] . '</a>',
-				));
-				echo $template->fetch('message_body.html');
-				close_out();
+                $template->assign_vars(array(
+                    'S_ERROR'           => true,
+                    'S_FORWARD'         => false,
+                    'TITTLE_M'          => $user->lang['BT_ERROR'],
+                    'MESSAGE'           => $user->lang['INVALID_PEASES'] . '<br /><br /><a href="javascript:history.go(-1)"  onMouseOver="self.status=document.referrer;return true">' . $user->lang['GO_BACK'] . '</a>',
+                ));
+                echo $template->fetch('message_body.html');
+                close_out();
 }
 unset($pieces);
 
 $tcomment = (entry_exists($torrent,"comment(String)")) ? entry_read($torrent,"comment(String)") : "";
 
 #Parsing Torrent Description
-$descr	= utf8_normalize_nfc(request_var('descr', '',true));
+$descr  = utf8_normalize_nfc(request_var('descr', '',true));
 if ($tcomment == "" AND (!isset($descr) OR empty($descr)))
 {
-				$template->assign_vars(array(
-					'S_ERROR'			=> true,
-					'S_FORWARD'			=> false,
-					'TITTLE_M'			=> $user->lang['BT_ERROR'],
-					'MESSAGE'			=> $user->lang['NO_DESCR'] . '<br /><br /><a href="javascript:history.go(-1)"  onMouseOver="self.status=document.referrer;return true">' . $user->lang['GO_BACK'] . '</a>',
-				));
-				echo $template->fetch('message_body.html');
-				close_out();
+                $template->assign_vars(array(
+                    'S_ERROR'           => true,
+                    'S_FORWARD'         => false,
+                    'TITTLE_M'          => $user->lang['BT_ERROR'],
+                    'MESSAGE'           => $user->lang['NO_DESCR'] . '<br /><br /><a href="javascript:history.go(-1)"  onMouseOver="self.status=document.referrer;return true">' . $user->lang['GO_BACK'] . '</a>',
+                ));
+                echo $template->fetch('message_body.html');
+                close_out();
 }
 if ($descr == "") $descr = parsedescr($tcomment);
 if ($allow_html) {
-	if (preg_match("/<[^>]* (on[a-z]*[.]*)=[^>]*>/i", $descr)) //HTML contains Javascript EVENTS. Must refuse
-		{
-						$template->assign_vars(array(
-							'S_ERROR'			=> true,
-							'S_FORWARD'			=> false,
-							'TITTLE_M'			=> $user->lang['BT_ERROR'],
-							'MESSAGE'			=> $user->lang['NO_HTML_ALLOWED'] . '<br /><br /><a href="javascript:history.go(-1)"  onMouseOver="self.status=document.referrer;return true">' . $user->lang['GO_BACK'] . '</a>',
-						));
-						echo $template->fetch('message_body.html');
-						close_out();
-		}
+    if (preg_match("/<[^>]* (on[a-z]*[.]*)=[^>]*>/i", $descr)) //HTML contains Javascript EVENTS. Must refuse
+        {
+                        $template->assign_vars(array(
+                            'S_ERROR'           => true,
+                            'S_FORWARD'         => false,
+                            'TITTLE_M'          => $user->lang['BT_ERROR'],
+                            'MESSAGE'           => $user->lang['NO_HTML_ALLOWED'] . '<br /><br /><a href="javascript:history.go(-1)"  onMouseOver="self.status=document.referrer;return true">' . $user->lang['GO_BACK'] . '</a>',
+                        ));
+                        echo $template->fetch('message_body.html');
+                        close_out();
+        }
 }
 if (preg_match('/<a[^>]* href="[^"]*(javascript|vbscript):[^>]*>/i', $descr)) //HTML contains Javascript or VBScript calls. Must refuse
-	{
-					$template->assign_vars(array(
-						'S_ERROR'			=> true,
-						'S_FORWARD'			=> false,
-						'TITTLE_M'			=> $user->lang['BT_ERROR'],
-						'MESSAGE'			=> $user->lang['NO_JAVA_ALLOW'] . '<br /><br /><a href="javascript:history.go(-1)"  onMouseOver="self.status=document.referrer;return true">' . $user->lang['GO_BACK'] . '</a>',
-					));
-					echo $template->fetch('message_body.html');
-					close_out();
-	}
-				
-				include_once('include/function_posting.php');
-				include_once('include/message_parser.php');
-				include_once('include/class.bbcode.php');
-				$bbcode_status		= ($config['allow_bbcode'] && $config['auth_bbcode_pm'] && checkaccess('u_add_bbcode_details')) ? true : false;
-				$smilies_status		= ($config['allow_smilies'] && $config['auth_smilies_pm'] && checkaccess('u_add_smiles_to_details')) ? true : false;
-				$img_status			= ($config['auth_img_pm'] && checkaccess('u_add_imgbbcode_details')) ? true : false;
-				$flash_status		= ($config['auth_flash_pm'] && checkaccess('u_flash_in_details')) ? true : false;
-				$url_status			= ($config['allow_post_links'] && checkaccess('u_links_in_details')) ? true : false;
-				$enable_sig			= ($config['allow_sig'] && $config['allow_sig_pm'] && checkaccess('u_sig'));
-				$enable_smilies		= ($config['allow_smilies'] && checkaccess('u_add_smiles_to_details'));
-				$enable_bbcode		= ($config['allow_bbcode'] && checkaccess('u_add_bbcode_details'));
-				$enable_urls		= ($config['enable_urls'] && checkaccess('u_links_in_details'))?true:false;
-				$message_parser = new parse_message();
-				$message_parser->message = $descr;
-				$bbcode_uid = $message_parser->bbcode_uid;
-				$message_parser->parse($enable_bbcode, ($config['allow_post_links']) ? $enable_urls : false, $enable_smilies, $img_status, $flash_status, true, $config['allow_post_links']);
-				$descr = $db->sql_escape($message_parser->message);
+    {
+                    $template->assign_vars(array(
+                        'S_ERROR'           => true,
+                        'S_FORWARD'         => false,
+                        'TITTLE_M'          => $user->lang['BT_ERROR'],
+                        'MESSAGE'           => $user->lang['NO_JAVA_ALLOW'] . '<br /><br /><a href="javascript:history.go(-1)"  onMouseOver="self.status=document.referrer;return true">' . $user->lang['GO_BACK'] . '</a>',
+                    ));
+                    echo $template->fetch('message_body.html');
+                    close_out();
+    }
+
+                include_once('include/function_posting.php');
+                include_once('include/message_parser.php');
+                include_once('include/class.bbcode.php');
+                $bbcode_status      = ($config['allow_bbcode'] && $config['auth_bbcode_pm'] && checkaccess('u_add_bbcode_details')) ? true : false;
+                $smilies_status     = ($config['allow_smilies'] && $config['auth_smilies_pm'] && checkaccess('u_add_smiles_to_details')) ? true : false;
+                $img_status         = ($config['auth_img_pm'] && checkaccess('u_add_imgbbcode_details')) ? true : false;
+                $flash_status       = ($config['auth_flash_pm'] && checkaccess('u_flash_in_details')) ? true : false;
+                $url_status         = ($config['allow_post_links'] && checkaccess('u_links_in_details')) ? true : false;
+                $enable_sig         = ($config['allow_sig'] && $config['allow_sig_pm'] && checkaccess('u_sig'));
+                $enable_smilies     = ($config['allow_smilies'] && checkaccess('u_add_smiles_to_details'));
+                $enable_bbcode      = ($config['allow_bbcode'] && checkaccess('u_add_bbcode_details'));
+                $enable_urls        = ($config['enable_urls'] && checkaccess('u_links_in_details'))?true:false;
+                $message_parser = new parse_message();
+                $message_parser->message = $descr;
+                $bbcode_uid = $message_parser->bbcode_uid;
+                $message_parser->parse($enable_bbcode, ($config['allow_post_links']) ? $enable_urls : false, $enable_smilies, $img_status, $flash_status, true, $config['allow_post_links']);
+                $descr = $db->sql_escape($message_parser->message);
 
 
 #Parsing Announce
@@ -348,46 +351,46 @@ $annregexp_http = "/(http[s]?+):\/\/[-\/.:_\\w]*\/announce[^\/\\s]*/i";
 $annregexp_dht = "/^dht:\/\/[0-9a-f]*.dht\/announce$/i";
 if (in_array($announce, $site_announce)) {
         if ($stealthmode)
-		{
-					$template->assign_vars(array(
-						'S_ERROR'			=> true,
-						'S_FORWARD'			=> false,
-						'TITTLE_M'			=> $user->lang['BT_ERROR'],
-						'MESSAGE'			=> $user->lang['LOCAL_TRACKER_DISABLED'] . '<br /><br /><a href="javascript:history.go(-1)"  onMouseOver="self.status=document.referrer;return true">' . $user->lang['GO_BACK'] . '</a>',
-					));
-					echo $template->fetch('message_body.html');
-					close_out();
-		} 
+        {
+                    $template->assign_vars(array(
+                        'S_ERROR'           => true,
+                        'S_FORWARD'         => false,
+                        'TITTLE_M'          => $user->lang['BT_ERROR'],
+                        'MESSAGE'           => $user->lang['LOCAL_TRACKER_DISABLED'] . '<br /><br /><a href="javascript:history.go(-1)"  onMouseOver="self.status=document.referrer;return true">' . $user->lang['GO_BACK'] . '</a>',
+                    ));
+                    echo $template->fetch('message_body.html');
+                    close_out();
+        }
         $announce = "";
 } elseif (preg_match($annregexp_http, $announce)) {
         $sql = "SELECT id FROM ".$db_prefix."_trackers WHERE url = '".addslashes($announce)."' AND status = 'blacklisted' LIMIT 1;";
         $res = $db->sql_query($sql);
         if ($db->sql_numrows($res) > 0)
-		{
-					$template->assign_vars(array(
-						'S_ERROR'			=> true,
-						'S_FORWARD'			=> false,
-						'TITTLE_M'			=> $user->lang['BT_ERROR'],
-						'MESSAGE'			=> sprintf($user->lang['TRACKER_IS_BLACK_LISTED'],$announce) . '<br /><br /><a href="javascript:history.go(-1)"  onMouseOver="self.status=document.referrer;return true">' . $user->lang['GO_BACK'] . '</a>',
-					));
-					echo $template->fetch('message_body.html');
-					close_out();
-		} 
+        {
+                    $template->assign_vars(array(
+                        'S_ERROR'           => true,
+                        'S_FORWARD'         => false,
+                        'TITTLE_M'          => $user->lang['BT_ERROR'],
+                        'MESSAGE'           => sprintf($user->lang['TRACKER_IS_BLACK_LISTED'],$announce) . '<br /><br /><a href="javascript:history.go(-1)"  onMouseOver="self.status=document.referrer;return true">' . $user->lang['GO_BACK'] . '</a>',
+                    ));
+                    echo $template->fetch('message_body.html');
+                    close_out();
+        }
         $db->sql_freeresult($res);
 } elseif (preg_match($annregexp_dht,$announce)) {
         $dht = "yes";
-} 
+}
 
 if(!$announce == "" AND !$allow_external)
 {
-					$template->assign_vars(array(
-						'S_ERROR'			=> true,
-						'S_FORWARD'			=> false,
-						'TITTLE_M'			=> $user->lang['BT_ERROR'],
-						'MESSAGE'			=> $user->lang['EXTERNAL_NOT_ALLOWED'],
-					));
-					echo $template->fetch('message_body.html');
-					close_out();
+                    $template->assign_vars(array(
+                        'S_ERROR'           => true,
+                        'S_FORWARD'         => false,
+                        'TITTLE_M'          => $user->lang['BT_ERROR'],
+                        'MESSAGE'           => $user->lang['EXTERNAL_NOT_ALLOWED'],
+                    ));
+                    echo $template->fetch('message_body.html');
+                    close_out();
 }
 
 #Parsing Multiple Announce
@@ -404,53 +407,53 @@ if (entry_exists($torrent,"announce-list(List)")) {
                         $tracker = $tracker_node->get_content();
                         //If the main tracker is NOT this one, but this one APPEARS within the Announce list then we're running backup tracker
                         if (in_array($tracker, $site_announce) AND $announce != "")
-						{
-							$backup_tracker = "true";
-						}
+                        {
+                            $backup_tracker = "true";
+                        }
                         if (in_array($tracker, $site_announce))
-						{
-                        	unset($tracker, $tracker_node);
-						}
-						else
-						{
-							array_push($trackers_in_group,$tracker);
-							array_push($to_check,"'".$tracker."'");
-						}
-                        	unset($tracker, $tracker_node);
+                        {
+                            unset($tracker, $tracker_node);
+                        }
+                        else
+                        {
+                            array_push($trackers_in_group,$tracker);
+                            array_push($to_check,"'".$tracker."'");
+                        }
+                            unset($tracker, $tracker_node);
                 }
                 array_push($trackers,$trackers_in_group);
                 unset($trackers_in_group, $group);
 
         }
-		if(count($to_check) > 0 AND !$allow_external)
-		{
-							$template->assign_vars(array(
-								'S_ERROR'			=> true,
-								'S_FORWARD'			=> false,
-								'TITTLE_M'			=> $user->lang['BT_ERROR'],
-								'MESSAGE'			=> $user->lang['EXTERNAL_NOT_ALLOWED'],
-							));
-							echo $template->fetch('message_body.html');
-							close_out();
-		}
-		if(count($to_check) > 0)
-		{
-			$sql = "SELECT url FROM ".$db_prefix."_trackers WHERE url IN (".implode(", ",$to_check).") AND status = 'blacklisted';";
-			$res = $db->sql_query($sql) or btsqlerror($sql);
-			if ($db->sql_numrows($res) > 0)
-			{
-					$blacklisted_trackers = $db->sql_fetchrowset($res);
-					$blacklisted_trackers = implode(",",$blacklisted_trackers);
-						$template->assign_vars(array(
-							'S_ERROR'			=> true,
-							'S_FORWARD'			=> false,
-							'TITTLE_M'			=> $user->lang['BT_ERROR'],
-							'MESSAGE'			=> sprintf($user->lang['TRACKER_IS_BLACK_LISTED'],$blacklisted_trackers) . '<br /><br /><a href="javascript:history.go(-1)"  onMouseOver="self.status=document.referrer;return true">' . $user->lang['GO_BACK'] . '</a>',
-						));
-						echo $template->fetch('message_body.html');
-						close_out();
-			}
-		}
+        if(count($to_check) > 0 AND !$allow_external)
+        {
+                            $template->assign_vars(array(
+                                'S_ERROR'           => true,
+                                'S_FORWARD'         => false,
+                                'TITTLE_M'          => $user->lang['BT_ERROR'],
+                                'MESSAGE'           => $user->lang['EXTERNAL_NOT_ALLOWED'],
+                            ));
+                            echo $template->fetch('message_body.html');
+                            close_out();
+        }
+        if(count($to_check) > 0)
+        {
+            $sql = "SELECT url FROM ".$db_prefix."_trackers WHERE url IN (".implode(", ",$to_check).") AND status = 'blacklisted';";
+            $res = $db->sql_query($sql) or btsqlerror($sql);
+            if ($db->sql_numrows($res) > 0)
+            {
+                    $blacklisted_trackers = $db->sql_fetchrowset($res);
+                    $blacklisted_trackers = implode(",",$blacklisted_trackers);
+                        $template->assign_vars(array(
+                            'S_ERROR'           => true,
+                            'S_FORWARD'         => false,
+                            'TITTLE_M'          => $user->lang['BT_ERROR'],
+                            'MESSAGE'           => sprintf($user->lang['TRACKER_IS_BLACK_LISTED'],$blacklisted_trackers) . '<br /><br /><a href="javascript:history.go(-1)"  onMouseOver="self.status=document.referrer;return true">' . $user->lang['GO_BACK'] . '</a>',
+                        ));
+                        echo $template->fetch('message_body.html');
+                        close_out();
+            }
+        }
         $db->sql_freeresult($res);
         unset($sql, $to_check,$announce_list, $res);
         for ($i = 0; $i < count($trackers); $i++) $trackers[$i] = implode("\n",$trackers[$i]);
@@ -459,7 +462,7 @@ if (entry_exists($torrent,"announce-list(List)")) {
 
 
 #Parsing password
-$password	= request_var('password', '');
+$password   = request_var('password', '');
 $torrentpass = $password; //Keep for URL Redirect
 if ($password != "" AND $announce == "") {
         $password = "'".$db->sql_escape(stripslashes($password))."'";
@@ -490,27 +493,27 @@ if (entry_exists($torrent,"info/length(Integer)")) {
         //Multiple files
         $flist = entry_read($torrent, "info/files(List)");
         if (!isset($flist))
-			{
-							$template->assign_vars(array(
-								'S_ERROR'			=> true,
-								'S_FORWARD'			=> false,
-								'TITTLE_M'			=> $user->lang['BT_ERROR'],
-								'MESSAGE'			=> $user->lang['MISSING_LENGTH_STRING'],
-							));
-							echo $template->fetch('message_body.html');
-							close_out();
-			}
+            {
+                            $template->assign_vars(array(
+                                'S_ERROR'           => true,
+                                'S_FORWARD'         => false,
+                                'TITTLE_M'          => $user->lang['BT_ERROR'],
+                                'MESSAGE'           => $user->lang['MISSING_LENGTH_STRING'],
+                            ));
+                            echo $template->fetch('message_body.html');
+                            close_out();
+            }
         if (!count($flist))
-			{
-							$template->assign_vars(array(
-								'S_ERROR'			=> true,
-								'S_FORWARD'			=> false,
-								'TITTLE_M'			=> $user->lang['BT_ERROR'],
-								'MESSAGE'			=> $user->lang['MISSING_INFO_DICTIONARY'],
-							));
-							echo $template->fetch('message_body.html');
-							close_out();
-			}
+            {
+                            $template->assign_vars(array(
+                                'S_ERROR'           => true,
+                                'S_FORWARD'         => false,
+                                'TITTLE_M'          => $user->lang['BT_ERROR'],
+                                'MESSAGE'           => $user->lang['MISSING_INFO_DICTIONARY'],
+                            ));
+                            echo $template->fetch('message_body.html');
+                            close_out();
+            }
 
         foreach ($flist as $fn) {
                 $ffe = "";
@@ -523,16 +526,16 @@ if (entry_exists($torrent,"info/length(Integer)")) {
                 }
 
                 if (!array_key_exists("length",$file) OR !array_key_exists("path",$file))
-					{
-									$template->assign_vars(array(
-										'S_ERROR'			=> true,
-										'S_FORWARD'			=> false,
-										'TITTLE_M'			=> $user->lang['BT_ERROR'],
-										'MESSAGE'			=> $user->lang['MISSING_LENGTH_STRING'],
-									));
-									echo $template->fetch('message_body.html');
-									close_out();
-					}
+                    {
+                                    $template->assign_vars(array(
+                                        'S_ERROR'           => true,
+                                        'S_FORWARD'         => false,
+                                        'TITTLE_M'          => $user->lang['BT_ERROR'],
+                                        'MESSAGE'           => $user->lang['MISSING_LENGTH_STRING'],
+                                    ));
+                                    echo $template->fetch('message_body.html');
+                                    close_out();
+                    }
 
                 $ll = $file["length"]->get_content();
 
@@ -579,16 +582,16 @@ $sql = "SELECT id FROM ".$db_prefix."_torrents WHERE info_hash = '".$db->sql_esc
 $res = $db->sql_query($sql) or btsqlerror($sql);
 if ($db->sql_numrows($res) > 0) {
         list ($id) = $db->fetch_array($res);
-			{
-							$template->assign_vars(array(
-								'S_ERROR'			=> true,
-								'S_FORWARD'			=> false,
-								'TITTLE_M'			=> $user->lang['BT_ERROR'],
-								'MESSAGE'			=> $user->lang['BANNED_TORRENT'],
-							));
-							echo $template->fetch('message_body.html');
-							close_out();
-			}
+            {
+                            $template->assign_vars(array(
+                                'S_ERROR'           => true,
+                                'S_FORWARD'         => false,
+                                'TITTLE_M'          => $user->lang['BT_ERROR'],
+                                'MESSAGE'           => $user->lang['BANNED_TORRENT'],
+                            ));
+                            echo $template->fetch('message_body.html');
+                            close_out();
+            }
 }
 $db->sql_freeresult($res);
 }
@@ -601,43 +604,43 @@ if (!$user->premium) {
 
         #Checking against minimumupload size
         if ($totallen < $minupload_size_file)
-			{
-							$template->assign_vars(array(
-								'S_ERROR'			=> true,
-								'S_FORWARD'			=> false,
-								'TITTLE_M'			=> $user->lang['BT_ERROR'],
-								'MESSAGE'			=> sprintf($user->lang['TORRENT_TO_SMALL'],mksize($totallen),mksize($minupload_size_file)),
-							));
-							echo $template->fetch('message_body.html');
-							close_out();
-			}
+            {
+                            $template->assign_vars(array(
+                                'S_ERROR'           => true,
+                                'S_FORWARD'         => false,
+                                'TITTLE_M'          => $user->lang['BT_ERROR'],
+                                'MESSAGE'           => sprintf($user->lang['TORRENT_TO_SMALL'],mksize($totallen),mksize($minupload_size_file)),
+                            ));
+                            echo $template->fetch('message_body.html');
+                            close_out();
+            }
 
         #Checking against Max num upload on 24h time
         if ($maxupload_day_num > 0 AND $maxupload_day_num <= $torrents)
-			{
-							$template->assign_vars(array(
-								'S_ERROR'			=> true,
-								'S_FORWARD'			=> false,
-								'TITTLE_M'			=> $user->lang['BT_ERROR'],
-								'MESSAGE'			=> sprintf($user->lang['MAX_UPLOADS_SET'],$maxupload_day_num),
-							));
-							echo $template->fetch('message_body.html');
-							close_out();
-			}
+            {
+                            $template->assign_vars(array(
+                                'S_ERROR'           => true,
+                                'S_FORWARD'         => false,
+                                'TITTLE_M'          => $user->lang['BT_ERROR'],
+                                'MESSAGE'           => sprintf($user->lang['MAX_UPLOADS_SET'],$maxupload_day_num),
+                            ));
+                            echo $template->fetch('message_body.html');
+                            close_out();
+            }
 
         #Max size share upload on 24h
-        if ($maxupload_day_share > 0 AND $maxupload_day_share < $uploaded_size+$totallen) 
-			{
-							$template->assign_vars(array(
-								'S_ERROR'			=> true,
-								'S_FORWARD'			=> false,
-								'TITTLE_M'			=> $user->lang['BT_ERROR'],
-								'MESSAGE'			=> sprintf($user->lang['MAX_SHARE_MET'],$maxupload_day_share,$torrents,mksize($uploaded_size)),
-							));
-							echo $template->fetch('message_body.html');
-							close_out();
-			}
-        
+        if ($maxupload_day_share > 0 AND $maxupload_day_share < $uploaded_size+$totallen)
+            {
+                            $template->assign_vars(array(
+                                'S_ERROR'           => true,
+                                'S_FORWARD'         => false,
+                                'TITTLE_M'          => $user->lang['BT_ERROR'],
+                                'MESSAGE'           => sprintf($user->lang['MAX_SHARE_MET'],$maxupload_day_share,$torrents,mksize($uploaded_size)),
+                            ));
+                            echo $template->fetch('message_body.html');
+                            close_out();
+            }
+
 }
 
 #Filename must be at least 4 chars
@@ -667,20 +670,20 @@ $sql_filter = "SELECT * FROM ".$db_prefix."_filter WHERE 1=0 ".$sql_filter.";";
 $res = $db->sql_query($sql_filter) or btsqlerror($sql_filter);
 if ($db->sql_numrows($res) > 0) {
                 $errmsg = "<p align=\"center\">".$user->lang['FILTER_FAIL']."</p></br>";
-              
+
                 while ($row = $db->sql_fetchrow($res)){
                         $errmsg.= "<p align=\"center\">".htmlspecialchars($row["reason"])."</p></br>";
                 }
-              
+
                 $errmsg.= "<p align=\"center\">".$user->lang['FILTER_FAIL_INFO']."</p>";
-								$template->assign_vars(array(
-									'S_ERROR'			=> true,
-									'S_FORWARD'			=> false,
-									'TITTLE_M'			=> $user->lang['BT_ERROR'],
-									'MESSAGE'			=> sprintf($user->lang['ELEGALE_CONTENT'],$errmsg,$admin_email),
-								));
-								echo $template->fetch('message_body.html');
-								close_out();
+                                $template->assign_vars(array(
+                                    'S_ERROR'           => true,
+                                    'S_FORWARD'         => false,
+                                    'TITTLE_M'          => $user->lang['BT_ERROR'],
+                                    'MESSAGE'           => sprintf($user->lang['ELEGALE_CONTENT'],$errmsg,$admin_email),
+                                ));
+                                echo $template->fetch('message_body.html');
+                                close_out();
 }
 $db->sql_freeresult($res);
 
@@ -726,14 +729,14 @@ if (isset($jump_check) AND $jump_check == 1) {
                         $errmsg.= "<li><p><a href='details.php?id=".$row["torrent"]."&hit=1'>".$row["filename"]."</a> (".mksize($row["size"]).")</p></li>\n";
                 }
                 $errmsg .= "</ul>\n";
-							$template->assign_vars(array(
-								'S_ERROR'			=> true,
-								'S_FORWARD'			=> false,
-								'TITTLE_M'			=> $user->lang['BT_ERROR'],
-								'MESSAGE'			=> sprintf($user->lang['DUPLICATE_UPLOAD'],$errmsg),
-							));
-							echo $template->fetch('message_body.html');
-							close_out();
+                            $template->assign_vars(array(
+                                'S_ERROR'           => true,
+                                'S_FORWARD'         => false,
+                                'TITTLE_M'          => $user->lang['BT_ERROR'],
+                                'MESSAGE'           => sprintf($user->lang['DUPLICATE_UPLOAD'],$errmsg),
+                            ));
+                            echo $template->fetch('message_body.html');
+                            close_out();
         }
 }
 
@@ -751,64 +754,64 @@ if($autoscrape AND $announce != "") {
 
         $tmp_tracker = str_replace("announce", "scrape", $announce).((strpos($announce,"?")) ? "&" : "?")."info_hash=".urlencode($infohash);
                         $scrape = getscrapedata($tmp_tracker, false,array($infohash=>preg_replace_callback('/./s', "hex_esc", str_pad($infohash,20))));
-						//die();
+                        //die();
         if ($scrape) {
                 #Check data
                 if (!entry_exists($scrape,"files(dictionary)","Scrape")) {
-							$template->assign_vars(array(
-								'S_ERROR'			=> true,
-								'S_FORWARD'			=> false,
-								'TITTLE_M'			=> $user->lang['BT_ERROR'],
-								'MESSAGE'			=> $user->lang['INVALID_TRACKER_RESPONCE'],
-							));
-							echo $template->fetch('message_body.html');
-							close_out();
+                            $template->assign_vars(array(
+                                'S_ERROR'           => true,
+                                'S_FORWARD'         => false,
+                                'TITTLE_M'          => $user->lang['BT_ERROR'],
+                                'MESSAGE'           => $user->lang['INVALID_TRACKER_RESPONCE'],
+                            ));
+                            echo $template->fetch('message_body.html');
+                            close_out();
                 } elseif (!entry_exists($scrape,"files/a".$infohash_hex."(Dictionary)","Scrape")) {
-							$template->assign_vars(array(
-								'S_ERROR'			=> true,
-								'S_FORWARD'			=> false,
-								'TITTLE_M'			=> $user->lang['NOTICE'],
-								'MESSAGE'			=> $user->lang['SCARPE_NOT_REG'],
-							));
-							$notice .= $template->fetch('message_body.html');
+                            $template->assign_vars(array(
+                                'S_ERROR'           => true,
+                                'S_FORWARD'         => false,
+                                'TITTLE_M'          => $user->lang['NOTICE'],
+                                'MESSAGE'           => $user->lang['SCARPE_NOT_REG'],
+                            ));
+                            $notice .= $template->fetch('message_body.html');
                 } else {
                         #Check seeder
                         $seeders = entry_read($scrape,"files/a".$infohash_hex."/complete(Integer)","Scrape");
-						if ($seeders <= 0 AND $force_upload)
-						{
-							$template->assign_vars(array(
-								'S_ERROR'			=> true,
-								'S_FORWARD'			=> false,
-								'TITTLE_M'			=> $user->lang['NOTICE'],
-								'MESSAGE'			=> $user->lang['NO_SEEDERS'],
-							));
-							$notice .= $template->fetch('message_body.html');
-						}
+                        if ($seeders <= 0 AND $force_upload)
+                        {
+                            $template->assign_vars(array(
+                                'S_ERROR'           => true,
+                                'S_FORWARD'         => false,
+                                'TITTLE_M'          => $user->lang['NOTICE'],
+                                'MESSAGE'           => $user->lang['NO_SEEDERS'],
+                            ));
+                            $notice .= $template->fetch('message_body.html');
+                        }
                         if ($seeders <= 0 AND !$force_upload)
-						{
-							$template->assign_vars(array(
-								'S_ERROR'			=> true,
-								'S_FORWARD'			=> false,
-								'TITTLE_M'			=> $user->lang['BT_ERROR'],
-								'MESSAGE'			=> $user->lang['NO_SEEDERS_NOT'],
-							));
-							echo $template->fetch('message_body.html');
-							close_out();
-						}
+                        {
+                            $template->assign_vars(array(
+                                'S_ERROR'           => true,
+                                'S_FORWARD'         => false,
+                                'TITTLE_M'          => $user->lang['BT_ERROR'],
+                                'MESSAGE'           => $user->lang['NO_SEEDERS_NOT'],
+                            ));
+                            echo $template->fetch('message_body.html');
+                            close_out();
+                        }
                         $leechers = entry_read($scrape,"files/a".$infohash_hex."/incomplete(Integer)","Scrape");
                         $completed = entry_read($scrape,"files/a".$infohash_hex."/downloaded(Integer)","Scrape");
                 }
                 unset($scrape);
-                $visible = ($tot_peer > 0) ? "yes" : "no";				
+                $visible = ($tot_peer > 0) ? "yes" : "no";
         } elseif (!$force_upload) {
-							$template->assign_vars(array(
-								'S_ERROR'			=> true,
-								'S_FORWARD'			=> false,
-								'TITTLE_M'			=> $user->lang['BT_ERROR'],
-								'MESSAGE'			=> $user->lang['INVALID_TRACKER_RESPONCE'],
-							));
-							echo $template->fetch('message_body.html');
-							close_out();
+                            $template->assign_vars(array(
+                                'S_ERROR'           => true,
+                                'S_FORWARD'         => false,
+                                'TITTLE_M'          => $user->lang['BT_ERROR'],
+                                'MESSAGE'           => $user->lang['INVALID_TRACKER_RESPONCE'],
+                            ));
+                            echo $template->fetch('message_body.html');
+                            close_out();
         }
 } else {
                 $completed = $leechers = 0;
@@ -822,136 +825,136 @@ $screen2 = request_var('screen2','');
 $screen3 = request_var('screen3','');
 $screen4 = request_var('screen4','');
 if(isset($post_img) && $post_img != ''){
-		if (!preg_match('#^(https?://).*?\.(gif|jpg|jpeg|png)$#i', $post_img, $match))
-		{
-							$template->assign_vars(array(
-								'S_ERROR'			=> true,
-								'S_FORWARD'			=> false,
-								'TITTLE_M'			=> $user->lang['BT_ERROR'],
-								'MESSAGE'			=> $user->lang['INVALID_POSTER_URL'],
-							));
-							echo $template->fetch('message_body.html');
-							close_out();
-		}
-		if (empty($match[2]))
-		{
-							$template->assign_vars(array(
-								'S_ERROR'			=> true,
-								'S_FORWARD'			=> false,
-								'TITTLE_M'			=> $user->lang['BT_ERROR'],
-								'MESSAGE'			=> $user->lang['INVALID_POSTER_TYPE'],
-							));
-							echo $template->fetch('message_body.html');
-							close_out();
-		}
+        if (!preg_match('#^(https?://).*?\.(gif|jpg|jpeg|png)$#i', $post_img, $match))
+        {
+                            $template->assign_vars(array(
+                                'S_ERROR'           => true,
+                                'S_FORWARD'         => false,
+                                'TITTLE_M'          => $user->lang['BT_ERROR'],
+                                'MESSAGE'           => $user->lang['INVALID_POSTER_URL'],
+                            ));
+                            echo $template->fetch('message_body.html');
+                            close_out();
+        }
+        if (empty($match[2]))
+        {
+                            $template->assign_vars(array(
+                                'S_ERROR'           => true,
+                                'S_FORWARD'         => false,
+                                'TITTLE_M'          => $user->lang['BT_ERROR'],
+                                'MESSAGE'           => $user->lang['INVALID_POSTER_TYPE'],
+                            ));
+                            echo $template->fetch('message_body.html');
+                            close_out();
+        }
 $post_img = "'".$db->sql_escape(stripslashes($post_img))."'";
 }
 else
 $post_img = "NULL";
 if(isset($screen1) && $screen1 != ''){
-		if (!preg_match('#^(https?://).*?\.(gif|jpg|jpeg|png)$#i', $screen1, $match))
-		{
-							$template->assign_vars(array(
-								'S_ERROR'			=> true,
-								'S_FORWARD'			=> false,
-								'TITTLE_M'			=> $user->lang['BT_ERROR'],
-								'MESSAGE'			=> $user->lang['INVALID_SCREEN_URL'],
-							));
-							echo $template->fetch('message_body.html');
-							close_out();
-		}
-		if (empty($match[2]))
-		{
-							$template->assign_vars(array(
-								'S_ERROR'			=> true,
-								'S_FORWARD'			=> false,
-								'TITTLE_M'			=> $user->lang['BT_ERROR'],
-								'MESSAGE'			=> $user->lang['INVALID_SCREEN_TYPE'],
-							));
-							echo $template->fetch('message_body.html');
-							close_out();
-		}
+        if (!preg_match('#^(https?://).*?\.(gif|jpg|jpeg|png)$#i', $screen1, $match))
+        {
+                            $template->assign_vars(array(
+                                'S_ERROR'           => true,
+                                'S_FORWARD'         => false,
+                                'TITTLE_M'          => $user->lang['BT_ERROR'],
+                                'MESSAGE'           => $user->lang['INVALID_SCREEN_URL'],
+                            ));
+                            echo $template->fetch('message_body.html');
+                            close_out();
+        }
+        if (empty($match[2]))
+        {
+                            $template->assign_vars(array(
+                                'S_ERROR'           => true,
+                                'S_FORWARD'         => false,
+                                'TITTLE_M'          => $user->lang['BT_ERROR'],
+                                'MESSAGE'           => $user->lang['INVALID_SCREEN_TYPE'],
+                            ));
+                            echo $template->fetch('message_body.html');
+                            close_out();
+        }
 $screen1 = "'".$db->sql_escape(stripslashes($screen1))."'";
 }
 else
 $screen1 = "NULL";
 if(isset($screen2) && $screen2 != ''){
-		if (!preg_match('#^(https?://).*?\.(gif|jpg|jpeg|png)$#i', $screen2, $match))
-		{
-							$template->assign_vars(array(
-								'S_ERROR'			=> true,
-								'S_FORWARD'			=> false,
-								'TITTLE_M'			=> $user->lang['BT_ERROR'],
-								'MESSAGE'			=> $user->lang['INVALID_SCREEN_URL'],
-							));
-							echo $template->fetch('message_body.html');
-							close_out();
-		}
-		if (empty($match[2]))
-		{
-							$template->assign_vars(array(
-								'S_ERROR'			=> true,
-								'S_FORWARD'			=> false,
-								'TITTLE_M'			=> $user->lang['BT_ERROR'],
-								'MESSAGE'			=> $user->lang['INVALID_SCREEN_TYPE'],
-							));
-							echo $template->fetch('message_body.html');
-							close_out();
-		}
+        if (!preg_match('#^(https?://).*?\.(gif|jpg|jpeg|png)$#i', $screen2, $match))
+        {
+                            $template->assign_vars(array(
+                                'S_ERROR'           => true,
+                                'S_FORWARD'         => false,
+                                'TITTLE_M'          => $user->lang['BT_ERROR'],
+                                'MESSAGE'           => $user->lang['INVALID_SCREEN_URL'],
+                            ));
+                            echo $template->fetch('message_body.html');
+                            close_out();
+        }
+        if (empty($match[2]))
+        {
+                            $template->assign_vars(array(
+                                'S_ERROR'           => true,
+                                'S_FORWARD'         => false,
+                                'TITTLE_M'          => $user->lang['BT_ERROR'],
+                                'MESSAGE'           => $user->lang['INVALID_SCREEN_TYPE'],
+                            ));
+                            echo $template->fetch('message_body.html');
+                            close_out();
+        }
 $screen2 = "'".$db->sql_escape(stripslashes($screen2))."'";
 }
 else
 $screen2 = "NULL";
 if(isset($screen3) && $screen3 != ''){
-		if (!preg_match('#^(https?://).*?\.(gif|jpg|jpeg|png)$#i', $screen3, $match))
-		{
-							$template->assign_vars(array(
-								'S_ERROR'			=> true,
-								'S_FORWARD'			=> false,
-								'TITTLE_M'			=> $user->lang['BT_ERROR'],
-								'MESSAGE'			=> $user->lang['INVALID_SCREEN_URL'],
-							));
-							echo $template->fetch('message_body.html');
-							close_out();
-		}
-		if (empty($match[2]))
-		{
-							$template->assign_vars(array(
-								'S_ERROR'			=> true,
-								'S_FORWARD'			=> false,
-								'TITTLE_M'			=> $user->lang['BT_ERROR'],
-								'MESSAGE'			=> $user->lang['INVALID_SCREEN_TYPE'],
-							));
-							echo $template->fetch('message_body.html');
-							close_out();
-		}
+        if (!preg_match('#^(https?://).*?\.(gif|jpg|jpeg|png)$#i', $screen3, $match))
+        {
+                            $template->assign_vars(array(
+                                'S_ERROR'           => true,
+                                'S_FORWARD'         => false,
+                                'TITTLE_M'          => $user->lang['BT_ERROR'],
+                                'MESSAGE'           => $user->lang['INVALID_SCREEN_URL'],
+                            ));
+                            echo $template->fetch('message_body.html');
+                            close_out();
+        }
+        if (empty($match[2]))
+        {
+                            $template->assign_vars(array(
+                                'S_ERROR'           => true,
+                                'S_FORWARD'         => false,
+                                'TITTLE_M'          => $user->lang['BT_ERROR'],
+                                'MESSAGE'           => $user->lang['INVALID_SCREEN_TYPE'],
+                            ));
+                            echo $template->fetch('message_body.html');
+                            close_out();
+        }
 $screen3 = "'".$db->sql_escape(stripslashes($screen3))."'";
 }
 else
 $screen3 = "NULL";
 if(isset($screen4) && $screen4 != ''){
-		if (!preg_match('#^(https?://).*?\.(gif|jpg|jpeg|png)$#i', $screen4, $match))
-		{
-							$template->assign_vars(array(
-								'S_ERROR'			=> true,
-								'S_FORWARD'			=> false,
-								'TITTLE_M'			=> $user->lang['BT_ERROR'],
-								'MESSAGE'			=> $user->lang['INVALID_SCREEN_URL'],
-							));
-							echo $template->fetch('message_body.html');
-							close_out();
-		}
-		if (empty($match[2]))
-		{
-							$template->assign_vars(array(
-								'S_ERROR'			=> true,
-								'S_FORWARD'			=> false,
-								'TITTLE_M'			=> $user->lang['BT_ERROR'],
-								'MESSAGE'			=> $user->lang['INVALID_SCREEN_TYPE'],
-							));
-							echo $template->fetch('message_body.html');
-							close_out();
-		}
+        if (!preg_match('#^(https?://).*?\.(gif|jpg|jpeg|png)$#i', $screen4, $match))
+        {
+                            $template->assign_vars(array(
+                                'S_ERROR'           => true,
+                                'S_FORWARD'         => false,
+                                'TITTLE_M'          => $user->lang['BT_ERROR'],
+                                'MESSAGE'           => $user->lang['INVALID_SCREEN_URL'],
+                            ));
+                            echo $template->fetch('message_body.html');
+                            close_out();
+        }
+        if (empty($match[2]))
+        {
+                            $template->assign_vars(array(
+                                'S_ERROR'           => true,
+                                'S_FORWARD'         => false,
+                                'TITTLE_M'          => $user->lang['BT_ERROR'],
+                                'MESSAGE'           => $user->lang['INVALID_SCREEN_TYPE'],
+                            ));
+                            echo $template->fetch('message_body.html');
+                            close_out();
+        }
 $screen4 = "'".$db->sql_escape(stripslashes($screen4))."'";
 }
 else
@@ -1115,7 +1118,7 @@ $torrentsql = "INSERT INTO ".$db_prefix."_torrents (".implode(", ",$torrentfield
 $db->sql_query($torrentsql) or btsqlerror($torrentsql);
 $id = $db->sql_nextid();
 
-if ($announce != ""){ 
+if ($announce != ""){
 $db->sql_query("INSERT INTO ".$db_prefix."_trackers (url, updated) VALUES ('".addslashes($announce)."', NOW());");
 }
 $db->sql_query("DELETE FROM ".$db_prefix."_files WHERE torrent = '".$id."'") or btsqlerror("DELETE FROM ".$db_prefix."_files WHERE torrent = '$id'");
@@ -1125,30 +1128,30 @@ foreach ($filelist as $file) {
         if ($magnet != "") {
                 $magnet = $db->sql_escape($magnet);
         }
-		else
-		{
+        else
+        {
                 $magnet = NULL;
-		}
+        }
         if ($ed2k != "") {
                 $ed2k = $db->sql_escape($ed2k);
         }
-		else
-		{
+        else
+        {
                 $ed2k = NULL;
-		}
-	$sql_ary[] = array(
-		'torrent'		=> (int) $id,
-		'filename'		=> $db->sql_escape($fname),
-		'size'		=> (int) $fsize,
-		'magnet'	=> $magnet,
-		'ed2k'	=> $ed2k,
-	);
+        }
+    $sql_ary[] = array(
+        'torrent'       => (int) $id,
+        'filename'      => $db->sql_escape($fname),
+        'size'      => (int) $fsize,
+        'magnet'    => $magnet,
+        'ed2k'  => $ed2k,
+    );
 }
 //die(print_r($sql_ary));
         if (!$db->sql_multi_insert($db_prefix . '_files', $sql_ary)) { //Rollback
                 $db->sql_query("DELETE FROM ".$db_prefix."_torrents WHERE id = '".$id."' LIMIT 1;");
                 $db->sql_query("DELETE FROM ".$db_prefix."_files WHERE torrent = '".$id."';");
-				
+
                 btsqlerror($filesql);
         }
 
@@ -1177,21 +1180,21 @@ if($user->user)
                         $bonset = $db->sql_query($bon);
                         list ($active, $upload_point) = $db->fetch_array($bonset);
                         $db->sql_freeresult($bonset);
-	if($active=='true')
-	{
-	$do="UPDATE ".$db_prefix."_users SET seedbonus = seedbonus + '".$upload_point."' WHERE id= ".$user->id."" ;
-	$db->sql_query($do) or btsqlerror($do);
-	}
+    if($active=='true')
+    {
+    $do="UPDATE ".$db_prefix."_users SET seedbonus = seedbonus + '".$upload_point."' WHERE id= ".$user->id."" ;
+    $db->sql_query($do) or btsqlerror($do);
+    }
 }
-		$shout			= request_var('shout', 0);
+        $shout          = request_var('shout', 0);
 if(checkaccess("u_shout_upload") AND $shout){
-				$mesg = sprintf($user->lang['SHOUT_NEW_UPLOAD'],$siteurl,$id,$torrentname);
-				$up_shout = new parse_message();
-				$up_shout->message = $mesg;
-				$up_shout->parse(true, true, true, true, false, true,true);
-				$mesg = $db->sql_escape(stripslashes($up_shout->message));
-				$sql = "INSERT INTO ".$db_prefix."_shouts (user, text, posted, bbcode_bitfield, bbcode_uid) VALUES ('".$user->id."', '".$mesg."', NOW(), '" . $up_shout->bbcode_bitfield . "', '" . $up_shout->bbcode_uid . "');";
-				$db->sql_query($sql);
+                $mesg = sprintf($user->lang['SHOUT_NEW_UPLOAD'],$siteurl,$id,$torrentname);
+                $up_shout = new parse_message();
+                $up_shout->message = $mesg;
+                $up_shout->parse(true, true, true, true, false, true,true);
+                $mesg = $db->sql_escape(stripslashes($up_shout->message));
+                $sql = "INSERT INTO ".$db_prefix."_shouts (user, text, posted, bbcode_bitfield, bbcode_uid) VALUES ('".$user->id."', '".$mesg."', NOW(), '" . $up_shout->bbcode_bitfield . "', '" . $up_shout->bbcode_uid . "');";
+                $db->sql_query($sql);
 }
 
 
@@ -1207,11 +1210,12 @@ if (isset($seednotify) AND $announce == "") {
         $db->sql_query($sql) or btsqlerror($sql);
 $msg[] = $user->lang['NOTIFY_NEW_SEED'];
 }
-							$template->assign_vars(array(
-								'S_NOTICE'			=> true,
-								'S_ERROR'			=>	false,
-								'META'				=>	$meta,
-								'L_MESSAGE'			=> $user->lang['SUCCESS'],
-								'S_ERROR_MESS'			=> implode("<br />",$msg),
-							));
+                            $template->assign_vars(array(
+                                'S_NOTICE'          => true,
+                                'S_ERROR'           =>  false,
+                                'META'              =>  $meta,
+                                'L_MESSAGE'         => $user->lang['SUCCESS'],
+                                'S_ERROR_MESS'          => implode("<br />",$msg),
+                            ));
+
 ?>

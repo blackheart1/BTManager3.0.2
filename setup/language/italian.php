@@ -1,34 +1,30 @@
 <?php
-/*
-*----------------------------phpMyBitTorrent V 2.0.5---------------------------*
-*--- The Ultimate BitTorrent Tracker and BMS (Bittorrent Management System) ---*
-*--------------   Created By Antonio Anzivino (aka DJ Echelon)   --------------*
-*-------------------   And Joe Robertson (aka joeroberts)   -------------------*
-*-------------               http://www.p2pmania.it               -------------*
-*------------ Based on the Bit Torrent Protocol made by Bram Cohen ------------*
-*-------------              http://www.bittorrent.com             -------------*
-*------------------------------------------------------------------------------*
-*------------------------------------------------------------------------------*
-*--   This program is free software; you can redistribute it and/or modify   --*
-*--   it under the terms of the GNU General Public License as published by   --*
-*--   the Free Software Foundation; either version 2 of the License, or      --*
-*--   (at your option) any later version.                                    --*
-*--                                                                          --*
-*--   This program is distributed in the hope that it will be useful,        --*
-*--   but WITHOUT ANY WARRANTY; without even the implied warranty of         --*
-*--   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          --*
-*--   GNU General Public License for more details.                           --*
-*--                                                                          --*
-*--   You should have received a copy of the GNU General Public License      --*
-*--   along with this program; if not, write to the Free Software            --*
-*-- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA --*
-*--                                                                          --*
-*------------------------------------------------------------------------------*
-*------              ©2010 phpMyBitTorrent Development Team              ------*
-*-----------               http://phpmybittorrent.com               -----------*
-*------------------------------------------------------------------------------*
-*-------------------Saturday, January 23, 2010 4:02 PM ------------------------*
-*/
+
+/**
+**********************
+** BTManager v3.0.2 **
+**********************
+** http://www.btmanager.org/
+** https://github.com/blackheart1/BTManager3.0.2
+** http://demo.btmanager.org/index.php
+** Licence Info: GPL
+** Copyright (C) 2018
+** Formerly Known As phpMyBitTorrent
+** Created By Antonio Anzivino (aka DJ Echelon)
+** And Joe Robertson (aka joeroberts)
+** Project Leaders: Black_heart, Thor.
+** File language/italian.php 2018-09-21 00:00:00 Thor
+**
+** CHANGES
+**
+** 2018-09-21 - Updated Masthead, Github, !defined('IN_BTM')
+**/
+
+if (!defined('IN_BTM'))
+{
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
+    die ("Error 404 - Page Not Found");
+}
 
 define("_ok","OK");
 define("_error","Errore");
@@ -38,7 +34,7 @@ define("_reset","Azzera");
 
 //Step 1
 define("_admpupload_dead","Torrenti di Unscrapeable");
-define("_admpupload_deadexplain","Usi questo per tenere conto affinchè i torrenti seminati ONU uploaded all'inseguitore che possono essere rimossi al tempo più tardo.");
+define("_admpupload_deadexplain","Usi questo per tenere conto affinch?i torrenti seminati ONU uploaded all'inseguitore che possono essere rimossi al tempo pi? tardo.");
 define("_step1","Passo 1: Requisiti di Installazione");
 define("_phpvercheck","Controllo versione di PHP");
 define("_phpverfail","La versione minima di PHP richiesta &egrave; la 4.3");
@@ -55,7 +51,7 @@ define("_externalfail","Impossibile aggiornare le statistiche dei Torrent Estern
 define("_oscheck","Controllo Sistema Operativo");
 
 define("_step1fail","Non &egrave; possibile continuare l'installazione di phpMyBitTorrent perch&egrave; i requisiti minimi non sono rispettati.");
-define("_step1warn","L'installazione può proseguire, ma alcune funzioni potrebbero non essere disponibili.");
+define("_step1warn","L'installazione pu?proseguire, ma alcune funzioni potrebbero non essere disponibili.");
 
 //Step 2
 define("_step2","Passo 2: Accordo di Licenza");
@@ -141,7 +137,7 @@ define("_admpcookiedomainexplain","Dominio dei Cookie. Il dominio a cui appartie
 define("_admpcookiepath","Percorso dei Cookie");
 define("_admpcookiepathexplain","Percorso dei Cookie. Cambia questo parametro <b>solo</b> se phpMyBitTorrent &egrave; installato in una sottodirectory sul server.");
 define("_admpuse_gzip","Utilizza compressione GZIP");
-define("_admpuse_gzipexplain","Questa opzione permette di abilitare o meno la compressione GZIP di PHP sulle pagine e sull'output del tracker. Se attivata, verrà risparmiata banda ma l'uso della CPU del server sarà maggiore. Inoltre si è visto che non è sempre possibile utilizzare questa funzionalità a causa dell'incompatibilità di alcuni server. Verificare che il proprio client di Bit Torrent legga correttamente l'output del tracker.");
+define("_admpuse_gzipexplain","Questa opzione permette di abilitare o meno la compressione GZIP di PHP sulle pagine e sull'output del tracker. Se attivata, verr?risparmiata banda ma l'uso della CPU del server sar?maggiore. Inoltre si ?visto che non ?sempre possibile utilizzare questa funzionalit?a causa dell'incompatibilit?di alcuni server. Verificare che il proprio client di Bit Torrent legga correttamente l'output del tracker.");
 define("_admpadmin_email","E-Mail Amministratore");
 define("_admpadmin_emailexplain","Indirizzo email da cui risulteranno spedite tutte le comunicazioni agli utenti (registrazione, autorizzazioni, ecc.). Non &egrave; necessario che sia un indirizzo vero, tuttavia &egrave; bene che sia identificativo per questo sito.");
 define("_admplanguage","Lingua di default");
@@ -250,13 +246,14 @@ define("_step7","Completamento dell'Installazione");
 define("_step7explain","Congratulazioni! phpMyBitTorrent &egrave; stato installato e configurato correttamente. Ora non ti resta che avviare il tuo nuovo Tracker
 e iniziare a condividere file! Prima di cominciare tieni presente quanto segue:");
 define("_thingstodo","<ul>\n
-<li><p>Cancella la directory <i>setup</i> dell'installazione! Per motivi di sicurezza phpMyBitTorrent si bloccherà fino a quando la directory non sarà cancellata.</p></li>\n
+<li><p>Cancella la directory <i>setup</i> dell'installazione! Per motivi di sicurezza phpMyBitTorrent si bloccher?fino a quando la directory non sar?cancellata.</p></li>\n
 <li><p>Usa l'account che hai appena creato per impostare nel dettaglio le preferenze del Tracker e impara a usarle al meglio per creare la tua community peer-to-peer. Non rivelare a nessuno la tua password di Amministratore</p></li>\n
 <li><p>Ricorda di eseguire di tanto in tanto l'Ottimizzatore Database, uno strumento fondamentale per mantenere efficiente il Tracker quando il carico del server aumenta</p></li>\n
-<li><p>Se hai bisogno di farti aiutare nella gestione del Tracker da altri utenti fidati, ricorda che i Moderatori possono gestire liberamente i Torrent senza però poter entrare nel Pannello Amministrativo</p></li>\n
-<li><p>Ricorda infine che lo scambio di cultura è libertà, ma la pirateria è un crimine.</p></li>\n
-<li><p>Se phpMyBitTorrent ti piace, perchè non fai una piccola <b>donazione</b> a chi lo ha creato in modo da mantenere il progetto attivo?</p></li>\n
+<li><p>Se hai bisogno di farti aiutare nella gestione del Tracker da altri utenti fidati, ricorda che i Moderatori possono gestire liberamente i Torrent senza per?poter entrare nel Pannello Amministrativo</p></li>\n
+<li><p>Ricorda infine che lo scambio di cultura ?libert? ma la pirateria ?un crimine.</p></li>\n
+<li><p>Se phpMyBitTorrent ti piace, perch?non fai una piccola <b>donazione</b> a chi lo ha creato in modo da mantenere il progetto attivo?</p></li>\n
 </ul>\n");
 define("_thanks","Grazie da parte del Team di phpMyBitTorrent per aver scelto questo fantastico prodotto Open Source!");
 define("_enter","Entra in phpMyBitTorrent");
+
 ?>

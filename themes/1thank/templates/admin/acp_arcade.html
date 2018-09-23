@@ -1,9 +1,9 @@
 <!-- INCLUDE themes/1thank/templates/admin/over_all_header.html -->
 
 <a name="maincontent"></a>
-	<!-- IF S_MANAGE_HIGHSCORES -->
+    <!-- IF S_MANAGE_HIGHSCORES -->
         <table cellspacing="1">
-		<caption>{GAME_NAME} {L_HIGHSCORES}</caption>
+        <caption>{GAME_NAME} {L_HIGHSCORES}</caption>
         <thead>
             <tr>
                 <th>{L_USERNAME}</th>
@@ -16,9 +16,9 @@
             <tr>
                 <td class="<!-- IF scorerow.COUNT is odd -->col2<!-- ELSE -->col1<!-- ENDIF -->">{scorerow.USER}</td>
                 <td width="75%" class="<!-- IF scorerow.COUNT is odd -->col2<!-- ELSE -->col1<!-- ENDIF -->" id="{scorerow.COUNT}">
-                	<dl id="highscore{scorerow.COUNT}"><strong>{scorerow.SCORE}</strong></dl>
+                    <dl id="highscore{scorerow.COUNT}"><strong>{scorerow.SCORE}</strong></dl>
                     <dl id="highscoreedit{scorerow.COUNT}" style="display:none">
-                    	<form id="category" method="post" action="{U_ACTION}">
+                        <form id="category" method="post" action="{U_ACTION}">
                             <input type="hidden" name="action" value="highscoreedit" />
                             <input type="hidden" name="hid" value="{scorerow.ID}" />
                             <input type="hidden" name="gid" value="{GAME_ID}" />
@@ -28,118 +28,118 @@
                         </form></dl>
                 </td>
                 <td class="<!-- IF scorerow.COUNT is odd -->col2<!-- ELSE -->col1<!-- ENDIF -->">
-                	<a href="javascript: void(0);" onClick="document.getElementById('highscoreedit{scorerow.COUNT}').style.display = 'block'; document.getElementById('highscore{scorerow.COUNT}').style.display = 'none'">{ICON_EDIT}</a>
+                    <a href="javascript: void(0);" onClick="document.getElementById('highscoreedit{scorerow.COUNT}').style.display = 'block'; document.getElementById('highscore{scorerow.COUNT}').style.display = 'none'">{ICON_EDIT}</a>
                     <a href="{scorerow.U_DELETE}">{ICON_DELETE}</a></td>
             </tr>
             <!-- END scorerow -->
         </tbody>
         </table>
     <!-- ENDIF -->
-	<!-- IF S_RESYNCED -->
-		<script type="text/javascript">
-		<!--
-			var close_waitscreen = 1;
-		//-->
-		</script>
+    <!-- IF S_RESYNCED -->
+        <script type="text/javascript">
+        <!--
+            var close_waitscreen = 1;
+        //-->
+        </script>
 
-		<div class="successbox">
-			<h3>{L_NOTIFY}</h3>
-			<p>{L_ARCADE_RESYNCED}</p>
-		</div>
-	<!-- ENDIF -->
+        <div class="successbox">
+            <h3>{L_NOTIFY}</h3>
+            <p>{L_ARCADE_RESYNCED}</p>
+        </div>
+    <!-- ENDIF -->
 
     <!-- IF S_NO_UPDATE -->
-		<script type="text/javascript">
-		<!--
-			var close_waitscreen = 1;
-		//-->
-		</script>
+        <script type="text/javascript">
+        <!--
+            var close_waitscreen = 1;
+        //-->
+        </script>
 
-		<div class="successbox">
-			<h3>{L_NOTIFY}</h3>
-			<p>{L_ARCADE_RESYNCED}</p>
-		</div>
-	<!-- ENDIF -->
+        <div class="successbox">
+            <h3>{L_NOTIFY}</h3>
+            <p>{L_ARCADE_RESYNCED}</p>
+        </div>
+    <!-- ENDIF -->
 
     <!-- IF S_UPDATE -->
-		<script type="text/javascript">
-		<!--
-			var close_waitscreen = 1;
-		//-->
-		</script>
+        <script type="text/javascript">
+        <!--
+            var close_waitscreen = 1;
+        //-->
+        </script>
 
-		<div class="errorbox">
-			<h3>{L_NOTIFY}</h3>
-			<p>{L_ARCADE_RESYNCED}</p>
-		</div>
-	<!-- ENDIF -->
+        <div class="errorbox">
+            <h3>{L_NOTIFY}</h3>
+            <p>{L_ARCADE_RESYNCED}</p>
+        </div>
+    <!-- ENDIF -->
 
     <!-- IF S_SETTINGS -->
     <table cellspacing="1">
-		<caption>{L_ARCADE_STATS}</caption>
-		<col class="col1" /><col class="col2" /><col class="col1" /><col class="col2" />
-	<thead>
-	<tr>
-		<th>{L_STATISTIC}</th>
-		<th>{L_VALUE}</th>
-		<th>{L_STATISTIC}</th>
-		<th>{L_VALUE}</th>
-	</tr>
-	</thead>
-	<tbody>
-	<tr>
-		<td>{L_TOTAL_GAMES}: </td>
-		<td><strong>{TOTAL_GAMES}</strong></td>
-		<td>{L_TOTAL_RATINGS}: </td>
-		<td><strong>{TOTAL_RATINGS}</strong></td>
-	</tr>
-	<tr>
-		<td>{L_TOTAL_PLAYS}: </td>
-		<td><strong>{TOTAL_PLAYS}</strong></td>
+        <caption>{L_ARCADE_STATS}</caption>
+        <col class="col1" /><col class="col2" /><col class="col1" /><col class="col2" />
+    <thead>
+    <tr>
+        <th>{L_STATISTIC}</th>
+        <th>{L_VALUE}</th>
+        <th>{L_STATISTIC}</th>
+        <th>{L_VALUE}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>{L_TOTAL_GAMES}: </td>
+        <td><strong>{TOTAL_GAMES}</strong></td>
+        <td>{L_TOTAL_RATINGS}: </td>
+        <td><strong>{TOTAL_RATINGS}</strong></td>
+    </tr>
+    <tr>
+        <td>{L_TOTAL_PLAYS}: </td>
+        <td><strong>{TOTAL_PLAYS}</strong></td>
         <td>{L_AVG_RATING}: </td>
-		<td><strong>{AVG_RATING}</strong></td>
-	</tr>
-	<tr>
-    	<td>{L_TOTAL_FAVORITES}: </td>
-		<td><strong>{TOTAL_FAVORITES}</strong></td>
-		<td>{L_TOTAL_SWF_SIZE}: </td>
-		<td><strong>{TOTAL_SWF_SIZE}</strong></td>
-	</tr>
-	<tr>
-		<td>{L_TOTAL_COMMENTS}: </td>
-		<td><strong>{TOTAL_COMMENTS}</strong></td>
-		<td>{L_TOTAL_IMG_SIZE}: </td>
-		<td><strong>{TOTAL_IMG_SIZE}</strong></td>
-	</tr>
+        <td><strong>{AVG_RATING}</strong></td>
+    </tr>
+    <tr>
+        <td>{L_TOTAL_FAVORITES}: </td>
+        <td><strong>{TOTAL_FAVORITES}</strong></td>
+        <td>{L_TOTAL_SWF_SIZE}: </td>
+        <td><strong>{TOTAL_SWF_SIZE}</strong></td>
+    </tr>
+    <tr>
+        <td>{L_TOTAL_COMMENTS}: </td>
+        <td><strong>{TOTAL_COMMENTS}</strong></td>
+        <td>{L_TOTAL_IMG_SIZE}: </td>
+        <td><strong>{TOTAL_IMG_SIZE}</strong></td>
+    </tr>
     <tr>
         <td>{L_TOKENS_SPENT}: </td>
-		<td><strong>{TOKENS_SPENT}</strong></td>
-		<td>{L_ARCADE_STARTED}: </td>
-		<td><strong>{ARCADE_STARTED}</strong></td>
-	</tr>
-    <tr>
-    	<td>{L_TICKETS_DISPENSED}: </td>
-		<td><strong>{TICKETS_DISPENSED}</strong></td>
-        <td>{L_PLAYS_PER_DAY}: </td>
-		<td><strong>{PLAYS_PER_DAY}</strong></td>
+        <td><strong>{TOKENS_SPENT}</strong></td>
+        <td>{L_ARCADE_STARTED}: </td>
+        <td><strong>{ARCADE_STARTED}</strong></td>
     </tr>
-	</tbody>
-	</table>
+    <tr>
+        <td>{L_TICKETS_DISPENSED}: </td>
+        <td><strong>{TICKETS_DISPENSED}</strong></td>
+        <td>{L_PLAYS_PER_DAY}: </td>
+        <td><strong>{PLAYS_PER_DAY}</strong></td>
+    </tr>
+    </tbody>
+    </table>
     <br />
     <form id="settings" method="post" action="{U_ACTION}">
     <input type="hidden" name="action" value="updatesettings" />
     <h1>{L_A_SETTINGS}</h1>
         <p>{L_A_SETTINGS_DESC}</p>
     <fieldset>
-		<legend>{L_AR_SETTINGS}</legend>
-    	<!-- BEGIN settingrow -->
+        <legend>{L_AR_SETTINGS}</legend>
+        <!-- BEGIN settingrow -->
         <dl>
-			<dt style="text-align:right"><label for="{settingrow.ID}">{settingrow.NAME}:</label></dt>
-			<!-- IF settingrow.TYPE is odd --><dd><!-- IF settingrow.CONTENT --><label><input id="{settingrow.ID}" name="{settingrow.ID}" value="1" checked="checked" class="radio" type="radio"> {L_YES}</label><label><input name="{settingrow.ID}" value="0" class="radio" type="radio"> {L_NO}</label>
+            <dt style="text-align:right"><label for="{settingrow.ID}">{settingrow.NAME}:</label></dt>
+            <!-- IF settingrow.TYPE is odd --><dd><!-- IF settingrow.CONTENT --><label><input id="{settingrow.ID}" name="{settingrow.ID}" value="1" checked="checked" class="radio" type="radio"> {L_YES}</label><label><input name="{settingrow.ID}" value="0" class="radio" type="radio"> {L_NO}</label>
             <!-- ELSE --><label><input id="{settingrow.ID}" name="{settingrow.ID}" value="1" class="radio" type="radio">
             {L_YES}</label><label><input name="{settingrow.ID}" checked="checked" value="0" class="radio" type="radio"> {L_NO}</label>
             <!-- ENDIF --></dd><!-- ELSE --><dd><input id="{settingrow.ID}" name="{settingrow.ID}" value="{settingrow.CONTENT}" size="3" maxlength="4" type="text" /> {L_MINUTES}</dd><!-- ENDIF -->
-		</dl>
+        </dl>
         <!-- END settingrow -->
 
         <p class="submit-buttons">
@@ -150,42 +150,42 @@
 
     </form>
     <fieldset>
-			<legend>{L_AR_TASKS}</legend>
-    	<dl>
-			<form id="resetratings" method="post" action="{U_ACTION}">
-  			<input type="hidden" name="action" value="resetratings" />
-    		<dt style="text-align:right">{L_RESET_RATINGS}</dt>
-			<dd><input class="button2" name="resetratings" type="submit" value="{L_RUN_TASK}" /></dd>
+            <legend>{L_AR_TASKS}</legend>
+        <dl>
+            <form id="resetratings" method="post" action="{U_ACTION}">
+            <input type="hidden" name="action" value="resetratings" />
+            <dt style="text-align:right">{L_RESET_RATINGS}</dt>
+            <dd><input class="button2" name="resetratings" type="submit" value="{L_RUN_TASK}" /></dd>
             </form>
         </dl>
         <dl>
             <form id="resethighscores" method="post" action="{U_ACTION}">
-  			<input type="hidden" name="action" value="resethighscores" />
-    		<dt style="text-align:right">{L_RESET_HIGHSCORES}</dt>
-			<dd><input class="button2" name="resethighscores" type="submit" value="{L_RUN_TASK}" /></dd>
+            <input type="hidden" name="action" value="resethighscores" />
+            <dt style="text-align:right">{L_RESET_HIGHSCORES}</dt>
+            <dd><input class="button2" name="resethighscores" type="submit" value="{L_RUN_TASK}" /></dd>
             </form>
-		</dl>
+        </dl>
         <dl>
-			<form id="resetviews" method="post" action="{U_ACTION}">
-  			<input type="hidden" name="action" value="resetviews" />
-    		<dt style="text-align:right">{L_RESET_VIEWS}</dt>
-			<dd><input class="button2" name="resetviews" type="submit" value="{L_RUN_TASK}" /></dd>
+            <form id="resetviews" method="post" action="{U_ACTION}">
+            <input type="hidden" name="action" value="resetviews" />
+            <dt style="text-align:right">{L_RESET_VIEWS}</dt>
+            <dd><input class="button2" name="resetviews" type="submit" value="{L_RUN_TASK}" /></dd>
             </form>
         </dl>
     </fieldset>
     <!-- ENDIF -->
 
-	<!-- IF S_MANAGE_CATEGORY -->
-    	<h1>{L_MANAGE_CAT}</h1>
+    <!-- IF S_MANAGE_CATEGORY -->
+        <h1>{L_MANAGE_CAT}</h1>
         <p>{L_MANAGE_CAT_DESC}</p>
-		<table cellspacing="1">
-        	<col class="row1" /><col class="row2" />
+        <table cellspacing="1">
+            <col class="row1" /><col class="row2" />
             <tbody>
-			{S_TITLE}
+            {S_TITLE}
             <!-- BEGIN categoryrow -->
                 <tr>
-                	<td width="10px" class="<!-- IF categoryrow.COUNT is even -->row1<!-- ELSE -->row2<!-- ENDIF -->">
-                    	<dl>{categoryrow.CATEGORY_COUNT}</dl>
+                    <td width="10px" class="<!-- IF categoryrow.COUNT is even -->row1<!-- ELSE -->row2<!-- ENDIF -->">
+                        <dl>{categoryrow.CATEGORY_COUNT}</dl>
                     </td>
                     <td class="<!-- IF categoryrow.COUNT is even -->row2<!-- ELSE -->row1<!-- ENDIF -->">
                         <dl id="name{categoryrow.CATEGORY_ID}"><strong><a href="{categoryrow.U_CATEGORY}">{categoryrow.CATEGORY_NAME}</a></strong></dl>
@@ -201,36 +201,36 @@
                         <strong><a href="{categoryrow.U_VIEW_CATEGORY}" target="_blank">{L_VIEW}</a></strong>
                     </td>
                     <td class="<!-- IF categoryrow.COUNT is even -->row2<!-- ELSE -->row1<!-- ENDIF -->" style="vertical-align: top; width: 20px; text-align: center; white-space: nowrap;">
-                    	<a href="javascript: void(0);" onClick="document.getElementById('edit{categoryrow.CATEGORY_ID}').style.display = 'block'; document.getElementById('name{categoryrow.CATEGORY_ID}').style.display = 'none'">{ICON_EDIT}</a>
+                        <a href="javascript: void(0);" onClick="document.getElementById('edit{categoryrow.CATEGORY_ID}').style.display = 'block'; document.getElementById('name{categoryrow.CATEGORY_ID}').style.display = 'none'">{ICON_EDIT}</a>
                         <a href="{categoryrow.U_DELETE}">{ICON_DELETE}</a>
                     </td>
                 </tr>
             <!-- END categoryrow -->
             </tbody>
-		</table>
+        </table>
 
-	<form id="category" method="post" action="{U_ACTION}">
+    <form id="category" method="post" action="{U_ACTION}">
 
-	<fieldset class="quick">
-		<input type="hidden" name="action" value="addcategory" />
-		<input type="text" name="category_name" value="" maxlength="255" />
-		<input class="button2" name="addcategory" type="submit" value="{L_CREATE_CAT}" />
-	</fieldset>
+    <fieldset class="quick">
+        <input type="hidden" name="action" value="addcategory" />
+        <input type="text" name="category_name" value="" maxlength="255" />
+        <input class="button2" name="addcategory" type="submit" value="{L_CREATE_CAT}" />
+    </fieldset>
 
-	</form>
-	<!-- ENDIF -->
+    </form>
+    <!-- ENDIF -->
 
     <!-- IF S_MANAGE_GAME -->
     <h1>{L_MANAGE_GAMES}</h1>
         <p>{L_MANAGE_GAMES_DESC}</p>
-		<table cellspacing="1">
-        	<col class="row1" /><col class="row2" />
+        <table cellspacing="1">
+            <col class="row1" /><col class="row2" />
             <tbody>
             {S_TITLE}
             <!-- BEGIN gamerow -->
                 <tr>
-                	<td width="10px" class="<!-- IF gamerow.COUNT is even -->row2<!-- ELSE -->row1<!-- ENDIF -->">
-                    	<!-- IF gamerow.DISABLED --><img src="flash/images/included/disabled.png" alt="*" /><!-- ELSE --><img src="flash/images/included/enabled.png" alt="*" /><!-- ENDIF -->
+                    <td width="10px" class="<!-- IF gamerow.COUNT is even -->row2<!-- ELSE -->row1<!-- ENDIF -->">
+                        <!-- IF gamerow.DISABLED --><img src="flash/images/included/disabled.png" alt="*" /><!-- ELSE --><img src="flash/images/included/enabled.png" alt="*" /><!-- ENDIF -->
                     </td>
                     <td class="<!-- IF gamerow.COUNT is even -->row1<!-- ELSE -->row2<!-- ENDIF -->">
                         <strong><a href="{gamerow.U_GAME}">{gamerow.GAME_NAME}</a></strong>
@@ -251,17 +251,17 @@
                 </tr>
             <!-- END gamerow -->
             </tbody>
-		</table>
+        </table>
 
-	<form id="game" method="post" action="{U_ACTION}">
+    <form id="game" method="post" action="{U_ACTION}">
         <fieldset class="quick">
             <input type="hidden" name="action" value="addgame" />
 
             <input type="text" name="game_name" value="" maxlength="255" />
             <input class="button2" name="addgame" type="submit" value="{L_ADD_GAME}" />
         </fieldset>
-	</form>
-	<form id="game" method="post" action="{U_ARCHIVE_ACTION}">
+    </form>
+    <form id="game" method="post" action="{U_ARCHIVE_ACTION}">
         <fieldset class="quick">
             <select name="archive_file">
                 <option value="none" selected="yes">{L_CHOOSE_GAME}</option>
@@ -271,24 +271,24 @@
             </select>
             <input class="button2" name="addgame" type="submit" value="{L_ADD_GAME}" />
         </fieldset>
-	</form>
+    </form>
     <form id="game" method="post" action="{U_UPLOAD_ARCHIVE}" enctype="multipart/form-data">
         <fieldset class="quick">
-        	<input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
+            <input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
             <input name="archive_file" type="file" />
             <input class="button2" name="uploadarchive" type="submit" value="{L_UPLOAD_ARCHIVE}" />
         </fieldset>
-	</form>
+    </form>
         <!-- ENDIF -->
 
     <!-- IF S_EDIT_GAME -->
-    	<h1>{L_EDIT_GAME}</h1>
+        <h1>{L_EDIT_GAME}</h1>
         <p>{L_EDIT_GAME_DESC}</p>
-    	<!-- IF S_ERROR -->
-       		{L_GAME_ERROR}<br />
+        <!-- IF S_ERROR -->
+            {L_GAME_ERROR}<br />
         <!-- ENDIF -->
-        	<fieldset>
-            	<legend>{L_GAME_NAME} {L_INFO}</legend>
+            <fieldset>
+                <legend>{L_GAME_NAME} {L_INFO}</legend>
                 <dl><dt style="text-align:right"><br /><strong><a href="{U_VIEW_GAME}" target="_blank">{L_VIEW}</a></strong></dt><dd><img src="{GAME_INFO_IMAGE}" /></dd></dl>
                 <dl>
                     <dt style="text-align:right">{L_GAME_ID_C}</dt><dd>{GAME_INFO_ID}</dd>
@@ -319,15 +319,15 @@
             <form enctype="multipart/form-data" id="game" method="post" action="{U_ACTION}">
 
             <fieldset>
-            	<legend>{L_EDIT}</legend>
+                <legend>{L_EDIT}</legend>
                 <input type="hidden" name="action" value="editgameinfo" />
                 <dl>
                     <dt style="text-align:right">{L_GAME_NAME_C}</dt><dd><input type="text" name="game_name" value="{L_GAME_NAME}" maxlength="255" /></dd>
                 </dl>
                 <dl>
                     <dt style="text-align:right">{L_GAME_CAT_C}</dt><dd><select name="game_cat" size="5">
-                    	<!-- BEGIN categoryrow -->
-                            	{categoryrow.CATEGORY_CODE}
+                        <!-- BEGIN categoryrow -->
+                                {categoryrow.CATEGORY_CODE}
                         <!-- END categoryrow -->
                     </select></dd>
                 </dl>
@@ -396,47 +396,47 @@
                 </dl>
                 <p class="submit-buttons">
                     <input class="button1" type="submit" id="submit" name="submit" value="{L_SAVE_GAME}" />&nbsp;
-					<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
+                    <input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
                 </p>
             </fieldset>
 
             </form>
     <fieldset>
-			<legend>{L_GAME_TASKS}</legend>
-    	<dl>
-			<form id="resetratingsgame" method="post" action="{U_ACTION}">
-  			<input type="hidden" name="action" value="resetratingsgame" />
-    		<dt style="text-align:right">{L_RESET_RATING}</dt>
-			<dd><input class="button2" name="resetratings" type="submit" value="{L_RUN_TASK}" /></dd>
+            <legend>{L_GAME_TASKS}</legend>
+        <dl>
+            <form id="resetratingsgame" method="post" action="{U_ACTION}">
+            <input type="hidden" name="action" value="resetratingsgame" />
+            <dt style="text-align:right">{L_RESET_RATING}</dt>
+            <dd><input class="button2" name="resetratings" type="submit" value="{L_RUN_TASK}" /></dd>
             </form>
         </dl>
         <dl>
             <form id="resethighscoresgame" method="post" action="{U_ACTION}">
-  			<input type="hidden" name="action" value="resethighscoresgame" />
-    		<dt style="text-align:right">{L_RESET_HIGHSCORE}</dt>
-			<dd><input class="button2" name="resethighscoresgame" type="submit" value="{L_RUN_TASK}" /></dd>
+            <input type="hidden" name="action" value="resethighscoresgame" />
+            <dt style="text-align:right">{L_RESET_HIGHSCORE}</dt>
+            <dd><input class="button2" name="resethighscoresgame" type="submit" value="{L_RUN_TASK}" /></dd>
             </form>
-		</dl>
+        </dl>
         <dl>
-			<form id="resetviewsgame" method="post" action="{U_ACTION}">
-  			<input type="hidden" name="action" value="resetviewsgame" />
-    		<dt style="text-align:right">{L_RESET_VIEW}</dt>
-			<dd><input class="button2" name="resetviewsgame" type="submit" value="{L_RUN_TASK}" /></dd>
+            <form id="resetviewsgame" method="post" action="{U_ACTION}">
+            <input type="hidden" name="action" value="resetviewsgame" />
+            <dt style="text-align:right">{L_RESET_VIEW}</dt>
+            <dd><input class="button2" name="resetviewsgame" type="submit" value="{L_RUN_TASK}" /></dd>
             </form>
         </dl>
     </fieldset>
     <!-- ENDIF -->
 
     <!-- IF S_ADD_GAME -->
-    	<h1>{L_ADD_GAME}</h1>
+        <h1>{L_ADD_GAME}</h1>
         <p>{L_ADD_GAME_DESC}</p>
-    	<!-- IF S_ERROR -->
-       		{L_GAME_ERROR}<br />
+        <!-- IF S_ERROR -->
+            {L_GAME_ERROR}<br />
         <!-- ENDIF -->
             <form enctype="multipart/form-data" id="game" method="post" action="{U_ACTION}">
 
             <fieldset>
-            	<legend>{L_ADD_GAME}</legend>
+                <legend>{L_ADD_GAME}</legend>
                 <input type="hidden" name="action" value="addgameinfo" />
                 <input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
                 <dl>
@@ -444,8 +444,8 @@
                 </dl>
                 <dl>
                     <dt style="text-align:right">{L_GAME_CAT_C}</dt><dd><select name="game_cat" size="5">
-                    	<!-- BEGIN categoryrow -->
-                            	{categoryrow.CATEGORY_CODE}
+                        <!-- BEGIN categoryrow -->
+                                {categoryrow.CATEGORY_CODE}
                         <!-- END categoryrow -->
                     </select></dd>
                 </dl>
@@ -458,7 +458,7 @@
                 </dl>
                 <dl>
                     <dt style="text-align:right">{L_GAME_HIGHSCORE_C}</dt>
-                    <dd><!-- IF S_HIGHSCORE --><label><input id="game_highscore" name="game_highscore" checked="checked"	 value="1" class="radio" type="radio">
+                    <dd><!-- IF S_HIGHSCORE --><label><input id="game_highscore" name="game_highscore" checked="checked"     value="1" class="radio" type="radio">
                     {L_YES}</label><label><input name="game_highscore" value="0" class="radio" type="radio"> {L_NO}</label><!-- ELSE --><label><input id="game_highscore" name="game_highscore" value="1" class="radio" type="radio">
                     {L_YES}</label><label><input name="game_highscore" checked="checked" value="0" class="radio" type="radio"> {L_NO}</label><!-- ENDIF -->
                     </dd>

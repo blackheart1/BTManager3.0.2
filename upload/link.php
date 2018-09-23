@@ -1,10 +1,11 @@
 <?php
+
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -12,17 +13,19 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File link.php 2018-02-18 14:32:00 joeroberts
+** File link.php 2018-09-22 00:00:00 Thor
 **
 ** CHANGES
 **
-** EXAMPLE 26-04-13 - Added Auto Ban
+** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
 **/
-if (!defined('IN_PMBT'))
+
+if (!defined('IN_BTM'))
 {
-	include_once './../security.php';
-	die ();
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
+    die ("Error 404 - Page Not Found");
 }
+
 require_once("include/torrent_functions.php");
 define("INVALID_LINK",0);
 define("LINK_OK",1);
@@ -34,17 +37,17 @@ $mg_trackers = '/tr=([^&]*)/i';
 $magnet_regex_bitprint = "/^magnet:\\?xt=urn:bitprint:(?P<bitprint>[a-zA-Z0-9]*)&dn=(?P<name>[^&\\s]*)/i";
 $md5sum_regex = "/^[0-f]{32}$/i";
 
-		$ed2klink			= request_var('ed2klink', '');
-		$magnetlink			= request_var('magnetlink', '');
-		$md5sum				= request_var('md5sum', '');
-		$link_category		= request_var('link_category', 0);
-		$old_files			= request_var('old_files', '');
-		$priv_key = base64_encode($_SERVER["SERVER_SIGNATURE"].$_SERVER["SCRIPT_NAME"]);
+        $ed2klink           = request_var('ed2klink', '');
+        $magnetlink         = request_var('magnetlink', '');
+        $md5sum             = request_var('md5sum', '');
+        $link_category      = request_var('link_category', 0);
+        $old_files          = request_var('old_files', '');
+        $priv_key = base64_encode($_SERVER["SERVER_SIGNATURE"].$_SERVER["SCRIPT_NAME"]);
 #Build Missing ED2K link
 if($ed2klink == '' AND !$magnetlink == '')
 {
-	preg_match_all($magnet_regex_sha1,$magnetlink,$matches);
-	$ed2klink = "ed2k://|file|".rawurldecode($matches["name"][0])."|10|".$matches["hash"][0]."|";
+    preg_match_all($magnet_regex_sha1,$magnetlink,$matches);
+    $ed2klink = "ed2k://|file|".rawurldecode($matches["name"][0])."|10|".$matches["hash"][0]."|";
 }
 $can_submit = false;
 $files = Array();
@@ -83,7 +86,7 @@ foreach($files as $val) $nf[] = $val;
         }
 }
 
-		$postback			= request_var('postback', '');
+        $postback           = request_var('postback', '');
 
 if (isset($postback) AND !is_numeric($postback) AND !$postback == '') {
 
@@ -100,11 +103,11 @@ if (isset($postback) AND !is_numeric($postback) AND !$postback == '') {
                                 $magnetfile = Array();
                                 $result = checkmagnet($magnetlink,$file["name"],$magnetfile);
                                 if ($result == LINK_OK) {
-									$trackers = '';
-									if(preg_match_all($mg_trackers,$magnetlink,$trurl))
-									{
-										$trackers = "&tr=".rawurldecode(implode("&tr=", $trurl[1]));
-									}
+                                    $trackers = '';
+                                    if(preg_match_all($mg_trackers,$magnetlink,$trurl))
+                                    {
+                                        $trackers = "&tr=".rawurldecode(implode("&tr=", $trurl[1]));
+                                    }
                                         $file["magnet"] = (($magnetfile["hash"] != "") ? "magnet:?xt=urn:btih:".strtoupper($magnetfile["hash"])."&dn=".$file["name"].$trackers : "magnet:?xt=urn:bitprint:".strtoupper($magnetfile["bitprint"])."&dn=".$file["name"]).$trackers;
                                         unset($magnetfile);
                                         $magnet_ok = true;
@@ -156,7 +159,7 @@ foreach ($cats as $cat)
  }
  $s .= "</optgroup>\n";
 
-}  
+}
 $s .= "</select>\n";
 if (!$use_rsa)$hiden['fingerprint'] = $fingerprint;
 $total = count($files);
@@ -167,101 +170,101 @@ if ($total > 0) {
         foreach ($files as $file) {
                 if ($file["torrent"] != 0) $duplicate++;
            $template->assign_block_vars('links_var', array(
-		   'LINK_ID'				=>	$i,
-		   'LINK_NAME'				=>	$file["name"],
-		   'LINK_MAGNET'			=>	$file["magnet"],
-		   'LINK_ED2K'				=>	$file["ed2k"],
-		   'LINK_SIZE'				=>	$file["size"],
-		   'LINK_MATCH'				=>	($file["torrent"] != 0)? $file["torrent"] : false,
+           'LINK_ID'                =>  $i,
+           'LINK_NAME'              =>  $file["name"],
+           'LINK_MAGNET'            =>  $file["magnet"],
+           'LINK_ED2K'              =>  $file["ed2k"],
+           'LINK_SIZE'              =>  $file["size"],
+           'LINK_MATCH'             =>  ($file["torrent"] != 0)? $file["torrent"] : false,
            ));
                 $i++;
-				$has_link = true;
+                $has_link = true;
         }
 
         if ($duplicate <= $total/2) $can_submit = true;
 
 }
-					
-					include_once('include/function_posting.php');
-					include_once('include/message_parser.php');
-					include_once('include/class.bbcode.php');
-				generate_smilies('inline', 0);
-				$num_predefined_bbcodes = 22;
-				$s_pm_icons = false;
-				if (!isset($icon_id))
-				{
-					$icon_id = false;
-				}
-				if ($config['enable_pm_icons'])
-				{
-					$s_pm_icons = posting_gen_topic_icons('post', $icon_id);
-				}
-			
-				$sql = 'SELECT bbcode_id, bbcode_tag, bbcode_helpline
-					FROM '.$db_prefix.'_bbcodes
-					WHERE display_on_posting = 1
-					ORDER BY bbcode_tag';
-				$result = $db->sql_query($sql);
-			
-				$i = 0;
-				while ($row = $db->sql_fetchrow($result))
-				{
-					// If the helpline is defined within the language file, we will use the localised version, else just use the database entry...
-					if (isset($user->lang[strtoupper($row['bbcode_helpline'])]))
-					{
-						$row['bbcode_helpline'] = $user->lang[strtoupper($row['bbcode_helpline'])];
-					}
-			
-					$template->assign_block_vars('custom_tags', array(
-						'BBCODE_NAME'		=> "'[{$row['bbcode_tag']}]', '[/" . str_replace('=', '', $row['bbcode_tag']) . "]'",
-						'BBCODE_ID'			=> $num_predefined_bbcodes + ($i * 2),
-						'BBCODE_TAG'		=> $row['bbcode_tag'],
-						'BBCODE_HELPLINE'	=> $row['bbcode_helpline'],
-						'A_BBCODE_HELPLINE'	=> str_replace(array('&amp;', '&quot;', "'", '&lt;', '&gt;'), array('&', '"', "\'", '<', '>'), $row['bbcode_helpline']),
-					));
-			
-					$i++;
-				}
-				$db->sql_freeresult($result);
-				$template->assign_vars(array(
-				'TITLE_TABLE'				=> $user->lang['UPLOAD_TABLE'],
-				'L_INTRO_TORRENT'			=> $user->lang['UPLOAD_LINK'],
-				'L_INTRO_TORRENT_EXP'		=> $user->lang['UPLOAD_LINK_EXP'],
-				'S_NAMEX'					=>	$namex,
-				'S_DESCR'					=>	$descr,
-				'S_IMDB'					=>	$imdb_info,
-				'S_POSTER'					=>	$post_img,
-				'S_SCREENA'					=>	$screen1,
-				'S_SCREENB'					=>	$screen2,
-				'S_SCREENC'					=>	$screen3,
-				'S_SCREEND'					=>	$screen4,
-				'S_CAN_SUBMIT'				=>	$can_submit,
-				'HAS_LINK'					=>	$has_link,
-				'S_DUPLICATE'				=>	$duplicate,
-				'S_CAT_SELECT'				=>	$s,
-		'ALOW_POSTER'				=> checkaccess("u_add_poster"),
-		'ALOW_SCREEN_SHOT'			=> checkaccess("u_add_screen_shots"),
-		'ALOW_NFO'					=> checkaccess("u_add_nfo"),
-		'S_SMILIES_ALLOWED'			=> checkaccess("u_add_smiles_to_details"),
-		'S_MESSAGE'					=> false,
-		'S_CAT_SELECT'				=>	$s,
-		'S_SHOW_SMILEY_LINK'		=> checkaccess("u_add_smiles_to_details"),
-		'S_BBCODE_ALLOWED'			=> checkaccess("u_add_bbcode_details"),
-		'T_TEMPLATE_PATH' 			=> 'themes/' . $theme . '/templates',
-		'S_BBCODE_QUOTE'			=> checkaccess("u_add_quote_details"),
-		'S_BBCODE_IMG'				=> checkaccess("u_add_imgbbcode_details"),
-		'S_LINKS_ALLOWED'			=> checkaccess("u_links_in_details"),
-		'S_BBCODE_FLASH'			=> checkaccess("u_flash_in_details"),
-		'ALOW_NOTIFY'				=> checkaccess("u_upload_notify"),
-		'ALOW_HIDE_OWNER'			=> checkaccess("u_hide_torrent_owner"),
-		'ALOW_PASSWORD'				=> checkaccess("u_add_password_torrent"),
-		'ALOW_ADVANCED'				=> checkaccess("u_advance_upload_setting"),
-		'ALOW_RATIO_BUILD'			=> checkaccess("u_apply_ratiobuild"),
-		'ALOW_STICKY'				=> checkaccess("u_add_sticky_upload"),
-		'ALOW_SHOUT_NEW'			=> checkaccess("u_shout_upload"),
-		'ALOW_ATTACHMENTS'			=> checkaccess("u_torrent_attach"),
-		'S_HIDDEN_FIELDS'			=>	build_hidden_fields($hiden),
-				));
+
+                    include_once('include/function_posting.php');
+                    include_once('include/message_parser.php');
+                    include_once('include/class.bbcode.php');
+                generate_smilies('inline', 0);
+                $num_predefined_bbcodes = 22;
+                $s_pm_icons = false;
+                if (!isset($icon_id))
+                {
+                    $icon_id = false;
+                }
+                if ($config['enable_pm_icons'])
+                {
+                    $s_pm_icons = posting_gen_topic_icons('post', $icon_id);
+                }
+
+                $sql = 'SELECT bbcode_id, bbcode_tag, bbcode_helpline
+                    FROM '.$db_prefix.'_bbcodes
+                    WHERE display_on_posting = 1
+                    ORDER BY bbcode_tag';
+                $result = $db->sql_query($sql);
+
+                $i = 0;
+                while ($row = $db->sql_fetchrow($result))
+                {
+                    // If the helpline is defined within the language file, we will use the localised version, else just use the database entry...
+                    if (isset($user->lang[strtoupper($row['bbcode_helpline'])]))
+                    {
+                        $row['bbcode_helpline'] = $user->lang[strtoupper($row['bbcode_helpline'])];
+                    }
+
+                    $template->assign_block_vars('custom_tags', array(
+                        'BBCODE_NAME'       => "'[{$row['bbcode_tag']}]', '[/" . str_replace('=', '', $row['bbcode_tag']) . "]'",
+                        'BBCODE_ID'         => $num_predefined_bbcodes + ($i * 2),
+                        'BBCODE_TAG'        => $row['bbcode_tag'],
+                        'BBCODE_HELPLINE'   => $row['bbcode_helpline'],
+                        'A_BBCODE_HELPLINE' => str_replace(array('&amp;', '&quot;', "'", '&lt;', '&gt;'), array('&', '"', "\'", '<', '>'), $row['bbcode_helpline']),
+                    ));
+
+                    $i++;
+                }
+                $db->sql_freeresult($result);
+                $template->assign_vars(array(
+                'TITLE_TABLE'               => $user->lang['UPLOAD_TABLE'],
+                'L_INTRO_TORRENT'           => $user->lang['UPLOAD_LINK'],
+                'L_INTRO_TORRENT_EXP'       => $user->lang['UPLOAD_LINK_EXP'],
+                'S_NAMEX'                   =>  $namex,
+                'S_DESCR'                   =>  $descr,
+                'S_IMDB'                    =>  $imdb_info,
+                'S_POSTER'                  =>  $post_img,
+                'S_SCREENA'                 =>  $screen1,
+                'S_SCREENB'                 =>  $screen2,
+                'S_SCREENC'                 =>  $screen3,
+                'S_SCREEND'                 =>  $screen4,
+                'S_CAN_SUBMIT'              =>  $can_submit,
+                'HAS_LINK'                  =>  $has_link,
+                'S_DUPLICATE'               =>  $duplicate,
+                'S_CAT_SELECT'              =>  $s,
+        'ALOW_POSTER'               => checkaccess("u_add_poster"),
+        'ALOW_SCREEN_SHOT'          => checkaccess("u_add_screen_shots"),
+        'ALOW_NFO'                  => checkaccess("u_add_nfo"),
+        'S_SMILIES_ALLOWED'         => checkaccess("u_add_smiles_to_details"),
+        'S_MESSAGE'                 => false,
+        'S_CAT_SELECT'              =>  $s,
+        'S_SHOW_SMILEY_LINK'        => checkaccess("u_add_smiles_to_details"),
+        'S_BBCODE_ALLOWED'          => checkaccess("u_add_bbcode_details"),
+        'T_TEMPLATE_PATH'           => 'themes/' . $theme . '/templates',
+        'S_BBCODE_QUOTE'            => checkaccess("u_add_quote_details"),
+        'S_BBCODE_IMG'              => checkaccess("u_add_imgbbcode_details"),
+        'S_LINKS_ALLOWED'           => checkaccess("u_links_in_details"),
+        'S_BBCODE_FLASH'            => checkaccess("u_flash_in_details"),
+        'ALOW_NOTIFY'               => checkaccess("u_upload_notify"),
+        'ALOW_HIDE_OWNER'           => checkaccess("u_hide_torrent_owner"),
+        'ALOW_PASSWORD'             => checkaccess("u_add_password_torrent"),
+        'ALOW_ADVANCED'             => checkaccess("u_advance_upload_setting"),
+        'ALOW_RATIO_BUILD'          => checkaccess("u_apply_ratiobuild"),
+        'ALOW_STICKY'               => checkaccess("u_add_sticky_upload"),
+        'ALOW_SHOUT_NEW'            => checkaccess("u_shout_upload"),
+        'ALOW_ATTACHMENTS'          => checkaccess("u_torrent_attach"),
+        'S_HIDDEN_FIELDS'           =>  build_hidden_fields($hiden),
+                ));
 #echo "</table><HR SIZE=1 NOSHADE><input type=\"submit\" value=\""._btfsend."\" ".((!$can_submit) ? "disabled" : "")." /></form>\n";
 
 ?>

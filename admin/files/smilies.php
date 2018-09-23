@@ -1,10 +1,11 @@
 <?php
+
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -12,17 +13,19 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File smilies.php 2018-02-23 14:32:00 Black_Heart
+** File files/smilies.php 2018-09-22 00:00:00 Thor
 **
 ** CHANGES
 **
-** EXAMPLE 26-04-13 - Added Auto Ban
+** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
 **/
-if (!defined('IN_PMBT'))
+
+if (!defined('IN_BTM'))
 {
-	include_once './../../security.php';
-	die ("You can't access this file directly");
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
+    die ("Error 404 - Page Not Found");
 }
+
 $user->set_lang('admin/acp_smilies',$user->ulanguage);
 function RebuildSortIndex() {
         global $db, $db_prefix;
@@ -37,13 +40,13 @@ function RebuildSortIndex() {
         $db->sql_freeresult($res);
         return;
 }
-				$op		= request_var('op', '');
+                $op     = request_var('op', '');
 switch($op) {
         case "addsmile": {
-				$sub_name		= request_var('sub_name', '');
-				$sub_image		= request_var('sub_image', '',true);
-				$sub_alt		= request_var('sub_alt', '');
-				$sub_position	= request_var('sub_position', '');
+                $sub_name       = request_var('sub_name', '');
+                $sub_image      = request_var('sub_image', '',true);
+                $sub_alt        = request_var('sub_alt', '');
+                $sub_position   = request_var('sub_position', '');
                 if (!isset($sub_name) OR empty($sub_name) OR !isset($sub_image) OR empty($sub_image)OR !isset($sub_alt) OR empty($sub_alt)) break;
                 if ($sub_position == -1) {
                         $sql = "SELECT MAX(sort_index) FROM ".$db_prefix."_smiles;";
@@ -59,44 +62,44 @@ switch($op) {
                 break;
         }
         case "editsmile": {
-				$id				= (int)request_var('id', '0');
-				$sub_name		= request_var('sub_name', '');
-				$sub_image		= request_var('sub_image', '',true);
-				$sub_alt		= request_var('sub_alt', '');
+                $id             = (int)request_var('id', '0');
+                $sub_name       = request_var('sub_name', '');
+                $sub_image      = request_var('sub_image', '',true);
+                $sub_alt        = request_var('sub_alt', '');
                 if (!isset($id) OR intval($id) < 1) break;
                 if (!$sub_name == '' AND !$sub_image == '') {
                         $sql = "UPDATE ".$db_prefix."_smiles SET code = '".$db->sql_escape($sub_name)."', file = '".$db->sql_escape($sub_image)."', alt='". $db->sql_escape($sub_alt) ."' WHERE id = '".$id."';";
-						$db->sql_query($sql) or btsqlerror($sql);
+                        $db->sql_query($sql) or btsqlerror($sql);
                         $op = "";
                 }
                 break;
         }
         case "delsmile": {
-				$id				= (int)request_var('id', '0');
+                $id             = (int)request_var('id', '0');
                 if (!isset($id) OR intval($id) < 1) break;
                 $sql = "DELETE FROM ".$db_prefix."_smiles WHERE id = '".intval($id)."';";
                 $db->sql_query($sql) or btsqlerror($sql);
                 break;
-		}
+        }
 }
 #CATEGORY IMAGE SCRIPT
 $sql = "SELECT * FROM ".$db_prefix."_smiles ORDER BY sort_index;";
 $res = $db->sql_query($sql);
         while ($row = $db->sql_fetchrow($res)) {
-			$template->assign_block_vars('smilies', array(
-			'ID'		=> $row["id"],
-			'ALT'		=> $row["alt"],
-			'IMG'		=> "<img src=\"smiles/".$row["file"]."\" alt=\"".$row["alt"]."\" />",
-			'CODE'		=> $row["code"],
-			));
+            $template->assign_block_vars('smilies', array(
+            'ID'        => $row["id"],
+            'ALT'       => $row["alt"],
+            'IMG'       => "<img src=\"smiles/".$row["file"]."\" alt=\"".$row["alt"]."\" />",
+            'CODE'      => $row["code"],
+            ));
         }
 $db->sql_freeresult($res);
-			$option = ($op != "editsmile")? "addsmile" : "editsmile";
-								$hidden = build_hidden_fields(array(
-								"op"			=> $option,
-								"id"		=> $id,
-								"i"			=> 'staff',
-								));
+            $option = ($op != "editsmile")? "addsmile" : "editsmile";
+                                $hidden = build_hidden_fields(array(
+                                "op"            => $option,
+                                "id"        => $id,
+                                "i"         => 'staff',
+                                ));
 if ($op == "editsmile")
 {
         $sql_edit = "SELECT * FROM ".$db_prefix."_smiles WHERE id = '".intval($id)."';";
@@ -130,15 +133,16 @@ if ($op != "editsmile") {
         }
         $db->sql_freeresult($res_position);
 }
-		$template->assign_vars(array(
-		'HIDE'		=> $hidden,
-		'EDACTION'	=> "admin.php#smilies",
-		'SUB_NAME'	=> $subname,
-		'SELIMG'	=>	$optimg,
-		'ALTSUB'	=> $altsub,
-		'SUBPOS'	=> $posit,
-		'SUBSMI'	=> (($op == "editsmile")? "./smiles/".$row["file"] : "./images/blank.gif"),
-		));
+        $template->assign_vars(array(
+        'HIDE'      => $hidden,
+        'EDACTION'  => "admin.php#smilies",
+        'SUB_NAME'  => $subname,
+        'SELIMG'    =>  $optimg,
+        'ALTSUB'    => $altsub,
+        'SUBPOS'    => $posit,
+        'SUBSMI'    => (($op == "editsmile")? "./smiles/".$row["file"] : "./images/blank.gif"),
+        ));
 echo $template->fetch('admin/smilies.html');
-		close_out();
+        close_out();
+
 ?>

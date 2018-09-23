@@ -1,10 +1,11 @@
 <?php
+
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -12,30 +13,32 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File whos_online.php 2018-02-18 14:32:00 joeroberts
+** File whos_online.php 2018-09-22 00:00:00 Thor
 **
 ** CHANGES
 **
-** EXAMPLE 26-04-13 - Added Auto Ban
+** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
 **/
-if (!defined('IN_PMBT'))
+
+if (!defined('IN_BTM'))
 {
-	include_once './../security.php';
-	die ();
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
+    die ("Error 404 - Page Not Found");
 }
+
 global $db_prefix, $user, $auth, $db, $shout_config,$template,$siteurl,$language,$pmbt_cache;
 $user->set_lang('whos_online',$user->ulanguage);
 $sqlev = "SELECT group_id, group_name, group_colour, group_legend FROM ".$db_prefix."_level_settings";
 $reslev = $db->sql_query($sqlev);
         while ($rowlev = $db->sql_fetchrow($reslev)) {
-		if($rowlev['group_legend'] == 0)
-		{
-			continue;
-		}
+        if($rowlev['group_legend'] == 0)
+        {
+            continue;
+        }
    $template->assign_block_vars('legend', array(
-		"ID"              => $rowlev['group_id'],
-		"NAME"              => (isset($user->lang[$rowlev['group_name']]))? $user->lang[$rowlev['group_name']] : $rowlev['group_name'],
-		"COLOR"             => $rowlev['group_colour'],
+        "ID"              => $rowlev['group_id'],
+        "NAME"              => (isset($user->lang[$rowlev['group_name']]))? $user->lang[$rowlev['group_name']] : $rowlev['group_name'],
+        "COLOR"             => $rowlev['group_colour'],
    ));
 }
 $db->sql_freeresult($reslev);
@@ -45,30 +48,30 @@ $tot = $db->sql_numrows($res);
 $i = 1;
 $user_now = $db->sql_numrows($res);
 if ($user_now == 0){
-	$template->assign_vars(array(
-	'S_USER_ON' => $user_now,
-	'IS_USERS_ON' => false,
-	));
+    $template->assign_vars(array(
+    'S_USER_ON' => $user_now,
+    'IS_USERS_ON' => false,
+    ));
 
 }else {
-	$template->assign_vars(array(
-	'S_USER_ON' => $user_now,
-	'IS_USERS_ON' => true,
-	));
+    $template->assign_vars(array(
+    'S_USER_ON' => $user_now,
+    'IS_USERS_ON' => true,
+    ));
         while ($row = $db->sql_fetchrow($res)) {
    $template->assign_block_vars('user_online', array(
-		"SHOW"              => ($row['Show_online'] == 'true' ) ? true : (($user->admin) ? true : false),
-		"SHOW_ICON"         => ($row['Show_online'] == 'false' ) ? false : true,
-		"LEVEL_ICON"        => ($row["level"] == "admin") ? pic("icon_admin.gif",'','admin') : (($row["level"] == "moderator") ? pic("icon_moderator.gif",'','moderator') : (($row["level"] == "premium") ?  pic("icon_premium.gif",'','premium') : '')),
-		"ID"                => $row['id'],
-		"USERNAME"          => htmlspecialchars($row["name"]),
-		"DONER"             => ($row["donator"] == 'true') ? true : false,
-		"WARNED"            => ($row["warned"] == '1') ? true : false,
-		"RATIO"             => get_u_ratio($row["uploaded"], $row["downloaded"]),
-		"COLOR"             => getusercolor($row["can_do"]),
-		"LAST_PAGE"         => getlastaction($row['lastpage']),
-		"ON_TIME"           => mkprettytime(time()-$row["logged_in"]),
-		));
+        "SHOW"              => ($row['Show_online'] == 'true' ) ? true : (($user->admin) ? true : false),
+        "SHOW_ICON"         => ($row['Show_online'] == 'false' ) ? false : true,
+        "LEVEL_ICON"        => ($row["level"] == "admin") ? pic("icon_admin.gif",'','admin') : (($row["level"] == "moderator") ? pic("icon_moderator.gif",'','moderator') : (($row["level"] == "premium") ?  pic("icon_premium.gif",'','premium') : '')),
+        "ID"                => $row['id'],
+        "USERNAME"          => htmlspecialchars($row["name"]),
+        "DONER"             => ($row["donator"] == 'true') ? true : false,
+        "WARNED"            => ($row["warned"] == '1') ? true : false,
+        "RATIO"             => get_u_ratio($row["uploaded"], $row["downloaded"]),
+        "COLOR"             => getusercolor($row["can_do"]),
+        "LAST_PAGE"         => getlastaction($row['lastpage']),
+        "ON_TIME"           => mkprettytime(time()-$row["logged_in"]),
+        ));
         }
 }
 $db->sql_freeresult($res);
@@ -138,5 +141,6 @@ $template->assign_vars(array(
         'MOST_CLIENTS'            => ($cnt)?$client : 'N/A',
         'M_CLIENT_CO'            => (int)$cnt,
 ));
-echo $template->fetch('whos_online.html');				
+echo $template->fetch('whos_online.html');
+
 ?>

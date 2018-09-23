@@ -1,10 +1,11 @@
 <?php
+
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -12,13 +13,15 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File redirect.php 2018-02-17 14:32:00 Black_Heart
+** File graphics/graphics.php 2018-09-21 00:00:00 Thor
 **
 ** CHANGES
 **
-** EXAMPLE 26-04-13 - Added Auto Ban
+** 2018-09-21 - Updated Masthead, Github, !defined('IN_BTM')
 **/
-if (!defined('INSETUP'))die ("You can't access this file directly");
+
+if (!defined('INSETUP'))
+    die ("Error 404 - Page Not Found");
 
 function makeheader() {
         global $step;
@@ -44,7 +47,7 @@ function makefooter() {
         <td width=34 height=43>\n
         <a href=\"http://btmanager.org/index.php\"><img src=\"graphics/12.jpg\" width=34 height=43 alt=\"\" border=\"0\" /></a></td>\n
         <td width=30 height=43>\n
-        <a href=\"https://github.com/blackheart1/BTManager\"><img src=\"graphics/13.jpg\" width=30 height=43 alt=\"\" border=\"0\" /></a></td>\n
+        <a href=\"https://github.com/blackheart1/BTManager3.0.2\"><img src=\"graphics/13.jpg\" width=30 height=43 alt=\"\" border=\"0\" /></a></td>\n
         <td width=35 height=43>\n
         <a href=\"mailto:black_heart@btmanager.org\"><img src=\"graphics/14.jpg\" width=35 height=43 alt=\"\" border=\"0\" /></a></td>\n
         <td width=59 height=43>\n

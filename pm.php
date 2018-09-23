@@ -1,10 +1,11 @@
 <?php
+
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -12,14 +13,20 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File pm.php 2018-02-17 14:32:00 Black_Heart
+** File pm.php 2018-09-22 00:00:00 Thor
 **
 ** CHANGES
 **
-** EXAMPLE 26-04-13 - Added Auto Ban
+** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
 **/
-if (defined('IN_PMBT'))die ("You can't include this file...");
-define("IN_PMBT",true);
+
+if (defined('IN_BTM'))
+{
+    require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
+    die ("Error 404 - Page Not Found");
+}
+
+define("IN_BTM",true);
 require_once("common.php");
 $user->set_lang('ucp',$user->ulanguage);
 $user->set_lang('pm',$user->ulanguage);
@@ -27,13 +34,13 @@ $template = new Template();
 if($user->id == 0 OR !checkaccess('u_sendpm')){
               set_site_var('- '.$user->lang['USER_CPANNEL'].' - '.$user->lang['BT_ERROR']);
                                 $template->assign_vars(array(
-								        'S_ERROR'			=> true,
-										'S_FORWARD'				=> false,
-								        'TITTLE_M'			=> $user->lang['GEN_ERROR'],
-                                        'MESSAGE'			=> sprintf($user->lang['GROUP_NO_ACCESS_PAGE'],getlevel($user->group)).back_link('./index.php'),
+                                        'S_ERROR'           => true,
+                                        'S_FORWARD'             => false,
+                                        'TITTLE_M'          => $user->lang['GEN_ERROR'],
+                                        'MESSAGE'           => sprintf($user->lang['GROUP_NO_ACCESS_PAGE'],getlevel($user->group)).back_link('./index.php'),
                                 ));
-							echo $template->fetch('message_body.html');
-							close_out();
+                            echo $template->fetch('message_body.html');
+                            close_out();
 }
 if (!isset($op)) {
         if (isset($mid1) AND is_numeric($mid)) $op = "readmsg";
@@ -97,33 +104,33 @@ switch($op) {
                 die();
         }
         case "send": {
-				set_site_var($user->lang['_UCP_PM']);
+                set_site_var($user->lang['_UCP_PM']);
                 include("pm/send.php");
                 break;
         }
         case "readmsg": {
-				set_site_var($user->lang['_UCP_PM']);
+                set_site_var($user->lang['_UCP_PM']);
                 include("pm/readmsg.php");
                 break;
         }
-		case "drafts": {
-					set_site_var($user->lang['_UCP_PM']);
-					include("pm/drafts.php");
-					break;
-		}
-		case "options": {
-					set_site_var($user->lang['_UCP_PM']);
-					include("pm/options.php");
-					break;
-		}
-		case "folder":
-		case "inbox":
-		default: {
-				set_site_var($user->lang['_UCP_PM']);
-				$u_action = 'pm.php';
-				include("pm/inbox.php");
-				break;
-		}
+        case "drafts": {
+                    set_site_var($user->lang['_UCP_PM']);
+                    include("pm/drafts.php");
+                    break;
+        }
+        case "options": {
+                    set_site_var($user->lang['_UCP_PM']);
+                    include("pm/options.php");
+                    break;
+        }
+        case "folder":
+        case "inbox":
+        default: {
+                set_site_var($user->lang['_UCP_PM']);
+                $u_action = 'pm.php';
+                include("pm/inbox.php");
+                break;
+        }
 }
 
-?> 
+?>

@@ -1,10 +1,10 @@
 <?php
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
@@ -12,15 +12,15 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File staffmess.php 2018-02-23 14:32:00 Black_Heart
+** File files/staffmess.php 2018-02-23 14:32:00 Black_Heart
 **
 ** CHANGES
 **
 ** EXAMPLE 26-04-13 - Added Auto Ban
 **/
-if (!defined('IN_PMBT'))
+if (!defined('IN_BTM'))
 {
-	include_once './../../security.php';
+	require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
 	die ("You can't access this file directly");
 }
 $user->set_lang('admin/acp_staffmess',$user->ulanguage);
@@ -99,7 +99,7 @@ if($page=="pm"){
 					}
 					// Parse the message and subject
 					$text = bbcode_nl2br($text);
-			
+
 				$template->assign_vars(array(
 					'S_USER_NOTICE'			=> true,
 					'S_FORWARD'				=> false,
@@ -281,7 +281,7 @@ require_once("include/class.bbcode.php");
 	}
 	$db->sql_freeresult($result);
 	$sql = 'SELECT level, name,group_id FROM `' . $db_prefix . '_levels` WHERE `group_id` <> 6 ';
-	$result = $db->sql_query($sql); 
+	$result = $db->sql_query($sql);
 	$s_group_options = '';
 	while ($row = $db->sql_fetchrow($result))
 	{
@@ -318,7 +318,7 @@ require_once("include/class.bbcode.php");
 
 if($page=="sendmail"){
 	$sql = 'SELECT name, group_id FROM `' . $db_prefix . '_levels` WHERE `group_id` <> 6 ';
-	$result = $db->sql_query($sql); 
+	$result = $db->sql_query($sql);
 	$s_group_options = '';
 	while ($row = $db->sql_fetchrow($result))
 	{

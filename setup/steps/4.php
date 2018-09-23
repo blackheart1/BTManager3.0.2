@@ -1,28 +1,27 @@
 <?php
+
 /**
 **********************
-** BTManager v3.0.1 **
+** BTManager v3.0.2 **
 **********************
 ** http://www.btmanager.org/
-** https://github.com/blackheart1/BTManager
+** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
 ** Copyright (C) 2018
 ** Formerly Known As phpMyBitTorrent
 ** Created By Antonio Anzivino (aka DJ Echelon)
-** And Joe Robertson (aka joeroberts/Black_Heart)
-** Project Leaders: Black_Heart, Thor.
-** File 4.php 2018-02-18 10:18:00 Black_Heart
+** And Joe Robertson (aka joeroberts)
+** Project Leaders: Black_heart, Thor.
+** File steps/4.php 2018-09-21 00:00:00 Thor
 **
 ** CHANGES
 **
-** EXAMPLE 26-04-13 - Added Auto Ban
+** 2018-09-21 - Updated Masthead, Github, !defined('IN_BTM')
 **/
-
 
 require_once("../include/configdata.php");
 require_once("udl/database.php");
-
 
 function btsqlerror($sql) { //Returns SQL Error
         global $db;
@@ -97,7 +96,7 @@ if ($can_proceed) {
         echo "<p>"._installsmiles;
         if (!$db->sql_query($installscript)) {
                 $can_proceed = false;
-                btsqlerror(substr($installscript,0,100)."..."); 
+                btsqlerror(substr($installscript,0,100)."...");
         } else echo "<font class=\"ok\">OK</font>";
         echo "</p>\n";
         unset($installscript);
@@ -112,7 +111,7 @@ if ($can_proceed) {
         echo "<p>"._sql_site_settings;
         if (!$db->sql_query($installscript)) {
                 $can_proceed = false;
-                btsqlerror(substr($installscript,0,100)."..."); 
+                btsqlerror(substr($installscript,0,100)."...");
         } else echo "<font class=\"ok\">OK</font>";
         echo "</p>\n";
         unset($installscript);
@@ -127,7 +126,7 @@ if ($can_proceed) {
         echo "<p>"._sql_arcade_settings;
         if (!$db->sql_query($installscript)) {
                 $can_proceed = false;
-                btsqlerror(substr($installscript,0,100)."..."); 
+                btsqlerror(substr($installscript,0,100)."...");
         } else echo "<font class=\"ok\">OK</font>";
         echo "</p>\n";
         unset($installscript);
@@ -142,7 +141,7 @@ if ($can_proceed) {
         echo "<p>"._sql_arcade_categories;
         if (!$db->sql_query($installscript)) {
                 $can_proceed = false;
-                btsqlerror(substr($installscript,0,100)."..."); 
+                btsqlerror(substr($installscript,0,100)."...");
         } else echo "<font class=\"ok\">OK</font>";
         echo "</p>\n";
         unset($installscript);
@@ -157,7 +156,7 @@ if ($can_proceed) {
         echo "<p>"._sql_arcade_games;
         if (!$db->sql_query($installscript)) {
                 $can_proceed = false;
-                btsqlerror(substr($installscript,0,100)."..."); 
+                btsqlerror(substr($installscript,0,100)."...");
         } else echo "<font class=\"ok\">OK</font>";
         echo "</p>\n";
         unset($installscript);
@@ -172,7 +171,7 @@ if ($can_proceed) {
         echo "<p>"._sql_attachments_config;
         if (!$db->sql_query($installscript)) {
                 $can_proceed = false;
-                btsqlerror(substr($installscript,0,100)."..."); 
+                btsqlerror(substr($installscript,0,100)."...");
         } else echo "<font class=\"ok\">OK</font>";
         echo "</p>\n";
         unset($installscript);
@@ -187,7 +186,7 @@ if ($can_proceed) {
         echo "<p>"._sql_avatar_config;
         if (!$db->sql_query($installscript)) {
                 $can_proceed = false;
-                btsqlerror(substr($installscript,0,100)."..."); 
+                btsqlerror(substr($installscript,0,100)."...");
         } else echo "<font class=\"ok\">OK</font>";
         echo "</p>\n";
         unset($installscript);
@@ -202,7 +201,7 @@ if ($can_proceed) {
         echo "<p>"._sql_avp;
         if (!$db->sql_query($installscript)) {
                 $can_proceed = false;
-                btsqlerror(substr($installscript,0,100)."..."); 
+                btsqlerror(substr($installscript,0,100)."...");
         } else echo "<font class=\"ok\">OK</font>";
         echo "</p>\n";
         unset($installscript);
@@ -217,7 +216,7 @@ if ($can_proceed) {
         echo "<p>"._sql_bbcode;
         if (!$db->sql_query($installscript)) {
                 $can_proceed = false;
-                btsqlerror(substr($installscript,0,100)."..."); 
+                btsqlerror(substr($installscript,0,100)."...");
         } else echo "<font class=\"ok\">OK</font>";
         echo "</p>\n";
         unset($installscript);
@@ -232,7 +231,7 @@ if ($can_proceed) {
         echo "<p>"._sql_bonus;
         if (!$db->sql_query($installscript)) {
                 $can_proceed = false;
-                btsqlerror(substr($installscript,0,100)."..."); 
+                btsqlerror(substr($installscript,0,100)."...");
         } else echo "<font class=\"ok\">OK</font>";
         echo "</p>\n";
         unset($installscript);
@@ -247,7 +246,7 @@ if ($can_proceed) {
         echo "<p>"._sql_bonus_points;
         if (!$db->sql_query($installscript)) {
                 $can_proceed = false;
-                btsqlerror(substr($installscript,0,100)."..."); 
+                btsqlerror(substr($installscript,0,100)."...");
         } else echo "<font class=\"ok\">OK</font>";
         echo "</p>\n";
         unset($installscript);
@@ -262,7 +261,7 @@ if ($can_proceed) {
         echo "<p>"._sql_cache_con;
         if (!$db->sql_query($installscript)) {
                 $can_proceed = false;
-                btsqlerror(substr($installscript,0,100)."..."); 
+                btsqlerror(substr($installscript,0,100)."...");
         } else echo "<font class=\"ok\">OK</font>";
         echo "</p>\n";
         unset($installscript);
@@ -277,7 +276,7 @@ if ($can_proceed) {
         echo "<p>"._installcategories;
         if (!$db->sql_query($installscript)) {
                 $can_proceed = false;
-                btsqlerror(substr($installscript,0,100)."..."); 
+                btsqlerror(substr($installscript,0,100)."...");
         } else echo "<font class=\"ok\">OK</font>";
         echo "</p>\n";
         unset($installscript);
@@ -292,7 +291,7 @@ if ($can_proceed) {
         echo "<p>"._sql_extension_groups;
         if (!$db->sql_query($installscript)) {
                 $can_proceed = false;
-                btsqlerror(substr($installscript,0,100)."..."); 
+                btsqlerror(substr($installscript,0,100)."...");
         } else echo "<font class=\"ok\">OK</font>";
         echo "</p>\n";
         unset($installscript);
@@ -307,7 +306,7 @@ if ($can_proceed) {
         echo "<p>"._sql_extensions;
         if (!$db->sql_query($installscript)) {
                 $can_proceed = false;
-                btsqlerror(substr($installscript,0,100)."..."); 
+                btsqlerror(substr($installscript,0,100)."...");
         } else echo "<font class=\"ok\">OK</font>";
         echo "</p>\n";
         unset($installscript);
@@ -322,7 +321,7 @@ if ($can_proceed) {
         echo "<p>"._sql_forum_config;
         if (!$db->sql_query($installscript)) {
                 $can_proceed = false;
-                btsqlerror(substr($installscript,0,100)."..."); 
+                btsqlerror(substr($installscript,0,100)."...");
         } else echo "<font class=\"ok\">OK</font>";
         echo "</p>\n";
         unset($installscript);
@@ -337,7 +336,7 @@ if ($can_proceed) {
         echo "<p>"._sql_icons;
         if (!$db->sql_query($installscript)) {
                 $can_proceed = false;
-                btsqlerror(substr($installscript,0,100)."..."); 
+                btsqlerror(substr($installscript,0,100)."...");
         } else echo "<font class=\"ok\">OK</font>";
         echo "</p>\n";
         unset($installscript);
@@ -352,7 +351,7 @@ if ($can_proceed) {
         echo "<p>"._sql_img_bucket;
         if (!$db->sql_query($installscript)) {
                 $can_proceed = false;
-                btsqlerror(substr($installscript,0,100)."..."); 
+                btsqlerror(substr($installscript,0,100)."...");
         } else echo "<font class=\"ok\">OK</font>";
         echo "</p>\n";
         unset($installscript);
@@ -367,7 +366,7 @@ if ($can_proceed) {
         echo "<p>"._sql_level_privlages;
         if (!$db->sql_query($installscript)) {
                 $can_proceed = false;
-                btsqlerror(substr($installscript,0,100)."..."); 
+                btsqlerror(substr($installscript,0,100)."...");
         } else echo "<font class=\"ok\">OK</font>";
         echo "</p>\n";
         unset($installscript);
@@ -382,7 +381,7 @@ if ($can_proceed) {
         echo "<p>"._sql_level_settings;
         if (!$db->sql_query($installscript)) {
                 $can_proceed = false;
-                btsqlerror(substr($installscript,0,100)."..."); 
+                btsqlerror(substr($installscript,0,100)."...");
         } else echo "<font class=\"ok\">OK</font>";
         echo "</p>\n";
         unset($installscript);
@@ -397,7 +396,7 @@ if ($can_proceed) {
         echo "<p>"._sql_levels;
         if (!$db->sql_query($installscript)) {
                 $can_proceed = false;
-                btsqlerror(substr($installscript,0,100)."..."); 
+                btsqlerror(substr($installscript,0,100)."...");
         } else echo "<font class=\"ok\">OK</font>";
         echo "</p>\n";
         unset($installscript);
@@ -412,7 +411,7 @@ if ($can_proceed) {
         echo "<p>"._sql_paypal;
         if (!$db->sql_query($installscript)) {
                 $can_proceed = false;
-                btsqlerror(substr($installscript,0,100)."..."); 
+                btsqlerror(substr($installscript,0,100)."...");
         } else echo "<font class=\"ok\">OK</font>";
         echo "</p>\n";
         unset($installscript);
@@ -428,7 +427,7 @@ if ($can_proceed) {
         echo "<p>"._sql_ranks;
         if (!$db->sql_query($installscript)) {
                 $can_proceed = false;
-                btsqlerror(substr($installscript,0,100)."..."); 
+                btsqlerror(substr($installscript,0,100)."...");
         } else echo "<font class=\"ok\">OK</font>";
         echo "</p>\n";
         unset($installscript);
@@ -444,7 +443,7 @@ if ($can_proceed) {
         echo "<p>"._sql_ratiowarn_config;
         if (!$db->sql_query($installscript)) {
                 $can_proceed = false;
-                btsqlerror(substr($installscript,0,100)."..."); 
+                btsqlerror(substr($installscript,0,100)."...");
         } else echo "<font class=\"ok\">OK</font>";
         echo "</p>\n";
         unset($installscript);
@@ -460,7 +459,7 @@ if ($can_proceed) {
         echo "<p>"._sql_search_cloud;
         if (!$db->sql_query($installscript)) {
                 $can_proceed = false;
-                btsqlerror(substr($installscript,0,100)."..."); 
+                btsqlerror(substr($installscript,0,100)."...");
         } else echo "<font class=\"ok\">OK</font>";
         echo "</p>\n";
         unset($installscript);
@@ -476,7 +475,7 @@ if ($can_proceed) {
         echo "<p>"._sql_shout_config;
         if (!$db->sql_query($installscript)) {
                 $can_proceed = false;
-                btsqlerror(substr($installscript,0,100)."..."); 
+                btsqlerror(substr($installscript,0,100)."...");
         } else echo "<font class=\"ok\">OK</font>";
         echo "</p>\n";
         unset($installscript);
@@ -492,7 +491,7 @@ if ($can_proceed) {
         echo "<p>"._sql_time_offset;
         if (!$db->sql_query($installscript)) {
                 $can_proceed = false;
-                btsqlerror(substr($installscript,0,100)."..."); 
+                btsqlerror(substr($installscript,0,100)."...");
         } else echo "<font class=\"ok\">OK</font>";
         echo "</p>\n";
         unset($installscript);
@@ -508,11 +507,11 @@ if ($can_proceed) {
         echo "<p>"._sql_userautodel;
         if (!$db->sql_query($installscript)) {
                 $can_proceed = false;
-                btsqlerror(substr($installscript,0,100)."..."); 
+                btsqlerror(substr($installscript,0,100)."...");
         } else echo "<font class=\"ok\">OK</font>";
         echo "</p>\n";
         unset($installscript);
-} 
+}
 
 if ($can_proceed) {
         $fp = @fopen("sql/acl_options.sql","r");
@@ -524,7 +523,7 @@ if ($can_proceed) {
         echo "<p>"._sql_acl_options;
         if (!$db->sql_query($installscript)) {
                 $can_proceed = false;
-                btsqlerror(substr($installscript,0,100)."..."); 
+                btsqlerror(substr($installscript,0,100)."...");
         } else echo "<font class=\"ok\">OK</font>";
         echo "</p>\n";
         unset($installscript);
@@ -540,11 +539,11 @@ if ($can_proceed) {
         echo "<p>"._sql_acl_roles;
         if (!$db->sql_query($installscript)) {
                 $can_proceed = false;
-                btsqlerror(substr($installscript,0,100)."..."); 
+                btsqlerror(substr($installscript,0,100)."...");
         } else echo "<font class=\"ok\">OK</font>";
         echo "</p>\n";
         unset($installscript);
-} 
+}
 
 if ($can_proceed) {
         $fp = @fopen("sql/acl_roles_data.sql","r");
@@ -556,11 +555,11 @@ if ($can_proceed) {
         echo "<p>"._sql_acl_roles_data;
         if (!$db->sql_query($installscript)) {
                 $can_proceed = false;
-                btsqlerror(substr($installscript,0,100)."..."); 
+                btsqlerror(substr($installscript,0,100)."...");
         } else echo "<font class=\"ok\">OK</font>";
         echo "</p>\n";
         unset($installscript);
-} 
+}
 
 if ($can_proceed) {
         $fp = @fopen("sql/acl_groups.sql","r");
@@ -572,7 +571,7 @@ if ($can_proceed) {
         echo "<p>"._sql_acl_groups;
         if (!$db->sql_query($installscript)) {
                 $can_proceed = false;
-                btsqlerror(substr($installscript,0,100)."..."); 
+                btsqlerror(substr($installscript,0,100)."...");
         } else echo "<font class=\"ok\">OK</font>";
         echo "</p>\n";
         unset($installscript);
@@ -588,11 +587,11 @@ if ($can_proceed) {
         echo "<p>"._sql_modules;
         if (!$db->sql_query($installscript)) {
                 $can_proceed = false;
-                btsqlerror(substr($installscript,0,100)."..."); 
+                btsqlerror(substr($installscript,0,100)."...");
         } else echo "<font class=\"ok\">OK</font>";
         echo "</p>\n";
         unset($installscript);
-} 
+}
 
 if ($can_proceed) {
         $fp = @fopen("sql/report_reasons.sql","r");
@@ -604,11 +603,11 @@ if ($can_proceed) {
         echo "<p>"._sql_report_reasons;
         if (!$db->sql_query($installscript)) {
                 $can_proceed = false;
-                btsqlerror(substr($installscript,0,100)."..."); 
+                btsqlerror(substr($installscript,0,100)."...");
         } else echo "<font class=\"ok\">OK</font>";
         echo "</p>\n";
         unset($installscript);
-} 
+}
 
 if ($can_proceed) {
         $fp = @fopen("sql/countries.sql","r");
@@ -620,12 +619,12 @@ if ($can_proceed) {
         echo "<p>"._sql_countries;
         if (!$db->sql_query($installscript)) {
                 $can_proceed = false;
-                btsqlerror(substr($installscript,0,100)."..."); 
+                btsqlerror(substr($installscript,0,100)."...");
         } else echo "<font class=\"ok\">OK</font>";
         echo "</p>\n";
-		$db->sql_query('UPDATE `' . $db_prefix . '_countries` SET `id`=\'0\' WHERE `id` = \'100\';');
+        $db->sql_query('UPDATE `' . $db_prefix . '_countries` SET `id`=\'0\' WHERE `id` = \'100\';');
         unset($installscript);
-} 
+}
 
 if ($can_proceed) {
         $fp = @fopen("sql/hit_run.sql","r");
@@ -637,15 +636,15 @@ if ($can_proceed) {
         echo "<p>"._sql_hit_run;
         if (!$db->sql_query($installscript)) {
                 $can_proceed = false;
-                btsqlerror(substr($installscript,0,100)."..."); 
+                btsqlerror(substr($installscript,0,100)."...");
         } else echo "<font class=\"ok\">OK</font>";
         echo "</p>\n";
         unset($installscript);
-} 
-		$db->sql_query('UPDATE `' . $db_prefix . '_countries` SET `id`=\'0\' WHERE `id` = \'100\';');
+}
+        $db->sql_query('UPDATE `' . $db_prefix . '_countries` SET `id`=\'0\' WHERE `id` = \'100\';');
         $sql = "INSERT INTO ".$db_prefix."_users (username, clean_username, password, email, active, act_key, level, can_do, user_rank, user_type, regdate) VALUES('GUEST','guest','".md5('1k2g5h1j5k1h5g1f5hkj')."','".addslashes('guest@nowhere.com')."', 1,'".base64_encode(microtime())."', 'user', '4', '0', '0', NOW());";
-		$db->sql_query($sql);
-		$db->sql_query('UPDATE `' . $db_prefix . '_users` SET `id`=\'0\';');
+        $db->sql_query($sql);
+        $db->sql_query('UPDATE `' . $db_prefix . '_users` SET `id`=\'0\';');
 if ($can_proceed) {
         echo "<p>"._step4complete."</p>";
         echo "<p><input type=\"submit\" value=\""._nextstep."\" /></p>\n";

@@ -258,8 +258,8 @@ CREATE TABLE IF NOT EXISTS `#prefix#_shout_cast` (
 --
 
 CREATE TABLE `#prefix#_words` (
-	`word_id` mediumint(8) UNSIGNED NOT NULL auto_increment,
-	`word` varchar(255) DEFAULT '' NOT NULL,
-	`replacement` varchar(255) DEFAULT '' NOT NULL,
-	PRIMARY KEY (`word_id`)
+    `word_id` mediumint(8) UNSIGNED NOT NULL auto_increment,
+    `word` varchar(255) DEFAULT '' NOT NULL,
+    `replacement` varchar(255) DEFAULT '' NOT NULL,
+    PRIMARY KEY (`word_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
