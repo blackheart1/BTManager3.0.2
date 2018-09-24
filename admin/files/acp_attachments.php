@@ -69,7 +69,7 @@ class acp_attachments
             break;
 
             default:
-                trigger_error('NO_MODEa'.$mode, E_USER_ERROR);
+                trigger_error('NO_MODE'.$mode, E_USER_ERROR);
             break;
         }
 
