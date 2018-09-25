@@ -46,7 +46,7 @@ if ($user->forumbanned){
 }
 else
 {
-    if ($FORUMS || $auth->acl_gets('a_', 'm_'))
+    if ($config['forum_open'] || $auth->acl_gets('a_', 'm_'))
     {
         //define the clickable smilies
         $submit     = (isset($_POST['post'])) ? true : false;
