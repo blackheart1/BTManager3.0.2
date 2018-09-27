@@ -139,7 +139,6 @@ foreach($tupd as $var=>$val)
     }
     //$db->sql_query($vas);
 }
-die();
        $template->assign_vars(array(
             'BTMVERSION'        => sprintf($user->lang['INLINE_UPDATE_SUCCESSFUL'],$tchan,$rchan,$ralt),
             'LANGIMG'           => $langpic,
