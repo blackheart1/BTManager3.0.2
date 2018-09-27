@@ -176,7 +176,7 @@ function stepimage() {
                 }
         }
 }
-include_once('include/class.template.php');
+include('setup/class.template.php');
 require_once("include/actions.php");
 require_once("include/user.functions.php");
 include('include/auth.php');
