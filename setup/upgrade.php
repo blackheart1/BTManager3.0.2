@@ -27,6 +27,7 @@ if (!ini_get('display_errors'))
 }
 
 define("IN_BTM",true);
+define("IN_PMBT",true);
 define('INSETUP',true);
 define('PMBT_ROOT',str_replace('setup','',__DIR__));
 
