@@ -123,26 +123,27 @@ function myErrorHandler($errno, $errstr, $errfile, $errline)
             echo '</html>';
             exit;
     break;
-        case E_USER_WARNING:
-        case E_USER_NOTICE:
-        require_once("include/config.php"); //if config file has not been loaded yet
-        include_once'include/class.template.php';
-        require_once("include/actions.php");
-        require_once("include/user.functions.php");
-            $template = new Template();
-            set_site_var($user->lang['NOTICE']);
-            $errstr = (!empty($user->lang[$errstr])) ? $user->lang[$errstr] : $errstr;
-            $msg_title = (!isset($errstr)) ? $user->lang['INFORMATION'] : ((!empty($user->lang[$errstr])) ? $user->lang[$errstr] : $errstr);
-            $template->assign_vars(array(
-                'S_ERROR'           => false,
-                'S_FORWARD'         =>  false,
-                'S_SUCCESS'         => true,
-                'TITTLE_M'          => $msg_title,
-                'MESSAGE'           => '',
-            ));
-            echo @$template->fetch(((preg_match("/admin.php/", $_SERVER["PHP_SELF"])) ? 'admin/' : '') . 'message_body.html');
-            close_out();
-        break;
+		case E_USER_NOTICE:
+		require_once("include/config.php"); //if config file has not been loaded yet
+		include_once'include/class.template.php';
+		require_once("include/actions.php");
+		require_once("include/user.functions.php");
+			$template = new Template();
+			set_site_var($user->lang['NOTICE']);
+			$errstr = (!empty($user->lang[$errstr])) ? $user->lang[$errstr] : $errstr;
+			$msg_title = (!isset($errstr)) ? $user->lang['INFORMATION'] : ((!empty($user->lang[$errstr])) ? $user->lang[$errstr] : $errstr);
+			$template->assign_vars(array(
+				'S_ERROR'			=> false,
+				'S_FORWARD'			=>	false,
+				'S_SUCCESS'			=> true,
+				'TITTLE_M'          => $msg_title,
+				'MESSAGE'           => '',
+				'MESSAGE_TITLE'          => $msg_title,
+				'MESSAGE_TEXT'           => '',
+			));
+			echo @$template->fetch(((preg_match("/admin.php/", $_SERVER["PHP_SELF"])) ? 'admin/' : '') . 'message_body.html');
+			close_out();
+		break;
     case E_ERROR:
         echo "<b>My ERROR</b> [$errno] $errstr<br />\n";
         echo "  Fatal Error on Line $errline in File $errfile<br />";
@@ -153,6 +154,20 @@ function myErrorHandler($errno, $errstr, $errfile, $errline)
         break;
 
     case E_WARNING:
+    case E_USER_WARNING:
+		require_once("include/config.php"); //if config file has not been loaded yet
+		include_once'include/class.template.php';
+		require_once("include/actions.php");
+		require_once("include/user.functions.php");
+			$errstr = (!empty($user->lang[$errstr])) ? $user->lang[$errstr] : $errstr;
+			$msg_title = (!isset($errstr)) ? $user->lang['INFORMATION'] : ((!empty($user->lang[$errstr])) ? $user->lang[$errstr] : $errstr);
+			$template->assign_vars(array(
+				'S_ERROR_MESS'			=> $msg_title,
+				'S_ERROR_HEADER'		=> $user->lang['BT_ERROR'],
+			));
+			echo @$template->fetch('error_message.html');
+			close_out();
+			break;
     case E_USER_WARNING:
         echo "<table><tr><td><b>My User WARNING</b> [$errno] $errstr<br />\n";
         @array_walk( debug_backtrace(), create_function( '$a,$b', 'print "<br /><b>". basename( $a[\'file\'] ). "</b> &nbsp; <font color=\"red\">{$a[\'line\']}</font> &nbsp; <font color=\"green\">{$a[\'function\']} ()</font> &nbsp; -- ". dirname( $a[\'file\'] ). "/";' ) );         echo "  Warning Error on Line $errline in File $errfile<br />";
