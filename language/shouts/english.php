@@ -66,6 +66,7 @@ $lang = array_merge($lang, array(
     'LEGEND_ADMIN'        => 'Legend: Admin ',
     'LEGEND_MODERATOR'    => ', Moderator',
     'LEGEND_PREMIUM'      => ', Premium',
+    'DELETE_SHOUT'        => 'Delete Shout?',
 ));
 
 ?>
