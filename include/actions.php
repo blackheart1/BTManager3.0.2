@@ -199,15 +199,6 @@ function getlastaction($wht)
                 break;
             }
         break;
-        case 'slove':
-        $where = 'Viewing help ticket in help desk';
-        break;
-        case 'problems':
-        $where = 'Viewing help problems in help desk';
-        break;
-        case 'helpdesk':
-        $where = 'Viewing help desk';
-        break;
         case 'redirect':
         $where = 'Being Redirected';
         break;
@@ -228,15 +219,6 @@ function getlastaction($wht)
         break;
         case 'invite':
         $where = 'Inviting A frend to Join Us';
-        break;
-        case 'keno':
-        $where = 'Playing Keno';
-        break;
-        case 'casino':
-        $where = 'Playing';
-        break;
-        case 'blackjack':
-        $where = 'Playing';
         break;
         case 'arcade':
         $where = 'Playing';
@@ -273,15 +255,6 @@ function getlastaction($wht)
         break;
         case 'mytorrents':
         $where = 'Viewing Ther Torrents';
-        break;
-        case 'offer':
-        $where = 'Making A Offer';
-        break;
-        case 'offers':
-        $where = 'Viewing Offers';
-        break;
-        case 'requests':
-        $where = 'Making A Requests';
         break;
         case 'login':
         $where = 'Loging In';
