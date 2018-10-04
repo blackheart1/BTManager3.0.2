@@ -11,11 +11,12 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File ajax.js 2018-09-22 00:00:00 Thor
+** File js/ajax.js 2018-10-03 00:00:00 Thor
 **
 ** CHANGES
 **
 ** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
+** 2018-10-03 - Changed Path to js Files
 **/
 
 var req;

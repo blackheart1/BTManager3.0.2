@@ -13,11 +13,12 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File details.php 2018-09-22 00:00:00 Thor
+** File details.php 2018-10-03 00:00:00 Thor
 **
 ** CHANGES
 **
 ** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
+** 2018-10-03 - Changed Path to js Files
 **/
 
 if (defined('IN_BTM'))
@@ -313,7 +314,7 @@ $template->assign_vars(array(
         'U_J_LOAD'         =>  $jload,
         'U_NOTIFY_SEEDER'  =>  $notify_seeder,
         'U_NOTIFY_COMMENT' =>  $notify_coment,
-        'META'             =>  '<script type="text/javascript" src="bbcode.js"></script>'
+        'META'             =>  '<script type="text/javascript" src="{SITE_URL}/js/bbcode.js"></script>'
 ));
 
 if ($comm == ':thankyou:' OR $comm == 'startcomments'){

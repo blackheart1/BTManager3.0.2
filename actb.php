@@ -13,11 +13,12 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File actb.php 2018-09-22 00:00:00 Thor
+** File actb.php 2018-10-03 00:00:00 Thor
 **
 ** CHANGES
 **
 ** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
+** 2018-10-03 - Changed Path to js Files
 **/
 
 if (!defined('IN_BTM'))
@@ -66,7 +67,7 @@ $template->assign_vars(array(
         'S_ACTB'            => "<SCRIPT type=\"text/javascript\" language=\"JavaScript\">
  var customarray=new Array('".implode("', '",$abc)."');
 </SCRIPT>
-<script type=\"text/javascript\" src=\"java/actb.js\"></script>",
+<script type=\"text/javascript\" src=\"{SITE_URL}/js/actb.js\"></script>"
 ));
 
 ?>

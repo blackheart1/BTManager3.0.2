@@ -8,7 +8,7 @@
 </div>
 <!-- ENDIF -->
 <script type="text/javascript" src="{SITE_URL}/themes/Bitfarm/templates/attach.js"></script>
-<script type="text/javascript" src="./java/tl.js"></script>
+<script type="text/javascript" src="{SITE_URL}/js/tl.js"></script>
 <table class="tablebg" width="100%" cellspacing="0">
     <tr>
         <td>
@@ -49,7 +49,7 @@
 </table>
 <br clear="all" />
 <!-- IF S_ACTION == torrent -->
-<script type="text/javascript" src="bbcode.js"></script>
+<script type="text/javascript" src="{SITE_URL}/js/bbcode.js"></script>
 <table class="tablebg" width="100%" cellspacing="{$CA_SPACING}">
     <form enctype="multipart/form-data" action="{SITE_URL}/upload.php?op=taketorrent" method="post" id="data" name="formdata">
     <tbody>
@@ -358,7 +358,7 @@
     </form>
 </table>
 <!-- ELSEIF S_ACTION == link -->
-<script type="text/javascript" src="bbcode.js"></script>
+<script type="text/javascript" src="{SITE_URL}/js/bbcode.js"></script>
 <form action="upload.php?op=takelink" method="post" id="data" name="formdata">
 <table class="tablebg" width="100%" cellspacing="{$CA_SPACING}">
         <tr>

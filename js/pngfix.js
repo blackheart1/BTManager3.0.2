@@ -11,11 +11,12 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File pngfix.php 2018-09-22 00:00:00 Thor
+** File pngfix.php 2018-10-03 00:00:00 Thor
 **
 ** CHANGES
 **
 ** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
+** 2018-10-03 - Changed Path to js Files
 **
 
 Correctly handle PNG transparency in Win IE 5.5 & 6.
@@ -23,7 +24,7 @@ http://homepage.ntlworld.com/bobosola. Updated 18-Jan-2006.
 
 Use in <HEAD> with DEFER keyword wrapped in conditional comments:
 <!--[if lt IE 7]>
-<script defer type="text/javascript" src="pngfix.js"></script>
+<script defer type="text/javascript" src="{SITE_URL}/js/pngfix.js"></script>
 <![endif]-->
 
 */

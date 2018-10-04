@@ -9,7 +9,7 @@
 </div>
 <!-- ENDIF -->
 <script type="text/javascript" src="{SITE_URL}/themes/1thank/templates/attach.js"></script>
-<script type="text/javascript" src="./java/tl.js"></script>
+<script type="text/javascript" src="{SITE_URL}/js/tl.js"></script>
 <table class="tablebg" width="100%" cellspacing="0">
     <tr>
         <td>
@@ -50,7 +50,7 @@
 </table>
 <br clear="all" />
 <!-- IF S_ACTION == torrent -->
-<script type="text/javascript" src="bbcode.js"></script>
+<script type="text/javascript" src="{SITE_URL}/js/bbcode.js"></script>
 <h2>{L_INTRO_TORRENT}</h2>
 
     <form enctype="multipart/form-data" action="{SITE_URL}/upload.php?op=taketorrent" method="post" id="data" name="postform">
@@ -267,7 +267,7 @@
 </fieldset>
 </form>
 <!-- ELSEIF S_ACTION == link -->
-<script type="text/javascript" src="bbcode.js"></script>
+<script type="text/javascript" src="{SITE_URL}/js/bbcode.js"></script>
 <h2>{L_INTRO_TORRENT}</h2>
 
     <form enctype="multipart/form-data" action="{SITE_URL}/upload.php?op=takelink" method="post" id="data" name="postform">
