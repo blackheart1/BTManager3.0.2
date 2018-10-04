@@ -40,7 +40,7 @@ require_once("include/class.bbcode.php");
 if (!isset($mid)) bterror($user->lang['INVALID_ID'],$user->lang['BT_ERROR']);
 $template->assign_vars(array(
         'ERROR_MESSAGE'         => false,
-        'PMBT_LINK_BACK'        => 'pm.php?',
+        'BTM_LINK_BACK'        => 'pm.php?',
         'S_UCP_ACTION'          => 'pm.php?op=inbox',
 ));
 $mode = 'inbox';

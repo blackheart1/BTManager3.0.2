@@ -4,7 +4,7 @@
 <!-- ELSEIF MODE == avatar -->
 <!-- INCLUDE themes/1thank/templates/ucp_profile_avatar.html -->
 <!-- ELSEIF MODE == admin_reg_details -->
-<form name="ucp" id="ucp" method="post" action="{PMBT_LINK_BACK}">
+<form name="ucp" id="ucp" method="post" action="{BTM_LINK_BACK}">
 {S_HIDDEN_FIELDS}
 <div class="panel">
     <div class="inner"><span class="corners-top"><span></span></span>
@@ -383,14 +383,14 @@
 </fieldset>
 </form>
 <!-- ELSEIF MODE == profile_info -->
-<form name="ucp" id="ucp" method="post" action="{PMBT_LINK_BACK}">
+<form name="ucp" id="ucp" method="post" action="{BTM_LINK_BACK}">
 <input type="hidden" name="take_edit" value="1" >
 <input type="hidden" name="action" value="profile" >
 <input type="hidden" name="op" value="editprofile" >
 <input type="hidden" name="mode" value="profile_info" />
 <!-- INCLUDE themes/1thank/templates/ucp_profile_profile_info.html -->
 <!-- ELSEIF MODE == friends -->
-<form name="formdata" id="ucp" method="post" action="{PMBT_LINK_BACK}">
+<form name="formdata" id="ucp" method="post" action="{BTM_LINK_BACK}">
 <input type="hidden" name="take_edit" value="1" >
 <input type="hidden" name="action" value="friends" >
 <input type="hidden" name="op" value="editprofile" >
@@ -432,7 +432,7 @@
 </form>
 
 <!-- ELSEIF MODE == foes -->
-<form name="ucp" id="formdata" method="post" action="{PMBT_LINK_BACK}">
+<form name="ucp" id="formdata" method="post" action="{BTM_LINK_BACK}">
 <input type="hidden" name="take_edit" value="1" >
 <input type="hidden" name="action" value="friends" >
 <input type="hidden" name="op" value="editprofile" >
@@ -473,7 +473,7 @@
 </fieldset>
 </form>
 <!-- ELSEIF MODE == subscribed -->
-<form name="ucp" id="ucp" method="post" action="{PMBT_LINK_BACK}">
+<form name="ucp" id="ucp" method="post" action="{BTM_LINK_BACK}">
 {S_HIDDEN_FIELDS}
 <h2>{L_USER_CPANNEL}</h2>
 
@@ -500,7 +500,7 @@
                 <!-- IF torrentrow.CAN_DELETE --><a href="edit.php?op=delete&amp;id={torrentrow.TORRENT_ID}"><img src="themes/1thank/pics/drop.gif" alt="{L_BAN_DELETE}" title="{L_BAN_DELETE}" border="0"></a><!-- ENDIF -->
                 <!-- IF torrentrow.CAN_BAN --><a href="edit.php?op=ban&amp;id={torrentrow.TORRENT_ID}"><img src="themes/1thank/pics/ban.png" alt="{L_BAN_TORRENT}" title="{L_BAN_TORRENT}" border="0"></a><!-- ENDIF -->
                 <!-- IF torrentrow.CAN_DOWNLOAD --><a class="index" href="download.php?id={torrentrow.TORRENT_ID}"><img style="border: medium none;" alt="{L_DOWNLOAD}" title="{L_DOWNLOAD}" src="themes/1thank/pics/download2.gif" align="left"></a><!-- ENDIF -->
-                <!-- IF torrentrow.TRACKER --><a href="scrape-external.php?id=279&amp;tracker={torrentrow.TRACKER}&amp;return={PMBT_LINK_BACK}mode={MODE}&amp;action={ACTION}"><img src="themes/1thank/pics/refresh.png" alt="{L_REFRESH_TORRENT}" title="{L_REFRESH_TORRENT}" border="0"></a><!-- ENDIF -->
+                <!-- IF torrentrow.TRACKER --><a href="scrape-external.php?id=279&amp;tracker={torrentrow.TRACKER}&amp;return={BTM_LINK_BACK}mode={MODE}&amp;action={ACTION}"><img src="themes/1thank/pics/refresh.png" alt="{L_REFRESH_TORRENT}" title="{L_REFRESH_TORRENT}" border="0"></a><!-- ENDIF -->
                 </dt>
             <dd class="lastpost"><span><dfn>{L_LAST_POST} </dfn>{L_AUTHOR} {torrentrow.LAST_POST_AUTHOR}
                     <a href="{torrentrow.U_LAST_POST}">{LAST_POST_IMG}</a> <br />{torrentrow.LAST_POST_ADDED}</span></dd>
@@ -620,7 +620,7 @@
 <!-- ENDIF -->
 </form>
 <!-- ELSEIF MODE == drafts -->
-<form id="postform" method="post" name="ucp" action="{PMBT_LINK_BACK}action=overview&mode=drafts">
+<form id="postform" method="post" name="ucp" action="{BTM_LINK_BACK}action=overview&mode=drafts">
 <h2>{L_USER_CPANNEL}</h2>
 
 <div class="panel">
@@ -689,7 +689,7 @@
 
 </form>
 <!-- ELSEIF MODE == attachments -->
-<form name="ucp" id="ucp" method="post" action="{PMBT_LINK_BACK}action=overview&amp;mode=attachments">
+<form name="ucp" id="ucp" method="post" action="{BTM_LINK_BACK}action=overview&amp;mode=attachments">
 <input type="hidden" name="op" value="editprofile" >
 <h2>{L_ATTACHMENTS}</h2>
 

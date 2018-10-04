@@ -16,46 +16,46 @@
 </div>
 </td></tr><tr valign="middle">
 
-<!-- IF ACTION != overview --><td class="row2" onmouseover="this.className='row1'" onmouseout="this.className='row2'" onclick="location.href=this.firstChild.href;" nowrap="nowrap"><a class="nav" href="{PMBT_LINK_BACK}action=overview&amp;mode=front">{L_OVERVIEW}</a><!-- ELSE --><td class="row1"><strong class="nav">{L_OVERVIEW}</strong><!-- ENDIF -->
+<!-- IF ACTION != overview --><td class="row2" onmouseover="this.className='row1'" onmouseout="this.className='row2'" onclick="location.href=this.firstChild.href;" nowrap="nowrap"><a class="nav" href="{BTM_LINK_BACK}action=overview&amp;mode=front">{L_OVERVIEW}</a><!-- ELSE --><td class="row1"><strong class="nav">{L_OVERVIEW}</strong><!-- ENDIF -->
 <!-- IF ACTION == overview -->
             <ul class="nav" style="margin: 0; padding: 0; list-style-type: none; line-height: 175%;">
-                            <li>&#187; <!-- IF MODE != front --><a href="{PMBT_LINK_BACK}action=overview&amp;mode=front">{L_FRONT_PAGE}</a><!-- ELSE --><strong>{L_FRONT_PAGE}</strong><!-- ENDIF --></li>
-                            <li>&#187; <!-- IF MODE != subscribed --><a href="{PMBT_LINK_BACK}action=overview&amp;mode=subscribed">{L_MANAGE_SUBS}</a><!-- ELSE --><strong>{L_MANAGE_SUBS}</strong><!-- ENDIF --></li>
-                            <li>&#187; <!-- IF MODE != drafts --><a href="{PMBT_LINK_BACK}action=overview&amp;mode=drafts">{L_MANAGE_DRAFTS}</a><!-- ELSE --><strong>{L_MANAGE_DRAFTS}</strong><!-- ENDIF --></li>
-                            <li>&#187; <!-- IF MODE != attachments --><a href="{PMBT_LINK_BACK}action=overview&amp;mode=attachments">{L_MANAGE_ATTACHMENTS}</a><!-- ELSE --><strong>{L_MANAGE_ATTACHMENTS}</strong><!-- ENDIF --></li>
+                            <li>&#187; <!-- IF MODE != front --><a href="{BTM_LINK_BACK}action=overview&amp;mode=front">{L_FRONT_PAGE}</a><!-- ELSE --><strong>{L_FRONT_PAGE}</strong><!-- ENDIF --></li>
+                            <li>&#187; <!-- IF MODE != subscribed --><a href="{BTM_LINK_BACK}action=overview&amp;mode=subscribed">{L_MANAGE_SUBS}</a><!-- ELSE --><strong>{L_MANAGE_SUBS}</strong><!-- ENDIF --></li>
+                            <li>&#187; <!-- IF MODE != drafts --><a href="{BTM_LINK_BACK}action=overview&amp;mode=drafts">{L_MANAGE_DRAFTS}</a><!-- ELSE --><strong>{L_MANAGE_DRAFTS}</strong><!-- ENDIF --></li>
+                            <li>&#187; <!-- IF MODE != attachments --><a href="{BTM_LINK_BACK}action=overview&amp;mode=attachments">{L_MANAGE_ATTACHMENTS}</a><!-- ELSE --><strong>{L_MANAGE_ATTACHMENTS}</strong><!-- ENDIF --></li>
                         </ul>
 <!-- ENDIF -->
                 </td>
     </tr>
     <tr>
-                    <!-- IF ACTION != profile --><td class="row2" nowrap="nowrap" onmouseover="this.className='row1'" onmouseout="this.className='row2'" onclick="location.href=this.firstChild.href;"><a class="nav" href="{PMBT_LINK_BACK}action=profile&mode=profile_info">{L_PROFILE}</a><!-- ELSE --><td class="row1"><strong class="nav">{L_PROFILE}</strong><!-- ENDIF -->
+                    <!-- IF ACTION != profile --><td class="row2" nowrap="nowrap" onmouseover="this.className='row1'" onmouseout="this.className='row2'" onclick="location.href=this.firstChild.href;"><a class="nav" href="{BTM_LINK_BACK}action=profile&mode=profile_info">{L_PROFILE}</a><!-- ELSE --><td class="row1"><strong class="nav">{L_PROFILE}</strong><!-- ENDIF -->
 <!-- IF ACTION == profile -->
         <ul class="nav" style="margin: 0pt; padding: 0pt; list-style-type: none; line-height: 175%;">
-                            <!-- IF MODE != profile_info --><li>&#187; <a href="{PMBT_LINK_BACK}action=profile&mode=profile_info">{L_EDIT_PROFILE}</a></li><!-- ELSE --><li>&#187; <strong>{L_EDIT_PROFILE}</strong></li><!-- ENDIF -->
-                            <!-- IF MODE != signature --><li>&#187; <a href="{PMBT_LINK_BACK}action=profile&mode=signature">{L_EDIT_SIGNATURE}</a></li><!-- ELSE --><li>&#187; <strong>{L_EDIT_SIGNATURE}</strong></li><!-- ENDIF -->
-                            <!-- IF MODE != avatar --><li>&#187; <a href="{PMBT_LINK_BACK}action=profile&mode=avatar">{L_EDIT_AVATAR}</a></li><!-- ELSE --><li>&#187; <strong>{L_EDIT_AVATAR}</strong></li><!-- ENDIF -->
-                            <!-- IF MODE != reg_details --><li>&#187; <a href="{PMBT_LINK_BACK}action=profile&mode=reg_details">{L_EDIT_SETTINGS}</a></li><!-- ELSE --><li>&#187; <strong>{L_EDIT_SETTINGS}</strong></li><!-- ENDIF -->
-                            <!-- IF S_MOD_MODE --><!-- IF MODE != admin_reg_details --><li>&#187; <a href="{PMBT_LINK_BACK}action=profile&mode=admin_reg_details">{L_EDIT_ADMIN_SETTINGS}</a></li><!-- ELSE --><li>&#187; <strong>{L_EDIT_ADMIN_SETTINGS}</strong></li><!-- ENDIF --><!-- ENDIF -->
+                            <!-- IF MODE != profile_info --><li>&#187; <a href="{BTM_LINK_BACK}action=profile&mode=profile_info">{L_EDIT_PROFILE}</a></li><!-- ELSE --><li>&#187; <strong>{L_EDIT_PROFILE}</strong></li><!-- ENDIF -->
+                            <!-- IF MODE != signature --><li>&#187; <a href="{BTM_LINK_BACK}action=profile&mode=signature">{L_EDIT_SIGNATURE}</a></li><!-- ELSE --><li>&#187; <strong>{L_EDIT_SIGNATURE}</strong></li><!-- ENDIF -->
+                            <!-- IF MODE != avatar --><li>&#187; <a href="{BTM_LINK_BACK}action=profile&mode=avatar">{L_EDIT_AVATAR}</a></li><!-- ELSE --><li>&#187; <strong>{L_EDIT_AVATAR}</strong></li><!-- ENDIF -->
+                            <!-- IF MODE != reg_details --><li>&#187; <a href="{BTM_LINK_BACK}action=profile&mode=reg_details">{L_EDIT_SETTINGS}</a></li><!-- ELSE --><li>&#187; <strong>{L_EDIT_SETTINGS}</strong></li><!-- ENDIF -->
+                            <!-- IF S_MOD_MODE --><!-- IF MODE != admin_reg_details --><li>&#187; <a href="{BTM_LINK_BACK}action=profile&mode=admin_reg_details">{L_EDIT_ADMIN_SETTINGS}</a></li><!-- ELSE --><li>&#187; <strong>{L_EDIT_ADMIN_SETTINGS}</strong></li><!-- ENDIF --><!-- ENDIF -->
                         </ul>
 <!-- ENDIF -->
                 </td>
 
     </tr>
     <tr>
-                    <!-- IF ACTION == preferences --><td class="row1"><strong class="nav">{L_BOARD_PREFS}</strong><!-- ELSE --><td class="row2" nowrap="nowrap" onmouseover="this.className='row1'" onmouseout="this.className='row2'" onclick="location.href=this.firstChild.href;"><a class="nav" href="{PMBT_LINK_BACK}action=preferences&mode=personal">{L_BOARD_PREFS}</a><!-- ENDIF -->
+                    <!-- IF ACTION == preferences --><td class="row1"><strong class="nav">{L_BOARD_PREFS}</strong><!-- ELSE --><td class="row2" nowrap="nowrap" onmouseover="this.className='row1'" onmouseout="this.className='row2'" onclick="location.href=this.firstChild.href;"><a class="nav" href="{BTM_LINK_BACK}action=preferences&mode=personal">{L_BOARD_PREFS}</a><!-- ENDIF -->
 <!-- IF ACTION == preferences -->
             <ul class="nav" style="margin: 0pt; padding: 0pt; list-style-type: none; line-height: 175%;">
-                            <li>&#187; <!-- IF MODE != personal --><a href="{PMBT_LINK_BACK}action=preferences&mode=personal">{L_EDIT_GLOBAL_SETTINGS}</a><!-- ELSE --><strong>{L_EDIT_GLOBAL_SETTINGS}</strong><!-- ENDIF --></li>
+                            <li>&#187; <!-- IF MODE != personal --><a href="{BTM_LINK_BACK}action=preferences&mode=personal">{L_EDIT_GLOBAL_SETTINGS}</a><!-- ELSE --><strong>{L_EDIT_GLOBAL_SETTINGS}</strong><!-- ENDIF --></li>
                         </ul>
 <!-- ENDIF -->
                 </td>
     </tr>
     <tr>
-                    <!-- IF ACTION == friends --><td class="row1"><strong class="nav">{L_FRIEND_FOE}</strong><!-- ELSE --><td class="row2" nowrap="nowrap" onmouseover="this.className='row1'" onmouseout="this.className='row2'" onclick="location.href=this.firstChild.href;"><a class="nav" href="{PMBT_LINK_BACK}action=friends&mode=friends">{L_FRIEND_FOE}</a><!-- ENDIF -->
+                    <!-- IF ACTION == friends --><td class="row1"><strong class="nav">{L_FRIEND_FOE}</strong><!-- ELSE --><td class="row2" nowrap="nowrap" onmouseover="this.className='row1'" onmouseout="this.className='row2'" onclick="location.href=this.firstChild.href;"><a class="nav" href="{BTM_LINK_BACK}action=friends&mode=friends">{L_FRIEND_FOE}</a><!-- ENDIF -->
 <!-- IF ACTION == friends -->
             <ul class="nav" style="margin: 0pt; padding: 0pt; list-style-type: none; line-height: 175%;">
-                            <li>&#187; <!-- IF MODE != friends --><a href="{PMBT_LINK_BACK}action=friends&amp;mode=friends">{L_MANAGE_FRIENDS}</a><!-- ELSE --><strong>{L_MANAGE_FRIENDS}</strong><!-- ENDIF --></li>
-                            <li>&#187; <!-- IF MODE != foes --><a href="{PMBT_LINK_BACK}action=friends&amp;mode=foes">{L_MANAGE_FOES}</a><!-- ELSE --><strong>{L_MANAGE_FOES}</strong><!-- ENDIF --></li>
+                            <li>&#187; <!-- IF MODE != friends --><a href="{BTM_LINK_BACK}action=friends&amp;mode=friends">{L_MANAGE_FRIENDS}</a><!-- ELSE --><strong>{L_MANAGE_FRIENDS}</strong><!-- ENDIF --></li>
+                            <li>&#187; <!-- IF MODE != foes --><a href="{BTM_LINK_BACK}action=friends&amp;mode=foes">{L_MANAGE_FOES}</a><!-- ELSE --><strong>{L_MANAGE_FOES}</strong><!-- ENDIF --></li>
 
                         </ul>
 <!-- ENDIF -->
@@ -112,7 +112,7 @@
 <td><img src="images/spacer.gif" width="4" alt="" /></td>
 <td width="80%" valign="top">
 <!-- IF MODE == signature -->
-<form name="ucp" id="ucp" method="post" action="{PMBT_LINK_BACK}">
+<form name="ucp" id="ucp" method="post" action="{BTM_LINK_BACK}">
 <input type="hidden" name="take_edit" value="1" >
 <input type="hidden" name="action" value="profile" >
 <input type="hidden" name="op" value="editprofile" >
@@ -279,7 +279,7 @@
 </table>
 </form>
 <!-- ELSEIF MODE == avatar -->
-<form enctype="multipart/form-data" name="ucp" id="ucp" method="post" action="{PMBT_LINK_BACK}">
+<form enctype="multipart/form-data" name="ucp" id="ucp" method="post" action="{BTM_LINK_BACK}">
 <input type="hidden" name="take_edit" value="1" >
 <input type="hidden" name="action" value="profile" >
 <input type="hidden" name="op" value="editprofile" >
@@ -372,7 +372,7 @@ function ChangeThumb(pic) {
 </table>
 </form>
 <!-- ELSEIF MODE == admin_reg_details -->
-<form name="ucp" id="ucp" method="post" action="{PMBT_LINK_BACK}">
+<form name="ucp" id="ucp" method="post" action="{BTM_LINK_BACK}">
 {S_HIDDEN_FIELDS}
 <table class="tablebg" width="100%" cellspacing="0">
 
@@ -480,7 +480,7 @@ function ChangeThumb(pic) {
 </table>
 </form>
 <!-- ELSEIF MODE == reg_details -->
-<form name="ucp" id="ucp" method="post" action="{PMBT_LINK_BACK}">
+<form name="ucp" id="ucp" method="post" action="{BTM_LINK_BACK}">
 <input type="hidden" name="take_edit" value="1" >
 <input type="hidden" name="action" value="profile" >
 <input type="hidden" name="op" value="editprofile" >
@@ -835,7 +835,7 @@ function ChangeThumb(pic) {
 </tr>
 </table>
 <!-- ELSEIF MODE == profile_info -->
-<form name="ucp" id="ucp" method="post" action="{PMBT_LINK_BACK}">
+<form name="ucp" id="ucp" method="post" action="{BTM_LINK_BACK}">
 <input type="hidden" name="take_edit" value="1" >
 <input type="hidden" name="action" value="profile" >
 <input type="hidden" name="op" value="editprofile" >
@@ -1094,7 +1094,7 @@ function ChangeThumb(pic) {
 </table>
 <br clear="all" />
 <!-- ELSEIF MODE == friends -->
-<form name="formdata" id="ucp" method="post" action="{PMBT_LINK_BACK}">
+<form name="formdata" id="ucp" method="post" action="{BTM_LINK_BACK}">
 <input type="hidden" name="take_edit" value="1" >
 <input type="hidden" name="action" value="friends" >
 <input type="hidden" name="op" value="editprofile" >
@@ -1136,7 +1136,7 @@ function ChangeThumb(pic) {
 </tr>
 </table>
 <!-- ELSEIF MODE == foes -->
-<form name="ucp" id="formdata" method="post" action="{PMBT_LINK_BACK}">
+<form name="ucp" id="formdata" method="post" action="{BTM_LINK_BACK}">
 <input type="hidden" name="take_edit" value="1" >
 <input type="hidden" name="action" value="friends" >
 <input type="hidden" name="op" value="editprofile" >
@@ -1175,7 +1175,7 @@ function ChangeThumb(pic) {
 </tr>
 </table>
 <!-- ELSEIF MODE == subscribed -->
-<form name="ucp" id="ucp" method="post" action="{PMBT_LINK_BACK}">
+<form name="ucp" id="ucp" method="post" action="{BTM_LINK_BACK}">
 {S_HIDDEN_FIELDS}
 <table class="tablebg" width="100%" cellspacing="0">
 <tr>
@@ -1211,7 +1211,7 @@ function ChangeThumb(pic) {
 
                 <!-- IF torrentrow.CAN_DOWNLOAD --><a class="index" href="download.php?id={torrentrow.TORRENT_ID}"><img style="border: medium none;" alt="{L_DOWNLOAD}" title="{L_DOWNLOAD}" src="themes/Bitfarm/pics/download2.gif" align="left"></a><!-- ENDIF -->
 
-                <!-- IF torrentrow.TRACKER --><a href="scrape-external.php?id=279&amp;tracker={torrentrow.TRACKER}&amp;return={PMBT_LINK_BACK}mode={MODE}&amp;action={ACTION}"><img src="themes/Bitfarm/pics/refresh.png" alt="{L_REFRESH_TORRENT}" title="{L_REFRESH_TORRENT}" border="0"></a><!-- ENDIF -->
+                <!-- IF torrentrow.TRACKER --><a href="scrape-external.php?id=279&amp;tracker={torrentrow.TRACKER}&amp;return={BTM_LINK_BACK}mode={MODE}&amp;action={ACTION}"><img src="themes/Bitfarm/pics/refresh.png" alt="{L_REFRESH_TORRENT}" title="{L_REFRESH_TORRENT}" border="0"></a><!-- ENDIF -->
             </td>
             <td class="gensmall row" style="padding: 4px;" align="left" valign="top" nowrap="nowrap">
                 <!-- IF torrentrow.LAST_SEEDER --><p class="topicdetails">{torrentrow.DATE_ADDED}<br />{torrentrow.LAST_SEEDER} <a href="{torrentrow.U_LAST_POST}">{LAST_POST_IMG}</a></p>
@@ -1311,7 +1311,7 @@ function ChangeThumb(pic) {
 </tr>
 </tbody></table>
 <!-- ELSEIF MODE == drafts -->
-<form id="postform" method="post" name="ucp" action="{PMBT_LINK_BACK}action=overview&mode=drafts">
+<form id="postform" method="post" name="ucp" action="{BTM_LINK_BACK}action=overview&mode=drafts">
 <table class="tablebg" width="100%" cellspacing="0">
 <tr>
 <td colspan="4">
@@ -1538,7 +1538,7 @@ function ChangeThumb(pic) {
     </tbody></table>
 <!-- ELSEIF MODE == attachments -->
 <!-- IF S_ATTACHMENT_ROWS -->
-<form name="ucp" id="ucp" method="post" action="{PMBT_LINK_BACK}action=overview&amp;mode=attachments">
+<form name="ucp" id="ucp" method="post" action="{BTM_LINK_BACK}action=overview&amp;mode=attachments">
 <input type="hidden" name="op" value="editprofile" >
         <table class="tablebg" width="100%" cellspacing="0">
         <tr>
@@ -1636,7 +1636,7 @@ function ChangeThumb(pic) {
 
 <!-- ENDIF -->
 <!-- ELSE -->
-<form name="ucp" id="ucp" method="post" action="{PMBT_LINK_BACK}action=main&amp;mode=front">
+<form name="ucp" id="ucp" method="post" action="{BTM_LINK_BACK}action=main&amp;mode=front">
 <input type="hidden" name="op" value="editprofile" >
 <table class="tablebg" width="100%" cellspacing="0">
 <tr><td>

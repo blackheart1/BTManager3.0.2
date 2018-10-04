@@ -67,7 +67,7 @@ $template->assign_vars(array(
         'T_TEMPLATE_PATH'         => $siteurl . '/themes/' . $theme . '/templates',
         'S_PRIVMSGS'         => true,
         'ERROR_MESSAGE'         => false,
-        'PMBT_LINK_BACK'        => 'pm.php?',
+        'BTM_LINK_BACK'        => 'pm.php?',
         'S_UCP_ACTION'          => 'pm.php?op=drafts',
         'S_BBCODE_ALLOWED'=> true,
         'S_BBCODE_QUOTE'=> true,

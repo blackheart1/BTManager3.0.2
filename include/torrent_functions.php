@@ -586,7 +586,7 @@ function multiscrape() {
         }
         unset($scrape);
         $db->sql_query("UPDATE ".$db_prefix."_trackers SET updated = NOW(), status = 'active' WHERE id = '".$id."';");
-             if(defined('PMBT_DEBUG'))logerror('multysxrape done for tracker #' . $id . 'With ' . $c . ' Torrents updated' , "system",get_tor_id_from_has($hash));
+             if(defined('BTM_DEBUG'))logerror('multysxrape done for tracker #' . $id . 'With ' . $c . ' Torrents updated' , "system",get_tor_id_from_has($hash));
 
 
         //echo "Debug: Scrape completato\n";

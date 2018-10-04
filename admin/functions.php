@@ -2067,19 +2067,19 @@ function adm_page_footer($copyright_html = true)
 	global $starttime, $phpbb_root_path, $phpbb_admin_path, $phpEx;
 
 	// Output page creation time
-	if (defined('PMBT_DEBUG'))
+	if (defined('BTM_DEBUG'))
 	{
 		$mtime = explode(' ', microtime());
 		$totaltime = $mtime[0] + $mtime[1] - $starttime;
 
-		if (!empty($_REQUEST['explain']) && $auth->acl_get('a_') && defined('PMBT_DEBUG') && method_exists($db, 'sql_report'))
+		if (!empty($_REQUEST['explain']) && $auth->acl_get('a_') && defined('BTM_DEBUG') && method_exists($db, 'sql_report'))
 		{
 			$db->sql_report('display');
 		}
 
 		$debug_output = sprintf('Time : %.3fs | ? Queries | GZIP : ' . (($config['gzip_compress']) ? 'On' : 'Off') . (($user->load) ? ' | Load : ' . $user->load : ''), $totaltime);
 
-		if (defined('PMBT_DEBUG'))
+		if (defined('BTM_DEBUG'))
 		{
 			if (function_exists('memory_get_usage'))
 			{
@@ -2098,7 +2098,7 @@ function adm_page_footer($copyright_html = true)
 	}
 
 	$template->assign_vars(array(
-		'DEBUG_OUTPUT'		=> (defined('PMBT_DEBUG')) ? $debug_output : '',
+		'DEBUG_OUTPUT'		=> (defined('BTM_DEBUG')) ? $debug_output : '',
 		'TRANSLATION_INFO'	=> (!empty($user->lang['TRANSLATION_INFO'])) ? $user->lang['TRANSLATION_INFO'] : '',
 		'S_COPYRIGHT_HTML'	=> $copyright_html,
 		'VERSION'			=> $config['version'])

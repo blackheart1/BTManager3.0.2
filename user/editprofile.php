@@ -77,7 +77,7 @@ if($auth->acl_get('a_user'))
 }
 $template->assign_vars(array(
         'S_MOD_MODE'            => $admin_mode,
-        'PMBT_LINK_BACK'        => ($admin_mode)? $siteurl.'/user.php?op=editprofile&amp;'.'id=' . $uid . '&amp;' : $siteurl.'/user.php?op=editprofile&amp;',
+        'BTM_LINK_BACK'        => ($admin_mode)? $siteurl.'/user.php?op=editprofile&amp;'.'id=' . $uid . '&amp;' : $siteurl.'/user.php?op=editprofile&amp;',
         'T_TEMPLATE_PATH'       => $siteurl . "/themes/" . $theme . "/templates",
 ));
 $sql_profile = "SELECT

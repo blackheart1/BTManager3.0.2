@@ -193,11 +193,11 @@ function selectCode(a)
 <td  class="row3">
             <ul class="nav" style="margin: 0; padding: 0; list-style-type: none; line-height: 175%;">
             <!-- BEGIN folder -->
-                            <li>&#187; <!-- IF MODE != folder --><a href="{PMBT_LINK_BACK}op=folder&amp;i={folder.FOLDER_ID}"><!-- IF folder.UNREAD_MESSAGES > 0 --><strong>{folder.FOLDER_NAME} ({folder.UNREAD_MESSAGES})</strong><!-- ELSE -->{folder.FOLDER_NAME}<!-- ENDIF --></a><!-- ELSE --><!-- IF folder.UNREAD_MESSAGES > 0 --><strong>{folder.FOLDER_NAME} ({folder.UNREAD_MESSAGES})</strong><!-- ELSE -->{folder.FOLDER_NAME}<!-- ENDIF --><!-- ENDIF --></li>
+                            <li>&#187; <!-- IF MODE != folder --><a href="{BTM_LINK_BACK}op=folder&amp;i={folder.FOLDER_ID}"><!-- IF folder.UNREAD_MESSAGES > 0 --><strong>{folder.FOLDER_NAME} ({folder.UNREAD_MESSAGES})</strong><!-- ELSE -->{folder.FOLDER_NAME}<!-- ENDIF --></a><!-- ELSE --><!-- IF folder.UNREAD_MESSAGES > 0 --><strong>{folder.FOLDER_NAME} ({folder.UNREAD_MESSAGES})</strong><!-- ELSE -->{folder.FOLDER_NAME}<!-- ENDIF --><!-- ENDIF --></li>
             <!-- END folder -->
-                            <li>&#187; <!-- IF MODE != send --><a href="{PMBT_LINK_BACK}op=send">{L_UCP_PM_COMPOSE}</a><!-- ELSE --><strong>{L_UCP_PM_COMPOSE}</strong><!-- ENDIF --></li>
-                            <li>&#187; <!-- IF MODE != drafts --><a href="{PMBT_LINK_BACK}op=drafts">{L_UCP_PM_DRAFTS}</a><!-- ELSE --><strong>{L_UCP_PM_DRAFTS}</strong><!-- ENDIF --></li>
-                            <li>&#187; <!-- IF MODE != options --><a href="{PMBT_LINK_BACK}op=options">{L_FOLDER_OPTIONS}</a><!-- ELSE --><strong>{L_FOLDER_OPTIONS}</strong><!-- ENDIF --></li>
+                            <li>&#187; <!-- IF MODE != send --><a href="{BTM_LINK_BACK}op=send">{L_UCP_PM_COMPOSE}</a><!-- ELSE --><strong>{L_UCP_PM_COMPOSE}</strong><!-- ENDIF --></li>
+                            <li>&#187; <!-- IF MODE != drafts --><a href="{BTM_LINK_BACK}op=drafts">{L_UCP_PM_DRAFTS}</a><!-- ELSE --><strong>{L_UCP_PM_DRAFTS}</strong><!-- ENDIF --></li>
+                            <li>&#187; <!-- IF MODE != options --><a href="{BTM_LINK_BACK}op=options">{L_FOLDER_OPTIONS}</a><!-- ELSE --><strong>{L_FOLDER_OPTIONS}</strong><!-- ENDIF --></li>
 
 
                         </ul>

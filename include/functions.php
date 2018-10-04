@@ -4320,7 +4320,7 @@ function set_site_var($page_title = '')
             'SITE_URL'             => $siteurl,
             'U_INDEX'              => $siteurl . '/index.' . $phpEx,
             'PRIVATE_MODE'         => $pivate_mode,
-            'PMBT_VER'             => $version,
+            'BTM_VER'             => $version,
             'PAGE_TITLE'           => $page_title,
             'SITENAME'             => $sitename,
             'S_ANNOUCEMENTS'       => ((!$announce_message == '' && $user->user)? $announce_message : false),
@@ -4431,7 +4431,7 @@ function close_out()
 
     if ($rewrite_engine) @include_once("include/rewrite.php");
 
-    if (defined('PMBT_DEBUG')) include_once("include/cleanup.php");
+    if (defined('BTM_DEBUG')) include_once("include/cleanup.php");
     else
         @include_once("include/cleanup.php");
 

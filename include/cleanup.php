@@ -26,7 +26,7 @@ if (!defined('IN_BTM'))
     die ("Error 404 - Page Not Found");
 }
 
-//if(defined('PMBT_DEBUG'))error_reporting(E_ALL);
+//if(defined('BTM_DEBUG'))error_reporting(E_ALL);
 //else
 error_reporting(E_ALL);
 if (isset($autoscrape)) {
@@ -289,8 +289,7 @@ $userwarninactivetext = Array();
 
 $warntexten1 = "Hi,
 we would like to warn you that you have not been active on **siteurl** for more than **inactwarning_time** days,
-if you do not want to have your account deleted please login to it.
-";
+if you do not want to have your account deleted please login to it.";
 if ($autodel_users_time != 0)
 {
 $warntexten2 = "You have **autodel_users_time** days to log in from now.
@@ -303,45 +302,43 @@ Thanks **sitename** Admin
 $userwarninactivetext['english'] = "".$warntexten1.$warntexten2.$warntexten3."";
 
 
-$warntextger1 = "Wir m�chten darauf hinweisen , dass du auf **siteurl** seit mehr als **inactwarning_time** Tagen nicht mehr aktiv warst,
-wenn Du nicht willst, dass dein Account gel�scht wird, logge dich bitte ein.
-";
+$warntextger1 = "Hallo,
+wir möchten Sie warnen, dass Sie seit mehr als **inactwarning_time** Tagen nicht auf **siteurl** aktiv waren,
+Wenn Sie Ihr Konto nicht löschen lassen möchten, melden Sie sich bitte an.";
 if ($autodel_users_time != 0)
 {
-$warntextger2 = "Du hast ab jetzt **autodel_users_time** Tage Zeit um dich auf **sitename** einzuloggen.
-Ansonsten werden wir deinen Account permanent l�schen.";
+$warntextger2 = "Sie haben **autodel_users_time** Tage, um sich ab sofort anzumelden.
+Ansonsten werden wir Ihr Konto dauerhaft löschen.";
 }
 else $warntextger2 = "";
 $warntextger3 = "
-Danke**sitename**Admin.
+Danke **sitename** Admin
 **siteurl**";
 
 $userwarninactivetext['german'] = "".$warntextger1.$warntextger2.$warntextger3."";
 
 $warntextspa1 = "Hola,
-Queriamos decirte que no visitaste nuestra pagina **siteurl** por mas de **inactwarning_time** dias.
-Si no quieres que tu Cuenta sea borrada, por favor logueate.
-";
+nos gustaría advertirle que no ha estado activo en **siteurl** durante más de **inactwarning_time**
+Si no desea que se elimine su cuenta, inicie sesión en ella.";
 if ($autodel_users_time != 0)
 {
-$warntextspa2 = "Tienes **autodel_users_time** dias para loguearte nuevamente apartir de hoy.
-De otra manera borraremos tu cuenta de forma permanente.";
+$warntextspa2 = "Tienes **autodel_users_time** días para iniciar sesión desde ahora.
+De lo contrario, eliminaremos su cuenta de forma permanente.";
 }
 else $warntextspa2 = "";
 $warntextspa3 = "
-Gracias. Los **sitename** administradores
+Gracias **sitename** administrador
 **siteurl**";
 
 $userwarninactivetext['spanish'] = "".$warntextspa1.$warntextspa2.$warntextspa3."";
 
 $warntextbra1 = "Oi,
-N�s gostar�amos de avisa-lo que voce nao tem estado ativo no **siteurl** por mais de **inactwarning_time** dias.
-Se voce nao quer ter sua conta exclu�da, por favor conecte-se.
-";
+Gostaríamos de avisar que você não esteve ativo no **siteurl** por mais de **inactwarning_time** dias,
+Se você não quiser que sua conta seja excluída, faça o login nela.";
 if ($autodel_users_time != 0)
 {
-$warntextbra2 = "Voce tem **autodel_users_time** dias a partir de hoje para fazer isso.
-Caso contr�rio n�s iremos apagar sua conta permanentemente.";
+$warntextbra2 = "Você tem **autodel_users_time** dias para fazer login a partir de agora.
+Caso contrário, excluiremos sua conta permanentemente.";
 }
 else $warntextbra2 = "";
 $warntextbra3 = "
@@ -350,13 +347,12 @@ Obrigado **sitename** Administrador
 $userwarninactivetext['brazilian'] = "".$warntextbra1.$warntextbra2.$warntextbra3."";
 
 $warntextpor1 = "Oi,
-N�s gostar�amos de avisa-lo que voce nao tem estado ativo no **siteurl** por mais de **inactwarning_time** dias.
-Se voce nao quer ter sua conta exclu�da, por favor conecte-se.
-";
+Gostaríamos de avisar que você não esteve ativo no **siteurl** por mais de **inactwarning_time** dias,
+Se você não quiser que sua conta seja excluída, faça o login nela.";
 if ($autodel_users_time != 0)
 {
-$warntextpor2 = "Voce tem **autodel_users_time** dias a partir de hoje para fazer isso.
-Caso contr�rio n�s iremos apagar sua conta permanentemente.";
+$warntextpor2 = "Você tem **autodel_users_time** dias para fazer login a partir de agora.
+Caso contrário, excluiremos sua conta permanentemente.";
 }
 else $warntextpor2 = "";
 $warntextpor3 = "
@@ -410,8 +406,8 @@ $db->sql_freeresult($res);
 $db->sql_close();
 }
 @exec("php-cli " . $sourcedir . "cron.php  >  /dev/null 2>&1 &");
-//define('PMBT_DEBUG', true);
-if(defined('PMBT_DEBUG'))cleanup();
+//define('BTM_DEBUG', true);
+if(defined('BTM_DEBUG'))cleanup();
 else
 register_shutdown_function("cleanup");
 

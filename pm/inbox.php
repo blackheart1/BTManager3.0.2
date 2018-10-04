@@ -31,7 +31,7 @@ require_once("include/class.bbcode.php");
 require_once("include/constants.php");
 $template->assign_vars(array(
         'ERROR_MESSAGE'         => false,
-        'PMBT_LINK_BACK'        => 'pm.php?',
+        'BTM_LINK_BACK'        => 'pm.php?',
         'S_UCP_ACTION'          => 'pm.php?op=inbox',
 ));
 $mode = 'inbox';

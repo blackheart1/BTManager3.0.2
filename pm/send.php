@@ -54,7 +54,7 @@ $template->assign_vars(array(
         'T_TEMPLATE_PATH'         => $siteurl . '/themes/' . $theme . '/templates',
         'S_PRIVMSGS'         => true,
         'ERROR_MESSAGE'         => false,
-        'PMBT_LINK_BACK'        => 'pm.php?',
+        'BTM_LINK_BACK'        => 'pm.php?',
         'S_UCP_ACTION'          => 'pm.php?op=inbox',
 ));
         $sql = "SELECT B.slave, U.username, IF (U.name IS NULL, U.username, U.name) as name, U.can_do as can_do, U.lastlogin as laslogin, U.Show_online as show_online FROM ".$db_prefix."_private_messages_bookmarks B LEFT JOIN ".$db_prefix."_users U ON B.slave = U.id WHERE B.master = '".$user->id."' ORDER BY name ASC;";
