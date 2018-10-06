@@ -13,11 +13,12 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts)
 ** Project Leaders: Black_heart, Thor.
-** File acp_forum/english.php 2018-09-23 00:00:00 Thor
+** File acp_forum/english.php 2018-10-06 10:24:00 Thor
 **
 ** CHANGES
 **
 ** 2018-09-23 - Updated Masthead, Github, !defined('IN_BTM')
+** 2018-10-06 - Added Missing Language
 **/
 
 if (!defined('IN_BTM'))
@@ -115,13 +116,13 @@ $lang = array_merge($lang, array(
 
     'FORUM_IMAGE'                      => 'Forum Image',
 
-    'FORUM_IMAGE_EXPLAIN'              => 'Enter the Location, Relative to the BTManager Root Directory, for the Image you\'d like to Associate with this Forum.',
+    'FORUM_IMAGE_EXPLAIN'              => 'Enter the Location, Relative to the BTManager Root Directory, for the Image you\'d like to Associate with this Forum e.g. <em>themes/1thank/pics/admin/icon_edit.gif</em>',
 
     'FORUM_IMAGE_NO_EXIST'             => 'The Specified Forum Image DOES NOT Exist',
     'WARNING'                          => 'WARNING',
-    'FORUM_LINK'                       => 'PLACEHOLDER PLACEHOLDER PLACEHOLDER',
+    'FORUM_LINK'                       => 'Address to Redirect Users to',
 
-    'FORUM_LINK_EXPLAIN'               => 'Full URL (including the Protocol, i.e.: <em>http://</em>) to the Destination Location that Clicking this Forum will take the User, e.g.: <em>http://www.phpbb.com/</em>.',
+    'FORUM_LINK_EXPLAIN'               => 'Full URL (including the Protocol, i.e.: <em>http://</em>) to the Destination Location that Clicking this Forum will take the User, e.g. <em>http://www.phpbb.com/</em>',
 
     'FORUM_LINK_TRACK'                 => 'Track Link Redirects',
     'FORUM_LINK_TRACK_EXPLAIN'         => 'Records the Number of Times a Forum Link is Clicked.',

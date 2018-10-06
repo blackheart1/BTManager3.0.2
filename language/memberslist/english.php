@@ -13,11 +13,12 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts)
 ** Project Leaders: Black_heart, Thor.
-** File memberlist/english.php 2018-09-23 00:00:00 Thor
+** File memberlist/english.php 2018-10-06 10:24:00 Thor
 **
 ** CHANGES
 **
 ** 2018-09-23 - Updated Masthead, Github, !defined('IN_BTM')
+** 2018-10-06 - Added Missing Language
 **/
 
 if (!defined('IN_BTM'))
@@ -51,7 +52,7 @@ $lang = array_merge($lang, array(
     'CC_EMAIL'                  => 'Send a Copy of this email to yourself.',
     'CONTACT_USER'              => 'Contact',
 
-    'DEST_LANG'                 => 'Language',
+    'DEST_LANG'                 => '',
     'DEST_LANG_EXPLAIN'         => 'Select an Appropriate Language (if available) for the Recipient of this Message.',
 
     'EMAIL_BODY_EXPLAIN'        => 'This Message will be Sent as Plain Text.  DO NOT include any HTML or BBCode.  The Return Address for this Message will be Set to your email Address.',
@@ -135,6 +136,7 @@ $lang = array_merge($lang, array(
     'LOGIN_EXPLAIN_VIEWPROFILE' => 'The Board Requires you to be Registered and Logged In to View Profiles.',
 
     'MORE_THAN'                 => 'More than',
+    'MESSAGE_BODY'              => '',
 
     'NO_EMAIL'                  => 'You are NOT Authorised to Send emails to this User.',
     'NO_VIEW_USERS'             => 'You are NOT Authorised to View the Member List or Profiles.',
@@ -161,6 +163,7 @@ $lang = array_merge($lang, array(
     'SORT_EMAIL'                => 'email',
     'SORT_LAST_ACTIVE'          => 'Last Active',
     'SORT_POST_COUNT'           => 'Post Count',
+    'SEND_EMAIL_USER'           => 'Send an email to a User',
 
     'USERNAME_BEGINS_WITH'      => 'Username begins with',
     'USER_ADMIN'                => 'Administer User',

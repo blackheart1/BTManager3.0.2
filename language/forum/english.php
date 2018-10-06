@@ -13,11 +13,12 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts)
 ** Project Leaders: Black_heart, Thor.
-** File forum/english.php 2018-09-23 00:00:00 Thor
+** File forum/english.php 2018-10-06 10:25:00 Thor
 **
 ** CHANGES
 **
 ** 2018-09-23 - Updated Masthead, Github, !defined('IN_BTM')
+** 2018-10-06 - Added Missing Language
 **/
 
 if (!defined('IN_BTM'))
@@ -299,6 +300,7 @@ $lang = array_merge($lang, array(
     'LOCK_POST'                  => 'Lock Post',
     'LOCK_POST_EXPLAIN'          => 'Prevent Editing',
     'VIEW_INFO'                  => 'Post Details',
+    'SEND_EMAIL'                 => 'Send email',
     'VIEW_NEWEST_POST'           => 'View Newest Post',
     'VIEW_LATEST_POST'           => 'View Latest Post',
     'VIEW_NEXT_TOPIC'            => 'Next Topic',
