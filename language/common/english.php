@@ -13,7 +13,7 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts)
 ** Project Leaders: Black_heart, Thor.
-** File common/english.php 2018-09-23 00:00:00 Thor
+** File common/english.php 2018-10-07 06:54:00 Thor
 **
 ** CHANGES
 **
@@ -519,7 +519,7 @@ $lang = array_merge($lang, array(
     'USEREPROFILE'              => 'Edit',
     'STAFF'                     => 'Staff',
     'USER_NOT_EDIT_ABL_BYCLASS' => 'You DO NOT have Access to Edit this User',
-    'USERNAME'                  => 'Users Name',
+    'USERNAME'                  => 'Users\' Name',
     'UNLOCK'                    => 'Unlock',
     'UNKNOWN'                   => 'Unknown',
     'URL_REDIRECT'              => 'If your Browser Does NOT Support Meta Redirection %s please click HERE to be Redirected %s.',
