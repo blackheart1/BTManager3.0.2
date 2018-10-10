@@ -13,11 +13,12 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts)
 ** Project Leaders: Black_heart, Thor.
-** File bbcode/english.php 2018-09-23 00:00:00 Thor
+** File bbcode/english.php 2018-10-10 09:17:00 Thor
 **
 ** CHANGES
 **
 ** 2018-09-23 - Updated Masthead, Github, !defined('IN_BTM')
+** 2018-10-10 - Added Missing Language
 **/
 
 if (!defined('IN_BTM'))
@@ -92,7 +93,9 @@ $lang = array_merge($lang, array(
     'DISPLAY_ON_POSTING'       => 'Display on Posting Page',
 
     'EXAMPLES'                 => 'Examples:',
-    'ACP_NO_ITEMS'             => 'There are NO Items Yet!',
+    'ACP_NO_ITEMS'             => 'There are No Items Yet!',
+    'BBCODE_EDIT'              => 'Edit',
+    'BBCODE_DELETE'            => 'Delete',
 ));
 
 ?>
