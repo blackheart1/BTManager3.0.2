@@ -13,11 +13,12 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File files/acp_arcade.php 2018-09-22 00:00:00 Thor
+** File files/acp_arcade.php 2018-10-14 08:04:00 Thor
 **
 ** CHANGES
 **
 ** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
+** 2018-10-14 - Added Missing Language
 **/
 
 if (!defined('IN_BTM'))
@@ -1512,7 +1513,7 @@ class acp_arcade
                     $template->assign_var('S_UPDATE', false);
                 }
 
-                $template->assign_var('L_NOTIFY', 'Update Notifications');
+                $template->assign_var('L_NOTIFY', $user->lang['UPDATE_NOTIF']);
                 $template->assign_var('S_SETTINGS', true);
                 // Grab game details for category display
                 $sql = 'SELECT *
