@@ -649,10 +649,24 @@ if(!defined("SQL_LAYER"))
 
         }
 
-        function fetch_array($queryresult, $type = 'DBARRAY_ASSOC')
+        /*function fetch_array($queryresult, $type = 'DBARRAY_ASSOC')
         {
             return $this->functions['fetch_array']($queryresult, $this->fetchtypes["$type"]);
+        }*/
+
+        function fetch_array($queryresult, $type = 'DBARRAY_ASSOC')
+        {
+                if(!$query_id)
+
+                {
+
+                        $query_id = $this->query_result;
+
+                }
+                       $this->row[(int)$query_id] = @mysql_fetch_array($query_id);
+                       return $this->row[(int)$query_id];
         }
+
         function sql_fetchfield($field, $rownum = -1, $query_id = 0)
 
         {
