@@ -670,7 +670,7 @@ function close_report($report_id_list, $mode, $action)
             $return_topic = sprintf($user->lang['RETURN_TOPIC'], '<a href="' . append_sid("{$phpbb_root_path}forum.$phpEx?action=viewtopic", 't=' . current($topic_ids) . '&amp;f=' . current($forum_ids)) . '">', '</a>') . '<br /><br />';
         }
 
-        trigger_error($user->lang[$success_msg] . '<br /><br />' . $return_forum . $return_topic . sprintf($user->lang['RETURN_PAGE'], "<a href=\"$redirect\">", '</a>'));
+        trigger_error($user->lang[$success_msg] . '<br /><br />' . $return_forum . $return_topic . sprintf('%s' . $user->lang['RETURN_PAGE'] . '%s', "<a href=\"$redirect\">", '</a>'));
     }
 }
 

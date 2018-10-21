@@ -966,7 +966,7 @@ function display_forums($root_data = '', $display_moderators = false, $return_mo
         }
         else
         {
-            trigger_error(sprintf($user->lang['RETURN_PAGE'], '<a href="' . $redirect . '">', '</a>'));
+            trigger_error(sprintf('%s' . $user->lang['RETURN_PAGE'] . '%s', '<a href="' . $redirect . '">', '</a>'));
         }
     }
     // Display list of active topics for this category?

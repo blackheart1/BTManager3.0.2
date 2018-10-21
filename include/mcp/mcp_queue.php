@@ -807,7 +807,7 @@ function approve_post($post_id_list, $id, $mode)
             $add_message = '<br /><br />' . sprintf($user->lang['RETURN_POST'], '<a href="' . $post_url . '">', '</a>');
         }
 
-        trigger_error($user->lang[$success_msg] . '<br /><br />' . sprintf($user->lang['RETURN_PAGE'], "<a href=\"$redirect\">", '</a>') . $add_message);
+        trigger_error($user->lang[$success_msg] . '<br /><br />' . sprintf('%s' . $user->lang['RETURN_PAGE'] . '%s', "<a href=\"$redirect\">", '</a>') . $add_message);
     }
 }
 
@@ -1096,7 +1096,7 @@ function disapprove_post($post_id_list, $id, $mode)
     else
     {
         meta_refresh(3, $redirect);
-        trigger_error($user->lang[$success_msg] . '<br /><br />' . sprintf($user->lang['RETURN_PAGE'], "<a href=\"$redirect\">", '</a>'));
+        trigger_error($user->lang[$success_msg] . '<br /><br />' . sprintf('%s' . $user->lang['RETURN_PAGE'] . '%s', "<a href=\"$redirect\">", '</a>'));
     }
 }
 

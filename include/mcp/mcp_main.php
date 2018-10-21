@@ -288,7 +288,7 @@ function lock_unlock($action, $ids)
     else
     {
         meta_refresh(2, $redirect);
-        trigger_error($user->lang[$success_msg] . '<br /><br />' . sprintf($user->lang['RETURN_PAGE'], '<a href="' . $redirect . '">', '</a>'));
+        trigger_error($user->lang[$success_msg] . '<br /><br />' . sprintf('%s' . $user->lang['RETURN_PAGE'] . '%s', '<a href="' . $redirect . '">', '</a>'));
     }
 }
 
@@ -535,7 +535,7 @@ function change_topic_type($action, $topic_ids)
     else
     {
         meta_refresh(2, $redirect);
-        trigger_error($user->lang[$success_msg] . '<br /><br />' . sprintf($user->lang['RETURN_PAGE'], '<a href="' . $redirect . '">', '</a>'));
+        trigger_error($user->lang[$success_msg] . '<br /><br />' . sprintf('%s' . $user->lang['RETURN_PAGE'] . '%s', '<a href="' . $redirect . '">', '</a>'));
     }
 }
 
@@ -789,7 +789,7 @@ function mcp_move_topic($topic_ids)
         meta_refresh(3, $redirect);
 
         $message = $user->lang[$success_msg];
-        $message .= '<br /><br />' . sprintf($user->lang['RETURN_PAGE'], '<a href="' . $redirect . '">', '</a>');
+        $message .= '<br /><br />' . sprintf('%s' . $user->lang['RETURN_PAGE'] . '%s', '<a href="' . $redirect . '">', '</a>');
         $message .= '<br /><br />' . sprintf($user->lang['RETURN_FORUM'], '<a href="' . append_sid("{$phpbb_root_path}forum.$phpEx?action=viewforum", "f=$forum_id") . '">', '</a>');
         $message .= '<br /><br />' . sprintf($user->lang['RETURN_NEW_FORUM'], '<a href="' . append_sid("{$phpbb_root_path}forum.$phpEx?action=viewforum", "f=$to_forum_id") . '">', '</a>');
 
@@ -984,7 +984,7 @@ function mcp_delete_post($post_ids)
         }
 
         meta_refresh(3, $redirect);
-        trigger_error($success_msg . '<br /><br />' . sprintf($user->lang['RETURN_PAGE'], '<a href="' . $redirect . '">', '</a>') . '<br /><br />' . implode('<br /><br />', $return_link));
+        trigger_error($success_msg . '<br /><br />' . sprintf('%s' . $user->lang['RETURN_PAGE'] . '%s', '<a href="' . $redirect . '">', '</a>') . '<br /><br />' . implode('<br /><br />', $return_link));
     }
 }
 
