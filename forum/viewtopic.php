@@ -1100,12 +1100,12 @@ while ($row = $db->sql_fetchrow($result))
 
                 'username'          => $row['username'],
                 'user_colour'       => $row['user_colour'],
-                'profile'       => append_sid("{$phpbb_root_path}userfind_to_pm.$phpEx", "mode=viewprofile&amp;u=$poster_id"),
+                'profile'       => append_sid("{$phpbb_root_path}memberslist.$phpEx", "mode=viewprofile&amp;u=$poster_id"),
                 'www'           => $row['user_website'],
-                'aim'           => ($row['aim'] && $auth->acl_get('u_sendim')) ? append_sid("{$phpbb_root_path}userfind_to_pm.$phpEx", "mode=contact&amp;action=aim&amp;u=$poster_id") : '',
-                'msn'           => ($row['msnm'] && $auth->acl_get('u_sendim')) ? append_sid("{$phpbb_root_path}userfind_to_pm.$phpEx", "mode=contact&amp;action=msnm&amp;u=$poster_id") : '',
+                'aim'           => ($row['aim'] && $auth->acl_get('u_sendim')) ? append_sid("{$phpbb_root_path}memberslist.$phpEx", "mode=contact&amp;action=aim&amp;u=$poster_id") : '',
+                'msn'           => ($row['msnm'] && $auth->acl_get('u_sendim')) ? append_sid("{$phpbb_root_path}memberslist.$phpEx", "mode=contact&amp;action=msnm&amp;u=$poster_id") : '',
                 'yim'           => ($row['yahoo']) ? 'http://edit.yahoo.com/config/send_webmesg?.target=' . urlencode($row['yahoo']) . '&amp;.src=pg' : '',
-                'jabber'        => ($row['jabber'] && $auth->acl_get('u_sendim')) ? append_sid("{$phpbb_root_path}userfind_to_pm.$phpEx", "mode=contact&amp;action=jabber&amp;u=$poster_id") : '',
+                'jabber'        => ($row['jabber'] && $auth->acl_get('u_sendim')) ? append_sid("{$phpbb_root_path}memberslist.$phpEx", "mode=contact&amp;action=jabber&amp;u=$poster_id") : '',
                 'search'        => ($auth->acl_get('u_search')) ? append_sid("{$phpbb_root_path}forum.$phpEx?action=search", "author_id=$poster_id&amp;sr=posts") : '',
             );
 

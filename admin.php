@@ -27,6 +27,7 @@ if (defined('IN_BTM'))
 }
 
 define("IN_BTM",true);
+define('DEBUG_EXTRA',true);
 
 if (!ini_get('display_errors')) {
     ini_set('display_errors', 1);
@@ -582,7 +583,7 @@ else
             'AVATAR_DIR_SIZE'   => mksize($avatar_dir_size),
             'UPLOAD_DIR_SIZE'   => mksize($upload_dir_size),
             'TORRENT_DIR_SIZE'  => mksize($torrent_dir_size),
-            'TOTAL_ORPHAN'      => $total_orphan,
+			'TOTAL_ORPHAN'		=> ($total_orphan)? $total_orphan: '0',
             'S_TOTAL_ORPHAN'    => ($total_orphan === false) ? false : true,
             'U_ACTION'          => $u_action,
             'U_ADMIN_LOG'       => append_sid("{$siteurl}/admin.$phpEx", 'i=siteinfo&amp;op=log'),
@@ -637,8 +638,10 @@ else
                 'S_INACTIVE_OPTIONS'    => build_select($option_ary))
             );
         }
-echo $template->fetch('admin/main.html');
-        close_out();
+	define('PMBT_DEBUG',true);
+	adm_page_footer(true);
+	echo $template->fetch('admin/main.html');
+    close_out();
 }
 
 ?>
