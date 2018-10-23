@@ -2104,7 +2104,7 @@ function adm_page_footer($copyright_html = true)
 		'VERSION'			=> $config['version'])
 	);
 
-	echo $template->fetch('admin/progress_bar.html');
+	//echo $template->fetch('admin/progress_bar.html');
 }
 function get_forum_branch($forum_id, $type = 'all', $order = 'descending', $include_forum = true)
 {
