@@ -638,8 +638,8 @@ else
                 'S_INACTIVE_OPTIONS'    => build_select($option_ary))
             );
         }
-	define('PMBT_DEBUG',true);
-	adm_page_footer(true);
+	define('BTM_DEBUG',true);
+	//adm_page_footer(true);
 	echo $template->fetch('admin/main.html');
     close_out();
 }
