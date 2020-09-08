@@ -61,8 +61,8 @@ if (count($errmsg) == 0) {
                 $errmsg[] = $user->lang['ERR_EMAIL_NOT_VALID'];
         if ($db->sql_numrows($db->sql_query("SELECT * FROM ".$db_prefix."_users WHERE email ='".$db->sql_escape($email)."';")) != 0)
                 $errmsg[] = $user->lang['ERR_EMAIL_ACSEST'];
-        if ($db->sql_numrows($db->sql_query("SELECT * FROM ".$db_prefix."_users WHERE lastip = '".sprintf("%u",ip2long(getip()))."';")) != 0)
-                $errmsg[] = "Duplicate Ip In use";
+        //if ($db->sql_numrows($db->sql_query("SELECT * FROM ".$db_prefix."_users WHERE lastip = '".sprintf("%u",ip2long(getip()))."';")) != 0)
+               // $errmsg[] = "Duplicate Ip In use";
         if (strlen($password) < 5)
                 $errmsg[] = $user->lang['ERR_PASS_TO_SHORT'];
         if ($password != $cpassword)

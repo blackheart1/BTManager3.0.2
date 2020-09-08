@@ -418,7 +418,7 @@ function phpbb_is_writable($file)
 		if (file_exists($file))
 		{
 			// Canonicalise path to absolute path
-			$file = phpbb_realpath($file);
+			//$file = phpbb_realpath($file);
 
 			if (is_dir($file))
 			{

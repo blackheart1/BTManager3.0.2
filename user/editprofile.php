@@ -35,19 +35,10 @@ $mode                                           = request_var('mode', 'front');
 $action                                         = request_var('action', 'overview');
 $take_edit                                      = (($_POST['preview'])? false : request_var('take_edit', ''));
 $admin_mode = false;
-if($user->id == 0 OR ($user->id != $userrow["id"] && !$auth->acl_get('a_user'))){
-              set_site_var('- '.$user->lang['USER_CPANNEL'].' - '.$user->lang['BT_ERROR']);
-                                $template->assign_vars(array(
-                                        'S_ERROR'           => true,
-                                        'S_FORWARD'             => false,
-                                        'TITTLE_M'          => $user->lang['GEN_ERROR'],
-                                        'MESSAGE'           => sprintf($user->lang['_NO_ACCESS_TO_PROFILE'],getlevel($user->group)).back_link('./index.php'),
-                                ));
-                            echo $template->fetch('message_body.html');
-                            close_out();
-}
-if (isset($id)) {
-        if($user->id != $id && (!$auth->acl_get('a_user')) && (is_founder($id) && !$user->user_type==3)){
+if (isset($id)) 
+{
+	if($user->id != $id && (!$auth->acl_get('a_user')) && (is_founder($id) && !$user->user_type==3))
+	{
               set_site_var('- '.$user->lang['USER_CPANNEL'].' - '.$user->lang['BT_ERROR']);
               meta_refresh('5',$siteurl."/index.php");
                                 $template->assign_vars(array(
@@ -63,6 +54,17 @@ if (isset($id)) {
     }
 }
 else $uid = $user->id;
+if($user->id == 0 OR ($user->id != $uid && !$auth->acl_get('a_user'))){
+              set_site_var('- '.$user->lang['USER_CPANNEL'].' - '.$user->lang['BT_ERROR']);
+                                $template->assign_vars(array(
+                                        'S_ERROR'           => true,
+                                        'S_FORWARD'             => false,
+                                        'TITTLE_M'          => $user->lang['GEN_ERROR'],
+                                        'MESSAGE'           => sprintf($user->lang['_NO_ACCESS_TO_PROFILE'],getlevel($user->group)).back_link('./index.php'),
+                                ));
+                            echo $template->fetch('message_body.html');
+                            close_out();
+}
 
 if(!$uid == $user->id)
 {
