@@ -54,7 +54,7 @@ class acp_email
                 $display_vars = array(
                     'title' => 'ACP_EMAIL_SETTINGS',
                     'vars'  => array(
-                        'legend1'               => 'GENERAL_SETTINGS',
+                        'legend'               => 'GENERAL_SETTINGS',
                         'email_enable'          => array('lang' => 'ENABLE_EMAIL',          'validate' => 'bool',   'type' => 'radio:enabled_disabled', 'explain' => true),
                         'board_email_form'      => array('lang' => 'BOARD_EMAIL_FORM',      'validate' => 'bool',   'type' => 'radio:enabled_disabled', 'explain' => true),
                         'email_function_name'   => array('lang' => 'EMAIL_FUNCTION_NAME',   'validate' => 'string', 'type' => 'text:20:50', 'explain' => true),

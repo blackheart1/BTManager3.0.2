@@ -71,6 +71,18 @@ $db->sql_freeresult($cfgres);
                                 'L_TITLE' => $user->lang['MENU_SIG_SETTINGS'],
                                 'U_TITLE' => append_sid("{$siteurl}/admin.$phpEx", 'i=siteinfo&amp;op=sig_settings'),
                                 ));
+								$template->assign_block_vars('l_block1.l_block2.l_block3',array(
+								'S_SELECTED'	=> ('user_signup' ==$op)? true:false,
+								'IMG' => '',
+								'L_TITLE' => 'User Sign Up',//$user->lang['MENU_SIG_SETTINGS'],
+								'U_TITLE' => append_sid("{$siteurl}/admin.$phpEx", 'i=siteinfo&amp;op=user_signup'),
+								));
+								$template->assign_block_vars('l_block1.l_block2.l_block3',array(
+								'S_SELECTED'	=> ('track_settings' ==$op)? true:false,
+								'IMG' => '',
+								'L_TITLE' => 'Tracker Settings',//$user->lang['MENU_SIG_SETTINGS'],
+								'U_TITLE' => append_sid("{$siteurl}/admin.$phpEx", 'i=siteinfo&amp;op=track_settings'),
+								));
                             }
                             if($auth->acl_get('a_server'))
                             {
@@ -131,6 +143,44 @@ if($op == 'settings_pm')
 {
     include 'admin/files/advance_settings.php';
 }
+if($op == 'track_settings')
+{
+	if (isset($_REQUEST['mode']) && is_array($_REQUEST['mode']))
+	{
+		$mode = request_var('mode', array(''));
+		list($mode, ) = each($mode);
+	}
+	else
+	{
+		$mode = request_var('mode', 'email');
+	}
+	include 'admin/files/acp_tracker_settings.php';
+	include_once($phpbb_root_path . 'include/modules.' . $phpEx);
+	$module = new acp_tracker_settings();
+	$module->module =  'acp_tracker_settings';
+	$module->main('',$action);
+	echo $template->fetch('admin/' . $module->tpl_name . '.html');
+	close_out();
+}
+if($op == 'user_signup')
+{
+	if (isset($_REQUEST['mode']) && is_array($_REQUEST['mode']))
+	{
+		$mode = request_var('mode', array(''));
+		list($mode, ) = each($mode);
+	}
+	else
+	{
+		$mode = request_var('mode', 'email');
+	}
+	include 'admin/files/acp_user_signup.php';
+	include_once($phpbb_root_path . 'include/modules.' . $phpEx);
+	$module = new acp_user_signup();
+	$module->module =  'acp_user_signup';
+	$module->main('',$action);
+	echo $template->fetch('admin/' . $module->tpl_name . '.html');
+	close_out();
+}
 if($op == 'sig_settings')
 {
     include 'admin/files/sig_settings.php';
@@ -172,6 +222,26 @@ if($op == 'settings_bbcode')
             close_out();
         break;
         case 'setting':
+		/*require_once("include/auth.php");
+		require_once("admin/files/acp_settings.php");
+		include_once($phpbb_root_path . 'include/modules.' . $phpEx);
+			$auth = new auth();
+			$auth->acl($user);
+			$admin_role = new acp_settings();
+			$admin_role->u_action = $u_action;
+			$template->assign_vars(array(
+				'U_ACTION'			=> '/admin.php?op=levels&i=userinfo&action=' . $action,
+				'ICON_MOVE_DOWN'          => $user->img('icon_down', 'MOVE_DOWN'),
+				'ICON_MOVE_UP'            => $user->img('icon_up', 'MOVE_UP'),
+				'ICON_MOVE_UP_DISABLED'   => $user->img('icon_up_disabled', 'MOVE_UP_DISABLED'),
+				'ICON_MOVE_DOWN_DISABLED' => $user->img('icon_down_disabled', 'MOVE_DOWN_DISABLED'),
+				'ICON_EDIT'               => $user->img('icon_edit', 'EDIT'),
+				'ICON_DELETE'             => $user->img('icon_delete', 'DELETE'),)
+			);
+			$action					= request_var('action_i', $action);
+			$admin_role->main('',$mode);
+			echo $template->fetch('admin/' . $admin_role->tpl_name . '.html');
+			close_out();*/
             if ($op == "savesettings")
             {
                 //Process Request
@@ -274,8 +344,8 @@ if($op == 'settings_bbcode')
                     'theme'                 => (is_dir("themes/".$sub_theme))? $sub_theme : 'Bitfarm',
                     'time_zone'             => ($sub_time_zone != '')? $sub_time_zone : 'America/Los_Angeles',
                     'announce_url'          => serialize($vallad_ann),
-                    'welcome_message'       => ($sub_welcome_message == '')? NULL : $sub_welcome_message,
-                    'announce_ments'        => ($announce_ments == '')? NULL : $announce_ments,
+					'welcome_message'		=> ($sub_welcome_message == '')? NULL : bbcode_nl2br($sub_welcome_message),
+					'announce_ments'		=> ($announce_ments == '')? NULL : bbcode_nl2br($announce_ments),
                     'announce_text'         => ($sub_announce_text == '')? NULL : $sub_announce_text,
                     'allow_html'            => ($sub_allow_html != "true")? 'false' : 'true',
                     'on_line'               => ($sub_on_line != "true")? 'false' : 'true',
@@ -329,16 +399,16 @@ if($op == 'settings_bbcode')
                     'free_dl'               => (!isset($sub_free_dl) OR $sub_free_dl != "true")? 'false' : 'true',
                     'addprivate'            => (!isset($sub_addprivate) OR $sub_addprivate != "true")? 'false' : 'true',
                     'GIGSA'                 => (is_numeric($sub_GIGSA))? (int) $sub_GIGSA : (int) '0',
-                    'RATIOA'                => (is_numeric($sub_RATIOA))? number_format($sub_RATIOA,2) : '0',
-                    'WAITA'                 => (is_numeric($sub_WAITA))? (int) $sub_WAITA : (int) '0',
-                    'GIGSB'                 => (is_numeric($sub_GIGSB))? (int) $sub_GIGSB : (int) '0',
-                    'RATIOB'                => (is_numeric($sub_RATIOB))? number_format($sub_RATIOB,2) : '0',
-                    'WAITB'                 => (is_numeric($sub_WAITB))? (int) $sub_WAITB : (int) '0',
-                    'GIGSC'                 => (is_numeric($sub_GIGSC))? (int) $sub_GIGSC : (int) '0',
-                    'RATIOC'                => (is_numeric($sub_RATIOC))? number_format($sub_RATIOC,2) : '0',
-                    'WAITC'                 => (is_numeric($sub_WAITC))? (int) $sub_WAITC : (int) '0',
-                    'GIGSD'                 => (is_numeric($sub_GIGSD))? (int) $sub_GIGSD : (int) '0',
-                    'RATIOD'                => (is_numeric($sub_RATIOD))? number_format($sub_RATIOD,2) : '0',
+					'RATIOA'				=> (is_numeric($sub_RATIOA))? number_format($sub_RATIOA,2) : '0.00',
+					'WAITA'					=> (is_numeric($sub_WAITA))? (int) $sub_WAITA : (int) '0',
+					'GIGSB'					=> (is_numeric($sub_GIGSB))? (int) $sub_GIGSB : (int) '0',
+					'RATIOB'				=> (is_numeric($sub_RATIOB))? number_format($sub_RATIOB,2) : '0.00',
+					'WAITB'					=> (is_numeric($sub_WAITB))? (int) $sub_WAITB : (int) '0',
+					'GIGSC'					=> (is_numeric($sub_GIGSC))? (int) $sub_GIGSC : (int) '0',
+					'RATIOC'				=> (is_numeric($sub_RATIOC))? number_format($sub_RATIOC,2) : '0.00',
+					'WAITC'					=> (is_numeric($sub_WAITC))? (int) $sub_WAITC : (int) '0',
+					'GIGSD'					=> (is_numeric($sub_GIGSD))? (int) $sub_GIGSD : (int) '0',
+					'RATIOD'				=> (is_numeric($sub_RATIOD))? number_format($sub_RATIOD,2) : '0.00',
                     'WAITD'                 => (is_numeric($sub_WAITD))? (int) $sub_WAITD : (int) '0',
                     'version'               => $version,
                     'most_on_line'          => $most_users_online,

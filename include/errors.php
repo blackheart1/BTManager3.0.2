@@ -30,7 +30,7 @@ error_reporting(E_ALL);
 
 function myErrorHandler($errno, $errstr, $errfile, $errline)
 {
-    global $pmbt_cache, $db_prefix, $db, $auth, $template, $config, $user, $phpEx, $admin_email, $siteurl, $msg_title, $msg_long_text;
+    global $pmbt_cache, $db_prefix, $db, $auth, $template, $config, $version, $user, $phpEx, $admin_email, $siteurl, $msg_title, $msg_long_text;
 
     if (error_reporting() == 0 && $errno != E_WARNING
                                && $errno != E_USER_ERROR

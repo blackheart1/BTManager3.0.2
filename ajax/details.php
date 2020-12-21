@@ -47,17 +47,20 @@ if($op == 'close_view_details_page')
         echo $template->fetch('detail_ajax.html');
         close_out();
     }
+//bterror($user->lang['INVALID_ID']);
 
 if($op == 'view_peers_page')
     {
-        if(!$user->user)bterror($user->lang['LOGIN_PEER_DETAILS']);
+        //if(!$user->user)bterror($user->lang['LOGIN_PEER_DETAILS']);
+        if(isset($_GET["amp;torrent"]))$_GET["torrent"] = $_GET["amp;torrent"];
+        if(isset($_GET["amp;password"]))$_GET["password"] = $_GET["amp;password"];
 
         $tracker  = request_var('tracker', '');
         $type     = request_var('type', '');
-        $torrent  = request_var('torrent', 0);
+        $torrent  = (int)request_var('torrent', '0');
         $password = request_var('password', '');
         $password = urldecode($password);
-
+//bterror($user->lang['INVALID_ID']);
                 if (!isset($torrent) OR !is_numeric($torrent) OR $torrent < 1) bterror($user->lang['INVALID_ID']);
 
                 $sql = "SELECT
@@ -149,8 +152,6 @@ if($op == 'view_peers_page')
                 {
                         if ($row["downloaded"])$s = number_format($row["uploaded"]/$row["downloaded"],2);
                         else
-                                if ($row["uploaded"])$s = number_format($row["uploaded"]/$row["torrent_size"],2);
-                                else
                                         $s = "---";
                         $edt = "&infin;";
                         if ($row["seeder"] == "no") {
@@ -181,11 +182,10 @@ if($op == 'view_peers_page')
                             'START_TIME'     => mkprettytime(time()-$row["started_ts"]),
                             'IDLE_TIME'      => mkprettytime(time()-$row["last_action_ts"]),
                             'USER_IP'        => $ip,
-                            'AVATAR'         => gen_avatar($row["uid"]),
+                            //'AVATAR'         => gen_avatar($row["uid"]),
                             'USER_HOST'      => ((checkaccess("a_see_ip"))? gethostbyaddr($ip) : false),
                             'ONLINE'         => (($row["user_lststamp"] > (time()-300))? true : false),
                             'RANK_IMG'       => '<img src="themes/' . $theme . '/pics/group/' . $row["can_do"] . '.png" title="' . ((!empty($user->lang[$row['lname']]))?$user->lang[$row['lname']]:$row['lname']) . '" alt="' . ((!empty($user->lang[$row['lname']]))?$user->lang[$row['lname']]:$row['lname']) . '">',
-
                             'IS_USER'        => (($row["uid"] != 0)? true : false),
                             'USER_ID'        => $row["uid"],
                             'USER_NAME'      => (($row["uid"] != 0)? $row["username"] : $user->lang['GUEST']),
@@ -194,14 +194,13 @@ if($op == 'view_peers_page')
                             'USER_GROUP'     => ((!empty($user->lang[$row['lname']]))?$user->lang[$row['lname']]:$row['lname']),
                             'IMG_BAR_WIDTH'  => round(1 * sprintf("%.2f%%", (1 - ($row["to_go"] / $row["torrent_size"])) * 100)),
                         ));
-                                                }
+                 }
                 $db->sql_freeresult($res);
-                        $template->assign_vars(array(
-                          'ACTION' => $op,
-                                                ));
-                                                //print_r($template->_tpldata['peer_info']);
-                        echo $template->fetch('detail_ajax.html');
-                        close_out();
+        $template->assign_vars(array(
+                                'ACTION' => $op,
+                                ));
+        echo $template->fetch('detail_ajax.html');
+        close_out();
     }
 if($op == 'view_nfo_page')
     {

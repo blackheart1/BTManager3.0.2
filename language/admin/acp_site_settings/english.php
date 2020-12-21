@@ -336,6 +336,7 @@ $lang = array_merge($lang, array(
     'MENU_PRIVATE_MESSAGE' => 'Private Message Settings',
     'MENU_BBCODE'          => 'BBcode Settings',
     'TRACKER_SETTINGS'     => 'Tracker Settings',
+    'TRACKER_SETTINGS_EXPLAIN'     => 'Tracker Settings',
     'USER_SETTINGS'        => 'User Settings',
     'UPLOAD_SETTINGS'      => 'Torrent Upload Settings',
     'EXT_TORRENT_SETTINGS' => 'External Torrent Upload Settings',

@@ -14,7 +14,7 @@ INSERT INTO `#prefix#_categories` (`id`, `name`, `sort_index`, `image`, `parent_
 (13, 'X360', 130, 'xbox.jpg', 2, 1, '5'),
 (14, 'PSP Games', 140, 'psp.gif', 2, 1, '5'),
 (15, 'PS2', 150, 'ps2.gif', 2, 1, '5'),
-(16, 'PC Games', 160, 'pc-games.jpg', 2, 1, '5'),
+(16, 'PC-Games', 160, 'pc-games.jpg', 2, 1, '5'),
 (17, 'NDS Games', 170, 'Nintendo.gif', 2, 1, '5'),
 (7, 'Music', 40, 'music.png', -1, 7, '3'),
 (19, 'Flac', 290, 'flac.jpg', 7, 1, '3'),

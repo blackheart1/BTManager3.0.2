@@ -349,6 +349,7 @@ if (preg_match('/<a[^>]* href="[^"]*(javascript|vbscript):[^>]*>/i', $descr)) //
 #Parsing Announce
 $annregexp_http = "/(http[s]?+):\/\/[-\/.:_\\w]*\/announce[^\/\\s]*/i";
 $annregexp_dht = "/^dht:\/\/[0-9a-f]*.dht\/announce$/i";
+
 if (in_array($announce, $site_announce)) {
         if ($stealthmode)
         {
