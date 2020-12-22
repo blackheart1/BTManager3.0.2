@@ -750,7 +750,7 @@ $searchtext.=implode(" ",$subarray);
 }
 #Parsing external tracker sources
 global $force_upload; //Used to force upload even if Torrent has 0 peers or the tracker does not respond
-$seeders = $leechers = $tot_peer = 0;
+$seeders = $leechers = $completed = $tot_peer = 0;
 if($autoscrape AND $announce != "") {
 
         $tmp_tracker = str_replace("announce", "scrape", $announce).((strpos($announce,"?")) ? "&" : "?")."info_hash=".urlencode($infohash);
@@ -1047,7 +1047,7 @@ $torrentfields[] = "downloaded";
 $torrentvalues[] = "'0'";
 
 $torrentfields[] = "completed";
-$torrentvalues[] = "'".$completed."'";
+$torrentvalues[] = "'".intval($completed)."'";
 
 $torrentfields[] = "banned";
 $torrentvalues[] = "'no'";
