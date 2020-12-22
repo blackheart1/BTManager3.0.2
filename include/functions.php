@@ -466,7 +466,7 @@ function meta_refresh($time, $url, $disable_cd_check = false)
     return '<meta http-equiv="refresh" content="' . $time . ';url=' . $url . '" >';
 }
 
-define('STRIP', (get_magic_quotes_gpc()) ? true : false);
+define('STRIP',  false);
 
 function set_var(&$result, $var, $type, $multibyte = false)
 {
@@ -858,7 +858,7 @@ function confirm_box($check, $title = '', $hidden = '', $html_body = 'confirm_bo
     $template->assign_vars(array(
             'MESSAGE_TITLE'    => (!isset($user->lang[$title])) ? ((defined('_' . $title)) ? constant('_' . $title) : 'CONFIRM') : $user->lang[$title],
 
-            'MESSAGE_TEXT'     => (!isset($user->lang[$title . '_CONFIRM'])) ? ((defined('_' . $title . '_CONFIRM')) ? constant('_' . $title . '_CONFIRM') : ($title == '') ? '_CONFIRM':$title) : $user->lang[$title . '_CONFIRM'],
+            'MESSAGE_TEXT'     => (!isset($user->lang[$title . '_CONFIRM'])) ? (((defined('_' . $title . '_CONFIRM')) ? constant('_' . $title . '_CONFIRM') : ($title == '')) ? '_CONFIRM':$title) : $user->lang[$title . '_CONFIRM'],
 
             'YES_VALUE'        => $user->lang['YES'],
             'S_CONFIRM_ACTION' => $u_action,
@@ -990,7 +990,14 @@ function logerror($message, $error = '',$tid = 0)
 
         if (is_array($message))
         {
-            $log_type    = (($message[0] == 'admin') ? '0' : ($message[0] == 'mod') ? '1' : ($message[0] == 'critical') ? '2' : '3');
+ 			$log_type    = 3;
+		if($message[0] == 'admin'){
+			$log_type    = 0;
+		}elseif($message[0] == 'mod'){
+			$log_type    = 1;
+		}elseif($message[0] == 'critical'){
+			$log_type    = 2;
+		}
             $mode        = $message[0];
             $reportee_id = $message[1];
             $forum_id    = $message[2];
@@ -3295,8 +3302,16 @@ function geturl($file, $args = array())
 
 function unesc($x)
 {   // Useful For Escaping Strings
-    if (get_magic_quotes_gpc())
-    return stripslashes($x);
+	$version = (float)phpversion();
+	$b = false;
+	if ($version < 5.4) {
+		$b = true;
+	}
+	if($b)
+	{
+		if (get_magic_quotes_gpc())
+		return stripslashes($x);
+	}
     return $x;
 }
 
@@ -4253,7 +4268,7 @@ function set_site_var($page_title = '')
             $torrents[] = htmlspecialchars((strlen($tor["name"]) > 33) ? substr($tor["name"],0,30) . "..." : $tor["name"]);
         }
 
-        if ($cnt > 0) $tseeding = "<p>" . implode($torrents, "<br>") . "</p>";
+        if ($cnt > 0) $tseeding = "<p>" . implode("<br>",$torrents ) . "</p>";
         else $tseeding = pic("upload.gif", null, $user->lang['T_U_SEED']);
 
         $tseedingcnt = $cnt;
@@ -4279,7 +4294,7 @@ function set_site_var($page_title = '')
                 $torrents[] = htmlspecialchars((strlen($tor["name"]) > 33) ? substr($tor["name"],0,30) . "..." : $tor["name"]);
         }
 
-        if ($cnt > 0) $tleeching = "<p>" . implode($torrents,"<br>") . "</p>";
+        if ($cnt > 0) $tleeching = "<p>" . implode("<br>",$torrents) . "</p>";
         else $tleeching = pic("download.gif", null, $user->lang['T_U_LEECH']);
 
         $tleechingcnt = $cnt;

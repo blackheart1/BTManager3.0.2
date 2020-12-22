@@ -678,7 +678,7 @@ if(!defined("SQL_LAYER"))
             }
         }
 
-        return parent::get_row_count($table_name);
+        return $this->get_row_count($table_name);
     }
 
     /**
@@ -699,7 +699,7 @@ if(!defined("SQL_LAYER"))
             return $table_status['Rows'];
         }
 
-        return parent::get_row_count($table_name);
+        return $this->get_row_count($table_name);
     }
 
     /**

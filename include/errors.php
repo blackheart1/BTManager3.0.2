@@ -40,7 +40,8 @@ function myErrorHandler($errno, $errstr, $errfile, $errline)
                                && $errno != E_ERROR
                                && $errno != E_FATAL
                                && $errno != E_STRICT
-                               && $errno != E_DEPRECATED)
+                               //&& $errno != E_DEPRECATED
+							   )
     {
         return;
     }

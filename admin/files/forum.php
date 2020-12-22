@@ -1108,6 +1108,8 @@ if ('forum_search' == $op)
                             $db->sql_multi_insert($db_prefix . '_acl_groups', $groups_sql_ary);
                             cache_moderators();
                         }
+						$auth->acl_clear_prefetch();
+        $auth->acl_cache($user);
 
                         $acl_url = '&amp;mode=setting_forum_local&amp;forum_id[]=' . $forum_data['forum_id'];
 
