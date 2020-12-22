@@ -799,8 +799,8 @@ if($autoscrape AND $announce != "") {
                             echo $template->fetch('message_body.html');
                             close_out();
                         }
-                        $leechers = entry_read($scrape,"files/a".$infohash_hex."/incomplete(Integer)","Scrape");
-                        $completed = entry_read($scrape,"files/a".$infohash_hex."/downloaded(Integer)","Scrape");
+                        $leechers = (0 + entry_read($scrape,"files/a".$infohash_hex."/incomplete(Integer)","Scrape"));
+                        $completed = (0 + entry_read($scrape,"files/a".$infohash_hex."/downloaded(Integer)","Scrape"));
                 }
                 unset($scrape);
                 $visible = ($tot_peer > 0) ? "yes" : "no";
