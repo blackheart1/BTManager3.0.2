@@ -279,7 +279,7 @@ function getscrapedata($url, $display=false, $info = false) {
                 $tracker = 'udp://' . $m[1];
                 $port = isset($m[2]) ? $m[2] : 80;
 $ports = array(21, 25, 80, 81, 110, 443, 3306, $port);
-foreach ($ports as $port)
+/*foreach ($ports as $port)
 {
     $connection = @fsockopen($tracker, $port);
     if (is_resource($connection))
@@ -291,7 +291,7 @@ foreach ($ports as $port)
     {
         //echo '<h2>' . $tracker . ':' . $port . ' is not responding.</h2>' . "\n";
     }
-}
+}*/
 //exit();
                 $page = "d5:filesd";
                 $transaction_id = mt_rand(0,65535);
