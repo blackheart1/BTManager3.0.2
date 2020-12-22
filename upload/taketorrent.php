@@ -751,6 +751,7 @@ $searchtext.=implode(" ",$subarray);
 #Parsing external tracker sources
 global $force_upload; //Used to force upload even if Torrent has 0 peers or the tracker does not respond
 $seeders = $leechers = $completed = $tot_peer = 0;
+$visible = 'no';
 if($autoscrape AND $announce != "") {
 
         $tmp_tracker = str_replace("announce", "scrape", $announce).((strpos($announce,"?")) ? "&" : "?")."info_hash=".urlencode($infohash);
@@ -1218,5 +1219,4 @@ $msg[] = $user->lang['NOTIFY_NEW_SEED'];
                                 'L_MESSAGE'         => $user->lang['SUCCESS'],
                                 'S_ERROR_MESS'          => implode("<br />",$msg),
                             ));
-
 ?>
