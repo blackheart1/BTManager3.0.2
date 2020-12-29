@@ -70,7 +70,7 @@ function hash_where($name, $hash)
 }
 
 function unesc_magic($x) {
-        return (get_magic_quotes_gpc()) ? stripslashes($x) : $x;
+        return $x;
 }
 function err($msg, $sqlerror = false)
 {
