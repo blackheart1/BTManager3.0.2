@@ -4348,10 +4348,13 @@ function set_site_var($page_title = '')
             'S_MOST_USERS_WN'      => $most_users_online_when,
             'U_SHOW_ARCADE'        => $auth->acl_get('u_arcade_play_games') ? true : false,
             'U_USER'               => $user->user,
+		'LAST_VISIT_DATE'				=> sprintf($user->lang['YOU_LAST_VISIT'], formatTimestamp($user->lastlogin)),
+		'CURRENT_TIME'					=> sprintf($user->lang['CURRENT_TIME'], $user->format_date(time(), false, true)),
             'U_MEMBERLIST'          => append_sid("memberslist.$phpEx"),
             'S_DISPLAY_MEMBERLIST'  => (isset($auth)) ? $auth->acl_get('u_viewprofile') : 0,
             'U_PREMIUM'            => $user->premium,
             'U_MODERATOR'          => $user->moderator,
+			'U_MCP'				   => ($auth->acl_get('m_') || $auth->acl_getf_global('m_')) ? append_sid("forum.php", 'action_mcp=mcp&amp;i=main&amp;mode=front', true, $user->session_id) : '',
             'U_ADMIN'              => $user->admin,
             'U_VIEW_ADMIN_PAN'     => $auth->acl_get('a_'),
             'S_USER_ID'            => $user->id,
@@ -4448,9 +4451,8 @@ function close_out()
 
     if (defined('BTM_DEBUG')) include_once("include/cleanup.php");
     else
-        @include_once("include/cleanup.php");
-
-    ob_end_flush();
+        include_once("include/cleanup.php");
+    //ob_end_flush();
     die();
 }
 

@@ -54,13 +54,14 @@ class acp_user_signup
 					'title'	=> 'ACP_REGISTER_SETTINGS',
 					'vars'	=> array(
 						'legend1'						=> 'SITE_SETTINGS',
-						'max_name_chars'				=> array('lang' => 'USERNAME_LENGTH', 'validate' => 'int:8:180', 'type' => false, 'method' => false, 'explain' => false,),
-						'max_pass_chars'				=> array('lang' => 'PASSWORD_LENGTH', 'validate' => 'int:8:255', 'type' => false, 'method' => false, 'explain' => false,),
+						'max_name_chars'				=> array('lang' => 'USERNAME_LENGTH', 'validate' => 'int:8:180', 'type' => false, 'method' => false, 'explain' => true,),
+						'max_pass_chars'				=> array('lang' => 'PASSWORD_LENGTH', 'validate' => 'int:8:255', 'type' => false, 'method' => false, 'explain' => true,),
 						'min_name_chars'				=> array('lang' => 'USERNAME_LENGTH',	'validate' => 'int:1',	'type' => 'custom:5:180', 'method' => 'username_length', 'explain' => true),
 						'min_pass_chars'				=> array('lang' => 'PASSWORD_LENGTH',	'validate' => 'int:1',	'type' => 'custom', 'method' => 'password_length', 'explain' => true),
 						'allow_name_chars'				=> array('lang' => 'USERNAME_CHARS',	'validate' => 'string',	'type' => 'select', 'method' => 'select_username_chars', 'explain' => true),
 						'pass_complex'					=> array('lang' => 'PASSWORD_TYPE',		'validate' => 'string',	'type' => 'select', 'method' => 'select_password_chars', 'explain' => true),
 						'conferm_email'					=> array('lang' => '_admpconferm_email',			'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => true),
+						'limit_acn_ip'					=> array('lang' => '_admplimit_acn_ip',			'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => true),
 						'allow_change_email'			=> array('lang' => '_admpallow_change_email',			'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => true),
 						'force_passkey'					=> array('lang' => '_admpforce_passkey',			'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => true),
 						'give_sign_up_credit'			=> array('lang' => '_admpgive_sign_up_credit',	'validate' => 'string',	'type' => false, 'method' => 'select_username_chars', 'explain' => false),
@@ -68,6 +69,7 @@ class acp_user_signup
 						'invites_open'					=> array('lang' => '_admpinvites_open',			'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => true),
 						'invite_only'					=> array('lang' => '_admpinvite_only',			'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => true),
 						'max_members'					=> array('lang' => '_admpmax_members',	'validate' => 'int:0',	'type' => 'text:20:50', 'explain' => true),
+                        'legend3'                   => 'ACP_SUBMIT_CHANGES',
 			)
 				);
 		$this->new_config = $config;

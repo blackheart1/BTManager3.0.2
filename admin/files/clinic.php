@@ -25,6 +25,7 @@ if (!defined('IN_BTM'))
     require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
     die ("Error 404 - Page Not Found");
 }
+require_once("include/torrent_functions.php");
 
 $user->set_lang('admin/mcp_clinic',$user->ulanguage);
 
@@ -277,7 +278,7 @@ if ($do) {
                         $template->assign_vars(array(
                                     'S_PEACES_CHECK'            =>  false,
                                     ));
-                        break;
+                       // break;
                 }
                 $pieces = entry_read($torrent,"info/pieces(String)");
                 if (strlen($pieces) % 20 == 0)
@@ -335,9 +336,11 @@ if ($do) {
                         $info = entry_get($torrent,"info");
                         $info_hash = sha1(Benc($info));
                         unset($info);
-                        $scrape_url .= ((strpos($scrape_url,"?")) ? "&" : "?")."info_hash=".urlencode(pack("H*",$info_hash));
+                        $scrape_url .= ((strpos($scrape_url,"?")) ? "&" : "?")."info_hash=".urlencode($info_hash);
+						$infohash = pack("H*", $info_hash);
+						$scrape = getscrapedata($scrape_url, false,array($infohash=>preg_replace_callback('/./s', "hex_esc", str_pad($infohash,20))));
 
-                        if (!$fp = @fopen($scrape_url,"rb")) {
+                        if (!$scrape) {
                         $template->assign_vars(array(
                                     'S_SCRAPE_GOOD'         =>  false,
                                     ));
@@ -347,11 +350,11 @@ if ($do) {
                                     'S_SCRAPE_GOOD'         =>  true,
                                     ));
 
-                        $page = "";
+                        /*$page = "";
                         while (!@feof($fp)) $page .= @fread($fp,1000);
                         @fclose($fp);
                         $scrape = Bdecode($page,"Scrape");
-                        unset($page);
+                        unset($page);*/
                         $info_hash = 'a'.$info_hash;
 
 

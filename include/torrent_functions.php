@@ -296,7 +296,7 @@ $ports = array(21, 25, 80, 81, 110, 443, 3306, $port);
                 $page = "d5:filesd";
                 $transaction_id = mt_rand(0,65535);
                 $fp = fsockopen($tracker, $port, $errno, $errstr);
-                stream_set_timeout($fp, 100);
+                stream_set_timeout($fp, 40);
                 if(!$fp)
                     {
                         return false;

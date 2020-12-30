@@ -1,5 +1,4 @@
-<?php
-
+<?
  #############################################################################
  # IMDBPHP                              (c) Giorgos Giagas & Itzchak Rehberg #
  # written by Giorgos Giagas                                                 #
@@ -38,5 +37,4 @@ foreach ($results as $res) {
      . "<TD><a href='http://'".$search->imdbsite."/title/tt".$res->imdbid()."'>imdb page</a></TD></TR>\n";
 }
 echo "</TABLE>\n</BODY></HTML>";
-
 ?>

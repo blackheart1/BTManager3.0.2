@@ -156,7 +156,7 @@ $lang = array_merge($lang, array(
     'INVALID_TRACKER_RESPONCE' => 'Invalid Data from External Tracker.  The Tracker may have Issues with it\'s Server?  Please try again later.',
 
     'NO_SEEDERS'              => 'Your Torrent is NOT Seeded!',
-    'NO_SEEDERS_NOT ALLOWED'  => 'Sorry we DO NOT Allow Torrents that are NOT Seeded!',
+    'NO_SEEDERS_NOT_ALLOWED'  => 'Sorry we DO NOT Allow Torrents that are NOT Seeded!',
     'INVALID_POSTER_URL'      => 'The Link you Provided for your Poster Image is Invalid your Link must Start with http://',
     'INVALID_POSTER_TYPE'     => 'The Poster Filename you entered is NOT in (gif|jpg|jpeg|png) format.',
     'INVALID_SCREEN_URL'      => 'The Link you Provided for your Poster is Invalid your Link must Start http://',

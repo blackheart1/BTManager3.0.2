@@ -215,7 +215,8 @@ class acp_users
                                 'mode'          => $mode,
                                 'action'        => $action,
                                 'update'        => true,
-                                'delete'        => 1,
+                                'delete'        => '1',
+								'op'			=> 'user',
                                 'delete_type'   => $delete_type))
                             );
                         }

@@ -8,16 +8,17 @@
 ** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
-** Copyright (C) 2018
+** Copyright (C) 2021
 ** Formerly Known As phpMyBitTorrent
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts)
 ** Project Leaders: Black_heart, Thor.
-** File steps/3.php 2018-09-21 00:00:00 Thor
+** File steps/3.php 2020-12-22 00:00:00 Black_Heart
 **
 ** CHANGES
 **
 ** 2018-09-21 - Updated Masthead, Github, !defined('IN_BTM')
+** 2020-12-22 - Updated File location in header
 **/
 
 $error = ((!isset($gpl) OR $gpl != "yes" OR !isset($lgpl) OR $lgpl != "yes") AND !isset($postback));
@@ -50,12 +51,12 @@ $configproto = <<<EOF
 ** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
-** Copyright (C) 2018
+** Copyright (C) 2021
 ** Formerly Known As phpMyBitTorrent
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File steps/step3.php 2018-09-23 00:00:00 Thor
+** File include/configdata.php 2020-12-22 00:00:00 Black_Heart
 **
 **/
 

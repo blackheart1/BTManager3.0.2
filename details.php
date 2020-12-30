@@ -83,7 +83,7 @@ if (!$torrent OR ($torrent["banned"] == "yes" AND !$user->moderator))
 
 set_site_var(sprintf($user->lang['TITTLE'],$torrent["name"]));
 //If password is set, and user is not premium or owner, and if provided password is wrong, then give error
-if ($torrent["password"] != "" AND !$user->premium AND $password != $torrent["password"] AND (!$user->user OR $user->id != $torrent["owner"])) {
+if ($torrent["password"] != "" AND !$auth->acl_get("m_override_trnt_paswd") AND $password != $torrent["password"] AND (!$user->user OR $user->id != $torrent["owner"])) {
         //Query user for Password
                 $hidden = build_hidden_fields(array(
                             'id'    =>  $id,
@@ -304,7 +304,7 @@ $template->assign_vars(array(
         'U_IMDB_LINK'      =>  ($torrent["imdb"] != "")?'op=get_imdb' . $java_link : false,
         'U_RATING_LINK'    =>  'op=view_rate_page' . $java_link,
         'U_COMM_LINK'      =>  'op=view_coments_page' . $java_link,
-        'U_PEERS_LINK'     =>  (checkaccess('u_can_view_snatchlist') AND $torrent["tracker"] == "" AND $torrent["type"] != "link" AND $user->user)?'op=view_peers_page' . $java_link : false,
+        'U_PEERS_LINK'     =>  ($auth->acl_get('u_view_snatchlist') AND $torrent["tracker"] == "" AND $torrent["type"] != "link" AND $user->user)?'op=view_peers_page' . $java_link : false,
         'U_SEEDERS'        =>  ($torrent["type"] != "link")?$torrent["seeders"] : false,
         'U_LEECHERS'       =>  ($torrent["type"] != "link")?$torrent["leechers"] : false,
         'U_PEERS'          =>  ($torrent["type"] != "link")?$torrent["tot_peer"] : false,

@@ -399,6 +399,7 @@ $lang = array_merge($lang, array(
         'user_group'    => 'Users and Groups',
         'trac'          => 'Tracker',
         'arcade'        => 'Arcade',
+		'comments'		=> 'Comments',
     ),
 
     // With Defining 'Global' Here we are Able to Specify what is Printed Out, if the Permission is within the Global Scope.
@@ -451,6 +452,14 @@ $lang = array_merge($lang, array(
     'acl_u_viewonline'   => array('lang' => 'Can View Hidden Online Users', 'cat' => 'misc'),
     'acl_u_search'       => array('lang' => 'Can Search Board', 'cat' => 'misc'),
     'acl_u_download_torrents' => array('lang' => 'Can Download Torrents', 'cat' => 'trac'),
+    'acl_u_can_comment' => array('lang' => 'Can Comment on Torrents', 'cat' => 'comments'),
+    'acl_u_delete_comments' => array('lang' => 'Can Delete your Own Comments on Torrents', 'cat' => 'comments'),
+    'acl_u_edit_comments' => array('lang' => 'Can Edit Your Own Comments on Torrents', 'cat' => 'comments'),
+    'acl_u_delete_torrents' => array('lang' => 'Can Delete Your Own Torrents', 'cat' => 'trac'),
+    'acl_u_edit_torrents' => array('lang' => 'Can Edit Your Own Torrents', 'cat' => 'trac'),
+    'acl_u_requist_reseed' => array('lang' => 'Can Requist Reseed On Torrents', 'cat' => 'trac'),
+    'acl_u_update_peers' => array('lang' => 'Can Update Peers On External Torrents', 'cat' => 'trac'),
+    'acl_u_view_snatchlist' => array('lang' => 'Can View Torrent Snatch List', 'cat' => 'trac'),
 ));
 
 // Forum Permissions
@@ -504,6 +513,14 @@ $lang = array_merge($lang, array(
     'acl_m_lock'      => array('lang' => 'Can Lock Topics', 'cat' => 'topic_actions'),
     'acl_m_split'     => array('lang' => 'Can Split Topics', 'cat' => 'topic_actions'),
     'acl_m_merge'     => array('lang' => 'Can Merge Topics', 'cat' => 'topic_actions'),
+
+    'acl_m_bann_torrents'     => array('lang' => 'Can Ban Torrents On Site', 'cat' => 'trac'),
+    'acl_m_can_edit_torrents'     => array('lang' => 'Can Edit Torrents Of Other Users', 'cat' => 'trac'),
+    'acl_m_delete_comments'     => array('lang' => 'Can Delete Comments Of Other Users', 'cat' => 'comments'),
+    'acl_m_delete_torrents'     => array('lang' => 'Can Delete Torrents Of Other Users', 'cat' => 'trac'),
+    'acl_m_edit_comments'     => array('lang' => 'Can Edit Comments Of Other Users', 'cat' => 'comments'),
+    'acl_m_override_trnt_paswd'     => array('lang' => 'Can Over Ride Torrent Passwords', 'cat' => 'trac'),
+    'acl_m_view_hdn_uplder'     => array('lang' => 'Can View Hidden Uploaders', 'cat' => 'trac'),
 
     'acl_m_info'      => array('lang' => 'Can View Post Details', 'cat' => 'misc'),
 

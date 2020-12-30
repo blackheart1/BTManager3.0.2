@@ -797,7 +797,7 @@ function get_user_timezone($id) {
 if (!function_exists("processinput")){
 function processinput($name,&$input) {
         global $sqlfields, $sqlvalues;
-        if (!get_magic_quotes_gpc()) $input = addslashes($input);
+        //if (!get_magic_quotes_gpc()) $input = addslashes($input);
         $sqlfields[] = $name;
         $sqlvalues[] = ($input != "NULL") ? "'".$input."'" : "NULL";
 }

@@ -554,8 +554,10 @@ $lang = array_merge($lang, array(
     '_SAVE_DRAFT'        => 'Save Draft',
     'SEARCH_TORRENTS'    => 'Search Torrents',
     'SEARCH_FORUMS'      => 'Search Forums',
+    'SEARCH_USERS'      => 'Search Users',
     'CHANGE_FONT_SIZE'   => 'Change Font Size',
-    'CURRENT_TIME'       => 'It is currently ',
+    'CURRENT_TIME'       => 'It is currently %1$s',
+	'YOU_LAST_VISIT'	=> 'Last visit was: %s',
 
     '_BBCODE_A_HELP'        => 'Inline Uploaded Attachment: [attachment=]filename.ext[/attachment]',
     '_BBCODE_B_HELP'        => 'Bold Text: [b]text[/b]',

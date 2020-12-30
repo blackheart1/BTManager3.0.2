@@ -1,5 +1,4 @@
 <?php
-
  #############################################################################
  # IMDBPHP                              (c) Giorgos Giagas & Itzchak Rehberg #
  # written by Giorgos Giagas                                                 #
@@ -13,7 +12,7 @@
  /* $Id: imdb_config.class.php 253 2009-10-11 21:54:15Z izzy $ */
 
 // the proxy to use for connections to imdb (leave it empty for no proxy).
-// this is only supported with PEAR.
+// this is only supported with PEAR. 
 define ('PROXY', "");
 define ('PROXY_PORT', "");
 
@@ -133,13 +132,12 @@ class imdb_config {
     # error_reporting(E_ALL ^ E_NOTICE);
   }
 
-    /*To not break everyone using your library, you have to keep backwards compatibility:
-    Add the PHP5-style constructor, but keep the PHP4-style one. */
-    function imdb_config()
-    {
-        $this->__construct();
-    }
+	/*To not break everyone using your library, you have to keep backwards compatibility: 
+	Add the PHP5-style constructor, but keep the PHP4-style one. */
+	function imdb_config()
+	{
+		$this->__construct();
+	}
 
 }
-
 ?>

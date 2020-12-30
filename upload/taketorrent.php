@@ -752,72 +752,82 @@ $searchtext.=implode(" ",$subarray);
 global $force_upload; //Used to force upload even if Torrent has 0 peers or the tracker does not respond
 $seeders = $leechers = $completed = $tot_peer = 0;
 $visible = 'no';
-if($autoscrape AND $announce != "") {
+if($autoscrape AND $announce != "")
+{
+	$tmp_tracker = str_replace("announce", "scrape", $announce).((strpos($announce,"?")) ? "&" : "?")."info_hash=".urlencode($infohash);
+	$scrape = getscrapedata($tmp_tracker, false,array($infohash=>preg_replace_callback('/./s', "hex_esc", str_pad($infohash,20))));
 
-        $tmp_tracker = str_replace("announce", "scrape", $announce).((strpos($announce,"?")) ? "&" : "?")."info_hash=".urlencode($infohash);
-                        $scrape = getscrapedata($tmp_tracker, false,array($infohash=>preg_replace_callback('/./s', "hex_esc", str_pad($infohash,20))));
-                        //die();
-        if ($scrape) {
-                #Check data
-                if (!entry_exists($scrape,"files(dictionary)","Scrape")) {
-                            $template->assign_vars(array(
-                                'S_ERROR'           => true,
-                                'S_FORWARD'         => false,
-                                'TITTLE_M'          => $user->lang['BT_ERROR'],
-                                'MESSAGE'           => $user->lang['INVALID_TRACKER_RESPONCE'],
-                            ));
-                            echo $template->fetch('message_body.html');
-                            close_out();
-                } elseif (!entry_exists($scrape,"files/a".$infohash_hex."(Dictionary)","Scrape")) {
-                            $template->assign_vars(array(
-                                'S_ERROR'           => true,
-                                'S_FORWARD'         => false,
-                                'TITTLE_M'          => $user->lang['NOTICE'],
-                                'MESSAGE'           => $user->lang['SCARPE_NOT_REG'],
-                            ));
-                            $notice .= $template->fetch('message_body.html');
-                } else {
-                        #Check seeder
-                        $seeders = entry_read($scrape,"files/a".$infohash_hex."/complete(Integer)","Scrape");
-                        if ($seeders <= 0 AND $force_upload)
-                        {
-                            $template->assign_vars(array(
-                                'S_ERROR'           => true,
-                                'S_FORWARD'         => false,
-                                'TITTLE_M'          => $user->lang['NOTICE'],
-                                'MESSAGE'           => $user->lang['NO_SEEDERS'],
-                            ));
-                            $notice .= $template->fetch('message_body.html');
-                        }
-                        if ($seeders <= 0 AND !$force_upload)
-                        {
-                            $template->assign_vars(array(
-                                'S_ERROR'           => true,
-                                'S_FORWARD'         => false,
-                                'TITTLE_M'          => $user->lang['BT_ERROR'],
-                                'MESSAGE'           => $user->lang['NO_SEEDERS_NOT'],
-                            ));
-                            echo $template->fetch('message_body.html');
-                            close_out();
-                        }
-                        $leechers = (0 + entry_read($scrape,"files/a".$infohash_hex."/incomplete(Integer)","Scrape"));
-                        $completed = (0 + entry_read($scrape,"files/a".$infohash_hex."/downloaded(Integer)","Scrape"));
-                }
-                unset($scrape);
-                $visible = ($tot_peer > 0) ? "yes" : "no";
-        } elseif (!$force_upload) {
-                            $template->assign_vars(array(
-                                'S_ERROR'           => true,
-                                'S_FORWARD'         => false,
-                                'TITTLE_M'          => $user->lang['BT_ERROR'],
-                                'MESSAGE'           => $user->lang['INVALID_TRACKER_RESPONCE'],
-                            ));
-                            echo $template->fetch('message_body.html');
-                            close_out();
-        }
-} else {
-                $completed = $leechers = 0;
-                $visible = ($announce != "") ? "yes" : "no";
+	if ($scrape)
+	{
+		#Check data
+		if (!entry_exists($scrape,"files(dictionary)","Scrape"))
+		{
+			$template->assign_vars(array(
+				'S_ERROR'           => true,
+				'S_FORWARD'         => false,
+				'TITTLE_M'          => $user->lang['BT_ERROR'],
+				'MESSAGE'           => $user->lang['INVALID_TRACKER_RESPONCE'] . '<br /><br /><a href="javascript:history.go(-1)"  onMouseOver="self.status=document.referrer;return true">' . $user->lang['GO_BACK'] . '</a>',
+			));
+			echo $template->fetch('message_body.html');
+			close_out();
+		}
+		elseif (!entry_exists($scrape,"files/a".$infohash_hex."(Dictionary)","Scrape"))
+		{
+			$template->assign_vars(array(
+				'S_ERROR'           => true,
+				'S_FORWARD'         => false,
+				'TITTLE_M'          => $user->lang['NOTICE'],
+				'MESSAGE'           => $user->lang['SCARPE_NOT_REG'] . '<br /><br /><a href="javascript:history.go(-1)"  onMouseOver="self.status=document.referrer;return true">' . $user->lang['GO_BACK'] . '</a>',
+			));
+			$notice .= $template->fetch('message_body.html');
+		}
+		else
+		{
+			#Check seeder
+			$seeders = entry_read($scrape,"files/a".$infohash_hex."/complete(Integer)","Scrape");
+			if ($seeders <= 0 AND $force_upload)
+			{
+				$template->assign_vars(array(
+					'S_ERROR'           => true,
+					'S_FORWARD'         => false,
+					'TITTLE_M'          => $user->lang['NOTICE'],
+					'MESSAGE'           => $user->lang['NO_SEEDERS'] . '<br /><br /><a href="javascript:history.go(-1)"  onMouseOver="self.status=document.referrer;return true">' . $user->lang['GO_BACK'] . '</a>',
+				));
+				$notice .= $template->fetch('message_body.html');
+			}
+			if ($seeders <= 0 AND !$force_upload)
+			{
+				$template->assign_vars(array(
+					'S_ERROR'           => true,
+					'S_FORWARD'         => false,
+					'TITTLE_M'          => $user->lang['BT_ERROR'],
+					'MESSAGE'           => $user->lang['NO_SEEDERS_NOT_ALLOWED'] . '<br /><br /><a href="javascript:history.go(-1)"  onMouseOver="self.status=document.referrer;return true">' . $user->lang['GO_BACK'] . '</a>',
+				));
+				echo $template->fetch('message_body.html');
+				close_out();
+			}
+			$leechers = (0 + entry_read($scrape,"files/a".$infohash_hex."/incomplete(Integer)","Scrape"));
+			$completed = (0 + entry_read($scrape,"files/a".$infohash_hex."/downloaded(Integer)","Scrape"));
+		}
+		unset($scrape);
+		$visible = ($tot_peer > 0) ? "yes" : "no";
+	}
+	elseif (!$force_upload)
+	{
+		$template->assign_vars(array(
+			'S_ERROR'           => true,
+			'S_FORWARD'         => false,
+			'TITTLE_M'          => $user->lang['BT_ERROR'],
+			'MESSAGE'           => $user->lang['INVALID_TRACKER_RESPONCE'],
+		));
+		echo $template->fetch('message_body.html');
+		close_out();
+	}
+}
+else
+{
+	$completed = $leechers = 0;
+	$visible = ($announce != "") ? "yes" : "no";
 }
 $build = request_var('build','no');
 if($build=='' OR !$build == 'yes') $build = "no";
@@ -1200,8 +1210,8 @@ if(checkaccess("u_shout_upload") AND $shout){
 }
 
 
-$msg[] = sprintf($user->lang['SUCCESS_UPLOAD_COMPL'],$url);
 $msg = array();
+$msg[] = sprintf($user->lang['SUCCESS_UPLOAD_COMPL'],$url);
 if (isset($commnotify)){
         $sql = "INSERT INTO ".$db_prefix."_comments_notify (torrent, user) VALUES ('".$id."', ".$user->id.")";
         $db->sql_query($sql) or btsqlerror($sql);

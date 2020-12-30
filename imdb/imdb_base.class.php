@@ -1,5 +1,4 @@
 <?php
-
  #############################################################################
  # IMDBPHP                              (c) Giorgos Giagas & Itzchak Rehberg #
  # written by Giorgos Giagas                                                 #
@@ -53,7 +52,7 @@
   function monthNo($mon) {
     static $months = array("January"=>"01","February"=>"02","March"=>"03","April"=>"04",
            "May"=>"05","June"=>"06","July"=>"07","August"=>"08","September"=>"09",
-       "October"=>"10","November"=>"11","December"=>"12");
+	   "October"=>"10","November"=>"11","December"=>"12");
     return $months[$mon];
   }
 
@@ -131,8 +130,8 @@
      if ($fp) {
       $temp="";
       while (!feof ($fp)) {
-     $temp .= fread ($fp, 1024);
-     $this->page[$wt] = $temp;
+	 $temp .= fread ($fp, 1024);
+	 $this->page[$wt] = $temp;
       }
       return;
      }
@@ -226,7 +225,7 @@
    * @method purge
    */
   function purge() {
-      return;
+	  return;
     if (is_dir($this->cachedir))  {
       if (is_writable($this->cachedir)) {
         $thisdir = dir($this->cachedir);
@@ -234,7 +233,7 @@
         while( $file=$thisdir->read() ) {
           if ($file!="." && $file!="..") {
             $fname = $this->cachedir . $file;
-        if (is_dir($fname) || !preg_match("/imdb_[0-9].\b(Trailers|Plot|Title|Credits)\b/",$fname)) continue;
+	    if (is_dir($fname) || !preg_match("/imdb_[0-9].\b(Trailers|Plot|Title|Credits)\b/",$fname)) continue;
             $mod = filemtime($fname);
             if ($mod && ($now - $mod > $this->cache_expire)) unlink($fname);
           }
@@ -344,7 +343,7 @@
      $fp = $be->getResponseBody();
      if ( !$fp ){
        if ($header = $be->getResponseHeader("Location")) {
-     if ( preg_match('!\.imdb\.(com|de|it)/find\?!',$header) ) {
+	 if ( preg_match('!\.imdb\.(com|de|it)/find\?!',$header) ) {
            return $this->results($header);
            break(4);
          }
