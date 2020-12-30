@@ -804,7 +804,7 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
    * @see used by the method cast
    */
   function get_table_rows_cast ( $html, $table_start ){
-   $row_s = strpos ( $html, '<h4 name="cast" id="cast" class="dataHeaderWithBorder">');
+   $row_s = strpos ( $html, '<table class="cast_list">');
    $row_e = $row_s;
    if ( $row_s == 0 )  return FALSE;
    $endtable = strpos($html, "</table>", $row_s);
@@ -894,16 +894,30 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
   function get_cast_image($herf, $offset)
   {
 	  $html = $this->page["Credits"];
-    $row_s = strpos ( $html, '<h4 name="cast" id="cast" class="dataHeaderWithBorder">');
+    $row_s = strpos ( $html, '<table class="cast_list">');
    $row_e = $row_s;
    if ( $row_s == 0 )  return FALSE;
    $endtable = strpos($html, "</table>", $row_s);
   // echo substr($html,$row_s,$endtable - $row_s);
   $pattern = str_replace(array('  ',"\r\n", "\r", "\n"), '',substr($html,$row_s,$endtable - $row_s));
  // die($pattern);
-       if (preg_match_all("/<img .*?loadlate=\"(.*?)\".*?>/",$this->page["Credits"],$match)){
-		//die(print_r($match[1]));
-		return $match[1];
+ $tb = array();
+ $i = 0;
+       if (preg_match_all("/<img height=\"44\" width=\"32\" alt=\"(.*?) src=\"(.*?)\"(.*?)>/",$pattern,$match)){
+		   foreach($match[0] as $var){
+			   //die(print_r($var));
+			   if (preg_match_all("/<img .*?loadlate=\"(.*?)\".*?>/",$var,$mat))
+			   {
+				   //die(print_r($mat));
+				   $tb[] = $mat[1][0];
+			   }
+			   else
+			   $tb[] = $match[2][$i];
+			   $i++;
+		   }
+		//die(print_r($tb));
+		//return $match[2];
+		return $tb;
 		}
   }
 
@@ -918,6 +932,7 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
    }
    $cast_rows = $this->get_table_rows_cast($this->page["Credits"], "Cast");
 	$cast_imgs = $this->get_cast_image(strip_tags($cels[0]), $i);
+	//die(print_r($cast_imgs));
    for ( $i = 0; $i < count ($cast_rows); $i++){
                if ($i > 9) {
                 break;
