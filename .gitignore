@@ -1,2 +1,4 @@
 
 include/configdata.php
+*.torrent
+log_file.txt

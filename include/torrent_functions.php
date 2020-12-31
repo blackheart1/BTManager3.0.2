@@ -13,11 +13,12 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File include/torrent_functions.php 2018-09-22 00:00:00 Thor
+** File include/torrent_functions.php 2020-12-30 00:00:00 Black_heart
 **
 ** CHANGES
 **
 ** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
+** 2020-12-30 - Clean up code and Up date time outs on scrape
 **/
 
 if (!defined('IN_BTM'))
@@ -278,25 +279,10 @@ function getscrapedata($url, $display=false, $info = false) {
             {
                 $tracker = 'udp://' . $m[1];
                 $port = isset($m[2]) ? $m[2] : 80;
-$ports = array(21, 25, 80, 81, 110, 443, 3306, $port);
-/*foreach ($ports as $port)
-{
-    $connection = @fsockopen($tracker, $port);
-    if (is_resource($connection))
-    {
-        //echo '<h2>' . $tracker . ':' . $port . ' ' . '(' . getservbyport($port, 'udp') . ') is open.</h2>' . "\n";
-        fclose($connection);
-    }
-    else
-    {
-        //echo '<h2>' . $tracker . ':' . $port . ' is not responding.</h2>' . "\n";
-    }
-}*/
-//exit();
                 $page = "d5:filesd";
                 $transaction_id = mt_rand(0,65535);
                 $fp = fsockopen($tracker, $port, $errno, $errstr);
-                stream_set_timeout($fp, 40);
+                stream_set_timeout($fp, 65);
                 if(!$fp)
                     {
                         return false;
@@ -329,7 +315,6 @@ $ports = array(21, 25, 80, 81, 110, 443, 3306, $port);
                 //Scrape response
                 $readlength = 8 + (12 * count($info));
                 $ret = fread($fp, $readlength);
-                //echo $ret;
                 if(strlen($ret) < 1 OR strlen($ret) < 8)
                     {
                         return false;
@@ -359,12 +344,11 @@ $ports = array(21, 25, 80, 81, 110, 443, 3306, $port);
             else
             {
                 if (!$fp = @fopen($url,"rb")) return false; //Warnings are shown
-                    @stream_set_timeout($fp, 10);
+                    @stream_set_timeout($fp, 65);
                 $page = "";
                 while (!feof($fp)) $page .= @fread($fp,10000);
                 @fclose($fp);
             }
-                    //die($url);
                 if(strlen($page) < 1 OR strlen($page) < 16)
                     {
                         return false;
@@ -374,7 +358,6 @@ $ports = array(21, 25, 80, 81, 110, 443, 3306, $port);
         unset($page);
 
         if (!$scrapef) {
-                //if($display)echo "<p>"._admtrkinvalidbencode."</p>\n";
                 return false;
         }
 
@@ -460,7 +443,7 @@ function multiscrape() {
 
         //echo "Debug: il tracker è pronto\n";
 
-        if ($support == "selective" AND  count($infohashes) > 1) {
+        if ($support == "selective" AND  count($infohashes) >= 1) {
                 //echo "Debug: Tento il selettivo\n";
                 /*
                 TRIES SELECTIVE SCRAPE.

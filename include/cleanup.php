@@ -26,9 +26,9 @@ if (!defined('IN_BTM'))
     die ("Error 404 - Page Not Found");
 }
 
-//if(defined('BTM_DEBUG'))error_reporting(E_ALL);
-//else
-error_reporting(E_ALL);
+if(defined('BTM_DEBUG'))error_reporting(E_ALL);
+else
+error_reporting(0);
 if (isset($autoscrape)) {
     include_once("include/bdecoder.php");
     include_once("include/torrent_functions.php");
@@ -405,7 +405,14 @@ $db->sql_freeresult($res);
 
 $db->sql_close();
 }
-@exec("php-cli " . $sourcedir . "cron.php  >  /dev/null 2>&1 &");
+$cmd = "php " . $sourcedir . "cron.php";
+
+if (substr(php_uname(), 0, 7) == "Windows"){
+	pclose(popen("start /B ". $cmd, "r"));
+}
+else {
+	exec($cmd . " > /dev/null &"); 
+}
 //define('BTM_DEBUG', true);
 if(defined('BTM_DEBUG'))cleanup();
 else

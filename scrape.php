@@ -26,16 +26,18 @@ if (defined('IN_BTM'))die ("You can't include this file...".$self[$last_key]);
 define("IN_BTM",true);
 require_once("include/config_lite.php");
 if(!isset($HTTP_SERVER_VARS["HTTP_USER_AGENT"])) $HTTP_SERVER_VARS["HTTP_USER_AGENT"] = '0';
-if (preg_match("/(Mozilla|Opera|Lynx|Netscape)$/",$HTTP_SERVER_VARS["HTTP_USER_AGENT"])) {
+/*if (preg_match("/(Mozilla|Opera|Lynx|Netscape)$/",$HTTP_SERVER_VARS["HTTP_USER_AGENT"])) {
        die("<html><head><title>Error!</title></head><body><h3>Sorry, but this file is not suitable for browsers.</h3></body></html>");
-}
+}*/
 
 if ($stealthmode) die();
 
 function hash_where($name, $hash_arr) {
         $new_hash_arr = Array();
         foreach ($hash_arr as $hash) {
-                array_push($new_hash_arr,"'".addslashes(urldecode($hash))."'");
+			        $utf_hash = utf8_encode($hash);
+
+                array_push($new_hash_arr,"'".addslashes(urldecode($utf_hash))."'");
         }
         return $name." IN ( ".implode(",",$new_hash_arr)." )";
 }
@@ -100,8 +102,9 @@ function benc_resp_raw($x) {
         header("Pragma: no-cache");
         echo $x;
 }
-preg_match_all('/info_hash=([^&]*)/i', $_SERVER["QUERY_STRING"], $info_hash_array);
-$info_hash_array = str_replace('info_hash=','',$info_hash_array[0]);
+$info_hash_array = array();
+//preg_match_all('/info_hash=([^&]*)/i', $_SERVER["QUERY_STRING"], $info_hash_array);
+//$info_hash_array = str_replace('info_hash=','',$info_hash_array[0]);
 if (count($info_hash_array) < 1) $sql = "SELECT tracker, info_hash, seeders AS complete, completed AS downloaded, leechers AS incomplete, name FROM ".$db_prefix."_torrents WHERE tracker IS NULL AND exeem IS NULL ORDER BY id;";
 else $sql = "SELECT info_hash, seeders AS complete, completed AS downloaded, leechers AS incomplete, name FROM ".$db_prefix."_torrents WHERE ".hash_where("info_hash", $info_hash_array);
 

@@ -74,12 +74,12 @@ class acp_tracker_settings
                         'dead_torrent_interval'				=> array('lang' => '_admpdead_torrent_interval',   'validate' => 'int:0', 'type' => 'text:5:10', 'explain' => true),
 						'torrent_complaints'				=> array('lang' => '_admptorrent_complaints',		'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => true),
 						'torrent_global_privacy'			=> array('lang' => '_admptorrent_global_privacy',		'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => true),
-                        'legend2'               => 'EXTERNAL_TORRENTS',
+                        'legend2'              				=> 'EXTERNAL_TORRENTS',
  						'allow_external'					=> array('lang' => '_admpallow_external',		'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => true),
 						'autoscrape'						=> array('lang' => '_admpautoscrape',		'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => true),
                         'time_tracker_update' 				=> array('lang' => '_admptime_tracker_update',   'validate' => 'int:0', 'type' => 'text:5:10', 'explain' => true),
 						'upload_dead'						=> array('lang' => '_admpupload_dead',		'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => true),
-                        'legend3'                   => 'ACP_SUBMIT_CHANGES',
+                        'legend3'                   		=> 'ACP_SUBMIT_CHANGES',
 			)
 				);
 		$this->new_config = $config;
@@ -121,7 +121,6 @@ class acp_tracker_settings
 					}
 					$config_value = serialize($vallad_ann);
 					$this->new_config[$config_name] = $config_value;
-					//die(print_r($config_value));
 				}
 				//set_config($config_name, $config_value);
 				//trigger_error($user->lang['CONFIG_UPDATED_EMAIL'] . adm_back_link($this->u_action));

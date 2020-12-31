@@ -8,16 +8,17 @@
 ** https://github.com/blackheart1/BTManager3.0.2
 ** http://demo.btmanager.org/index.php
 ** Licence Info: GPL
-** Copyright (C) 2018
+** Copyright (C) 2020
 ** Formerly Known As phpMyBitTorrent
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File cron.php 2018-09-22 00:00:00 Thor
+** File cron.php 2020-12-30 00:00:00 Black_Heart
 **
 ** CHANGES
 **
 ** 2018-09-22 - Updated Masthead, Github, !defined('IN_BTM')
+** 2020-12-30 - Clean Up code added debuging adjust runtime
 **/
 
 if (defined('IN_BTM'))
@@ -27,10 +28,10 @@ if (defined('IN_BTM'))
 }
 define("IN_BTM",true);
 #Turn off error reporting because it well not be seen
-error_reporting(E_ALL);
+error_reporting(0);
 #Attempt to expand run time to allow for long scrape times
 if( !ini_get('safe_mode') ){
-    set_time_limit(40);
+    set_time_limit(80);
 }
 require_once("common.php");
 require_once("include/bdecoder.php");
@@ -42,12 +43,6 @@ if (!isset($config['cron_lock']))
 {
     set_config('cron_lock', '0', true);
 }
-          #$OUTPUT = $cron_type . '123';
-          #$fp = fopen($sourcedir."log_file.txt","w");
-          #fputs($fp, $OUTPUT);
-          #fclose($fp);
-          #@chmod($sourcedir."log_file.txt", 0755);
-
 if ($config['cron_lock'])
 {
     // if the other process is running more than an hour already we have to assume it
@@ -78,6 +73,7 @@ define('CRON_ID', time() . ' ' . RandomAlpha(32));
         }
         else if ($config['warnings_expire_days'] && ($time_now - $config['warnings_gc'] > $config['warnings_last_gc']))
         {
+			// Tidy the warnings
             $cron_type = 'tidy_warnings';
         }
         else if ($time_now - $config['database_gc'] > $config['database_last_gc'])
@@ -90,20 +86,16 @@ define('CRON_ID', time() . ' ' . RandomAlpha(32));
             // Tidy the search
             $cron_type = 'tidy_search';
         }
-        /*
-        else if ($time_now - $config['session_gc'] > $config['session_last_gc'])
-        {
-            $cron_type = 'tidy_sessions';
-        }*/
-$sql = 'UPDATE ' . $db_prefix."_settings
-    SET config_value = '" . $db->sql_escape(CRON_ID) . "'
-    WHERE config_name = 'cron_lock' AND config_value = '" . $db->sql_escape($config['cron_lock']) . "'";
-$db->sql_query($sql);
-// another cron process altered the table between script start and UPDATE query so exit
-if ($db->sql_affectedrows() != 1)
-{
-    exit;
-}
+	    if(defined('BTM_DEBUG'))add_log('admin','LOG_CRON',$cron_type);
+		$sql = 'UPDATE ' . $db_prefix."_settings
+			SET config_value = '" . $db->sql_escape(CRON_ID) . "'
+			WHERE config_name = 'cron_lock' AND config_value = '" . $db->sql_escape($config['cron_lock']) . "'";
+		$db->sql_query($sql);
+		// another cron process altered the table between script start and UPDATE query so exit
+		if ($db->sql_affectedrows() != 1)
+		{
+			exit;
+		}
 switch ($cron_type)
 {
     case 'queue':
