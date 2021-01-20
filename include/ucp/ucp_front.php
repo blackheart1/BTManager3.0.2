@@ -74,7 +74,7 @@ $template->assign_vars(array(
         'POSTS_DAY'             => sprintf('%.2f posts per day', $posts_per_day),
         'POSTS_PCT'             => sprintf('%.2f%% of all posts', $percentage),
         'ACTIVE_FORUM'          => (isset($active_f_name['forum_name'])) ? $active_f_name['forum_name'] : '',
-        'ACTIVE_FORUM_POSTS'    => ($active_f_count == 0) ? sprintf('%d Post', 0) :($active_f_count == 1) ? sprintf('%d Post', 1) : sprintf('%d Posts', $most_in_f['posts']),
+        'ACTIVE_FORUM_POSTS'    => (($active_f_count == 0) ? sprintf('%d Post', 0) :($active_f_count == 1)) ? sprintf('%d Post', 1) : sprintf('%d Posts', $most_in_f['posts']),
         'ACTIVE_FORUM_PCT'      => sprintf($l_active_pct, $active_f_pct),
         'ACTIVE_TOPIC'          => (isset($active_t_name['topic_title'])) ? $active_t_name['topic_title'] : '',
         'ACTIVE_TOPIC_POSTS'    => (isset($most_in['posts'])) ? ($most_in['posts'] == 1) ? sprintf('%d Post', 1) : sprintf('%d Posts', $most_in['posts']) : '',

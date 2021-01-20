@@ -160,6 +160,11 @@ function myErrorHandler($errno, $errstr, $errfile, $errline)
 		include_once'include/class.template.php';
 		require_once("include/actions.php");
 		require_once("include/user.functions.php");
+		if(!$template)
+		{
+			$template = new Template();
+			set_site_var($user->lang['NOTICE']);
+		}
 			$errstr = (!empty($user->lang[$errstr])) ? $user->lang[$errstr] : $errstr;
 			$msg_title = (!isset($errstr)) ? $user->lang['INFORMATION'] : ((!empty($user->lang[$errstr])) ? $user->lang[$errstr] : $errstr);
 			$template->assign_vars(array(

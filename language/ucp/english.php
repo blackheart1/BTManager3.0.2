@@ -320,6 +320,23 @@ $lang = array_merge($lang, array(
     'SAVE_DATE'                => 'Date',
     'SAVE'                     => 'Save',
     'DELETE_RULE'              => 'Delete Rule',
+    'DUPE_IP'                  => 'Duplicate IP in use',
+	'TOO_LONG'						=> 'The value you entered is too long.',
+	'TOO_SHORT'						=> 'The value you entered is too short.',
+	'INVALID_CHARS_USERNAME'	=> 'The username contains forbidden characters.',
+	'INVALID_CHARS_NEW_PASSWORD'=> 'The password does not contain the required characters.',
+	'USERNAME_TAKEN_USERNAME'		=> 'The username you entered is already in use, please select an alternative.',
+	'USERNAME_DISALLOWED_USERNAME'	=> 'The username you entered has been disallowed or contains a disallowed word. Please choose a different name.',
+	'PASS_TYPE_ALPHA_EXPLAIN'	=> 'Password must be between %1$s and %2$s long, must contain letters in mixed case and must contain numbers.',
+	'PASS_TYPE_ANY_EXPLAIN'		=> 'Must be between %1$s and %2$s.',
+	'PASS_TYPE_CASE_EXPLAIN'	=> 'Password must be between %1$s and %2$s long and must contain letters in mixed case.',
+	'PASS_TYPE_SYMBOL_EXPLAIN'	=> 'Password must be between %1$s and %2$s long, must contain letters in mixed case, must contain numbers and must contain symbols.',
+	'USERNAME_ALPHA_ONLY_EXPLAIN'	=> 'Username must be between %1$s and %2$s long and use only alphanumeric characters.',
+	'USERNAME_ALPHA_SPACERS_EXPLAIN'=> 'Username must be between %1$s and %2$s long and use alphanumeric, space or -+_[] characters.',
+	'USERNAME_ASCII_EXPLAIN'		=> 'Username must be between %1$s and %2$s long and use only ASCII characters, so no special symbols.',
+	'USERNAME_LETTER_NUM_EXPLAIN'	=> 'Username must be between %1$s and %2$s long and use only letter or number characters.',
+	'USERNAME_LETTER_NUM_SPACERS_EXPLAIN'=> 'Username must be between %1$s and %2$s long and use letter, number, space or -+_[] characters.',
+	'USERNAME_CHARS_ANY_EXPLAIN'	=> 'Length must be between %1$s and %2$s.',
 ));
 
 ?>

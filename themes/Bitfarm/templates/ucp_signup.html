@@ -56,7 +56,7 @@ function check_username_ajax(username)
                             <table class="tablebg" width="100%" cellspacing="0">
                                 {HIDDEN}
                                 <tr>
-                                    <td class="row1" width="35%">{L_USER_NAME}</td>
+                                    <td class="row1" width="35%">{L_USER_NAME}<br /><span class="gensmall">{L_NAME_CHARS_EXPLAIN}</span></td>
                                     <td class="row2">
                                         <p><input autocomplete="off" id="username" type="text" name="username" size="60" /><span id="user-result"></span></p>
                                     </td>
@@ -72,7 +72,7 @@ function check_username_ajax(username)
                                 <tr>
                                     <td class="row1" width="35%">
                                         <p>{L_PASSWORD}</p><br />
-                                        <span class="gensmall">{L_PASSWORD_EXP}</span>
+                                        <span class="gensmall">{L_CHANGE_PASSWORD_EXPLAIN}</span>
                                     </td>
                                     <td class="row2">
                                         <p><input type="password" name="password" size="60" /></p>

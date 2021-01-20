@@ -50,7 +50,7 @@ $db->sql_freeresult($cfgres);
         $do                 = request_var('do', '');
 function is__writable($path)
 {
-    if ($path{strlen($path)-1}=='/') return is__writable($path.uniqid(mt_rand()).'.tmp');
+    if ($path[strlen($path)-1]=='/') return is__writable($path.uniqid(mt_rand()).'.tmp');
 
     if (file_exists($path)) {
         if (!($f = @fopen($path, 'r+'))) return false;

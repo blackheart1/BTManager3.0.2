@@ -96,6 +96,8 @@ if ($disclaimer_check) {
         $template->assign_vars(array(
                 'U_ACTION'          => './user.php',
                 'HIDDEN'            => build_hidden_fields($hide),
+					'L_NAME_CHARS_EXPLAIN'		=> sprintf($user->lang[$config['allow_name_chars'] . '_EXPLAIN'],$config['min_name_chars'],$config['max_name_chars']),
+					'L_CHANGE_PASSWORD_EXPLAIN'	=> sprintf($user->lang[$config['pass_complex'] . '_EXPLAIN'], $config['min_pass_chars'],$config['max_pass_chars']),
         ));
 echo $template->fetch('ucp_signup.html');
 close_out();

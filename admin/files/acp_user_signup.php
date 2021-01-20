@@ -34,9 +34,6 @@ class acp_user_signup
 		global $config,$db_prefix, $phpEx;
 		global $pmbt_cache;
 		$user->set_lang('admin/acp_site_settings',$user->ulanguage);
-		$config['global_min_ratio'] = '1.00';
-		$config['min_name_chars'] = '5';
-		$config['max_name_chars'] = '15';
 
 		$action	= request_var('action', '');
 		$submit = (isset($_POST['submit'])) ? true : false;
@@ -101,7 +98,9 @@ class acp_user_signup
 			$this->new_config[$config_name] = $config_value = $cfg_array[$config_name];
 			if ($submit)
 			{
-				//set_config($config_name, $config_value);
+            	add_log('admin', 'LOG_CONFIG_REGISTRATION');
+				set_config($config_name, $config_value);
+				trigger_error($user->lang['_admsaved'] . adm_back_link($this->u_action));
 			}
 		}
 		$template->assign_vars(array(

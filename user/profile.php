@@ -238,7 +238,7 @@ $online = ((time() - $userrow['lststamp']) < 600 ?  'on' : 'off');
     {
         $email = '';
     }
-    $user_owner = (!is_founder($id)? true : ($user->user_type==3)? true : false);
+    $user_owner = (!is_founder($id)? true : (($user->user_type==3)? true : false));
 $l_active_pct = ($user->user && $userrow["id"] == $user->id) ? '%.2f%% of your posts' : '%.2f%% of user\'s posts';
 $active_t_pct = ($userrow["forumposts"]) ? ($most_in['posts'] / $userrow["forumposts"]) * 100 : 0;
 $active_f_pct = ($userrow["forumposts"]) ? ($most_in_f['posts'] / $userrow["forumposts"]) * 100 : 0;
@@ -248,7 +248,7 @@ $template->assign_vars(array(
         'CP_UID'                => $userrow["id"],
         'CP_UUPLOADED'          => mksize($userrow["uploaded"]),
         'CP_UDOWNLOADED'        => mksize($userrow["downloaded"]),
-        'CP_EDIT_USER'          => ($user->id == $userrow["id"]) ? true : ($userrow["user_type"] == 3 && !$user->user_type == 3)? false : checkaccess('m_edit_user'),
+        'CP_EDIT_USER'          => ($user->id == $userrow["id"]) ? true : (($userrow["user_type"] == 3 && !$user->user_type == 3)? false : checkaccess('m_edit_user')),
         'CP_URATIO'             => get_u_ratio($userrow["uploaded"], $userrow["downloaded"]),
         'CP_UCOLOR'             => getusercolor($userrow["can_do"]),
         'CP_UAVATAR'            => gen_avatar($userrow["id"]),

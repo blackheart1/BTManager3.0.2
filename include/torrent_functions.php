@@ -504,9 +504,11 @@ function multiscrape() {
                 $root->set_attribute("type","Dictionary");
                 $files = $scrape->create_element("files");
                 $files->set_attribute("type","Dictionary");
+                $scrape_valid = false;
 
                 foreach ($infohashes as $hash) {
                          if(!$scr = getscrapedata ($scrapeurl.((strpos($scrapeurl,"?")) ? "&" : "?")."info_hash=".urlencode($hash), false,array($hash=>preg_replace_callback('/./s', "hex_esc", str_pad($hash,20))))) continue;
+                                $scrape_valid = true;
                         $hash_hex = preg_replace_callback('/./s', "hex_esc", str_pad($hash,20));
                         $hash_hex = 'a'.$hash_hex;
 
@@ -540,6 +542,9 @@ function multiscrape() {
 
                         ob_flush();
                         sleep(2);
+                }
+                if (!$scrape_valid) {
+                        $db->sql_query("UPDATE ".$db_prefix."_trackers SET status = 'dead' WHERE id = '".$id."';");
                 }
 
                 $root->append_child($files);

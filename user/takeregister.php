@@ -28,7 +28,6 @@ if (!defined('IN_BTM'))
 
 require_once("common.php");
 $user->set_lang('profile',$user->ulanguage);
-require_once("include/recaptchalib.php");
 $template = new Template();
 $errmsg = array();
 $username                                               = utf8_normalize_nfc(request_var('username', '', true));
@@ -48,6 +47,34 @@ $gfxcode                                                = request_var('gfxcode',
                 $responseKeys = json_decode($response,true);
                 $recap_pass = intval($responseKeys["success"]) !== 1 ? false : true;
             }
+		$data = array(
+			'username'			=> $username,
+			'new_password'		=> $password,
+			'password_confirm'	=> $cpassword,
+			'email'				=> strtolower($email),
+		);
+			$errmsg = validate_data($data, array(
+				'username'			=> array(
+					array('string', false, $config['min_name_chars'], $config['max_name_chars']),
+					array('username', '')),
+				'new_password'		=> array(
+					array('string', false, $config['min_pass_chars'], $config['max_pass_chars']),
+					array('password')),
+				'password_confirm'	=> array('string', false, $config['min_pass_chars'], $config['max_pass_chars']),
+				'email'				=> array(
+					array('string', false, 6, 60),
+					array('email')),
+			));
+
+			// Replace "error" strings with their real, localised form
+			$errmsg = array_map(array($user, 'lang'), $errmsg);
+			if (!sizeof($errmsg))
+			{
+				if ($data['new_password'] != $data['password_confirm'])
+				{
+					$errmsg[] = $user->lang['ERR_PASS_NOT_MATCH'];
+				}
+			}
 if (!isset($username) OR $username == "")
         $errmsg[] = $user->lang['NO_USERNAME_SET'];
 if (!isset($password) OR $password == "")
@@ -55,18 +82,8 @@ if (!isset($password) OR $password == "")
 if (!isset($email) OR $email == "")
         $errmsg[] = $user->lang['NO_EMAIL_SET'];
 if (count($errmsg) == 0) {
-        if ($db->sql_numrows($db->sql_query("SELECT * FROM ".$db_prefix."_users WHERE username ='".$db->sql_escape($username)."';")) != 0)
-                $errmsg[] = $user->lang['ERR_USER_ACSEST'];
-        if (!is_email($email))
-                $errmsg[] = $user->lang['ERR_EMAIL_NOT_VALID'];
-        if ($db->sql_numrows($db->sql_query("SELECT * FROM ".$db_prefix."_users WHERE email ='".$db->sql_escape($email)."';")) != 0)
-                $errmsg[] = $user->lang['ERR_EMAIL_ACSEST'];
-        //if ($db->sql_numrows($db->sql_query("SELECT * FROM ".$db_prefix."_users WHERE lastip = '".sprintf("%u",ip2long(getip()))."';")) != 0)
-               // $errmsg[] = "Duplicate Ip In use";
-        if (strlen($password) < 5)
-                $errmsg[] = $user->lang['ERR_PASS_TO_SHORT'];
-        if ($password != $cpassword)
-                $errmsg[] = $user->lang['ERR_PASS_NOT_MATCH'];
+        if ($config['limit_acn_ip'] AND $db->sql_numrows($db->sql_query("SELECT * FROM ".$db_prefix."_users WHERE lastip = '".sprintf("%u",ip2long(getip()))."';")) != 0)
+                $errmsg[] = $user->lang['DUPE_IP'];
         if ($disclaimer_check AND $disclaimer != "yes")
                 $errmsg[] = $user->lang['DISCL_NOT_ACCP'];
                 #GFX Check
@@ -108,6 +125,15 @@ if($force_passkey){
                 $passkey = NULL;
                 }
 $act_key = RandomAlpha(32);
+/*if ($use_rsa)
+{
+	$password = $rsa->encrypt($password);
+}
+else
+{
+	$password = md5($password);
+}
+die($password);*/
 if($conferm_email)$sql = "INSERT INTO ".$db_prefix."_users (username, clean_username, email, password, act_key, can_do, uploaded, regdate, user_type" . $passkeyrow . ") VALUES ('".$db->sql_escape($username)."', '".$db->sql_escape($username_clean)."', '".$db->sql_escape($email)."', '".md5($password)."', '".$act_key."', " . $default_group['group_id'] . ", '".$give_sign_up_credit."', NOW(), 1 " . $passkey .");";
 else
 $sql = "INSERT INTO ".$db_prefix."_users (username, clean_username, email, password, act_key, can_do, uploaded, regdate, user_type" . $passkeyrow . ", active) VALUES ('".$db->sql_escape($username)."', '".$db->sql_escape($username_clean)."', '".$db->sql_escape($email)."', '".md5($password)."', '".$act_key."', " . $default_group['group_id'] . ", '".$give_sign_up_credit."', NOW(), 0" . $passkey .", 1);";

@@ -29,7 +29,7 @@ function check_username_ajax(username)
             <form method="post" action="{U_ACTION}">
             {HIDDEN}
             <dl>
-                <dt><label for="images1">{L_USER_NAME}:</label></dt>
+                <dt><label for="images1">{L_USER_NAME}:</label><br /><span>{L_NAME_CHARS_EXPLAIN}</span></dt>
                 <dd>
                     <input autocomplete="off" id="username" type="text" name="username" size="60" /><br />
                     <span id="user-result"></span>
@@ -43,7 +43,7 @@ function check_username_ajax(username)
             </dl>
             <dl>
                 <dt><label for="password">{L_PASSWORD}:</label><br />
-                    <span class="gensmall">{L_PASSWORD_EXP}</span>
+                    <span class="gensmall">{L_CHANGE_PASSWORD_EXPLAIN}</span>
                 </dt>
                 <dd>
                     <input type="password" name="password" size="60" />

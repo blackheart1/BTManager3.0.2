@@ -1937,7 +1937,7 @@ function validate_password($password)
         {
             if (!preg_match('#' . $char . '#u', $password))
             {
-                return 'INVALID_CHARS';
+                return 'INVALID_CHARS_NEW_PASSWORD';
             }
         }
     }
@@ -1947,7 +1947,7 @@ function validate_password($password)
         {
             if (mb_ereg($char, $password) === false)
             {
-                return 'INVALID_CHARS';
+                return 'INVALID_CHARS_NEW_PASSWORD';
             }
         }
     }
@@ -2021,7 +2021,7 @@ function validate_username($username, $allowed_username = false)
     // ... Fast Checks First.
     if (strpos($username, '&quot;') !== false || strpos($username, '"') !== false || empty($clean_username))
     {
-        return 'INVALID_CHARS';
+        return 'INVALID_CHARS_USERNAME';
     }
 
     $mbstring = $pcre = false;
@@ -2099,7 +2099,7 @@ function validate_username($username, $allowed_username = false)
     {
         if (!preg_match('#^' . $regex . '$#u', $username))
         {
-            return 'INVALID_CHARS';
+            return 'INVALID_CHARS_USERNAME';
         }
     }
     else if ($mbstring)
@@ -2108,7 +2108,7 @@ function validate_username($username, $allowed_username = false)
 
         if (!mb_ereg_search())
         {
-            return 'INVALID_CHARS';
+            return 'INVALID_CHARS_USERNAME';
         }
     }
 
@@ -2123,7 +2123,7 @@ function validate_username($username, $allowed_username = false)
 
     if ($row)
     {
-        return 'USERNAME_TAKEN';
+        return 'USERNAME_TAKEN_USERNAME';
     }
 
     $sql = 'SELECT group_name
@@ -2137,7 +2137,7 @@ function validate_username($username, $allowed_username = false)
 
     if ($row)
     {
-        return 'USERNAME_TAKEN';
+        return 'USERNAME_TAKEN_USERNAME';
     }
 
     $bad_usernames = $pmbt_cache->obtain_disallowed_usernames();
@@ -2146,7 +2146,7 @@ function validate_username($username, $allowed_username = false)
     {
         if (preg_match('#^' . $bad_username . '$#', $clean_username))
         {
-            return 'USERNAME_DISALLOWED';
+            return 'USERNAME_DISALLOWED_USERNAME';
         }
     }
 
@@ -2554,7 +2554,7 @@ function bterror($error, $title = 'GEN_ERROR', $fatal = true, $redirect = false,
 
 function loginrequired($level, $guickclose = false)
 {
-    global $user, $template, $db, $db_prefix, $gfx_check, $autoscrape, $recap_puplic_key, $recap_private_key;
+    global $user, $template, $db, $db_prefix, $gfx_check, $autoscrape, $recap_puplic_key, $recap_private_key,$rsa,$use_rsa;
 
     require_once("include/recaptchalib.php");
 
@@ -2634,6 +2634,15 @@ function loginrequired($level, $guickclose = false)
             }
             else
             {
+					/*if ($use_rsa)
+					{
+						$password = $rsa->encrypt($password);
+					}
+					else
+					{
+						$password = md5($password);
+					}
+					die($password);*/
                 $result = $db->sql_query("SELECT active FROM " . $db_prefix . "_users WHERE clean_username = '" . $db->sql_escape(strtolower($username)) . "' AND password = '" . md5($password) . "'");
 
                 if ($db->sql_numrows($result) == 1)

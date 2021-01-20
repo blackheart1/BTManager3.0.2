@@ -83,7 +83,7 @@ if($op == 'view_peers_page')
                 {
                     $row = $db->sql_fetchrow($res);
 
-                    if ($row["password"] != "" AND !checkaccess("m_over_ride_password") AND $password != $row["password"] AND (!$user->user OR $user->id != $row["owner"]))
+                    if ($row["password"] != "" AND !$auth->acl_get("m_override_trnt_paswd") AND $password != $row["password"] AND (!$user->user OR $user->id != $row["owner"]))
                     {
                         $template->assign_vars(array(
                           'ACTION'         => 'error',
@@ -165,7 +165,7 @@ if($op == 'view_peers_page')
                     $client = $row["client"]." ".$row["clientversion"];
                     if ($row["client"] != "" AND is_readable("client_icons/".$row["client"].".gif")) $client_img = "<img src=\"client_icons/".htmlspecialchars($row["client"]).".gif\" alt=\"".$client."\" title=\"".$client."\" />";
                     else $client_img =  "<img src=\"client_icons/Unknown.gif\" alt=\"".$client."\" title=\"".$client."\" />";
-                    if (!$user->admin) $ip = preg_replace('/\.\d+$/', ".xxx", long2ip($row["ip"]));
+                    if (!$auth->acl_get("a_view_ips")) $ip = preg_replace('/\.\d+$/', ".xxx", long2ip($row["ip"]));
                     else $ip = long2ip($row["ip"]);
                     $template->assign_block_vars('peer_list', array(
                             'UPLOADED'       => mksize($row["uploaded"]),
@@ -182,8 +182,8 @@ if($op == 'view_peers_page')
                             'START_TIME'     => mkprettytime(time()-$row["started_ts"]),
                             'IDLE_TIME'      => mkprettytime(time()-$row["last_action_ts"]),
                             'USER_IP'        => $ip,
-                            //'AVATAR'         => gen_avatar($row["uid"]),
-                            'USER_HOST'      => ((checkaccess("a_see_ip"))? gethostbyaddr($ip) : false),
+                            'AVATAR'         => gen_avatar($row["uid"]),
+                            'USER_HOST'      => (($auth->acl_get("a_view_ips"))? gethostbyaddr($ip) : false),
                             'ONLINE'         => (($row["user_lststamp"] > (time()-300))? true : false),
                             'RANK_IMG'       => '<img src="themes/' . $theme . '/pics/group/' . $row["can_do"] . '.png" title="' . ((!empty($user->lang[$row['lname']]))?$user->lang[$row['lname']]:$row['lname']) . '" alt="' . ((!empty($user->lang[$row['lname']]))?$user->lang[$row['lname']]:$row['lname']) . '">',
                             'IS_USER'        => (($row["uid"] != 0)? true : false),
@@ -228,7 +228,7 @@ if($op == 'view_nfo_page')
                 if ($db->sql_numrows($res) < 1)
                 {
                     $row = $db->sql_fetchrow($res);
-                    if ($row["password"] != "" AND !checkaccess("m_over_ride_password") AND $password != $row["password"] AND (!$user->user OR $user->id != $row["owner"]))
+                    if ($row["password"] != "" AND !$auth->acl_get("m_override_trnt_paswd") AND $password != $row["password"] AND (!$user->user OR $user->id != $row["owner"]))
                     {
                         $template->assign_vars(array(
                           'ACTION'         => 'error',
@@ -275,7 +275,7 @@ if($op == 'view_files_page')
                 if ($db->sql_numrows($res) < 1)
                 {
                     $row = $db->sql_fetchrow($res);
-                    if ($row["password"] != "" AND !checkaccess("m_over_ride_password") AND $password != $row["password"] AND (!$user->user OR $user->id != $row["owner"]))
+                    if ($row["password"] != "" AND !$auth->acl_get("m_override_trnt_paswd") AND $password != $row["password"] AND (!$user->user OR $user->id != $row["owner"]))
                     {
                         $template->assign_vars(array(
                           'ACTION'         => 'error',
@@ -345,7 +345,7 @@ if($op == 'view_rate_page')
                 if ($db->sql_numrows($res) < 1)
                 {
                     $row = $db->sql_fetchrow($res);
-                    if ($row["password"] != "" AND !checkaccess("m_over_ride_password") AND $password != $row["password"] AND (!$user->user OR $user->id != $row["owner"]))
+                    if ($row["password"] != "" AND !$auth->acl_get("m_override_trnt_paswd") AND $password != $row["password"] AND (!$user->user OR $user->id != $row["owner"]))
                     {
                         $template->assign_vars(array(
                           'ACTION'         => 'error',
@@ -512,7 +512,7 @@ if($op == 'view_coments_page')
                 if ($db->sql_numrows($res) < 1)
                 {
                     $row = $db->sql_fetchrow($res);
-                    if ($row["password"] != "" AND !checkaccess("m_over_ride_password") AND $password != $row["password"] AND (!$user->user OR $user->id != $row["owner"]))
+                    if ($row["password"] != "" AND !$auth->acl_get("m_override_trnt_paswd") AND $password != $row["password"] AND (!$user->user OR $user->id != $row["owner"]))
                     {
                         $template->assign_vars(array(
                           'ACTION'         => 'error',
@@ -547,7 +547,7 @@ if($op == 'view_coments_page')
                             added ASC;";
                 $res = $db->sql_query($sql) or btsqlerror($sql);
                             $template->assign_vars(array(
-                          'CAN_COMMENT' => checkaccess("u_can_comment"),
+                          'CAN_COMMENT' => $auth->acl_get("u_can_comment"),
                           'T_ID'        => $id,
                           'ACTION'      => $op,
                             ));
@@ -563,10 +563,10 @@ if($op == 'view_coments_page')
                 // Parse the message and subject
                 //$comment_txt = bbcode_nl2br($comment_txt);
                 //$comment_txt = parse_smiles($comment_txt);
-                $can_edit = checkaccess("u_edit_own_comments");
-                if(checkaccess("m_edit_comments")) $can_edit = true;
-                $can_del = checkaccess("u_delete_comments");
-                if(checkaccess("m_delete_comments")) $can_del = true;
+                $can_edit = $auth->acl_get("u_edit_comments");
+                if($auth->acl_get("m_edit_comments")) $can_edit = true;
+                $can_del = $auth->acl_get("u_delete_comments");
+                if($auth->acl_get("m_delete_comments")) $can_del = true;
 
                         $template->assign_block_vars('comments', array(
                                             'USER_ID'      => $comment["uid"],
@@ -670,7 +670,7 @@ if($op == 'view_details_page')
         $can_access = false;
         }
         $infohash_hex = preg_replace_callback('/./s', "hex_esc", str_pad(utf8_decode($torrent["info_hash"]),20));
-        if ($torrent["password"] != "" AND !checkaccess("m_over_ride_password") AND $password != $torrent["password"] AND (!$user->user OR $user->id != $torrent["owner"])) {
+        if ($torrent["password"] != "" AND !$auth->acl_get("m_override_trnt_paswd") AND $password != $torrent["password"] AND (!$user->user OR $user->id != $torrent["owner"])) {
             if ($password != "") { //Means that password is wrong
                             $template->assign_vars(array(
                               'ERROR'   => false,
@@ -712,23 +712,23 @@ if($op == 'view_details_page')
         $torrent_link = $rxport_link = $magnet_link = $edit_link = $delete_link = $ban_link = $torrent_lock = $auth_needed = false;
         $can_edit=$can_delete=true;
         $can_ban = false;
-        if ($torrent['owner'] == $user->id AND !checkaccess("u_edit_own_torrents"))
+        if ($torrent['owner'] == $user->id AND !$auth->acl_get("u_edit_torrents"))
         {
         $can_edit=false;
         }
-        if ($torrent['owner'] == $user->id AND !checkaccess("u_delete_own_torrents"))
+        if ($torrent['owner'] == $user->id AND !$auth->acl_get("u_delete_torrents"))
         {
         $can_delete=false;
         }
-        if ($torrent['owner'] != $user->id AND !checkaccess("m_delete_others_torrents"))
+        if ($torrent['owner'] != $user->id AND !$auth->acl_get("m_delete_torrents"))
         {
         $can_delete=false;
         }
-        if ($torrent['owner'] != $user->id AND !checkaccess("m_can_edit_others_torrents"))
+        if ($torrent['owner'] != $user->id AND !$auth->acl_get("m_can_edit_torrents"))
         {
         $can_edit=false;
         }
-        if (checkaccess("m_bann_torrents"))$can_ban = true;
+        if ($auth->acl_get("m_bann_torrents"))$can_ban = true;
         $passlink = "";
         if ($torrent["password"] != "") $passlink = "&amp;password=".urlencode($torrent["password"]);
         $maglinks_b = array();
@@ -807,21 +807,21 @@ if($op == 'view_details_page')
                 $u_name = htmlspecialchars($torrent["ownername"]);
                 $u_color = $torrent["color"];
                 $u_id = $torrent["owner"];
-                $u_host = ((checkaccess("a_see_ip"))? htmlspecialchars($torrent["user_host"]) : false);
+                $u_host = (($auth->acl_get("a_view_ips"))? htmlspecialchars($torrent["user_host"]) : false);
                         break;
                 }
                 case 1: {
-                        if (checkaccess("see_hidden_uploader"))
+                        if ($auth->acl_get("m_view_hdn_uplder"))
                         {
                             $u_name = htmlspecialchars($torrent["ownername"]);
                             $u_color = $torrent["color"];
                             $u_id = $torrent["owner"];
-                            $u_host = ((checkaccess("a_see_ip"))? htmlspecialchars($torrent["user_host"]) : false);
+                            $u_host = (($auth->acl_get("a_view_ips"))? htmlspecialchars($torrent["user_host"]) : false);
                         }
                         else $private = true;
                 }
                 case 2: {
-                        $u_host = ((checkaccess("a_see_ip"))? htmlspecialchars($torrent["user_host"]) : false);
+                        $u_host = (($auth->acl_get("a_view_ips"))? htmlspecialchars($torrent["user_host"]) : false);
                         $private = true;
                 }
         }
@@ -839,7 +839,7 @@ if($op == 'view_details_page')
                     }
         }
         $scrape_url = false;
-        if (checkaccess("u_update_peers") AND $torrent["tracker"] != "")
+        if ($auth->acl_get("u_update_peers") AND $torrent["tracker"] != "")
         {
             $scrape_url = "scrape-external.php?id=".$torrent["id"]."&amp;tracker=".$torrent["tracker"]."&amp;back=yes";
         }
@@ -895,14 +895,14 @@ if($op == 'view_details_page')
                                 'UPLOADER_HIDE'    => $private,
                                 'LAST_ACTION'      => mkprettytime($torrent["lastseed"]),
 
-                                'SNATCH_LIST'      => ((checkaccess("u_can_view_snatchlist"))?(($torrent["tracker"] == "")?true : false) : false),
+                                'SNATCH_LIST'      => (($auth->acl_get('u_view_snatchlist'))?(($torrent["tracker"] == "")?true : false) : false),
 
                                 'NUKED'            => $user->lang[strtoupper($torrent["nuked"])],
                                 'NUKED_REASON'     => $torrent["nukereason"],
 
-                                'RESEED'           => ((checkaccess("u_requist_reseed"))?(($torrent["tracker"] == "")?true : false) : false),
+                                'RESEED'           => (($auth->acl_get("u_requist_reseed"))?(($torrent["tracker"] == "")?true : false) : false),
 
-                                'SHOW_PASS_WORD'   => ((checkaccess("m_over_ride_password") AND $torrent["password"] != "" AND ($user->id == $torrent["owner"] OR $user->premium))? htmlspecialchars($torrent["password"]) : false),
+                                'SHOW_PASS_WORD'   => (($auth->acl_get("m_override_trnt_paswd") AND $torrent["password"] != "" AND ($user->id == $torrent["owner"] OR $user->premium))? htmlspecialchars($torrent["password"]) : false),
 
                                 'PASSWORD_LINK'    => $siteurl . "/details.php?id=" . $torrent_var . "&amp;password=" . urlencode($torrent["password"]),
                         ));
@@ -1000,7 +1000,7 @@ if($op == 'get_imdb')
                 if ($db->sql_numrows($res) < 1)
                 {
                     $row = $db->sql_fetchrow($res);
-                    if ($row["password"] != "" AND !checkaccess("m_over_ride_password") AND $password != $row["password"] AND (!$user->user OR $user->id != $row["owner"]))
+                    if ($row["password"] != "" AND !$auth->acl_get("m_override_trnt_paswd") AND $password != $row["password"] AND (!$user->user OR $user->id != $row["owner"]))
                     {
                         $template->assign_vars(array(
                                 'ACTION'         => 'error',

@@ -25,8 +25,8 @@ if (!defined('IN_BTM'))
     require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
     die ("Error 404 - Page Not Found");
 }
-
-$pmbt_cache = new pmbt_cache();
+require_once("include/cache/file.php");
+$pmbt_cache = new file();
 class pmbt_cache {
 
     var $cache_dir = './';
@@ -67,58 +67,12 @@ class pmbt_cache {
         }
        function get_sql($file, $expire = 60)
        {
-           if($expire > $this->expire)$expire = $expire;
-           else
-           $expire = $this->expire;
-          if (@file_exists($this->cache_dir."sql_".md5($file).".php"))
-          {
-                  if(@filemtime($this->cache_dir."sql_".md5($file).".php") < (time() - $expire))
-                 {
-                 $this->remove_file("sql_".md5($file).".php");
-                 return false;
-                 }
-
-                 $record = unserialize(file_get_contents($this->cache_dir."sql_".md5($file).".php"));
-                 return $record;
-          }else{
-                 return false;
-          }
-       }
-       function get($file, $expire = 60)
-       {
-       if($expire > $this->expire)$expire = $expire;
-       else
-       $expire = $this->expire;
-          if (file_exists($this->cache_dir.$file.".php"))
-          {
-                  if(filemtime($this->cache_dir.$file.".php") < (time() - $expire))
-                 {
-                 $this->remove_file($file.".php");
-                 return false;
-                 }
-
-                 $record = unserialize(file_get_contents($this->cache_dir.$file.".php"));
-                 return $record;
-          }else{
-                 return false;
-          }
+		   return $this->get("sql_".md5($file), $expire);
        }
        function destroy($filename)
        {
            return $this->remove_file($filename . '.php');
        }
-       function remove_file($filename)
-        {
-          if (file_exists($this->cache_dir.$filename))
-          {
-        //  echo $this->cache_dir.$filename;
-            if (!@unlink($this->cache_dir.$filename))
-            {
-                // E_USER_ERROR - not using language entry - intended.
-                trigger_error('Unable to remove files within ' . $this->cache_dir . $filename . '. Please check directory permissions.', E_USER_ERROR);
-            }
-        }
-        }
     function obtain_icons()
     {
         if (($icons = $this->get('_icons')) === false)
@@ -225,22 +179,9 @@ class pmbt_cache {
         }
         closedir($dir);
        }
-       function put($file, $output)
-       {
-           $OUTPUT = serialize($output);
-           //die($this->cache_dir);
-           $fp = fopen($this->cache_dir.$file.".php","w");
-          fputs($fp, $OUTPUT);
-          fclose($fp);
-          @chmod($this->cache_dir.$file.".php", 0755);
-       }
        function set_sql($file, $output)
        {
-           $OUTPUT = serialize($output);
-           $fp = fopen($this->cache_dir."sql_".md5($file).".php","w");
-          fputs($fp, $OUTPUT);
-          fclose($fp);
-          @chmod($this->cache_dir."sql_".md5($file).".php", 0755);
+		   $this->put("sql_".md5($file), $output,$this->expire);
        }
     function obtain_word_list()
     {
