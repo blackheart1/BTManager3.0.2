@@ -43,7 +43,7 @@ $cat_sub = array();
             ORDER BY `".$db_prefix."_categories`.`parent_id` ,
             `".$db_prefix."_categories`.`id` ,
             `".$db_prefix."_categories`.`sort_index` ASC"
-        ))bterror("SELECT id, name FROM ".$db_prefix."_categories ORDER BY sort_index, id ASC");
+        ));
 
         while ($row = $db->sql_fetchrow($res))
         {
@@ -104,12 +104,11 @@ require_once("include/torrent_functions.php");
                             ".$catmainv.$viswhere.$catwhere.$passwhere.$orderby.$db_prefix."_torrents.added
                             DESC
                             LIMIT 0,5;";
-                $res = $db->sql_query($sql) or mysql_error();
+                $res = $db->sql_query($sql);
         if ($db->sql_numrows($res) > 0) {
     $template->assign_vars(array(
             'S_TORRENTS'     => true,
             ));
-        //die($sql);
                 get_tor_vars($res, "",  "", "", '_ind');
                 $template->assign_block_vars('index_tor.tsble',array('OUT' => $template->assign_display('index_tor')));
                 unset($template->_tpldata['torrent_var_ind']);

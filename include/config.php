@@ -97,8 +97,8 @@ if (!$db->db_connect_id)
 // This way we Protect Database Authentication against Hacked Mods
 unset($db_type, $db_host, $db_user, $db_pass);
 
-require_once'include/class.cache.php';
 require_once("include/bittorrent.php");
+require_once'include/class.cache.php';
 
 if (!$row = $pmbt_cache->get_sql("config"))
 {

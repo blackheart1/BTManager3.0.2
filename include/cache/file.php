@@ -30,7 +30,7 @@ class file extends pmbt_cache
 	function __construct()
 	{
 		// Call the parent constructor
-		//parent::__construct();
+		parent::__construct();
 	}
        function get($file, $expire = 60)
        {
@@ -72,5 +72,52 @@ class file extends pmbt_cache
           fclose($fp);
           @chmod($this->cache_dir.$file.".php", 0755);
        }
+    /**
+    * Tidy cache
+    */
+    function tidy()
+    {
+        global $phpEx;
+
+        $dir = @opendir($this->cache_dir);
+
+        if (!$dir)
+        {
+            return;
+        }
+
+        $time = time();
+
+        while (($entry = readdir($dir)) !== false)
+        {
+            if (preg_match('/^(imdb_|data_)/', $entry) OR $entry == "." OR $entry == "..")
+            {
+                continue;
+            }
+
+            if (!($handle = @fopen($this->cache_dir . $entry, 'rb')))
+            {
+                continue;
+            }
+            if (preg_match('/\.html.php$/', $entry))
+            {
+            $expires = (int) (filemtime($this->cache_dir.$entry) + $this->theme_expire);
+            }
+            else
+            {
+            $expires = (int) (filemtime($this->cache_dir.$entry) + $this->expire);
+            }
+            fclose($handle);
+
+            if ($time >= $expires)
+            {
+                $this->remove_file($entry);
+            }
+        }
+        closedir($dir);
+
+
+        set_config('cache_last_gc', time(), true);
+    }
 }
 ?>

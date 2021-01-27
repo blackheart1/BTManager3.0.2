@@ -25,8 +25,9 @@ if (!defined('IN_BTM'))
     require_once($_SERVER['DOCUMENT_ROOT'].'/security.php');
     die ("Error 404 - Page Not Found");
 }
-require_once("include/cache/file.php");
-$pmbt_cache = new file();
+require_once("cache/data_global.php");
+require_once("include/cache/" . $cache_type . ".php");
+$pmbt_cache = new $cache_type();
 class pmbt_cache {
 
     var $cache_dir = './';
@@ -207,53 +208,6 @@ class pmbt_cache {
         return $censors;
     }
     /**
-    * Tidy cache
-    */
-    function tidy()
-    {
-        global $phpEx;
-
-        $dir = @opendir($this->cache_dir);
-
-        if (!$dir)
-        {
-            return;
-        }
-
-        $time = time();
-
-        while (($entry = readdir($dir)) !== false)
-        {
-            if (preg_match('/^imdb_/', $entry) OR $entry == "." OR $entry == "..")
-            {
-                continue;
-            }
-
-            if (!($handle = @fopen($this->cache_dir . $entry, 'rb')))
-            {
-                continue;
-            }
-            if (preg_match('/\.html.php$/', $entry))
-            {
-            $expires = (int) (filemtime($this->cache_dir.$entry) + $this->theme_expire);
-            }
-            else
-            {
-            $expires = (int) (filemtime($this->cache_dir.$entry) + $this->expire);
-            }
-            fclose($handle);
-
-            if ($time >= $expires)
-            {
-                $this->remove_file($entry);
-            }
-        }
-        closedir($dir);
-
-
-        set_config('cache_last_gc', time(), true);
-    }
-    /**
     * Load global cache
     */
     function load()
@@ -361,6 +315,50 @@ class pmbt_cache {
         }
 //die(print_r($extensions));
         return $extensions;
+    }
+    function tidy()
+    {
+        global $phpEx;
+
+        $dir = @opendir($this->cache_dir);
+
+        if (!$dir)
+        {
+            return;
+        }
+
+        $time = time();
+
+        while (($entry = readdir($dir)) !== false)
+        {
+            if (preg_match('/^(imdb_|data_)/', $entry) OR $entry == "." OR $entry == "..")
+            {
+                continue;
+            }
+
+            if (!($handle = @fopen($this->cache_dir . $entry, 'rb')))
+            {
+                continue;
+            }
+            if (preg_match('/\.html.php$/', $entry))
+            {
+            $expires = (int) (filemtime($this->cache_dir.$entry) + $this->theme_expire);
+            }
+            else
+            {
+            $expires = (int) (filemtime($this->cache_dir.$entry) + $this->expire);
+            }
+            fclose($handle);
+
+            if ($time >= $expires)
+            {
+                $this->remove_file($entry);
+            }
+        }
+        closedir($dir);
+
+
+        set_config('cache_last_gc', time(), true);
     }
 }
 

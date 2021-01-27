@@ -46,6 +46,9 @@ $result = $db->sql_query($cfgquery);
             {
                 $cfgrow[$row_attach['name']] = $row_attach['value'];
             }
+			$cfgrow['mem_host'] = $mem_host;
+			$cfgrow['mem_port'] = $mem_port;
+			$cfgrow['cache_type'] = $cache_type;
 $db->sql_freeresult($cfgres);
         $do                 = request_var('do', '');
 function is__writable($path)
@@ -68,6 +71,9 @@ if ($do == "take_config") {
         $sub_sql_time                                   = request_var('sub_sql_time',$cfgrow['sql_time']);
         $sub_theme_time                                 = request_var('sub_theme_time', $cfgrow['theme_time']);
         $sub_cache_dir                                  = request_var('sub_cache_dir', $cfgrow['cache_dir']);
+        $sub_mem_host                                   = request_var('sub_mem_host',$cfgrow['mem_host']);
+        $sub_mem_port                                 = request_var('sub_mem_port', $cfgrow['mem_port']);
+        $sub_cache_type                                  = request_var('sub_cache_type', $cfgrow['cache_type']);
         $params = array();
         $values = array();
         $errors = array();
@@ -75,6 +81,13 @@ if ($do == "take_config") {
         if (!is_numeric($sub_theme_time))$errors[] = sprintf($user->lang["ERR_THEME_TIME"],$sub_theme_time);
         if (!isset($sub_cache_dir) OR $sub_cache_dir == "")$errors[] = sprintf($user->lang["ERR_CACHE_DIR_NOTSET"],$sub_cache_dir);
         if (!is__writable($sub_cache_dir.'/'))$errors[] = sprintf($user->lang["ERR_CACHE_DIR_NOT_WRITEABLE"],$sub_cache_dir);
+		if(($sub_cache_type == 'memcached')){
+			if (!is_numeric($sub_mem_port))$errors[] = sprintf($user->lang["ERR_MEMCACHE_PORT"],$sub_mem_port);
+			if (!isset($sub_mem_host) OR $sub_mem_host == "")$errors[] = sprintf($user->lang["ERR_NO_MEMCACHE_HOST"],$sub_mem_host);
+			if(!class_exists('Memcache')){
+			  $errors[] = $user->lang["ERR_NO_MEMCACHE"];
+			}
+		}
         if (count($errors) > 0)
         {
             $report = '<ul>';
@@ -111,7 +124,9 @@ if ($do == "take_config") {
         $db->sql_multi_insert($db_prefix."_cache_con", $sql_ary);
         $pmbt_cache->remove_file("sql_".md5('cache').".php");
         $pmbt_cache->set_sql("cache", $sql_ary);
-                add_log('admin','LOG_CACHE_SETTING_UPDATE');
+         $file = new SplFileObject('cache/data_global.php', 'w');                                
+         $file->fwrite("<?php\n\$mem_host = '" . $sub_mem_host . "';\n\n\$mem_port = '" . $sub_mem_port . "';\n\n\$cache_type = '" . $sub_cache_type . "';\n?>");
+                       add_log('admin','LOG_CACHE_SETTING_UPDATE');
                                 $template->assign_vars(array(
                                         'S_USER_NOTICE'                 => true,
                                         'S_FORWARD'                 => $u_action,
@@ -134,6 +149,10 @@ drawRow(true,false, false ,$user->lang['CACHE']);
 if($auth->acl_get('a_cache_time_sql'))drawRow("sql_time","text");
 if($auth->acl_get('a_cache_time_tmpl'))drawRow("theme_time","text");
 if($auth->acl_get('a_cache_dir'))drawRow("cache_dir","text");
+drawRow("sitename","text", false ,'TITLE_MEM');
+drawRow("mem_host","text");
+drawRow("mem_port","text");
+drawRow("cache_type","select",$user->lang['_admpSEL_TYPE']);
 echo $template->fetch('admin/acp_cache.html');
         close_out();
 

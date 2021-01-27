@@ -36,7 +36,7 @@ if (!defined('MEMCACHE_COMPRESS'))
 	define('MEMCACHE_COMPRESS', false);
 }
 
-if (!defined('PHPBB_ACM_MEMCACHE_HOST'))
+if (!defined('MEMCACHE_HOST'))
 {
 	define('MEMCACHE_HOST', 'localhost');
 }
@@ -49,23 +49,18 @@ if (!defined('MEMCACHE'))
 class memcached extends pmbt_cache
 {
 	var $extension = 'memcache';
-
 	var $memcache;
 	var $flags = 0;
 
 	function __construct()
 	{
+		global $mem_host, $mem_port;
 		// Call the parent constructor
 
 		$this->memcache = new Memcache;
-		foreach (explode(',', MEMCACHE) as $u)
-		{
-			$parts = explode('/', $u);
-			$this->memcache->addServer(trim($parts[0]), trim($parts[1]));
-		}
+		$this->memcache->addServer($mem_host, $mem_port);
 		$this->flags = (MEMCACHE_COMPRESS) ? MEMCACHE_COMPRESSED : 0;
-		//die(print_r($this->memcache->getStats()));
-		//parent::__construct();
+		parent::__construct();
 	}
 
 	/**
@@ -120,6 +115,16 @@ class memcached extends pmbt_cache
 		}
 		return true;
 	}
+    /**
+    * Tidy cache
+    */
+	function tidy()
+	{
+
+		parent::tidy();
+		// cache has auto GC, no need to have any code here :)
+		set_config('cache_last_gc', time(), true);
+	}
 
 	/**
 	* Remove an item from the cache
@@ -130,6 +135,14 @@ class memcached extends pmbt_cache
 	*/
 	function remove_file($var)
 	{
+			/* if (file_exists($this->cache_dir.$var))
+			 {
+				if (!@unlink($this->cache_dir.$var))
+				{
+					// E_USER_ERROR - not using language entry - intended.
+				   // trigger_error('Unable to remove files within ' . $this->cache_dir . $filename . '. Please check directory permissions.', E_USER_ERROR);
+				}
+			}*/
 		return $this->memcache->delete($var);
 	}
 }

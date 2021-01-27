@@ -75,47 +75,39 @@ if ($user_now == 0){
         }
 }
 $db->sql_freeresult($res);
+$statstot = array();
+if(!$pmbt_cache->get_sql("site_stats")){
         //Total users
         $sql = "SELECT COUNT(id) FROM ".$db_prefix."_users WHERE `active` = 1 AND UNIX_TIMESTAMP(lastlogin) > UNIX_TIMESTAMP(NOW()) - 86400;";
         $res = $db->sql_query($sql);
         list ($totuser) = $db->fetch_array($res);
+		$statstot['ON_NOW'] = $totuser;
         $db->sql_freeresult($res);
-$template->assign_vars(array(
-        'ON_NOW'            => $totuser,
-));
         //Total users
         $sql = "SELECT COUNT(id) FROM ".$db_prefix."_users WHERE `active` = 1 AND UNIX_TIMESTAMP(regdate) > UNIX_TIMESTAMP(NOW()) - 86400*7;";
         $res = $db->sql_query($sql);
         list ($totuser) = $db->fetch_array($res);
+		$statstot['ON_REG_WEEK'] = $totuser;
         $db->sql_freeresult($res);
-$template->assign_vars(array(
-        'ON_REG_WEEK'            => $totuser,
-));
         //Total users
         $sql = "SELECT COUNT(id) FROM ".$db_prefix."_users WHERE `active` = 1 AND UNIX_TIMESTAMP(regdate) > UNIX_TIMESTAMP(NOW()) - 86400;";
         $res = $db->sql_query($sql);
         list ($totuser) = $db->fetch_array($res);
+		$statstot['ON_REG_DAY'] = $totuser;
         $db->sql_freeresult($res);
-$template->assign_vars(array(
-        'ON_REG_DAY'            => $totuser,
-));
         //Total users
         $sql = "SELECT COUNT(id) FROM ".$db_prefix."_users WHERE `active` = 1;";
         $res = $db->sql_query($sql);
         list ($totuser) = $db->fetch_array($res);
+		$statstot['TOTAL_USERS'] = $totuser;
         $db->sql_freeresult($res);
-$template->assign_vars(array(
-        'TOTAL_USERS'            => $totuser,
-));
         //Total Torrents and their size
         $sql = "SELECT COUNT(id), SUM(size) FROM ".$db_prefix."_torrents;";
         $res = $db->sql_query($sql);
         list ($tottorrent, $totshare) = $db->fetch_array($res);
+		$statstot['TOTTAL_TORRENTS'] = $tottorrent;
+		$statstot['TOTAL_DATA'] = mksize($totshare);
         $db->sql_freeresult($res);
-$template->assign_vars(array(
-        'TOTTAL_TORRENTS'            => $tottorrent,
-        'TOTAL_DATA'            => mksize($totshare),
-));
         //Total peers and their speed
         $sql = "SELECT COUNT(id), (SUM(upload_speed)+SUM(download_speed))/2 FROM ".$db_prefix."_peers;";
         $res = $db->sql_query($sql);
@@ -126,21 +118,22 @@ $template->assign_vars(array(
         $res = $db->sql_query($sql);
         list ($totseeders) = $db->fetch_array($res);
         list ($totleechers) = $db->fetch_array($res);
+		$statstot['TOTTAL_SEEDERS'] = (int)$totseeders;
+		$statstot['TOTAL_LEACHERS'] = (int)$totleechers;
+		$statstot['TOTAL_PEERS'] = ($totleechers+$totseeders);
+		$statstot['TRANSFER_SPEED'] = mksize($totspeed);
         $db->sql_freeresult($res);
-$template->assign_vars(array(
-        'TOTTAL_SEEDERS'            => (int)$totseeders,
-        'TOTAL_LEACHERS'            => (int)$totleechers,
-        'TOTAL_PEERS'            => ($totleechers+$totseeders),
-        'TRANSFER_SPEED'            => mksize($totspeed),
-));
         $sql = "SELECT COUNT(id) as cnt, client FROM ".$db_prefix."_peers WHERE client IS NOT NULL GROUP BY client ORDER BY cnt DESC LIMIT 1;";
         $res = $db->sql_query($sql);
         list ($cnt, $client) = $db->fetch_array($res);
+		$statstot['MOST_CLIENTS'] = ($cnt)?$client : 'N/A';
+		$statstot['M_CLIENT_CO'] = (int)$cnt;
         $db->sql_freeresult($res);
-$template->assign_vars(array(
-        'MOST_CLIENTS'            => ($cnt)?$client : 'N/A',
-        'M_CLIENT_CO'            => (int)$cnt,
-));
+$pmbt_cache->set_sql("site_stats", $statstot);
+}else{
+$statstot = $pmbt_cache->get_sql("site_stats");
+}
+$template->assign_vars($statstot);
 echo $template->fetch('whos_online.html');
 
 ?>

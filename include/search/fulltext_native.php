@@ -1488,7 +1488,8 @@ class fulltext_native extends search_backend
         * If we use it more widely, an instance of that class should be held in a
         * a global variable instead
         */
-        utf_normalizer::nfc($text);
+		$obj = new utf_normalizer();
+        $obj->nfc($text);
 
         /**
         * The first thing we do is:
