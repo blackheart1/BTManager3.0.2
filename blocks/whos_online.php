@@ -28,18 +28,29 @@ if (!defined('IN_BTM'))
 
 global $db_prefix, $user, $auth, $db, $shout_config,$template,$siteurl,$language,$pmbt_cache;
 $user->set_lang('whos_online',$user->ulanguage);
-$sqlev = "SELECT group_id, group_name, group_colour, group_legend FROM ".$db_prefix."_level_settings";
-$reslev = $db->sql_query($sqlev);
-        while ($rowlev = $db->sql_fetchrow($reslev)) {
-        if($rowlev['group_legend'] == 0)
-        {
-            continue;
-        }
-   $template->assign_block_vars('legend', array(
-        "ID"              => $rowlev['group_id'],
-        "NAME"              => (isset($user->lang[$rowlev['group_name']]))? $user->lang[$rowlev['group_name']] : $rowlev['group_name'],
-        "COLOR"             => $rowlev['group_colour'],
-   ));
+if(!$pmbt_cache->get_sql("site_legend"))
+{
+	$legend = array();
+	$sqlev = "SELECT group_id, group_name, group_colour, group_legend FROM ".$db_prefix."_level_settings";
+	$reslev = $db->sql_query($sqlev);
+	while ($rowlev = $db->sql_fetchrow($reslev))
+	{
+		if($rowlev['group_legend'] == 0)
+		{
+			continue;
+		}
+		$legend[] = array(
+			"ID"              => $rowlev['group_id'],
+			"NAME"              => (isset($user->lang[$rowlev['group_name']]))? $user->lang[$rowlev['group_name']] : $rowlev['group_name'],
+			"COLOR"             => $rowlev['group_colour'],
+		);
+	}
+}else{
+$legend = $pmbt_cache->get_sql("site_legend");
+}
+foreach($legend as $val)
+{
+	$template->assign_block_vars('legend', $val);
 }
 $db->sql_freeresult($reslev);
 $sql = "SELECT O.id AS id, O.page AS page, UNIX_TIMESTAMP(O.logged_in) AS logged_in, IF(U.name IS NULL, U.username, U.name) as name, U.lastpage as lastpage, U.donator AS donator, U.warned AS warned, U.can_do as can_do, U.level AS level, U.Show_online AS Show_online, U.uploaded as uploaded, U.downloaded AS downloaded FROM ".$db_prefix."_online_users O LEFT JOIN ".$db_prefix."_users U ON O.id = U.id WHERE UNIX_TIMESTAMP( NOW( ) ) - UNIX_TIMESTAMP( U.lastlogin )  < 1800 ;";

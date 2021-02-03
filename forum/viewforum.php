@@ -225,6 +225,25 @@ $template->assign_vars(array(
 // Not postable forum or showing active topics?
 if (!($forum_data['forum_type'] == 1 || (($forum_data['forum_flags'] & 16) && $forum_data['forum_type'] == 0)))
 {
+$template->assign_vars(array(
+            'FOLDER_IMG'                => $user->img('topic_read', 'NO_NEW_POSTS'),
+            'FOLDER_NEW_IMG'            => $user->img('topic_unread', 'NEW_POSTS'),
+            'FOLDER_HOT_IMG'            => $user->img('topic_read_hot', 'NO_NEW_POSTS_HOT'),
+            'FOLDER_HOT_NEW_IMG'        => $user->img('topic_unread_hot', 'NEW_POSTS_HOT'),
+            'FOLDER_LOCKED_IMG'         => $user->img('topic_read_locked', 'NO_NEW_POSTS_LOCKED'),
+            'FOLDER_LOCKED_NEW_IMG'     => $user->img('topic_unread_locked', 'NEW_POSTS_LOCKED'),
+            'FOLDER_STICKY_IMG'         => $user->img('sticky_read', 'POST_STICKY'),
+            'FOLDER_STICKY_NEW_IMG'     => $user->img('sticky_unread', 'POST_STICKY'),
+            'FOLDER_ANNOUNCE_IMG'       => $user->img('announce_read', 'POST_ANNOUNCEMENT'),
+            'FOLDER_ANNOUNCE_NEW_IMG'   => $user->img('announce_unread', 'POST_ANNOUNCEMENT'),
+            'FOLDER_MOVED_IMG'          => $user->img('topic_moved', 'TOPIC_MOVED'),
+            'FORUM_IMG'             => $user->img('forum_read', 'NO_NEW_POSTS'),
+            'FORUM_NEW_IMG'         => $user->img('forum_unread', 'NEW_POSTS'),
+            'FORUM_LOCKED_IMG'      => $user->img('forum_read_locked', 'NO_NEW_POSTS_LOCKED'),
+            'FORUM_NEW_LOCKED_IMG'  => $user->img('forum_unread_locked', 'NO_NEW_POSTS_LOCKED'),
+            'S_DISPLAY_BIRTHDAY_LIST'   => ($config['load_birthdays']) ? true : false,
+            'U_MARK_FORUMS'     => ($user->user) ? append_sid("{$phpbb_root_path}forum.$phpEx", 'action=viewforum&amp;f=' . $forum_id . '&amp;hash=' . generate_link_hash('global') . '&amp;mark=forums') : '',
+));
 echo $template->fetch('forum_index.html');
 close_out();
 }

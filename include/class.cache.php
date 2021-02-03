@@ -54,11 +54,11 @@ class pmbt_cache {
                     $ch_con[$row_attach['name']] = $row_attach['value'];
                 }
                 $db->sql_freeresult($sql_query);
+                $this->set_sql('cache', $ch_con);
+            }
                 $this->cache_dir = $ch_con['cache_dir'] . '/';
                 $this->expire = $ch_con['sql_time'];
                 $this->theme_expire = $ch_con['theme_time'];
-                $this->set_sql('cache', $ch_con);
-            }
        }
     /*To not break everyone using your library, you have to keep backwards compatibility:
     Add the PHP5-style constructor, but keep the PHP4-style one. */
@@ -171,7 +171,7 @@ class pmbt_cache {
         }
         while (($entry = readdir($dir)) !== false)
         {
-            if (strpos($entry, 'html') === false && strpos($entry, 'sql_') === false && strpos($entry, 'cache_') !== 0 && strpos($entry, 'staff') !== 0 )
+            if (preg_match('/^data_/', $entry) OR $entry == "index.html" OR $entry == "." OR $entry == "..")
             {
                 continue;
             }
@@ -331,7 +331,7 @@ class pmbt_cache {
 
         while (($entry = readdir($dir)) !== false)
         {
-            if (preg_match('/^(imdb_|data_)/', $entry) OR $entry == "." OR $entry == "..")
+            if (preg_match('/^(imdb_|data_)/', $entry) OR $entry == "index.html" OR $entry == "." OR $entry == "..")
             {
                 continue;
             }

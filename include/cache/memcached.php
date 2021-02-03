@@ -26,40 +26,27 @@ if (!defined('IN_BTM'))
     die ("Error 404 - Page Not Found");
 }
 
-if (!defined('MEMCACHE_PORT'))
-{
-	define('MEMCACHE_PORT', 11211);
-}
 
 if (!defined('MEMCACHE_COMPRESS'))
 {
 	define('MEMCACHE_COMPRESS', false);
 }
 
-if (!defined('MEMCACHE_HOST'))
-{
-	define('MEMCACHE_HOST', 'localhost');
-}
-
-if (!defined('MEMCACHE'))
-{
-	//can define multiple servers with host1/port1,host2/port2 format
-	define('MEMCACHE', MEMCACHE_HOST . '/' . MEMCACHE_PORT);
-}
 class memcached extends pmbt_cache
 {
 	var $extension = 'memcache';
 	var $memcache;
 	var $flags = 0;
+	var $cache_dir = '';
 
 	function __construct()
 	{
+        global $db, $db_prefix;
 		global $mem_host, $mem_port;
-		// Call the parent constructor
-
 		$this->memcache = new Memcache;
 		$this->memcache->addServer($mem_host, $mem_port);
 		$this->flags = (MEMCACHE_COMPRESS) ? MEMCACHE_COMPRESSED : 0;
+		// Call the parent constructor
 		parent::__construct();
 	}
 
@@ -104,7 +91,7 @@ class memcached extends pmbt_cache
 	* @param int $ttl Time-to-live of cached data
 	* @return bool True if the operation succeeded
 	*/
-	function put($var, $data, $ttl = 2592000)
+	function put($var, $data, $ttl = 60)
 	{
        if($ttl > $this->expire)$expire = $ttl;
        else
@@ -135,14 +122,14 @@ class memcached extends pmbt_cache
 	*/
 	function remove_file($var)
 	{
-			/* if (file_exists($this->cache_dir.$var))
+			 if (file_exists($this->cache_dir.$var))
 			 {
 				if (!@unlink($this->cache_dir.$var))
 				{
 					// E_USER_ERROR - not using language entry - intended.
 				   // trigger_error('Unable to remove files within ' . $this->cache_dir . $filename . '. Please check directory permissions.', E_USER_ERROR);
 				}
-			}*/
+			}
 		return $this->memcache->delete($var);
 	}
 }

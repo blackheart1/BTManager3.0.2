@@ -44,7 +44,6 @@ deny from 59.
 deny from 218.
 deny from 111.
 deny from 142.
-deny from 192.
 deny from 119.
 deny from 222.
 deny from 199.
@@ -69,3 +68,14 @@ deny from 204.124.181.85
 deny from 188.92.75.
 deny from 5.135.43.104
 deny from 46.150.44.170
+deny from 193.112.160.70
+deny from 78.198.118.43
+deny from 135.148.33.55
+deny from 52.64.20.252
+deny from 144.217.31.90
+deny from 68.132.136.198
+deny from 167.172.57.1
+deny from 34.236.18.197
+deny from 13.232.96.15
+deny from 213.32.20.107
+deny from 52.60.189.115

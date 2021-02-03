@@ -78,7 +78,7 @@ class Template {
       global $theme, $phpEx;
       // ----Clear name to Just the file name----//
       $name = str_replace(array($this->cache_dir, "themes/".$theme."/templates/"), '', $name);
-    //  die('/'.$name);
+      //die($name);
       if(!preg_match('/(.*).\bhtml\b/',$name)){
             die('This is not a Template File: ' . $name );
       }
@@ -183,8 +183,9 @@ class Template {
     {
         global $user, $phpEx, $config,$theme;
 
-        $filename = $this->cachepath . str_replace('/', '.', $this->filename[$handle]) . '.' . $phpEx;
-        $this->files_template[$handle] = $user->theme . '\'';
+        $filename = $this->cachepath . $theme . '_' . str_replace('/', '_', $this->filename[$handle]) . '.' . $phpEx;
+		//die($filename);
+        $this->files_template[$handle] = $theme . '\'';
 
         $recompile = false;
         if (!file_exists($filename) || @filesize($filename) === 0)
@@ -197,7 +198,7 @@ class Template {
             if ($user->theme['template_inherits_id'] && !file_exists($this->files[$handle]))
             {
                 $this->files[$handle] = $this->files_inherit[$handle];
-                $this->files_template[$handle] = $user->theme;
+                $this->files_template[$handle] = $theme;
             }
             $recompile = (@filemtime($filename) < filemtime($this->files[$handle])) ? true : false;
         }
@@ -223,7 +224,7 @@ class Template {
         //die($this->compiled_code);
                 //echo(str_replace($this->root . '/','',$this->files[$handle]));
 
-        $this->compile_write(str_replace($this->root . '/','',$this->files[$handle]), $data);
+        $this->compile_write(str_replace($this->root . '/','_',$this->files[$handle]), $data);
             return false;
     }
 
@@ -385,8 +386,8 @@ class Template {
 
                 case 'INCLUDE':
                     $temp = array_shift($include_blocks);
-                    $compile_blocks[] = $this->compile(file_get_contents($temp));
-                    $this->fetch($temp);
+					$compile_blocks[] = '<?php ' . $this->compile_tag_include($temp) . ' ?>';
+					$this->_tpl_include($temp, false);
                 break;
 
                 case 'INCLUDEPHP':
@@ -792,7 +793,9 @@ class Template {
     */
     function compile_tag_include($tag_args)
     {
-        return "include_once('$tag_args');";
+		global $theme;
+      $tag_args = str_replace("themes/".$theme."/templates/", '', $tag_args);
+		return "\$this->_tpl_include('$tag_args');";
     }
 
     /**
@@ -964,16 +967,25 @@ class Template {
     }
     function _tpl_include($filename, $include = true)
     {
-      $content = new Template();
-      $content->_rootref = $this->_rootref;
-      $content->block_names = $this->block_else_level;
-      $content->block_else_level = $this->block_else_level;
-      $content->vars = $this->vars;
-      //foreach($this->_rootref as $key => $val)
-       //{
-       //   $content->set($key, $val);
-       //}
-     // echo $content->fetch($filename);
+		global $theme;
+      	$filename = str_replace("themes/".$theme."/templates/", '', $filename);
+		$handle = $filename;
+		$this->filename[$handle] = $filename;
+		$this->files[$handle] = $this->root . '/' . $filename;
+
+ 		$filename = $this->_tpl_load($handle);
+
+		if ($include)
+		{
+			global $user;
+
+			if ($filename)
+			{
+				include($filename);
+				return;
+			}
+			eval(' ?>' . $this->compiled_code[$handle] . '<?php ');
+		}
     }
     function assign_block_vars($blockname, $vararray)
     {
