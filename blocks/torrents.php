@@ -31,10 +31,10 @@ global $db_prefix, $user, $auth, $db, $shout_config,$template,$siteurl,$language
         $autoscrape, $theme, $btback1, $btback2, $btback3, $free_dl,$page, $prev, $pages, $pager, $next;
 $cat_main = array();
 $cat_sub = array();
-    if (!isset($template->filename['index_tor']))
+    if (!isset($template->filename['index_torrents.html']))
     {
         $template->set_filenames(array(
-            'index_tor' => 'index_torrents.html')
+            'index_torrents.html' => 'index_torrents.html')
         );
     }
         if(! $res = $db->sql_query(
@@ -110,7 +110,7 @@ require_once("include/torrent_functions.php");
             'S_TORRENTS'     => true,
             ));
                 get_tor_vars($res, "",  "", "", '_ind');
-                $template->assign_block_vars('index_tor.tsble',array('OUT' => $template->assign_display('index_tor')));
+                $template->assign_block_vars('index_tor.tsble',array('OUT' => $template->assign_display('index_torrents.html','index_torrents.html')));
                 unset($template->_tpldata['torrent_var_ind']);
                 }
                 $db->sql_freeresult($res);
@@ -122,6 +122,6 @@ require_once("include/torrent_functions.php");
             'SHOW_ALL'     => true,
             ));
 
-echo $template->fetch('index_torrents.html');
+echo $template->assign_display('index_torrents.html');
 
 ?>

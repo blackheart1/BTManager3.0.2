@@ -13,7 +13,7 @@
 ** Created By Antonio Anzivino (aka DJ Echelon)
 ** And Joe Robertson (aka joeroberts/Black_Heart)
 ** Project Leaders: Black_Heart, Thor.
-** File include/class.template.php 2018-09-22 00:00:00 Thor
+** File include/class.template.php 2021-02-03 00:00:00 Black_Heart
 **
 ** CHANGES
 **
@@ -46,16 +46,17 @@ class Template {
      *
      * @param $file string the file name you want to load
      */
-    function __construct($file = NULL) {
-    global $theme, $phpEx, $pmbt_cache;
-    $this->expire = $pmbt_cache->theme_expire;
-    $this->cache_dir = $pmbt_cache->cache_dir;
-    $this->cachepath = $pmbt_cache->cache_dir;
-    if($file){
-        $this->file = $this->check_file($file);
-        }
-        else
-        $this->file = $file;
+	function __construct($file = NULL) {
+		global $theme, $phpEx, $pmbt_cache;
+		$this->expire = $pmbt_cache->theme_expire;
+		$this->cache_dir = $pmbt_cache->cache_dir;
+		$this->cachepath = $pmbt_cache->cache_dir;
+		if($file)
+		{
+			$this->file = $this->check_file($file);
+		}
+		else
+			$this->file = $file;
     }
     function Template($file = NULL)
     {
@@ -115,7 +116,7 @@ class Template {
             }
 
             $this->filename[$handle] = $filename;
-            $this->files[$handle] = $this->root . '/' . $filename;
+            $this->files[$handle] = $filename;
 
 
             if ($this->inherit_root)
@@ -184,7 +185,7 @@ class Template {
         global $user, $phpEx, $config,$theme;
 
         $filename = $this->cachepath . $theme . '_' . str_replace('/', '_', $this->filename[$handle]) . '.' . $phpEx;
-		//die($filename);
+
         $this->files_template[$handle] = $theme . '\'';
 
         $recompile = false;
@@ -217,12 +218,9 @@ class Template {
         }
         else
         {
-            $data = $this->compile(trim(file_get_contents("themes/".$theme."/templates".$this->files[$handle])));
+            $data = $this->compile(trim(file_get_contents("themes/".$theme."/templates/".$this->files[$handle])));
         }
-        //die(str_replace($this->root . '/','',$this->files[$handle]));
         $this->compiled_code[$handle] = $data;
-        //die($this->compiled_code);
-                //echo(str_replace($this->root . '/','',$this->files[$handle]));
 
         $this->compile_write(str_replace($this->root . '/','_',$this->files[$handle]), $data);
             return false;
@@ -230,8 +228,7 @@ class Template {
 
     function display($handle, $include_once = true)
     {
-        global $user, $phpbb_hook;
-
+        global $user;
 
         if (defined('IN_ERROR_HANDLER'))
         {
@@ -258,8 +255,9 @@ class Template {
     function assign_display($handle, $template_var = '', $return_content = true, $include_once = false)
     {
         ob_start();
-        $this->display($handle, $include_once);
-        $contents = ob_get_clean();
+       $this->display($handle, $include_once);
+        $contents = ob_get_contents(); // Get the contents of the buffer
+        ob_end_clean();                // End buffering and discard
 
         if ($return_content)
         {
@@ -395,7 +393,7 @@ class Template {
                 break;
 
                 case 'PHP':
-                    $compile_blocks[] = '<?php ' . array_shift($php_blocks) . '?>';
+					$compile_blocks[] = ($config['tpl_allow_php']) ? '<?php ' . array_shift($php_blocks) . ' ?>' : '';
                 break;
 
                 default:
@@ -764,7 +762,6 @@ class Template {
         else
         {
             preg_match('#true|false|\.#i', $match[4], $type);
-            //print_r($type);
             if(!$type) $type = array(0=>'no');
 
             switch (strtolower($type[0]))
@@ -794,7 +791,7 @@ class Template {
     function compile_tag_include($tag_args)
     {
 		global $theme;
-      $tag_args = str_replace("themes/".$theme."/templates/", '', $tag_args);
+      	$tag_args = str_replace("themes/".$theme."/templates/", '', $tag_args);
 		return "\$this->_tpl_include('$tag_args');";
     }
 
@@ -948,10 +945,8 @@ class Template {
     */
     function compile_write($handle, $data)
     {
-    //echo $handle;
-    global $theme, $phpEx;
+    	global $theme, $phpEx;
         $filename = $this->cache_dir.$theme.'_'.str_replace("admin/","admin_",$handle).'.'.$phpEx;
-        //die($filename);
         $data = "<?php\n if (!defined('IN_BTM'))\n{\n include_once './../security.php';\n}\n" . ((strpos($data, '<?php') === 0) ? substr($data, 5) : ' ?>' . $data);
         if ($fp = @fopen($filename, 'wb'))
         {
@@ -960,7 +955,7 @@ class Template {
             @flock($fp, LOCK_UN);
             @fclose($fp);
 
-            //phpbb_chmod($filename, CHMOD_READ | CHMOD_WRITE);
+			@chmod($filename, 0666);
         }
 
         return;
@@ -971,7 +966,7 @@ class Template {
       	$filename = str_replace("themes/".$theme."/templates/", '', $filename);
 		$handle = $filename;
 		$this->filename[$handle] = $filename;
-		$this->files[$handle] = $this->root . '/' . $filename;
+		$this->files[$handle] = $this->root . $filename;
 
  		$filename = $this->_tpl_load($handle);
 

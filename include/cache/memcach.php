@@ -32,7 +32,7 @@ if (!defined('MEMCACHE_COMPRESS'))
 	define('MEMCACHE_COMPRESS', false);
 }
 
-class memcached extends pmbt_cache
+class memcach extends pmbt_cache
 {
 	var $extension = 'memcache';
 	var $memcache;

@@ -81,7 +81,7 @@ if ($do == "take_config") {
         if (!is_numeric($sub_theme_time))$errors[] = sprintf($user->lang["ERR_THEME_TIME"],$sub_theme_time);
         if (!isset($sub_cache_dir) OR $sub_cache_dir == "")$errors[] = sprintf($user->lang["ERR_CACHE_DIR_NOTSET"],$sub_cache_dir);
         if (!is__writable($sub_cache_dir.'/'))$errors[] = sprintf($user->lang["ERR_CACHE_DIR_NOT_WRITEABLE"],$sub_cache_dir);
-		if(($sub_cache_type == 'memcached')){
+		if(($sub_cache_type == 'memcach')){
 			if (!is_numeric($sub_mem_port))$errors[] = sprintf($user->lang["ERR_MEMCACHE_PORT"],$sub_mem_port);
 			if (!isset($sub_mem_host) OR $sub_mem_host == "")$errors[] = sprintf($user->lang["ERR_NO_MEMCACHE_HOST"],$sub_mem_host);
 			if(!class_exists('Memcache')){

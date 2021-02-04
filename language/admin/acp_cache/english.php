@@ -69,7 +69,7 @@ $lang = array_merge($lang, array(
 
     '_admpcache_type'        => 'Cache Type',
     '_admpcache_typeexplain' => 'Select what Type of Cache System You want to use File System or Memcache',
-    '_admpSEL_TYPE'          => array('memcached' => 'Memcache System', 'file' => 'File System'),
+    '_admpSEL_TYPE'          => array('memcach' => 'Memcache System', 'file' => 'File System'),
 ));
 
 ?>
