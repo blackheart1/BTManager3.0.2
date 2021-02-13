@@ -1,18 +1,48 @@
 # BTManager3.0.2 is the brand new Open Source solution for BitTorrent communities!
 
-BTManager is not just a simple tracker like the ones you see around.
-It has so many amazing features that it cannot be called simply a "Tracker".
-In fact, it is a BMS (Bittorrent Management System), something like a BitTorrent-oriented Content Management System.
+## BTManager is not just a simple tracker like the ones you see around.
+```bash
+	It has so many amazing features that it cannot be called simply a "Tracker".
+	In fact, it is a BMS (Bittorrent Management System), something like a BitTorrent-oriented Content Management System.
+```
 
-BTManager is Free Software!
+###Requirements###
+
+BTManager requires the following :
+- Memcached
+- PHP7.2(3,4)
+- PHP7.2(3,4)-CURL
+- PHP7.2(3,4)-IGBINARY
+- PHP7.2(3,4)-JSON
+- PHP7.2(3,4)-MEMCACHED
+- PHP7.2(3,4)-MSGPACK
+- PHP7.2(3,4)-MCRYPT
+- PHP7.2(3,4)-MYSQL/MYSQLI
+- PHP7.2(3,4)-MBSTRING
+- PHP7.2(3,4)-GD
+- PHP7.2(3,4)-GEOIP
+- PHP7.2(3,4)-OPCACHE
+- PHP7.2(3,4)-XML
+- PHP7-ZIP
+- LIBAPACHE2-MOD-PHP7.2(3,4)
+- Apache/2.4.10
+- MariaDB 10.0-10.1
+- Nodejs
+- Npm
+
+## BTManager is Free Software!
+```bash
 BTManager is Open Source Software, distributed under the GNU/GPL license. 
   This means that the code is open for scrutiny by anyone, and anybody can join in the development effort.
 BTManager is easy!
 BTManager is provided with full documentation to help you install it step by step in no time, even if you've never heard of PHP/MySQL.
+```
 
-BTManager is up-to-date!
+## BTManager is up-to-date!
+```bash
 BTManager supports all the latest BitTorrent Protocol Extensions, including 
   Compact Announce, MultiScrape, DHT, Peer Count, Tracker ID, Unique Peer ID, Backup Tracker, etc.
+ ```
   
 BTManager is not only BitTorrent!
   There are many ways other than BitTorrent to share your files. 
