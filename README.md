@@ -6,7 +6,7 @@
 	In fact, it is a BMS (Bittorrent Management System), something like a BitTorrent-oriented Content Management System.
 ```
 
-###Requirements###
+### Requirements ###
 
 BTManager requires the following :
 - Memcached
