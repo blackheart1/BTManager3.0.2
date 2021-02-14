@@ -9,7 +9,7 @@
 ### Requirements ###
 
 BTManager requires the following :
-- Memcached
+- Memcache
 - PHP7.2(3,4)
 - PHP7.2(3,4)-CURL
 - PHP7.2(3,4)-IGBINARY
