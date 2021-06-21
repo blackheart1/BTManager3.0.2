@@ -211,7 +211,7 @@ class bbcode_firstpass extends bbcode
 
             $sql = 'SELECT *
                 FROM ' . $db_prefix . '_bbcodes';
-            $result = $db->sql_query($sql);
+            $result = $db->sql_query($sql,6000000);
 
             while ($row = $db->sql_fetchrow($result))
             {

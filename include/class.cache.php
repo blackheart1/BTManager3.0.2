@@ -35,6 +35,8 @@ class pmbt_cache {
     var $theme_expire = '60';
     var $vars = array();
     var $var_expires = array();
+	var $sql_rowset = array();
+	var $sql_row_pointer = array();
 
     /**
     * Constuctor
@@ -66,7 +68,21 @@ class pmbt_cache {
         {
             $this->__construct();
         }
-       function get_sql($file, $expire = 60)
+ 
+	/**
+	* {@inheritDoc}
+	*/
+	function unload()
+	{
+		unset($this->vars);
+		unset($this->sql_rowset);
+		unset($this->sql_row_pointer);
+
+		$this->vars = array();
+		$this->sql_rowset = array();
+		$this->sql_row_pointer = array();
+	}
+      function get_sql($file, $expire = 60)
        {
 		   return $this->get("sql_".md5($file), $expire);
        }
@@ -169,6 +185,7 @@ class pmbt_cache {
         {
             return;
         }
+		
         while (($entry = readdir($dir)) !== false)
         {
             if (preg_match('/^data_/', $entry) OR $entry == "index.html" OR $entry == "." OR $entry == "..")
@@ -179,6 +196,18 @@ class pmbt_cache {
             $this->remove_file($entry);
         }
         closedir($dir);
+
+		unset($this->vars);
+		unset($this->var_expires);
+		unset($this->sql_rowset);
+		unset($this->sql_row_pointer);
+
+		$this->vars = array();
+		$this->var_expires = array();
+		$this->sql_rowset = array();
+		$this->sql_row_pointer = array();
+
+		$this->is_modified = false;
        }
        function set_sql($file, $output)
        {
@@ -284,8 +313,7 @@ class pmbt_cache {
         else
         {
             $forum_id = (int) $forum_id;
-                //die(print_r($extensions['_allowed_post']));
-    $return = array('_allowed_' => array());
+    		$return = array('_allowed_' => array());
 
             foreach ($extensions['_allowed_post'] as $extension => $check)
             {
@@ -313,7 +341,7 @@ class pmbt_cache {
         {
             $extensions['_allowed_'] = array();
         }
-//die(print_r($extensions));
+
         return $extensions;
     }
     function tidy()
@@ -360,6 +388,159 @@ class pmbt_cache {
 
         set_config('cache_last_gc', time(), true);
     }
+
+	/**
+	* {@inheritDoc}
+	*/
+	function sql_load($query)
+	{
+		// Remove extra spaces and tabs
+		$query = preg_replace('/[\n\r\s\t]+/', ' ', $query);
+		$query_id = md5($query);
+
+		if (($result = $this->get('sql_' . $query_id)) === false)
+		{
+			return false;
+		}
+
+		$this->sql_rowset[$query_id] = $result;
+		$this->sql_row_pointer[$query_id] = 0;
+
+		return $query_id;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	function sql_exists($query_id)
+	{
+		return isset($this->sql_rowset[$query_id]);
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	function sql_fetchrow($query_id)
+	{
+		if ($this->sql_row_pointer[$query_id] < count($this->sql_rowset[$query_id]))
+		{
+			return $this->sql_rowset[$query_id][$this->sql_row_pointer[$query_id]++];
+		}
+
+		return false;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	function sql_fetchfield($query_id, $field)
+	{
+		if ($this->sql_row_pointer[$query_id] < sizeof($this->sql_rowset[$query_id]))
+		{
+			return (isset($this->sql_rowset[$query_id][$this->sql_row_pointer[$query_id]][$field])) ? $this->sql_rowset[$query_id][$this->sql_row_pointer[$query_id]++][$field] : false;
+		}
+
+		return false;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	function sql_rowseek($rownum, $query_id)
+	{
+		if ($rownum >= count($this->sql_rowset[$query_id]))
+		{
+			return false;
+		}
+
+		$this->sql_row_pointer[$query_id] = $rownum;
+		return true;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	function sql_freeresult($query_id)
+	{
+		if (!isset($this->sql_rowset[$query_id]))
+		{
+			return false;
+		}
+
+		unset($this->sql_rowset[$query_id]);
+		unset($this->sql_row_pointer[$query_id]);
+
+		return true;
+	}
+
+	/**
+	* {@inheritDoc}
+	*/
+	function sql_save($db, $query, $query_result, $ttl)
+	{
+		// Remove extra spaces and tabs
+		$query = preg_replace('/[\n\r\s\t]+/', ' ', $query);
+		$query_id = md5($query);
+
+		// determine which tables this query belongs to
+		// Some queries use backticks, namely the get_database_size() query
+		// don't check for conformity, the SQL would error and not reach here.
+		if (!preg_match_all('/(?:FROM \\(?(`?\\w+`?(?: \\w+)?(?:, ?`?\\w+`?(?: \\w+)?)*)\\)?)|(?:JOIN (`?\\w+`?(?: \\w+)?))/', $query, $regs, PREG_SET_ORDER))
+		{
+			// Bail out if the match fails.
+			return $query_result;
+		}
+
+		$tables = array();
+		foreach ($regs as $match)
+		{
+			if ($match[0][0] == 'F')
+			{
+				$tables = array_merge($tables, array_map('trim', explode(',', $match[1])));
+			}
+			else
+			{
+				$tables[] = $match[2];
+			}
+		}
+
+		foreach ($tables as $table_name)
+		{
+			// Remove backticks
+			$table_name = ($table_name[0] == '`') ? substr($table_name, 1, -1) : $table_name;
+
+			if (($pos = strpos($table_name, ' ')) !== false)
+			{
+				$table_name = substr($table_name, 0, $pos);
+			}
+
+			$temp = $this->get('sql_' . $table_name);
+
+			if ($temp === false)
+			{
+				$temp = array();
+			}
+
+			$temp[$query_id] = true;
+
+			// This must never expire
+			$this->put('sql_' . $table_name, $temp, 0);
+		}
+
+		// store them in the right place
+		$this->sql_rowset[$query_id] = array();
+		$this->sql_row_pointer[$query_id] = 0;
+
+		while ($row = $db->sql_fetchrow($query_result))
+		{
+			$this->sql_rowset[$query_id][] = $row;
+		}
+		$db->sql_freeresult($query_result);
+
+		$this->put('sql_' . $query_id, $this->sql_rowset[$query_id], $ttl);
+
+		return $query_id;
+	}
 }
 
 ?>

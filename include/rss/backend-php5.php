@@ -29,9 +29,16 @@ if (!defined('IN_BTM'))
 header('Content-Type: text/xml');
 
  $rss = new DomDocument("1.0","UTF-8");
-{
+$rss->preserveWhiteSpace = false;
      $rss->formatOutput = true;
+// ------------- Interresting part here ------------
 
+//creating an xslt adding processing line
+$xslt = $rss->createProcessingInstruction('xml-stylesheet', 'type="text/css" href="' .  $siteurl . '/themes/' . $theme . '/base.css"');
+
+//adding it to the xml
+$rss->appendChild($xslt);
+{
      $rdf = $rss->appendChild( $rss->createElement( 'rss' ) );
      $rdf->setAttribute( "version" , "2.0" );
      $rdf->setAttribute( "xmlns:dc" , "http://purl.org/dc/elements/1.1/" );

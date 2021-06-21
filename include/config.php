@@ -110,7 +110,7 @@ if (!$row = $pmbt_cache->get_sql("config"))
 
     if (!$row = $db->sql_fetchrow($configquery)) die("BT.Manager not Installed Correctly!  Ensure you have run setup.php or config_default.sql!!");
 
-    $pmbt_cache->set_sql("config", $row);
+    $pmbt_cache->set_sql("config", $row, 200);
     $db->sql_freeresult($configquery);
 }
 

@@ -43,7 +43,7 @@ class memcach extends pmbt_cache
 	{
         global $db, $db_prefix;
 		global $mem_host, $mem_port;
-		$this->memcache = new Memcache;
+		$this->memcache = new Memcache();
 		$this->memcache->addServer($mem_host, $mem_port);
 		$this->flags = (MEMCACHE_COMPRESS) ? MEMCACHE_COMPRESSED : 0;
 		// Call the parent constructor
@@ -98,6 +98,7 @@ class memcach extends pmbt_cache
        $ttl = $this->expire;
 		if (!$this->memcache->replace($var, $data, $this->flags, $ttl))
 		{
+	   //die($var);
 			return $this->memcache->set($var, $data, $this->flags, $ttl);
 		}
 		return true;

@@ -35,7 +35,7 @@ if (!ini_get('display_errors'))
 require_once("include/errors.php");
 $old_error_handler = set_error_handler("myErrorHandler");
 /*Set start time*/
-$startpagetime = microtime();
+$startpagetime = microtime(true);
 
 if($_SERVER["PHP_SELF"] == '')$_SERVER["PHP_SELF"] = 'index.php';
 
@@ -53,7 +53,7 @@ if (is_banned($user, $reason) && !preg_match("/ban.php/",$_SERVER["PHP_SELF"]))
     redirect('ban.php?reson='.urlencode($reason));
     die();
 }
-
+//die($user->timezone);
 if (!preg_match("/cron.php/",$_SERVER['PHP_SELF']))
 {
     $auth = new auth();
@@ -83,7 +83,7 @@ if (!preg_match("/cron.php/",$_SERVER['PHP_SELF']))
         meta_refresh(5, $siteurl . "/login.php$returnto");
         $template->assign_vars(array(
                                     'S_ERROR'   => true,
-                                    'S_FORWARD' => $siteurl."/login.php$returnto",
+                                    'S_FORWARD' => false,
                                     'TITTLE_M'  => $user->lang['BT_ERROR'],
                                     'MESSAGE'   => $user->lang['LOGIN_SITE'],
                                 ));

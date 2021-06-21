@@ -197,7 +197,7 @@ else
             'FORUM_LOCKED_IMG'      => $user->img('forum_read_locked', 'NO_NEW_POSTS_LOCKED'),
             'FORUM_NEW_LOCKED_IMG'  => $user->img('forum_unread_locked', 'NO_NEW_POSTS_LOCKED'),
             'S_DISPLAY_BIRTHDAY_LIST'   => ($config['load_birthdays']) ? true : false,
-            'U_MARK_FORUMS'     => ($user->user) ? append_sid("{$phpbb_root_path}forum.$phpEx", 'hash=' . generate_link_hash('global') . '&amp;mark=forums') : '',
+            'U_MARK_FORUMS'     => ($user->user) ? append_sid("{$phpbb_root_path}forum.$phpEx", 'hash=' . generate_link_hash('global') . '&amp;mark=all') : '',
             'U_MCP'             => ($auth->acl_get('m_') || $auth->acl_getf_global('m_')) ? append_sid("{$phpbb_root_path}forum.$phpEx?action_mcp=mcp", 'i=main&amp;mode=front', true, $user->session_id) : '',
     		'S_SEARCHBOX_ACTION'    => append_sid("{$phpbb_root_path}forum.$phpEx" , 'action=search'),
         ));

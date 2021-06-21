@@ -108,7 +108,7 @@ switch ($op) {
                         $tortn = $db->sql_fetchrow($nott);
                         $db->sql_freeresult($nott);
                         $messenger = new messenger();
-                        $messenger->template('comentnotify', $language);
+                        $messenger->template('comentnotify', $language,);
                         while($row = $db->sql_fetchrow($res))
                         {
                             $messenger->to($row["email"], $row["username"]);

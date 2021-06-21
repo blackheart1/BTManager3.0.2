@@ -1,0 +1,32 @@
+item {
+	padding: 0 2px;
+    margin: 0 2px;
+    font-weight: normal;
+    color: #000000;
+    background-color:#DBE2EC;
+    font-size: 0.9em;
+	display:inline-block;
+	}
+title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #000000;
+	display:inline-block;
+}
+item.title {
+    font-size: 12px;
+    font-weight: bold;
+    color: #E6EAF0;
+}
+size {
+  color:#000;
+}
+description {
+	display:inline-block;
+}
+generator {
+}
+lastBuildDate {
+}
+language {
+}

@@ -60,9 +60,9 @@ $disable_res                                            = utf8_normalize_nfc(req
         else
         $forumban = "yes";
         processinput("forumbanned",$forumban);
-        if (!isset($shoutban) OR $shoutban == "false") $shoutban = "false";
+        if (!isset($shoutban) OR $shoutban == "false") $shoutban = "true";
         else
-        $shoutban = "true";
+        $shoutban = "false";
         processinput("can_shout",$shoutban);
         if (!isset($disable) OR $disable == "") $disable = "false";
         else

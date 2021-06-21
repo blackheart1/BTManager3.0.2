@@ -1512,7 +1512,7 @@ for ($i = 0, $end = sizeof($post_list); $i < $end; ++$i)
 unset($rowset, $user_cache);
 
 // Update topic view and if necessary attachment view counters ... but only for humans and if this is the first 'page view'
-if (isset($user->data['session_page']) && !$user->data['is_bot'] && (strpos($user->data['session_page'], '&t=' . $topic_id) === false))
+if (isset($user->data['session_page']) && $user->user && (strpos($user->data['session_page'], '&t=' . $topic_id) === false))
 {
     $sql = 'UPDATE ' . $db_prefix.'_topics
         SET topic_views = topic_views + 1, topic_last_view_time = ' . time() . "
@@ -1636,7 +1636,6 @@ make_jumpbox(append_sid("{$phpbb_root_path}forum.$phpEx?action=viewforum"), $for
 set_site_var($user->lang['VIEW_TOPIC'] . ' - ' . $topic_data['topic_title']);
 
 echo $template->fetch(($view == 'print') ? 'viewtopic_print.html' : 'viewtopic_body.html');
-//print_r($auth_get_all);
 close_out();
 }
 

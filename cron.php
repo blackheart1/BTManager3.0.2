@@ -57,6 +57,8 @@ if ($config['cron_lock'])
     }
 }
 
+    $auth = new auth();
+    $auth->acl($user);
 define('CRON_ID', time() . ' ' . RandomAlpha(32));
         $time_now = time();
         $cron_type = 'queue';

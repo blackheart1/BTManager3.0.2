@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="{S_CONTENT_DIRECTION}" lang="{S_USER_LANG}" xml:lang="{S_USER_LANG}">
     <head>
         <meta http-equiv="content-type" content="text/html; charset={S_CONTENT_ENCODING}" />
@@ -10,8 +10,8 @@
         <link rel="shortcut icon" href="{SITE_URL}/themes/Bitfarm/favicon.ico" type="image/x-icon" />
         <link rel="alternate" type="application/rss+xml" title="{L_LAST_TORRENT}" href="{SITE_URL}/backend.php?op=last" />
         <link rel="alternate" type="application/rss+xml" title="{L_BEST_TORRENT}" href="{SITE_URL}/backend.php?op=best" />
-        <link rel="StyleSheet" href="{SITE_URL}/themes/Bitfarm/style.css" type="text/css">
-        <link rel="stylesheet" href="{SITE_URL}/themes/Bitfarm/css/lightbox.css" type="text/css">
+        <link rel="StyleSheet" href="{SITE_URL}/themes/Bitfarm/style.css" type="text/css" />
+        <link rel="stylesheet" href="{SITE_URL}/themes/Bitfarm/css/lightbox.css" type="text/css" />
 
         {META}
 
@@ -65,20 +65,6 @@
 
             var pd = new Date();
             var last_reload = pd.getTime();
-
-            function do_breload()
-            {
-                if (document.location.href.match(/\/torrents\.php/))
-                {
-                   var d = new Date();
-
-                   if (last_reload && last_reload > (d.getTime() - "4000")) return;
-
-                   last_reload = d.getTime();
-
-                   bparam('page=1')
-                }
-            }
 
             function toggle2(nome)
             {
@@ -195,9 +181,9 @@
         <link rel="stylesheet" type="text/css" media="screen" href="{SITE_URL}/themes/Bitfarm/iestyle.css">
     <![endif]-->
 
-    <body class="{S_CONTENT_DIRECTION}" onLoad="shoutthis_ajax()">
+    <body class="{S_CONTENT_DIRECTION}" onload="shoutthis_ajax()">
         <div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
-        <div align="center">
+        <div  align="center">
             <div id="infobar">
                 <div class="fltLeft">
                     <!-- IF U_VIEW_ADMIN_PAN -->
@@ -211,33 +197,33 @@
                         <font color="#000" style='background-color: {U_USER_COLOR};'>{U_USER_USERNAME}</font>
                     </a>
 
-                    <img width="20" height="20" border="none" title="{L_UPLODED}" alt="{L_UPLODED}" src="{SITE_URL}/themes/Bitfarm/images/uploaded.png">
+                    <img width="20" height="20" border="none" title="{L_UPLODED}" alt="{L_UPLODED}" src="{SITE_URL}/themes/Bitfarm/images/uploaded.png" />
 
                     <font color="#009900">{U_UPLOADED}</font>
-                    <img width="20" height="20" border="none" title="{L_DOWNED}" alt="{L_DOWNED}" src="{SITE_URL}/themes/Bitfarm/images/downloaded.png">
+                    <img width="20" height="20" border="none" title="{L_DOWNED}" alt="{L_DOWNED}" src="{SITE_URL}/themes/Bitfarm/images/downloaded.png" />
 
                     <font color="#CC0000">{U_DOWNLOADED}</font>
-                    <img width="20" height="20" border="none" title="{L_RATIO}" alt="{L_RATIO}" src="{SITE_URL}/themes/Bitfarm/images/ratio.png">
+                    <img width="20" height="20" border="none" title="{L_RATIO}" alt="{L_RATIO}" src="{SITE_URL}/themes/Bitfarm/images/ratio.png" />
 
                     {U_RATIO}
                     <a href="user.php?op=editprofile">
-                        <img width="20" height="20" border="none" title="{L_YOUR_ACCOUNT}" alt="{L_YOUR_ACCOUNT}" src="{SITE_URL}/themes/Bitfarm/images/account.png">
+                        <img width="20" height="20" border="none" title="{L_YOUR_ACCOUNT}" alt="{L_YOUR_ACCOUNT}" src="{SITE_URL}/themes/Bitfarm/images/account.png" />
                     </a>
 
                     <a href="user.php?op=profile">
-                        <img width="20" height="20" border="none" title="{L_USERPROFILE}" alt="{L_USERPROFILE}" src="{SITE_URL}/themes/Bitfarm/images/profile.png">
+                        <img width="20" height="20" border="none" title="{L_USERPROFILE}" alt="{L_USERPROFILE}" src="{SITE_URL}/themes/Bitfarm/images/profile.png" />
                     </a>
 
                     <a href="pm.php">
-                        <img width="20" height="20" border="none"  title="{L_PM}" alt="{L_PM}" src="{SITE_URL}/themes/Bitfarm/images/<!-- IF U_USER_NEW_PM -->mail_new.png<!-- ELSE -->mail.png<!-- ENDIF -->">
+                        <img width="20" height="20" border="none"  title="{L_PM}" alt="{L_PM}" src="{SITE_URL}/themes/Bitfarm/images/<!-- IF U_USER_NEW_PM -->mail_new.png<!-- ELSE -->mail.png<!-- ENDIF -->" />
                     </a>
 
                     <!-- IF U_USER -->
-                        <a onClick="if(!confirm('{L_JAVA_CONF_LOGOUT}')){return false;};" href="user.php?op=logout" alt="{L_LOGOUT}" title="{L_LOGOUT}">
+                        <a onClick="if(!confirm('{L_JAVA_CONF_LOGOUT}')){return false;};" href="user.php?op=logout" title="{L_LOGOUT}">
                     <!-- ELSE -->
-                        <a href="login.php" alt="{L_LOGIN}" title="{L_LOGIN}">
+                        <a href="login.php" title="{L_LOGIN}">
                     <!-- ENDIF -->
-                        <img width="20" height="20" border="none" title="{L_LOGOUT}" alt="{L_LOGOUT}" src="{SITE_URL}/themes/Bitfarm/images/logout.png">
+                        <img width="20" height="20" border="none" title="{L_LOGOUT}" alt="{L_LOGOUT}" src="{SITE_URL}/themes/Bitfarm/images/logout.png" />
                     </a>
                 </div>
             </div>

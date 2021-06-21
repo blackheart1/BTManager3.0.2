@@ -459,11 +459,11 @@ function meta_refresh($time, $url, $disable_cd_check = false)
     // For XHTML Compatibility We Change Back & To &amp;
 
     $template->assign_vars(array(
-            'META'      => '<meta http-equiv="refresh" content="' . $time . ';url=' . $url . '" >',
+            'META'      => '<meta http-equiv="refresh" content="' . $time . ';url=' . $url . '" />',
             'S_REFRESH' => true
     ));
 
-    return '<meta http-equiv="refresh" content="' . $time . ';url=' . $url . '" >';
+    return '<meta http-equiv="refresh" content="' . $time . ';url=' . $url . '" />';
 }
 
 define('STRIP',  false);
@@ -1957,7 +1957,7 @@ function validate_password($password)
 
 function validate_email($email, $allowed_email = false)
 {
-    global $config, $db, $user;
+    global $config, $db, $db_prefix, $user;
 
     $email         = strtolower($email);
     $allowed_email = ($allowed_email === false) ? strtolower($user->data['user_email']) : strtolower($allowed_email);
@@ -2267,6 +2267,30 @@ function validate_data($data, $val_ary)
     return $error;
 }
 
+function validate_timezone($timezone)
+{
+	return (in_array($timezone, get_timezone_identifiers($timezone))) ? false : 'TIMEZONE_INVALID';
+}
+function get_timezone_identifiers($selected_timezone)
+{
+	$timezones = DateTimeZone::listIdentifiers();
+
+	if (!in_array($selected_timezone, $timezones))
+	{
+		try
+		{
+			// Add valid timezones that are currently selected but not returned
+			// by DateTimeZone::listIdentifiers
+			$validate_timezone = new DateTimeZone($selected_timezone);
+			$timezones[] = $selected_timezone;
+		}
+		catch (\Exception $e)
+		{
+		}
+	}
+
+	return $timezones;
+}
 function validate_jabber($jid)
 {
     if (!$jid)
@@ -3530,7 +3554,7 @@ function parse_smiles(&$text)
     global $db, $db_prefix;
 
     $sql       = "SELECT * FROM " . $db_prefix . "_smiles;";
-    $smile_res = $db->sql_query($sql);
+    $smile_res = $db->sql_query($sql,600000);
     $search    = array();
     $replace   = array();
 
@@ -3761,9 +3785,9 @@ function format_comment($text, $strip_html = false, $strip_slash = false, $allow
     $s = preg_replace($match, $replace, $s);
     // URL's
     $sql = "SELECT *
-            FROM `" . $db_prefix . "_bbcodes`";
+            FROM " . $db_prefix . "_bbcodes;";
 
-    $res = $db->sql_query($sql);
+    $res = $db->sql_query($sql,600000);
     $m   = array();
     $r   = array();
 
@@ -4441,7 +4465,7 @@ function close_out()
         $pagename = substr($_SERVER["PHP_SELF"], strrpos($_SERVER["PHP_SELF"], "/") + 1);
 
         $sqlupdate = "UPDATE " . $db_prefix . "_online_users
-                      SET page = '" . $db->sql_escape($pagename) . "',
+                      SET page = '" . $db->sql_escape($pagename) . "'
                       WHERE id = " . $user->id . " LIMIT 1;";
 
         $sqlinsert = "INSERT INTO " . $db_prefix . "_online_users
@@ -4449,7 +4473,7 @@ function close_out()
 
         $res = $db->sql_query($sqlupdate);
 
-        if (!$db->sql_affectedrows($res)) $db->sql_query($sqlinsert);
+        if (!$res) $db->sql_query($sqlinsert);
 
         $db->sql_query("UPDATE " . $db_prefix . "_users
                         SET lastpage = '" . $db->sql_escape($user->page['page']) . "'

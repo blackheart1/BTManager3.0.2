@@ -240,7 +240,7 @@ class messenger
             $tpl->set_custom_template($template_path, $template_lang . '_email', $fallback_template_path);
 
             $tpl->set_filenames(array(
-                'body'      => $template_file . '.txt',
+                'body'      => $template_path . '/' . $template_file . '.txt',
             ));
         }
 

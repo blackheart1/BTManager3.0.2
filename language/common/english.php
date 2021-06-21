@@ -915,6 +915,7 @@ $lang = array_merge($lang, array(
     'ELAPSED_TIME_HOUR'     => 'Hour',
     'ELAPSED_TIME_MIN '     => 'Minute',
     'ELAPSED_TIME_SEC'      => '< 1 Minute',
+	'SQL_ERROR_OCCURRED'		=> 'An SQL error occurred while fetching this page. Please contact the %sBoard Administrator%s if this problem persists.',
 ));
 
 ?>

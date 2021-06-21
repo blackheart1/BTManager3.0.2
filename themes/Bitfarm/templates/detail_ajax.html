@@ -755,11 +755,11 @@
                                 <p>{L_ADD_COMMENT}</p>
                                 </td>
                                 <td>
-                                <form name="torrentComment" method="POST" action="comment.php">
+                               <form name="torrentComment" method="POST" action="comment.php">
                                 <p><textarea rows="7" cols="40" name="comment"></textarea>
                                 <br />
 <!-- BEGIN smilies -->
-                                <a onclick="comment_smile('{smilies.SMILIE_CODE}',torrentComment.comment);"><img src="smiles/{smilies.SMILIE_IMG}" alt="{smilies.ALT}" border="0"></a>
+                    <a href="#" onClick="insert_text('{smilies.SMILIE_CODE}', true); return false;" style="line-height: 20px;"><img src="smiles/{smilies.SMILIE_IMG}" alt="{smilies.SMILIE_CODE}" title="{smilies.SMILIE_CODE}" hspace="2" vspace="2" /></a>
 <!-- END smilies -->
                                 </p>
                                 <p><input value="{L_SUBMIT}" type="submit" /></p>

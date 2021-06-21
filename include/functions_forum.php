@@ -1340,7 +1340,7 @@ function display_forums($root_data = '', $display_moderators = false, $return_mo
 
     $template->assign_vars(array(
         'T_THEME_PATH'      =>  'themes/' . $theme .'/',
-        'U_MARK_FORUMS'     => ($user->user) ? append_sid("{$phpbb_root_path}forum.$phpEx", 'hash=' . generate_link_hash('global') . '&amp;mark=forums') : '',
+        'U_MARK_FORUMS'     => ($user->user) ? append_sid("{$phpbb_root_path}forum.$phpEx", 'hash=' . generate_link_hash('global') . '&amp;mark=all') : '',
         'S_HAS_SUBFORUM'    => ($visible_forums) ? true : false,
         'L_SUBFORUM'        => ($visible_forums == 1) ? $user->lang['SUBFORUM'] : $user->lang['SUBFORUMS'],
         'LAST_POST_IMG'     => $user->img('icon_topic_latest', 'VIEW_LATEST_POST'))
@@ -2340,7 +2340,7 @@ function markread($mode, $forum_id = false, $topic_id = false, $post_time = 0, $
             // insert row
             if (!$db->sql_affectedrows())
             {
-                //$db->sql_return_on_error(true);
+                $db->sql_return_on_error(true);
 
                 $sql_ary = array(
                     'user_id'       => $user->id,
@@ -2351,7 +2351,7 @@ function markread($mode, $forum_id = false, $topic_id = false, $post_time = 0, $
 
                 $db->sql_query('INSERT INTO ' . $db_prefix . '_topics_track ' . $db->sql_build_array('INSERT', $sql_ary));
 
-                //$db->sql_return_on_error(false);
+                $db->sql_return_on_error(false);
             }
         }
 
@@ -2368,7 +2368,7 @@ function markread($mode, $forum_id = false, $topic_id = false, $post_time = 0, $
 
         if ($use_user_id != 0)
         {
-            //$db->sql_return_on_error(true);
+            $db->sql_return_on_error(true);
 
             $sql_ary = array(
                 'user_id'       => (int) $use_user_id,
@@ -2378,7 +2378,7 @@ function markread($mode, $forum_id = false, $topic_id = false, $post_time = 0, $
 
             $db->sql_query('INSERT INTO ' . $db_prefix . '_topics_posted ' . $db->sql_build_array('INSERT', $sql_ary));
 
-            //$db->sql_return_on_error(false);
+            $db->sql_return_on_error(false);
         }
 
         return;

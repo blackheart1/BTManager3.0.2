@@ -258,6 +258,18 @@ class filespec
     {
         return @filesize($filename);
     }
+	function check_image($is_image)
+	{
+		global $user;
+		// Make sure the image category only holds valid images...
+		if ($is_image && !$this->is_image())
+		{
+			$this->remove();
+			// If this error occurs a user tried to exploit an IE Bug by renaming extensions
+			// Since the image category is displaying content inline we need to catch this.
+			$this->error[] = $user->lang['ATTACHED_IMAGE_NOT_IMAGE'];
+		}
+	}
 
     /**
     * Move file to destination folder
@@ -517,6 +529,18 @@ class fileupload
         }
     }
 
+	function check_image($is_image)
+	{
+		global $user;
+		// Make sure the image category only holds valid images...
+		if ($is_image && !$this->is_image())
+		{
+			$this->remove();
+			// If this error occurs a user tried to exploit an IE Bug by renaming extensions
+			// Since the image category is displaying content inline we need to catch this.
+			$this->error[] = $user->lang['ATTACHED_IMAGE_NOT_IMAGE'];
+		}
+	}
     /**
     * Set error prefix
     */

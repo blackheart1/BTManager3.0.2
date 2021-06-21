@@ -29,7 +29,7 @@ if (!defined('IN_BTM'))
 include_once 'include/utf/utf_tools.php';
 function add_attach($form_name, $forum_id, $local = false, $local_storage = '', $is_message = false, $local_filedata = false)
 {
-    global $db_prefix, $user, $db, $siteurl, $config;
+    global $db_prefix, $user, $db, $siteurl, $config, $pmbt_cache, $auth;
     $user->set_lang('pm',$user->ulanguage);
     include_once('include/function_attach.php');
     $filedata = array(
@@ -49,11 +49,8 @@ function add_attach($form_name, $forum_id, $local = false, $local_storage = '', 
         $filedata['error'][] = 'NO_UPLOAD_FORM_FOUND';
         return $filedata;
     }
-    $extensions = array();
-$sql = 'SELECT `extension` as extension FROM `' . $db_prefix . '_extensions`';
-$res = $db->sql_query($sql) OR btsqlerror($sql);
-while ($ct_a = $db->sql_fetchrow($res))$extensions[] = $ct_a['extension'];
-$upload->set_allowed_extensions($extensions);
+    $extensions = $pmbt_cache->obtain_attach_extensions((($is_message) ? false : (int) $forum_id));
+	$upload->set_allowed_extensions($extensions['_allowed_']);
     $file = ($local) ? $upload->local_upload($local_storage, $local_filedata) : $upload->form_upload($form_name);
 
     if ($file->init_error)
@@ -62,21 +59,14 @@ $upload->set_allowed_extensions($extensions);
         return $filedata;
     }
     $cat_id = (isset($extensions[$file->get('extension')]['display_cat'])) ? $extensions[$file->get('extension')]['display_cat'] == 1 : false;
-    if ($cat_id == 1 && !$file->is_image())
-    {
-        $file->remove();
-        bterror('BT_ERROR', 'ATTACHED_IMAGE_NOT_IMAGE');
-    }
-    $filedata['thumbnail'] = ($file->is_image() && $config['img_create_thumbnail']) ? 1 : 0;
 
-    //die(print($filedata['thumbnail']));
-    if (!$user->admin && $cat_id == 1)
+	if (!$auth->acl_get('a_') && !$auth->acl_get('m_', $forum_id))
     {
-        $file->upload->set_allowed_dimensions(0, 0, $config['img_max_width'], $config['img_max_height']);
-    }
+		if (!$cat_id)
+		{
+			$upload->set_allowed_dimensions(0, 0, $config['img_max_width'], $config['img_max_height']);
+		}
 
-    if ($user->admin)
-    {
         if (!empty($extensions[$file->get('extension')]['max_filesize']))
         {
             $allowed_filesize = $extensions[$file->get('extension')]['max_filesize'];
@@ -86,14 +76,14 @@ $upload->set_allowed_extensions($extensions);
             $allowed_filesize = ($is_message) ? $config['max_filesize_pm'] : $config['max_filesize'];
         }
 
-        $file->upload->set_max_filesize($allowed_filesize);
+        $upload->set_max_filesize($allowed_filesize);
     }
 
     $file->clean_filename('unique', $user->id . '_');
+    $file->move_file($config['upload_path'], false, !$cat_id);
+    $filedata['thumbnail'] = ($file->is_image() && $config['img_create_thumbnail']) ? 1 : 0;
 
-    $no_image = ($cat_id == 1) ? false : true;
-
-    $file->move_file($config['upload_path'], false, $no_image);
+	$file->check_image($cat_id);
 
     if (sizeof($file->error))
     {
@@ -153,21 +143,32 @@ $upload->set_allowed_extensions($extensions);
 
     return $filedata;
 }
-function display_custom_bbcodes()
+function display_custom_bbcodes($num_predefined_bbcodes = 22)
 {
-    global $db, $template, $user, $db_prefix;
+    global $db, $template, $user, $db_prefix, $pmbt_cache;
 
 
-    $sql = 'SELECT bbcode_id, bbcode_tag, bbcode_helpline
-        FROM ' . $db_prefix . '_bbcodes
-        WHERE display_on_posting = 1
-        ORDER BY bbcode_tag';
-    $result = $db->sql_query($sql);
+	if(!$tags = $pmbt_cache->get_sql("bbcode_tag")){
+		$sql = 'SELECT bbcode_id, bbcode_tag, bbcode_helpline
+			FROM ' . $db_prefix . '_bbcodes
+			WHERE display_on_posting = 1
+			ORDER BY bbcode_tag';
+		$result = $db->sql_query($sql);
+		$tags = array();
+	    while ($row = $db->sql_fetchrow($result))
+		{
+			$tags[] = array(
+			'bbcode_id'			=> $row['bbcode_id'],
+			'bbcode_tag'		=> $row['bbcode_tag'],
+			'bbcode_helpline'	=> $row['bbcode_helpline']
+			);
+		}
+    	$db->sql_freeresult($result);
+		$pmbt_cache->set_sql("bbcode_tag", $tags);
+	}
 
     $i = 0;
-    // Start counting from 22 for the bbcode ids (every bbcode takes two ids - opening/closing)
-    $num_predefined_bbcodes = 22;
-    while ($row = $db->sql_fetchrow($result))
+    foreach ($tags as $row)
     {
         // If the helpline is defined within the language file, we will use the localised version, else just use the database entry...
         if (isset($user->lang[strtoupper($row['bbcode_helpline'])]))
@@ -182,12 +183,9 @@ function display_custom_bbcodes()
             'BBCODE_HELPLINE'   => $row['bbcode_helpline'],
             'A_BBCODE_HELPLINE' => str_replace(array('&amp;', '&quot;', "'", '&lt;', '&gt;'), array('&', '"', "\'", '<', '>'), $row['bbcode_helpline']),
         ));
-    //echo ($num_predefined_bbcodes + ($i * 2)) . ' | ';
 
         $i++;
     }
-    $db->sql_freeresult($result);
-        //die('test');
 }
 function posting_gen_topic_types($forum_id, $cur_topic_type = 0)
 {
@@ -619,7 +617,7 @@ function attach_unlink($filename, $mode = 'file', $entry_removed = false)
 }
 function system_pm($msg,$sub,$to,$icon,$send_from = false)
 {
-    global $config, $db, $db_prefix, $user, $phpEx, $template, $sitename,$siteurl, $config;
+    global $config, $db, $db_prefix, $user, $phpEx, $template, $sitename,$siteurl, $config, $auth;
         include_once('include/message_parser.php');
         include_once('include/class.bbcode.php');
         include_once('include/ucp/functions_privmsgs.php');
@@ -641,7 +639,7 @@ function system_pm($msg,$sub,$to,$icon,$send_from = false)
         $bbcode_status      = ($config['allow_bbcode'] && $config['auth_bbcode_pm'] && checkaccess('u_pm_bbcode')) ? true : false;
         $smilies_status     = ($config['allow_smilies'] && $config['auth_smilies_pm'] && checkaccess('u_pm_smilies')) ? true : false;
         $img_status         = ($config['auth_img_pm'] && checkaccess('u_pm_img')) ? true : false;
-        $flash_status       = ($config['auth_flash_pm'] && checkaccess('u_pm_flash')) ? true : false;
+        $flash_status       = ($config['auth_flash_pm'] && $auth->acl_get('u_pm_flash')) ? true : false;
         $url_status         = ($config['allow_post_links']) ? true : false;
         $enable_sig         = ($config['allow_sig'] && $config['allow_sig_pm'] && checkaccess('u_sig'));
         $enable_smilies     = ($config['allow_smilies'] && checkaccess('u_pm_smilies'));
@@ -1703,7 +1701,7 @@ function submit_post($mode, $subject, $username, $topic_type, &$poll, &$data, $u
     if ($user->user)
     {
         $sql = 'SELECT mark_time
-            FROM ' . $db_prefix.'_forums_watch
+            FROM ' . $db_prefix.'_forums_track
             WHERE user_id = ' . $user->id . '
                 AND forum_id = ' . $data['forum_id'];
         $result = $db->sql_query($sql);
@@ -2009,7 +2007,7 @@ function user_notification($mode, $subject, $topic_title, $forum_name, $forum_id
 function topic_review($topic_id, $forum_id, $mode = 'topic_review', $cur_post_id = 0, $show_quote_button = true)
 {
     global $user, $auth, $db, $template, $bbcode, $pmbt_cache;
-    global $config, $phpbb_root_path, $phpEx, $db_prefix;
+    global $config, $phpbb_root_path, $phpEx, $db_prefix, $torrent_per_page;
 
     // Go ahead and pull all data for this topic
     $sql = 'SELECT p.post_id
@@ -2019,7 +2017,7 @@ function topic_review($topic_id, $forum_id, $mode = 'topic_review', $cur_post_id
             ' . (($mode == 'post_review') ? " AND p.post_id > $cur_post_id" : '') . '
         ORDER BY p.post_time ';
     $sql .= ($mode == 'post_review') ? 'ASC' : 'DESC';
-    $sql .= 'LIMIT ' . $torrent_per_page;
+    $sql .= ' LIMIT ' . $torrent_per_page;
     $result = $db->sql_query($sql);
 
     $post_list = array();

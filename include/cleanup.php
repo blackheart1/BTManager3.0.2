@@ -266,7 +266,7 @@ if($hnr_system == 'true')
     $db->sql_query( "DELETE FROM ".$db_prefix."_private_messages WHERE recipient = '0';");
     #$db->sql_query(    "DELETE FROM ".$db_prefix."_private_messages WHERE save = 'false' AND UNIX_TIMESTAMP(sent) < UNIX_TIMESTAMP(NOW()) - 2592000;");
     #clean snatch list
-   $db->sql_query("UPDATE ".$db_prefix."_snatched SET seeder = 'no' WHERE seeder = 'yes' AND last_action < ".get_date_time(gmtime() - $announce_interval).";");
+   $db->sql_query("UPDATE ".$db_prefix."_snatched SET seeder = 'no' WHERE seeder = 'yes' AND last_action < '".get_date_time(gmtime() - $announce_interval)."';");
    $db->sql_query("UPDATE ".$db_prefix."_users SET warned = '0', warn_kapta= 0, warn_hossz = 0 WHERE (`warn_hossz` + `warn_kapta`) < '" . strtotime(gmdate("Y-m-d H:i:s", time())) . "'");
 
 
@@ -378,7 +378,7 @@ $up_warn = "UPDATE ".$db_prefix."_users SET inactwarning = 1, inactive_warn_time
 $db->sql_query($up_warn);
 }
 }
-$db->sql_query("UPDATE ".$db_prefix."_users SET inactwarning = 0, inactive_warn_time = '0000-00-00 00:00:00' WHERE id > 0 inactwarning = 1 AND UNIX_TIMESTAMP(lastlogin) > UNIX_TIMESTAMP(NOW()) - (".$inactwarning_time.");");
+$db->sql_query("UPDATE ".$db_prefix."_users SET inactwarning = 0, inactive_warn_time = '0000-00-00 00:00:00' WHERE id > 0 AND inactwarning = 1 AND UNIX_TIMESTAMP(lastlogin) > UNIX_TIMESTAMP(NOW()) - (".$inactwarning_time.");");
         #Clean Shoutbox
         if($shout_config['autodelet'] == 'true')
         $db->sql_query("DELETE FROM ".$db_prefix."_shouts WHERE id > 0 AND UNIX_TIMESTAMP(posted) < UNIX_TIMESTAMP(NOW()) - (" . $shout_config['autodelete_time'] . "*60);");

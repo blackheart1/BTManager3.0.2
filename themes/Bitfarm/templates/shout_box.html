@@ -62,15 +62,6 @@ img.src = img.src.replace("_over.gif",".gif");
 }
 var pd = new Date();
 var last_reload = pd.getTime();
-function do_breload() {
-    if (document.location.href.match(/\/torrents\.php/)) {
-       var d = new Date();
-       if (last_reload && last_reload > (d.getTime() - "4000")) return;
-          last_reload = d.getTime();
-       bparam('page=1')
-
-    }
-}
 
 function toggle2(nome) {
 if(document.getElementById(nome).style.display=='none')

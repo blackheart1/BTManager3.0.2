@@ -528,7 +528,7 @@ if ($user->user && $auth->acl_get('u_savedrafts') && ($mode == 'reply' || $mode 
             (($forum_id) ? ' AND forum_id = ' . (int) $forum_id : '') .
             (($topic_id) ? ' AND topic_id = ' . (int) $topic_id : '') .
             (($draft_id) ? " AND draft_id <> $draft_id" : '').
-            'LIMIT 1';
+            ' LIMIT 1';
     $result = $db->sql_query($sql);
 
     if ($db->sql_fetchrow($result))

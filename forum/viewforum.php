@@ -28,6 +28,7 @@ if (!defined('IN_BTM'))
 
 if ($action == "viewforum") {
 $forum_id = request_var('f', 0);
+$mark_read	= request_var('mark', '');
 $start      = request_var('start', 0);
 
 $default_sort_days  = (!empty($user->topic_show_days)) ? $user->topic_show_days : 0;
@@ -218,6 +219,20 @@ set_site_var($user->lang['VIEW_FORUM'] . ' - ' . $forum_data['forum_name']);
 
 make_jumpbox(append_sid("{$phpbb_root_path}forum.$phpEx",'action=viewforum'), $forum_id,false,false,true);
 
+// Handle marking posts
+if ($mark_read == 'topics')
+{
+	$token = request_var('hash', '');
+	if (check_link_hash($token, 'global'))
+	{
+		// Add 0 to forums array to mark global announcements correctly
+		markread('topics', array($forum_id, 0));
+	}
+	$redirect_url = append_sid("{$phpbb_root_path}forum.$phpEx", 'action=viewforum&amp;f=' . $forum_id);
+	meta_refresh(3, $redirect_url);
+
+	trigger_error($user->lang['TOPICS_MARKED'] . '<br /><br />' . sprintf($user->lang['RETURN_FORUM'], '<a href="' . $redirect_url . '">', '</a>'));
+}
 $template->assign_vars(array(
     'U_VIEW_FORUM'          => append_sid("{$phpbb_root_path}forum.$phpEx", "action=viewforum&amp;f=$forum_id&amp;start=$start"),
 ));
@@ -390,7 +405,7 @@ $template->assign_vars(array(
     'U_MCP'             => ($auth->acl_get('m_', $forum_id)) ? append_sid("{$phpbb_root_path}forum.$phpEx?action_mcp=mcp", "f=$forum_id&amp;i=main&amp;mode=forum_view", true, $user->session_id) : '',
     'U_POST_NEW_TOPIC'  => ($auth->acl_get('f_post', $forum_id) || $user->id == 0) ? append_sid("{$phpbb_root_path}forum.$phpEx", 'action=posting&amp;mode=post&amp;f=' . $forum_id) : '',
     'U_VIEW_FORUM'      => append_sid("{$phpbb_root_path}forum.$phpEx?action=viewforum", "f=$forum_id" . ((strlen($u_sort_param)) ? "&amp;$u_sort_param" : '') . "&amp;start=$start"),
-    'U_MARK_TOPICS'     => ($user->user) ? append_sid("{$phpbb_root_path}forum.$phpEx", "action=viewforum&amp;f=$forum_id&amp;mark=topics") : '',
+    'U_MARK_TOPICS'     => ($user->user) ? append_sid("{$phpbb_root_path}forum.$phpEx", 'hash=' . generate_link_hash('global') . "&amp;action=viewforum&amp;f=$forum_id&amp;mark=topics") : '',
 ));
 // Grab icons
 $icons = $pmbt_cache->obtain_icons();
@@ -412,6 +427,17 @@ if ($user->user)
 {
         $sql_array['LEFT_JOIN'][] = array('FROM' => array($db_prefix . '_topics_posted' => 'tp'), 'ON' => 'tp.topic_id = t.topic_id AND tp.user_id = ' . $user->id);
         $sql_array['SELECT'] .= ', tp.topic_posted';
+	if ($config['load_db_lastread'])
+	{
+		$sql_array['LEFT_JOIN'][] = array('FROM' => array($db_prefix . '_topics_track' => 'tt'), 'ON' => 'tt.topic_id = t.topic_id AND tt.user_id = ' . $user->id);
+		$sql_array['SELECT'] .= ', tt.mark_time';
+
+		if ($s_display_active && sizeof($active_forum_ary))
+		{
+			$sql_array['LEFT_JOIN'][] = array('FROM' => array($db_prefix . '_forums_track' => 'ft'), 'ON' => 'ft.forum_id = t.forum_id AND ft.user_id = ' . $user->id);
+			$sql_array['SELECT'] .= ', ft.mark_time AS forum_mark_time';
+		}
+	}
 }
 
 if ($forum_data['forum_type'] == 1)

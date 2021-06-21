@@ -57,7 +57,7 @@ class User {
         var $load = 0;
         var $date_format = 'd M Y H:i';
         var $img;
-        var $dst = false;
+        var $dst = 0;
         var $lastpage;
         var $parked;
         var $disabled_reason;
@@ -153,7 +153,8 @@ class User {
                             $this->data['sig_bbcode_uid'] = $row['sig_bbcode_uid'];
                             $this->data['clean_username'] = $row['clean_username'];
                             $this->date_format = $row['user_dateformat'];
-                            $this->timezone = $row['tzoffset']*60;
+							$tz = $row['tzoffset'];
+                            $this->timezone = ((float)$tz * 60);
                             $this->lastpost = $row['user_lastpost_time'];
                             $this->posts = $row['user_posts'];
                             $this->optionset('viewimg', 1);
@@ -249,7 +250,8 @@ class User {
                             $this->lastpost = $row['user_lastpost_time'];
                             $this->posts = $row['user_posts'];
                             $this->optionset('viewimg', 1);
-                            $this->timezone = $row['tzoffset']*60;
+							$tz = $row['tzoffset'];
+                            $this->timezone = ((float)$tz * 60);
                             $this->date_format = $row['user_dateformat'];
                             $this->parked = (($row['parked'] == 'true')? true : false);
                             $this->disabled = (($row['disabled'] == 'true')? true : false);
@@ -681,7 +683,8 @@ class User {
 
         if (!$midnight)
         {
-            list($d, $m, $y) = explode(' ', gmdate('j n Y', time() . $zone_offset));
+			$td = (time() . $zone_offset);
+            list($d, $m, $y) = explode(' ', gmdate('j n Y', (int)$td));
             $midnight = gmmktime(0, 0, 0, $m, $d, $y) - $zone_offset;
         }
 

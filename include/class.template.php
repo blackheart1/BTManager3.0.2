@@ -214,6 +214,7 @@ class Template {
         }
         elseif(preg_match("/style\/upgrade\//",$this->files[$handle]))
         {
+			
             $data = $this->compile(trim(file_get_contents($this->files[$handle])));
         }
         else
@@ -269,11 +270,13 @@ class Template {
         return true;
     }
     function fetch($file = NULL) {
-    global $user, $theme,$startpagetime,$TheQueryCount;
+    global $user, $theme,$startpagetime,$TheQueryCount,$db;
        if(!$file) $file = $this->file;
        else
        $file = $this->check_file($file);
-       $this->assign_vars(array('S_GENTIME'=> abs(round(microtime()-$startpagetime,2)),'S_QUERYCOUNT'=>$TheQueryCount));
+	   $mtime = explode(' ', microtime());
+	   $totaltime = $mtime[0] + $mtime[1] - $startpagetime;
+       $this->assign_vars(array('S_GENTIME'=> round($totaltime, 4),'S_QUERYCOUNT'=>$db->num_queries['normal']));
         if($this->vars)extract($this->vars);          // Extract the vars to local namespace
         ob_start();                    // Start output buffering
         include_once($file);                // Include the file
