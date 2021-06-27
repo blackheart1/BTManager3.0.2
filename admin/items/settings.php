@@ -28,8 +28,8 @@ if (!defined('IN_BTM'))
 
 if ($auth->acl_get('a_board'))
 {
-    adminentry("settings","settings",$user->lang['MENU_SETTINGS'],"siteinfo","admin");
-	$op_keys = explode(",","settings,savesettings,settings_pm,settings_bbcode,sig_settings,acp_email,user_signup,track_settings");
+    adminentry("settings","setting",$user->lang['MENU_SETTINGS'],"siteinfo","admin");
+	$op_keys = explode(",","setting,attach,settings,savesettings,settings_pm,settings_captch,settings_bbcode,sig_settings,acp_email,user_signup,track_settings");
 }
 
 ?>

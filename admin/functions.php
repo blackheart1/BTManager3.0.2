@@ -600,6 +600,20 @@ function build_cfg_template($tpl_type, $key, &$new, $config_key, $vars)
 			$tpl = '<input id="' . $key . '" type="' . $tpl_type[0] . '"' . (($size) ? ' size="' . $size . '"' : '') . ' maxlength="' . (($maxlength) ? $maxlength : 255) . '" name="' . $name . '" value="' . $new[$config_key] . '"' . (($tpl_type[0] === 'password') ?  ' autocomplete="off"' : '') . ' />';
 		break;
 
+		case 'date':
+		case 'time':
+		case 'number':
+		case 'range':
+			$max = '';
+			$min = ( isset($tpl_type[1]) ) ? (int) $tpl_type[1] : false;
+			if ( isset($tpl_type[2]) )
+			{
+				$max = (int) $tpl_type[2];
+			}
+
+			$tpl = '<input id="' . $key . '" type="' . $tpl_type[0] . '"' . (( $min != '' ) ? ' min="' . $min . '"' : '') . (( $max != '' ) ? ' max="' . $max . '"' : '') . ' name="' . $name . '" value="' . $new[$config_key] . '" />';
+		break;
+
 		case 'dimension':
 			$size = (int) $tpl_type[1];
 			$maxlength = (int) $tpl_type[2];
@@ -629,8 +643,6 @@ function build_cfg_template($tpl_type, $key, &$new, $config_key, $vars)
 
 		case 'select':
 		case 'custom':
-
-			$return = '';
 
 			if (isset($vars['method']))
 			{
@@ -1509,9 +1521,9 @@ function build_permission_dropdown($options, $default_option, $permission_scope)
 	}
 function get_database_size()
 {
-	global $db, $db_prefix;
+	global $db, $db_prefix, $pmbt_cache;
 
-	$database_size = false;
+	//$database_size = false;
 
 	// This code is heavily influenced by a similar routine in phpMyAdmin 2.2.0
 	switch ($db->sql_layer)
@@ -1556,6 +1568,27 @@ function get_database_size()
 						}
 					}
 					$db->sql_freeresult($result);
+				}
+				else
+				{
+					$mysql_engine	= ['MyISAM', 'InnoDB', 'Aria'];
+					$db_name		= $db->dbname;
+					$database_size	= 0;
+		
+					$sql = 'SHOW TABLE STATUS
+						FROM ' . $db_name;
+					$result = $db->sql_query($sql);
+					while ($row = $db->sql_fetchrow($result))
+					{
+						if (isset($row['Engine']) && in_array($row['Engine'], $mysql_engine))
+						{
+							$database_size += $row['Data_length'] + $row['Index_length'];
+						}
+					}
+		
+					$db->sql_freeresult($result);
+		
+					$database_size = $database_size ? $database_size : false;
 				}
 			}
 		break;
@@ -2064,7 +2097,7 @@ function delete_topics($where_type, $where_ids, $auto_sync = true, $post_count_s
 function adm_page_footer($copyright_html = true)
 {
 	global $db, $db_prefix, $config, $template, $user, $auth, $pmbt_cache;
-	global $starttime, $phpbb_root_path, $phpbb_admin_path, $phpEx;
+	global $starttime, $phpbb_root_path, $phpbb_admin_path, $phpEx, $u_action;
 
 	// Output page creation time
 	if (defined('BTM_DEBUG'))
@@ -2077,7 +2110,7 @@ function adm_page_footer($copyright_html = true)
 			$db->sql_report('display');
 		}
 
-		$debug_output = sprintf('Time : %.3fs | ? Queries | GZIP : ' . (($config['gzip_compress']) ? 'On' : 'Off') . (($user->load) ? ' | Load : ' . $user->load : ''), $totaltime);
+		$debug_output = sprintf('Time : %.3fs | ' . $db->sql_num_queries() . ' Queries | GZIP : ' . (($config['gzip_compress']) ? 'On' : 'Off') . (($user->load) ? ' | Load : ' . $user->load : ''), $totaltime);
 
 		if (defined('BTM_DEBUG'))
 		{
@@ -2093,7 +2126,7 @@ function adm_page_footer($copyright_html = true)
 				}
 			}
 
-			$debug_output .= ' | <a href="/&amp;explain=1">Explain</a>';
+			$debug_output .= ' | <a href="' . append_sid($u_action, 'explain=1') . '">Explain</a>';
 		}
 	}
 

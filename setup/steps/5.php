@@ -58,7 +58,7 @@ function drawRow($param, $type, $options = NULL) {
                 echo "<input type=\"text\" name=\"sub_".$param."\" value=\"".$cfgrow[$param]."\" size=\"40\" />";
         }
         elseif ($type == "text3") {
-                $content = "<textarea type=\"text\" name=\"sub_".$param."\" rows=\"15\" cols=\"76\">" . $cfgrow[$param] . "</textarea>";
+                echo "<textarea type=\"text\" name=\"sub_".$param."\" rows=\"15\" cols=\"76\">" . $cfgrow[$param] . "</textarea>";
         } elseif ($type == "select") {
                 echo "<select name=\"sub_".$param."\">\n";
                 foreach ($options as $key=>$val) {

@@ -36,35 +36,7 @@ if($shout_config['turn_on']=='yes')
         $shoutannounce = format_comment($shout_config['announce_ment'], false, true);
         parse_smiles($shoutannounce);
         generate_smilies('inline', 0);
-        $sql = 'SELECT bbcode_id, bbcode_tag, bbcode_helpline
-            FROM '.$db_prefix.'_bbcodes
-            WHERE display_on_posting = 1
-            ORDER BY bbcode_tag';
-        $result = $db->sql_query($sql);
-
-        $i = 0;
-        $num_predefined_bbcodes = 24;
-        while ($rows = $db->sql_fetchrow($result))
-        {
-            // If the helpline is defined within the language file, we will use the localised version, else just use the database entry...
-            if (isset($user->lang[strtoupper($rows['bbcode_helpline'])]))
-            {
-                $rows['bbcode_helpline'] = $user->lang[strtoupper($rows['bbcode_helpline'])];
-            }
-
-            $template->assign_block_vars('custom_tags', array(
-                'BBCODE_NAME'       => "'[{$rows['bbcode_tag']}]', '[/" . str_replace('=', '', $rows['bbcode_tag']) . "]'",
-                'BBCODE_ID'         => $num_predefined_bbcodes + ($i * 2),
-                'BBCODE_TAG'        => str_replace('=', '', $rows['bbcode_tag']),
-                'BBCODE_HELPLINE'   => $rows['bbcode_helpline'],
-                'A_BBCODE_HELPLINE' => str_replace(
-                    array('&amp;', '&quot;', "'", '&lt;', '&gt;'),
-                    array('&', '"', "\'", '<', '>'), $rows['bbcode_helpline']),
-            ));
-
-            $i++;
-        }
-        $db->sql_freeresult($result);
+		display_custom_bbcodes(24);
         $template->assign_vars(array(
                         'SHOUT_WELCOME'            => $shoutannounce,
                         'S_SHOUTBOX_AJAX'          => false,
@@ -76,8 +48,9 @@ if($shout_config['turn_on']=='yes')
                         'MESSAGE'                   =>  addslashes($shoutannounce),
                         'S_BBCODE_IMG'              => ($config['auth_img_pm'] && checkaccess('u_pm_img')) ? true : false,
                         'S_LINKS_ALLOWED'           => ($config['allow_post_links']) ? true : false,
-                        'S_BBCODE_FLASH'            => ($config['auth_flash_pm'] && checkaccess('u_pm_flash')) ? true : false,
+                        'S_BBCODE_FLASH'            => ($config['auth_flash_pm'] && $auth->acl_get('u_pm_flash')) ? true : false,
                         'EDIT_SHOUT'                =>  false,
+						'DETACH'					=> 0,
         ));
         $ucs = 0;
         $i = 0;

@@ -162,8 +162,23 @@ if ('forum_search' == $op)
             case 'configs':
                 if (!$update)
                 {
-                    $cfgrow = $config;
+			require_once("include/auth.php");
+			require_once("admin/files/acp_forum_settings." . $phpEx);
+			include_once($phpbb_root_path . 'include/modules.' . $phpEx);
                     $user->set_lang('admin/acp_forum_configs',$user->ulanguage);
+				$auth = new auth();
+				$auth->acl($user);
+				$module = new acp_forum_settings();
+				$module->u_action = $u_action;
+				$module->module =  'acp_forum_settings';
+				$template->assign_vars(array(
+					'U_ACTION'			=> '/admin.php?op=forum&i=userinfo&action=' . $action,)
+				);
+				$action					= request_var('action_i', $action);
+				$module->main('',$mode);
+				echo $template->fetch('admin/' . $module->tpl_name . '.html');
+				close_out();
+                    $cfgrow = $config;
                     drawRow("forumsettings","text", false ,'Forum Settings');
                     drawRow("forum_open","select",$user->lang["YES_NO_NUM"]);
                     drawRow("board_disable_msg","text");
@@ -1452,10 +1467,10 @@ if ('forum_search' == $op)
                 $statuslist = '<option value="' . 0 . '"' . (($forum_data['forum_status'] == 0) ? ' selected="selected"' : '') . '>' . $user->lang['UNLOCKED'] . '</option><option value="' . 1 . '"' . (($forum_data['forum_status'] == 1) ? ' selected="selected"' : '') . '>' . $user->lang['LOCKED'] . '</option>';
 
                 $sql = 'SELECT forum_id
-                    FROM ' . $db_prefix .'_forums
-                    WHERE forum_type = ' . $db_prefix ."_posts
+                    FROM ' . $db_prefix ."_forums
+                    WHERE forum_type = 1
                         AND forum_id <> $forum_id LIMIT 1";
-                $result = $db->sql_query($sql, 1);
+                $result = $db->sql_query($sql);
 
                 $postable_forum_exists = false;
                 if ($db->sql_fetchrow($result))
@@ -1612,8 +1627,8 @@ if ('forum_search' == $op)
                 $forums_list = make_forum_select($forum_data['parent_id'], $subforums_id);
 
                 $sql = 'SELECT forum_id
-                    FROM ' . $db_prefix .'_forums
-                    WHERE forum_type = ' . $db_prefix . "_posts
+                    FROM ' . $db_prefix ."_forums
+                    WHERE forum_type = 1
                         AND forum_id <> $forum_id LIMIT 1";
                 $result = $db->sql_query($sql);
 

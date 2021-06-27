@@ -28,6 +28,8 @@ if (defined('IN_BTM'))
 
 define("IN_BTM",true);
 define('DEBUG_EXTRA',true);
+define('DISPLAY_LOAD_TIME',true);
+define('DEBUG',true);
 
 if (!ini_get('display_errors')) {
     ini_set('display_errors', 1);
@@ -36,6 +38,7 @@ require_once("include/errors.php");
 $old_error_handler = set_error_handler("myErrorHandler");
 require_once("include/config.php"); //if config file has not been loaded yet
 date_default_timezone_set($pmbt_time_zone);
+$starttime = microtime(true);
 include'include/class.template.php';
 require_once("include/actions.php");
 require_once("admin/functions.php");
@@ -455,8 +458,9 @@ else
         if (($lversion = $pmbt_cache->get('source_version',86400)) === false)$lversion = array('LATEST_VERSION'=>'0.0.0');
         if($auth->acl_get('a_viewlogs'))
         {
-            $sql = "SELECT event, action, results, ip, datetime, userid FROM `".$db_prefix."_log` ORDER BY datetime DESC LIMIT 0, 5 ";
-            $res = $db->sql_query($sql);
+            $sql = "SELECT event, action, results, ip, datetime, userid FROM ".$db_prefix."_log
+			 ORDER BY datetime DESC LIMIT 0, 5 ";
+            $res = $db->sql_query($sql,60000000);
             while ($errors = $db->sql_fetchrow($res))
             {
                 $data = '';
@@ -639,7 +643,7 @@ else
             );
         }
 	define('BTM_DEBUG',true);
-	//adm_page_footer(true);
+	adm_page_footer(true);
 	echo $template->fetch('admin/main.html');
     close_out();
 }

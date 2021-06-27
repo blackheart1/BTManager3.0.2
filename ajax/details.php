@@ -64,7 +64,7 @@ if($op == 'view_peers_page')
                 if (!isset($torrent) OR !is_numeric($torrent) OR $torrent < 1) bterror($user->lang['INVALID_ID']);
 
                 $sql = "SELECT
-                            password .
+                            password,
                             owner
                         FROM
                             ".$db_prefix."_torrents
@@ -212,7 +212,7 @@ if($op == 'view_nfo_page')
             }
         $password = urldecode($password);
                 $sql = "SELECT
-                            password .
+                            password,
                             owner
                         FROM
                             ".$db_prefix."_torrents
@@ -259,7 +259,7 @@ if($op == 'view_files_page')
                 if (!isset($id) OR !is_numeric($id) OR $id < 1) error($user->lang['INVALID_ID']);
                 $password = urldecode($password);
                 $sql = "SELECT
-                            password .
+                            password,
                             owner
                         FROM
                             ".$db_prefix."_torrents
@@ -329,7 +329,7 @@ if($op == 'view_rate_page')
                 bterror($user->lang['INVALID_TORRENT']);
             }
                 $sql = "SELECT
-                            password .
+                            password,
                             owner
                         FROM
                             ".$db_prefix."_torrents
@@ -496,7 +496,7 @@ if($op == 'view_coments_page')
         $password                   = request_var('password', '');
         $password = urldecode($password);
                 $sql = "SELECT
-                            password .
+                            password,
                             owner
                         FROM
                             ".$db_prefix."_torrents

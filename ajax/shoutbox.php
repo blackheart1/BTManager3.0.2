@@ -41,7 +41,7 @@ if ($user->user AND(
         $sqlupdate = "UPDATE ".$db_prefix."_online_users SET last_action = NOW() WHERE id = ".$user->id.";";
         $sqlinsert = "INSERT INTO ".$db_prefix."_online_users VALUES ('".$user->id."','".addslashes($pagename)."', NOW(), NOW())";
         $res = $db->sql_query($sqlupdate);
-        if (!$db->sql_affectedrows($res)) $db->sql_query($sqlinsert);
+        if (!$res) $db->sql_query($sqlinsert);
 }
 function build_shouts($shotuser)
 {
@@ -54,15 +54,15 @@ global $db_prefix, $user, $db, $shout_config, $template, $btback1, $btback2, $ph
         $template->assign_vars(array(
                 'SHOUT_WELCOME'             => $shoutannounce,
                 'S_SHOUTBOX_AJAX'           => true,
-                'S_SMILIES_ALLOWED'         => ($config['allow_smilies'] && $config['auth_smilies_pm'] && checkaccess('u_pm_smilies')) ? true : false,
-                'S_SHOW_SMILEY_LINK'        => ($config['allow_smilies'] && $config['auth_smilies_pm'] && checkaccess('u_pm_smilies')) ? true : false,
-                'S_BBCODE_ALLOWED'          => ($config['allow_bbcode'] && $config['auth_bbcode_pm'] && checkaccess('u_pm_bbcode')) ? true : false,
+                'S_SMILIES_ALLOWED'         => ($config['allow_smilies'] && $config['auth_smilies_pm'] && $auth->acl_get('u_pm_smilies')) ? true : false,
+                'S_SHOW_SMILEY_LINK'        => ($config['allow_smilies'] && $config['auth_smilies_pm'] && $auth->acl_get('u_pm_smilies')) ? true : false,
+                'S_BBCODE_ALLOWED'          => ($config['allow_bbcode'] && $config['auth_bbcode_pm'] && $auth->acl_get('u_pm_bbcode')) ? true : false,
                 'T_TEMPLATE_PATH'           => 'themes/' . $theme . '/templates',
                 'S_BBCODE_QUOTE'            => true,
                 'MESSAGE'                   =>  '[quote]'.addslashes($shoutannounce).'[/quote]',
-                'S_BBCODE_IMG'              => ($config['auth_img_pm'] && checkaccess('u_pm_img')) ? true : false,
+                'S_BBCODE_IMG'              => ($config['auth_img_pm'] && $auth->acl_get('u_pm_img')) ? true : false,
                 'S_LINKS_ALLOWED'           => ($config['allow_post_links']) ? true : false,
-                'S_BBCODE_FLASH'            => ($config['auth_flash_pm'] && checkaccess('u_pm_flash')) ? true : false,
+                'S_BBCODE_FLASH'            => ($config['auth_flash_pm'] && $auth->acl_get('u_pm_flash')) ? true : false,
                 'EDIT_SHOUT'                =>  false,
         ));
     $ucs = 0;
@@ -239,14 +239,14 @@ if($op == 'take_edit_shout')
                     include_once('include/function_posting.php');
                     include_once('include/message_parser.php');
                     include_once('include/class.bbcode.php');
-                    $bbcode_status      = ($config['allow_bbcode'] && $config['auth_bbcode_pm'] && checkaccess('u_pm_bbcode')) ? true : false;
-                    $smilies_status     = ($config['allow_smilies'] && $config['auth_smilies_pm'] && checkaccess('u_pm_smilies')) ? true : false;
-                    $img_status         = ($config['auth_img_pm'] && checkaccess('u_pm_img')) ? true : false;
-                    $flash_status       = ($config['auth_flash_pm'] && checkaccess('u_pm_flash')) ? true : false;
+                    $bbcode_status      = ($config['allow_bbcode'] && $config['auth_bbcode_pm'] && $auth->acl_get('u_pm_bbcode')) ? true : false;
+                    $smilies_status     = ($config['allow_smilies'] && $config['auth_smilies_pm'] && $auth->acl_get('u_pm_smilies')) ? true : false;
+                    $img_status         = ($config['auth_img_pm'] && $auth->acl_get('u_pm_img')) ? true : false;
+                    $flash_status       = ($config['auth_flash_pm'] && $auth->acl_get('u_pm_flash')) ? true : false;
                     $url_status         = ($config['allow_post_links']) ? true : false;
-                    $enable_sig         = ($config['allow_sig'] && $config['allow_sig_pm'] && checkaccess('u_sig'));
-                    $enable_smilies     = ($config['allow_smilies'] && checkaccess('u_pm_smilies'));
-                    $enable_bbcode      = ($config['allow_bbcode'] && checkaccess('u_pm_bbcode'));
+                    $enable_sig         = ($config['allow_sig'] && $config['allow_sig_pm'] && $auth->acl_get('u_sig'));
+                    $enable_smilies     = ($config['allow_smilies'] && $auth->acl_get('u_pm_smilies'));
+                    $enable_bbcode      = ($config['allow_bbcode'] && $auth->acl_get('u_pm_bbcode'));
                     $enable_urls        = ($config['enable_urls'])?true:false;
                 $message_parser = new parse_message();
                 $message_parser->message = $shout;
@@ -276,14 +276,14 @@ if($op == 'take_edit_archive_shout')
                     include_once('include/message_parser.php');
                     include_once('include/class.bbcode.php');
                     include_once('include/bbcode.php');
-                    $bbcode_status      = ($config['allow_bbcode'] && $config['auth_bbcode_pm'] && checkaccess('u_pm_bbcode')) ? true : false;
-                    $smilies_status     = ($config['allow_smilies'] && $config['auth_smilies_pm'] && checkaccess('u_pm_smilies')) ? true : false;
-                    $img_status         = ($config['auth_img_pm'] && checkaccess('u_pm_img')) ? true : false;
-                    $flash_status       = ($config['auth_flash_pm'] && checkaccess('u_pm_flash')) ? true : false;
+                    $bbcode_status      = ($config['allow_bbcode'] && $config['auth_bbcode_pm'] && $auth->acl_get('u_pm_bbcode')) ? true : false;
+                    $smilies_status     = ($config['allow_smilies'] && $config['auth_smilies_pm'] && $auth->acl_get('u_pm_smilies')) ? true : false;
+                    $img_status         = ($config['auth_img_pm'] && $auth->acl_get('u_pm_img')) ? true : false;
+                    $flash_status       = ($config['auth_flash_pm'] && $auth->acl_get('u_pm_flash')) ? true : false;
                     $url_status         = ($config['allow_post_links']) ? true : false;
-                    $enable_sig         = ($config['allow_sig'] && $config['allow_sig_pm'] && checkaccess('u_sig'));
-                    $enable_smilies     = ($config['allow_smilies'] && checkaccess('u_pm_smilies'));
-                    $enable_bbcode      = ($config['allow_bbcode'] && checkaccess('u_pm_bbcode'));
+                    $enable_sig         = ($config['allow_sig'] && $config['allow_sig_pm'] && $auth->acl_get('u_sig'));
+                    $enable_smilies     = ($config['allow_smilies'] && $auth->acl_get('u_pm_smilies'));
+                    $enable_bbcode      = ($config['allow_bbcode'] && $auth->acl_get('u_pm_bbcode'));
                     $enable_urls        = ($config['enable_urls'])?true:false;
                 $message_parser = new parse_message();
                 $message_parser->message = $shout;
@@ -498,14 +498,14 @@ if($op == 'take_shout')
                     include_once('include/function_posting.php');
                     include_once('include/message_parser.php');
                     include_once('include/class.bbcode.php');
-                    $bbcode_status      = ($config['allow_bbcode'] && $config['auth_bbcode_pm'] && checkaccess('u_pm_bbcode')) ? true : false;
-                    $smilies_status     = ($config['allow_smilies'] && $config['auth_smilies_pm'] && checkaccess('u_pm_smilies')) ? true : false;
-                    $img_status         = ($config['auth_img_pm'] && checkaccess('u_pm_img')) ? true : false;
-                    $flash_status       = ($config['auth_flash_pm'] && checkaccess('u_pm_flash')) ? true : false;
+                    $bbcode_status      = ($config['allow_bbcode'] && $config['auth_bbcode_pm'] && $auth->acl_get('u_pm_bbcode')) ? true : false;
+                    $smilies_status     = ($config['allow_smilies'] && $config['auth_smilies_pm'] && $auth->acl_get('u_pm_smilies')) ? true : false;
+                    $img_status         = ($config['auth_img_pm'] && $auth->acl_get('u_pm_img')) ? true : false;
+                    $flash_status       = ($config['auth_flash_pm'] && $auth->acl_get('u_pm_flash')) ? true : false;
                     $url_status         = ($config['allow_post_links']) ? true : false;
-                    $enable_sig         = ($config['allow_sig'] && $config['allow_sig_pm'] && checkaccess('u_sig'));
-                    $enable_smilies     = ($config['allow_smilies'] && checkaccess('u_pm_smilies'));
-                    $enable_bbcode      = ($config['allow_bbcode'] && checkaccess('u_pm_bbcode'));
+                    $enable_sig         = ($config['allow_sig'] && $config['allow_sig_pm'] && $auth->acl_get('u_sig'));
+                    $enable_smilies     = ($config['allow_smilies'] && $auth->acl_get('u_pm_smilies'));
+                    $enable_bbcode      = ($config['allow_bbcode'] && $auth->acl_get('u_pm_bbcode'));
                     $enable_urls        = ($shout_config['allow_url'] != "no")?true:false;
                 $message_parser = new parse_message();
                 $message_parser->message = $shout;

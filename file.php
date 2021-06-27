@@ -63,7 +63,7 @@ function wrap_img_in_html($src, $title)
             </html>';
 }
 
-function pixelfuck($url, $chars='ewk34543�G�$�$Tg34g4g', $shrpns='1', $size='4',$weight='2')
+/*function pixelfuck($url, $chars='ewk34543�G�$�$Tg34g4g', $shrpns='1', $size='4',$weight='2')
 {
 //die($url);
     list($w, $h, $type) = getimagesize($url);
@@ -73,9 +73,9 @@ function pixelfuck($url, $chars='ewk34543�G�$�$Tg34g4g', $shrpns='1', $siz
 
     for($y=0;$y <$h;$y+=$shrpns)
         for($x=0;$x <$w;$x+=$shrpns)
-            imagestring($img,$weight,$x*$size,$y*$size, $chars{@++$p%$cc}, imagecolorat($resource, $x, $y));
+            imagestring($img,$weight,$x*$size,$y*$size, $chars[@++$p%$cc], imagecolorat($resource, $x, $y));
     return $img;
-}
+}*/
 
 function header_filename($file)
 {

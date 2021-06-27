@@ -86,6 +86,7 @@ require_once("include/torrent_functions.php");
                             IF(".$db_prefix."_torrents.numratings < '".$minvotes."', NULL, ROUND(".$db_prefix."_torrents.ratingsum / ".$db_prefix."_torrents.numratings, 1)) AS rating,
                             ".$db_prefix."_categories.name AS cat_name,
                             ".$db_prefix."_categories.image AS cat_pic,
+		                    ".$db_prefix."_categories.parent_id AS parent_id,
                             U.username,
                             IF(U.name IS NULL, U.username, U.name) as user_name,
                             U.level as user_level,
@@ -120,6 +121,7 @@ require_once("include/torrent_functions.php");
 
     $template->assign_vars(array(
             'SHOW_ALL'     => true,
+        'HIT_COUNT'            => ($user->admin) ? false : true,
             ));
 
 echo $template->assign_display('index_torrents.html');

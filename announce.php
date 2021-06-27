@@ -224,6 +224,7 @@ $left = 0 + $left;
 $ip = $real_ip = getip();
         if($ip == "0.0.0.0")err("Bad Ip report");
 else $ip = sprintf("%u",ip2long($ip));
+$db->sql_return_on_error(true);
 #make sure Ip is not banned
 $sql = "SELECT  ipstart, ban_exclude, ban_give_reason AS reason, ban_end FROM ".$db_prefix."_bans
               WHERE ban_email = ''
@@ -658,15 +659,15 @@ if ($self) { //Peer is already connected
                //SNATCHED MOD
          $res = $db->sql_query("SELECT torrent, userid FROM ".$db_prefix."_snatched WHERE torrent = $torrentid AND userid = $uid")or err("HELP2");
            $check = $db->sql_fetchrow($res);
-         if (!$check['userid'] AND $seeder == "yes")$db->sql_query("INSERT INTO ".$db_prefix."_snatched (torrent, torrentid, userid, ip, port, startdat, last_action, agent, torrent_name, torrent_category, finished, completedat) VALUES ($torrentid, $torrentid, $uid, '".$ip."', $port, '".get_date_time()."', '".get_date_time()."', '" . addslashes($agent) .$clientversion. "' , '" . addslashes($torrentname) . "', $torrentcategory, 'yes', NOW())")or err('SQL Error',$db->sql_error());
-         if (!$check['userid'] AND $seeder != "yes")$db->sql_query("INSERT INTO ".$db_prefix."_snatched (torrent, torrentid, userid, ip, port, startdat, last_action, agent, torrent_name, torrent_category) VALUES ($torrentid, $torrentid, $uid, '".$ip."', $port, '".get_date_time()."', '".get_date_time()."', '" . addslashes($agent) .$clientversion. "' , '" . addslashes($torrentname) . "', $torrentcategory)")or err('SQL Error',$db->sql_error());
+         if (!$check['userid'] AND $seeder == "yes")$db->sql_query("INSERT INTO ".$db_prefix."_snatched (torrent, torrentid, userid, ip, port, startdat, last_action, agent, torrent_name, torrent_category, finished, completedat) VALUES ($torrentid, $torrentid, $uid, '".$ip."', $port, '".get_date_time()."', '".get_date_time()."', '" . $db->sql_escape($agent) .$clientversion. "' , '" . addslashes($torrentname) . "', $torrentcategory, 'yes', NOW())")or err('SQL Error',$db->sql_error());
+         if (!$check['userid'] AND $seeder != "yes")$db->sql_query("INSERT INTO ".$db_prefix."_snatched (torrent, torrentid, userid, ip, port, startdat, last_action, agent, torrent_name, torrent_category) VALUES ($torrentid, $torrentid, $uid, '".$ip."', $port, '".get_date_time()."', '".get_date_time()."', '" . $db->sql_escape($agent) .$clientversion. "' , '" . addslashes($torrentname) . "', $torrentcategory)")or err('SQL Error',$db->sql_error());
            //END SNATCHED
 
         $sql_insert = "INSERT INTO ".$db_prefix."_peers (connectable, torrent, peer_id, ip, port, uploaded, downloaded, to_go, started, last_action, seeder, real_ip, client, version, user_agent, unique_id, uid) VALUES ('".$connectable."', '".$torrentid."', '".$db->sql_escape(utf8_clean_string($peer_id)). "', '".$ip."', '".$port."', '".$uploaded."', '".$downloaded."', '".$left."', NOW(), NOW(), '".$seeder."', '".$real_ip."', $client, '".$clientversion."', '".$_SERVER["HTTP_USER_AGENT"]."', '".$key."', '".$uid."')";
         if ($db->sql_query($sql_insert)) {
   $hitrun = "IF(hitrun > '".get_date_time(gmtime() - 5400)."', '0000-00-00 00:00:00', hitrun)";
   $hitrunwarn = "IF(hitrun > '".get_date_time(gmtime() - 5400)."', 'no', hitrunwarn)";
-  $snh_up = "UPDATE ".$db_prefix."_snatched SET ip = ".$ip.", port = $port, agent = ".addslashes($agent).$clientversion.", last_action = '".get_date_time()."', hitrun = $hitrun, seeder = '".$seeder."', hitrunwarn = $hitrunwarn WHERE torrentid = $torrentid AND userid = $uid";
+  $snh_up = "UPDATE ".$db_prefix."_snatched SET ip = ".$ip.", port = $port, agent = '".$db->sql_escape($agent).$clientversion."', last_action = '".get_date_time()."', hitrun = $hitrun, seeder = '".$seeder."', hitrunwarn = $hitrunwarn WHERE torrentid = $torrentid AND userid = $uid";
   $snh_in = "INSERT INTO ".$db_prefix."_snatched (torrentid, userid, port, startdate, agent,ip) VALUES ($torrentid, $uid, $port, '".get_date_time()."', '" . $db->sql_escape($agent) .$clientversion. "','" . $ip . "')";
   if(!$db->sql_query($snh_up))$db->sql_query($snh_in);
                 if ($seeder == "yes")

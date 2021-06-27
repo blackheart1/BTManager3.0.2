@@ -2548,7 +2548,7 @@ function group_user_attributes($action, $group_id, $user_id_ary = false, $userna
                 WHERE group_id = $group_id
                     AND user_pending = 1
                     AND " . $db->sql_in_set('user_id', $user_id_ary);
-            $result = $db->sql_query($sql . ' LIMT 1');
+            $result = $db->sql_query($sql . ' LIMIT 1');
             $not_empty = ($db->sql_fetchrow($result));
             $db->sql_freeresult($result);
             if ($not_empty)

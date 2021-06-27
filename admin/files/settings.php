@@ -62,6 +62,12 @@ $db->sql_freeresult($cfgres);
                                 'L_TITLE' => $user->lang['MENU_PRIVATE_MESSAGE'],
                                 'U_TITLE' => append_sid("{$siteurl}/admin.$phpEx", 'i=siteinfo&amp;op=settings_pm'),
                                 ));
+                                $template->assign_block_vars('l_block1.l_block2.l_block3',array(
+                                'S_SELECTED'    => ('settings_captch' ==$op)? true:false,
+                                'IMG' => '',
+                                'L_TITLE' => 'ACP_CAPTCHA',//$user->lang['MENU_PRIVATE_MESSAGE'],
+                                'U_TITLE' => append_sid("{$siteurl}/admin.$phpEx", 'i=siteinfo&amp;op=settings_captch'),
+                                ));
                             }
                             if($auth->acl_get('a_board'))
                             {
@@ -96,99 +102,178 @@ $db->sql_freeresult($cfgres);
                             if($auth->acl_get('a_attach'))
                             {
                                 $template->assign_block_vars('l_block1.l_block2.l_block3',array(
-                                'S_SELECTED'    => ('attach' ==$action)? true:false,
+                                'S_SELECTED'    => ('attach' ==$op)? true:false,
                                 'IMG' => '',
                                 'L_TITLE' => $user->lang['ACP_ATTACHMENT_SETTINGS'],
-                                'U_TITLE' => append_sid($u_action, 'action=attach'),
+                                'U_TITLE' => append_sid("{$siteurl}/admin.$phpEx", 'i=siteinfo&amp;op=attach&amp;action=attach'),
                                 ));
-                                $template->assign_block_vars('l_block1.l_block2.l_block3',array(
-                                'S_SELECTED'    => ('extensions' ==$action)? true:false,
-                                'IMG' => '',
-                                'L_TITLE' => $user->lang['ACP_MANAGE_EXTENSIONS'],
-                                'U_TITLE' => append_sid($u_action, 'action=extensions'),
-                                ));
-                                $template->assign_block_vars('l_block1.l_block2.l_block3',array(
-                                'S_SELECTED'    => ('ext_groups' ==$action)? true:false,
-                                'IMG' => '',
-                                'L_TITLE' => $user->lang['ACP_EXTENSION_GROUPS'],
-                                'U_TITLE' => append_sid($u_action, 'action=ext_groups'),
-                                ));
-                                $template->assign_block_vars('l_block1.l_block2.l_block3',array(
-                                'S_SELECTED'    => ('orphan' ==$action)? true:false,
-                                'IMG' => '',
-                                'L_TITLE' => $user->lang['ACP_ORPHAN_ATTACHMENTS'],
-                                'U_TITLE' => append_sid($u_action, 'action=orphan'),
-                                ));
+								if('attach' ==$op)
+								{
+									$template->assign_block_vars('l_block1.l_block2',array(
+									'L_TITLE'       => $user->lang['ACP_ATTACHMENT_SETTINGS'],
+									'S_SELECTED'    => true,
+									'U_TITLE'       => '1',));
+									$template->assign_block_vars('l_block1.l_block2.l_block3',array(
+									'S_SELECTED'    => ('extensions' ==$action)? true:false,
+									'IMG' => '',
+									'L_TITLE' => $user->lang['ACP_MANAGE_EXTENSIONS'],
+									'U_TITLE' => append_sid("{$siteurl}/admin.$phpEx", 'i=siteinfo&amp;op=attach&amp;action=extensions'),
+									));
+									$template->assign_block_vars('l_block1.l_block2.l_block3',array(
+									'S_SELECTED'    => ('ext_groups' ==$action)? true:false,
+									'IMG' => '',
+									'L_TITLE' => $user->lang['ACP_EXTENSION_GROUPS'],
+									'U_TITLE' => append_sid("{$siteurl}/admin.$phpEx", 'i=siteinfo&amp;op=attach&amp;action=ext_groups'),
+									));
+									$template->assign_block_vars('l_block1.l_block2.l_block3',array(
+									'S_SELECTED'    => ('orphan' ==$action)? true:false,
+									'IMG' => '',
+									'L_TITLE' => $user->lang['ACP_ORPHAN_ATTACHMENTS'],
+									'U_TITLE' => append_sid("{$siteurl}/admin.$phpEx", 'i=siteinfo&amp;op=attach&amp;action=orphan'),
+									));
+								}
                             }
-if($op == 'acp_email')
-{
-    if (isset($_REQUEST['mode']) && is_array($_REQUEST['mode']))
+    switch ($op)
     {
-        $mode = request_var('mode', array(''));
-        list($mode, ) = each($mode);
-    }
-    else
-    {
-        $mode = request_var('mode', 'email');
-    }
-    include 'admin/files/acp_email.php';
-    include_once($phpbb_root_path . 'include/modules.' . $phpEx);
-    $module = new acp_email();
-    $module->module =  'acp_email';
-    $module->main('',$action);
-    echo $template->fetch('admin/' . $module->tpl_name . '.html');
-    close_out();
-}
-if($op == 'settings_pm')
-{
-    include 'admin/files/advance_settings.php';
-}
-if($op == 'track_settings')
-{
-	if (isset($_REQUEST['mode']) && is_array($_REQUEST['mode']))
-	{
-		$mode = request_var('mode', array(''));
-		list($mode, ) = each($mode);
+        case 'acp_email':
+			if (isset($_REQUEST['mode']) && is_array($_REQUEST['mode']))
+			{
+				$mode = request_var('mode', array(''));
+				list($mode, ) = each($mode);
+			}
+			else
+			{
+				$mode = request_var('mode', 'email');
+			}
+			include 'admin/files/acp_email.php';
+			include_once($phpbb_root_path . 'include/modules.' . $phpEx);
+			$module = new acp_email();
+			$module->module =  'acp_email';
+			$module->main('',$action);
+			echo $template->fetch('admin/' . $module->tpl_name . '.html');
+			close_out();
+		break;
+		case 'settings_pm':
+			include 'admin/files/advance_settings.php';
+		break;
+		case 'track_settings':
+			if (isset($_REQUEST['mode']) && is_array($_REQUEST['mode']))
+			{
+				$mode = request_var('mode', array(''));
+				list($mode, ) = each($mode);
+			}
+			else
+			{
+				$mode = request_var('mode', 'email');
+			}
+			include 'admin/files/acp_tracker_settings.php';
+			include_once($phpbb_root_path . 'include/modules.' . $phpEx);
+			$module = new acp_tracker_settings();
+			$module->module =  'acp_tracker_settings';
+			$module->main('',$action);
+			echo $template->fetch('admin/' . $module->tpl_name . '.html');
+			close_out();
+		break;
+		case 'user_signup':
+			if (isset($_REQUEST['mode']) && is_array($_REQUEST['mode']))
+			{
+				$mode = request_var('mode', array(''));
+				list($mode, ) = each($mode);
+			}
+			else
+			{
+				$mode = request_var('mode', 'email');
+			}
+			include 'admin/files/acp_user_signup.php';
+			include_once($phpbb_root_path . 'include/modules.' . $phpEx);
+			$module = new acp_user_signup();
+			$module->module =  'acp_user_signup';
+			$module->main('',$action);
+			echo $template->fetch('admin/' . $module->tpl_name . '.html');
+			close_out();
+		break;
+		case 'sig_settings':
+    		include 'admin/files/sig_settings.php';
+		break;
+		case 'settings_bbcode':
+    		include 'admin/files/settings_bbcode.php';
+		break;
+		case 'settings_captch':
+			require_once("include/auth.php");
+			require_once("admin/files/acp_captcha." . $phpEx);
+			include_once($phpbb_root_path . 'include/modules.' . $phpEx);
+				$auth = new auth();
+				$auth->acl($user);
+				$module = new acp_captcha();
+				$module->u_action = $u_action;
+				$module->module =  'acp_captcha';
+				$template->assign_vars(array(
+					'U_ACTION'			=> '/admin.php?op=levels&i=userinfo&action=' . $action,)
+				);
+				$action					= request_var('action_i', $action);
+				$module->main('',$mode);
+				echo $template->fetch('admin/' . $module->tpl_name . '.html');
+				close_out();
+		break;
+		case 'settings':
+			require_once("include/auth.php");
+			require_once("admin/files/acp_overall_settings.php");
+			include_once($phpbb_root_path . 'include/modules.' . $phpEx);
+				$auth = new auth();
+				$auth->acl($user);
+				$module = new acp_overall_settings();
+				$module->u_action = $u_action;
+				$module->module =  'acp_overall_settings';
+				$template->assign_vars(array(
+					'U_ACTION'			=> '/admin.php?op=levels&i=userinfo&action=' . $action,
+					'ICON_MOVE_DOWN'          => $user->img('icon_down', 'MOVE_DOWN'),
+					'ICON_MOVE_UP'            => $user->img('icon_up', 'MOVE_UP'),
+					'ICON_MOVE_UP_DISABLED'   => $user->img('icon_up_disabled', 'MOVE_UP_DISABLED'),
+					'ICON_MOVE_DOWN_DISABLED' => $user->img('icon_down_disabled', 'MOVE_DOWN_DISABLED'),
+					'ICON_EDIT'               => $user->img('icon_edit', 'EDIT'),
+					'ICON_DELETE'             => $user->img('icon_delete', 'DELETE'),)
+				);
+				$action					= request_var('action_i', $action);
+				$module->main('',$mode);
+				echo $template->fetch('admin/' . $module->tpl_name . '.html');
+				close_out();
+		break;
+		case 'attach':
+			switch ($action)
+			{
+				case 'imgmagick':
+				$mode = 'attach';
+				case 'edit':
+				case 'add':
+				$mode = 'ext_groups';
+				case 'attach':
+				case 'extensions':
+				case 'ext_groups':
+				case 'orphan':
+				require_once("include/auth.php");
+				require_once("admin/files/acp_attachments.php");
+				include_once($phpbb_root_path . 'include/modules.' . $phpEx);
+					$auth = new auth();
+					$auth->acl($user);
+					$admin_role = new acp_attachments();
+					$admin_role->module =  'acp_attachments';
+					$admin_role->u_action = $u_action;
+						$template->assign_vars(array(
+							'U_ACTION'          => '/admin.php?op=levels&i=userinfo&action=' . $action,
+							'ICON_MOVE_DOWN'          => $user->img('icon_down', 'MOVE_DOWN'),
+							'ICON_MOVE_UP'            => $user->img('icon_up', 'MOVE_UP'),
+							'ICON_MOVE_UP_DISABLED'   => $user->img('icon_up_disabled', 'MOVE_UP_DISABLED'),
+							'ICON_MOVE_DOWN_DISABLED' => $user->img('icon_down_disabled', 'MOVE_DOWN_DISABLED'),
+							'ICON_EDIT'               => $user->img('icon_edit', 'EDIT'),
+							'ICON_DELETE'             => $user->img('icon_delete', 'DELETE'),)
+						);
+				$action                 = request_var('action_i', $action);
+					$admin_role->main('',$mode);
+					echo $template->fetch('admin/' . $admin_role->tpl_name . '.html');
+					close_out();
+			}
+		break;
 	}
-	else
-	{
-		$mode = request_var('mode', 'email');
-	}
-	include 'admin/files/acp_tracker_settings.php';
-	include_once($phpbb_root_path . 'include/modules.' . $phpEx);
-	$module = new acp_tracker_settings();
-	$module->module =  'acp_tracker_settings';
-	$module->main('',$action);
-	echo $template->fetch('admin/' . $module->tpl_name . '.html');
-	close_out();
-}
-if($op == 'user_signup')
-{
-	if (isset($_REQUEST['mode']) && is_array($_REQUEST['mode']))
-	{
-		$mode = request_var('mode', array(''));
-		list($mode, ) = each($mode);
-	}
-	else
-	{
-		$mode = request_var('mode', 'email');
-	}
-	include 'admin/files/acp_user_signup.php';
-	include_once($phpbb_root_path . 'include/modules.' . $phpEx);
-	$module = new acp_user_signup();
-	$module->module =  'acp_user_signup';
-	$module->main('',$action);
-	echo $template->fetch('admin/' . $module->tpl_name . '.html');
-	close_out();
-}
-if($op == 'sig_settings')
-{
-    include 'admin/files/sig_settings.php';
-}
-if($op == 'settings_bbcode')
-{
-    include 'admin/files/settings_bbcode.php';
-}
     switch ($action)
     {
         case 'imgmagick':
@@ -206,6 +291,7 @@ if($op == 'settings_bbcode')
             $auth = new auth();
             $auth->acl($user);
             $admin_role = new acp_attachments();
+			$module->module =  'acp_attachments';
             $admin_role->u_action = $u_action;
                 $template->assign_vars(array(
                     'U_ACTION'          => '/admin.php?op=levels&i=userinfo&action=' . $action,
@@ -222,26 +308,6 @@ if($op == 'settings_bbcode')
             close_out();
         break;
         case 'setting':
-		/*require_once("include/auth.php");
-		require_once("admin/files/acp_settings.php");
-		include_once($phpbb_root_path . 'include/modules.' . $phpEx);
-			$auth = new auth();
-			$auth->acl($user);
-			$admin_role = new acp_settings();
-			$admin_role->u_action = $u_action;
-			$template->assign_vars(array(
-				'U_ACTION'			=> '/admin.php?op=levels&i=userinfo&action=' . $action,
-				'ICON_MOVE_DOWN'          => $user->img('icon_down', 'MOVE_DOWN'),
-				'ICON_MOVE_UP'            => $user->img('icon_up', 'MOVE_UP'),
-				'ICON_MOVE_UP_DISABLED'   => $user->img('icon_up_disabled', 'MOVE_UP_DISABLED'),
-				'ICON_MOVE_DOWN_DISABLED' => $user->img('icon_down_disabled', 'MOVE_DOWN_DISABLED'),
-				'ICON_EDIT'               => $user->img('icon_edit', 'EDIT'),
-				'ICON_DELETE'             => $user->img('icon_delete', 'DELETE'),)
-			);
-			$action					= request_var('action_i', $action);
-			$admin_role->main('',$mode);
-			echo $template->fetch('admin/' . $admin_role->tpl_name . '.html');
-			close_out();*/
             if ($op == "savesettings")
             {
                 //Process Request

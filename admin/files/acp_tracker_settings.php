@@ -36,7 +36,6 @@ class acp_tracker_settings
 		global $db, $user, $auth, $template;
 		global $config,$db_prefix, $phpEx;
 		global $pmbt_cache, $site_announce;
-		$config['announce_url'] = serialize($site_announce);
 		$user->set_lang('admin/acp_site_settings',$user->ulanguage);
 
 		$action	= request_var('action', '');
@@ -44,7 +43,6 @@ class acp_tracker_settings
 
 		$form_key = 'acp_tracker_settings';
 		add_form_key($form_key);
-		$config['allow_backup_tracker'] = 1;
 
 		/**
 		*	Validation types are:
@@ -122,10 +120,13 @@ class acp_tracker_settings
 					$config_value = serialize($vallad_ann);
 					$this->new_config[$config_name] = $config_value;
 				}
-				//set_config($config_name, $config_value);
-				//trigger_error($user->lang['CONFIG_UPDATED_EMAIL'] . adm_back_link($this->u_action));
+				set_config($config_name, $config_value);
 			}
 		}
+			if ($submit)
+			{
+				trigger_error($user->lang['CONFIG_UPDATED_TRACKER'] . adm_back_link($this->u_action));
+			}
 		$template->assign_vars(array(
 			'L_TITLE'			=> $user->lang[$display_vars['title']],
 			'L_TITLE_EXPLAIN'	=> $user->lang[$display_vars['title'] . '_EXPLAIN'],
