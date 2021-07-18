@@ -408,12 +408,12 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
   function rate_vote() {
     if ($this->page["Title"] == "") $this->openpage ("Title");
 	
-	if(preg_match("/<span itemprop=\"ratingValue\">(.*?)<\/span>/m",$this->page["Title"],$match)){
+	if(preg_match("/<span class=\"AggregateRatingButton__RatingScore-sc-1ll29m0-1 iTLWoV\">(.*?)<\/span>/m",$this->page["Title"],$match)){
 		//die(print_r($match));
       $this->main_rating = $match[1];
 	}
 	unset($match);
-	if(preg_match("/<span class=\"small\" itemprop=\"ratingCount\">(.*?)<\/span>/m",$this->page["Title"],$match)){
+	if(preg_match("/<div class=\"AggregateRatingButton__TotalRatingAmount-sc-1ll29m0-3 jkCVKJ\">(.*?)<\/div>/m",$this->page["Title"],$match)){
       $this->main_votes = $match[1];
 	}
   }
@@ -518,9 +518,9 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
   function genres () {
     if (empty($this->moviegenres)) {
       if ($this->page["Title"] == "") $this->openpage ("Title");
-    if (preg_match_all("/\<h4 class=\"inline\">Genres:<\/h4>(.*?)<\/div>/",$this->page["Title"],$matches))
+    if (preg_match_all("/\<a class=\"ipc-metadata-list-item__list-content-item ipc-metadata-list-item__list-content-item--link\" rel=\"\" href=\"\/search\/title\/\?genres.*?>(.*?)<\/a>/",$this->page["Title"],$matches))
         $this->moviegenres = $matches[1];
-		//print_r($matches);
+		//die(print_r($matches[1]));
     }
     return $this->moviegenres;
   }
@@ -580,7 +580,7 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
   function plotoutline () {
     if ($this->main_plotoutline == "") {
       if ($this->page["Title"] == "") $this->openpage ("Title");
-      if (@preg_match("/<div class=\"summary_text\">(.*?)\</ms",$this->page["Title"],$match))
+      if (@preg_match("/<div class=\"ipc-html-content ipc-html-content--base\"><div>(.*?)\<a/ms",$this->page["Title"],$match))
         $this->main_plotoutline = $match[1];
     }
     return $this->main_plotoutline;
@@ -588,10 +588,12 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
 	function release_date () {
       if ($this->page["Title"] == "") $this->openpage ("Title");
 	 // die($this->page["Title"]);
-      preg_match("/\<h4 class=\"inline\">Release Date:<\/h4>(.*?)<span class=\"see-more inline\">/ms",$this->page["Title"],$match);
-      if (empty($match[1])) return FALSE;
+    //if (preg_match_all("/\<a class=\"ipc-metadata-list-item__list-content-item ipc-metadata-list-item__list-content-item--link\" rel=\"\" href=\"\/search\/title\/\?genres.*? >(.*?)<\/a>/",$this->page["Title"],$matches))
+      preg_match("/\<a class=\"ipc-metadata-list-item__list-content-item ipc-metadata-list-item__list-content-item--link\" rel=\"\" href=\"\/title\/tt(.*?)\/releaseinfo\?ref_=tt_dt_rdat\">(.*?)<\/a>/ms",$this->page["Title"],$match);
+	  //die(print_r($match));
+      if (empty($match[2])) return FALSE;
 	  //print_r($match);
-	  return $match[1];
+	  return $match[2];
 	}
  #--------------------------------------------------------[ Photo specific ]---
   /** Get cover photo
@@ -717,12 +719,14 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
   function mpaa () {
    if (empty($this->mpaas)) {
     if ($this->page["MPAA"] == "") $this->openpage ("MPAA");
-	//echo $this->page["MPAA"];
-    if (preg_match_all("/\/title\?certificates.*?>(.*?):(.*?)</",$this->page["MPAA"],$matches)) {
+	//die($this->page["MPAA"]);
+    if (preg_match_all("/\ipl-inline-list.*?><a.*?>(.*?):(.*?)<\//",$this->page["MPAA"],$matches)) {
+	//die(print_r($matches));
       $cc = count($matches[0]);
       for ($i=0;$i<$cc;++$i) $this->mpaas[$matches[1][$i]] = $matches[2][$i];
     }
    }
+   //die(print_r($this->mpaas));
    return $this->mpaas;
   }
 

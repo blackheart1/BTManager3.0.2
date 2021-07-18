@@ -209,15 +209,15 @@ function view_message($id, $mode, $folder_id, $msg_id, $folder, $message_row)
         'EDITED_MESSAGE'    => $l_edited_by,
         'MESSAGE_ID'        => $message_row['msg_id'],
 
-        'U_PM'          => ($config['allow_privmsg'] && checkaccess('u_sendpm') && ($user_info['user_allow_pm'] || $auth->acl_gets('a_', 'm_') || $auth->acl_getf_global('m_'))) ? append_sid("{$siteurl}pm.$phpEx", 'op=send&amp;i=pm&amp;mode=compose&amp;u=' . $author_id) : '',
+        'U_PM'          => ($config['allow_privmsg'] && $auth->acl_get('u_sendpm') && ($user_info['user_allow_pm'] || $auth->acl_gets('a_', 'm_') || $auth->acl_getf_global('m_'))) ? append_sid("{$siteurl}pm.$phpEx", 'op=send&amp;i=pm&amp;mode=compose&amp;u=' . $author_id) : '',
         'U_WWW'         => (!empty($user_info['user_website'])) ? $user_info['user_website'] : '',
         'U_ICQ'         => ($user_info['user_icq']) ? 'http://www.icq.com/people/webmsg.php?to=' . urlencode($user_info['user_icq']) : '',
-        'U_AIM'         => ($user_info['user_aim'] && checkaccess('u_sendim')) ? append_sid("{$siteurl}/userfind_to_pm.$phpEx", 'mode=contact&amp;action=aim&amp;u=' . $author_id) : '',
+        'U_AIM'         => ($user_info['user_aim'] && $auth->acl_get('u_sendim')) ? append_sid("{$siteurl}/userfind_to_pm.$phpEx", 'mode=contact&amp;action=aim&amp;u=' . $author_id) : '',
         'U_YIM'         => ($user_info['user_yim']) ? 'http://edit.yahoo.com/config/send_webmesg?.target=' . urlencode($user_info['user_yim']) . '&amp;.src=pg' : '',
-        'U_MSN'         => ($user_info['user_msnm'] && checkaccess('u_sendim')) ? append_sid("{$siteurl}/userfind_to_pm.$phpEx", 'mode=contact&amp;action=msnm&amp;u=' . $author_id) : '',
-        'U_JABBER'      => ($user_info['user_jabber'] && checkaccess('u_sendim')) ? append_sid("{$siteurl}/userfind_to_pm.$phpEx", 'mode=contact&amp;action=jabber&amp;u=' . $author_id) : '',
+        'U_MSN'         => ($user_info['user_msnm'] && $auth->acl_get('u_sendim')) ? append_sid("{$siteurl}/userfind_to_pm.$phpEx", 'mode=contact&amp;action=msnm&amp;u=' . $author_id) : '',
+        'U_JABBER'      => ($user_info['user_jabber'] && $auth->acl_get('u_sendim')) ? append_sid("{$siteurl}/userfind_to_pm.$phpEx", 'mode=contact&amp;action=jabber&amp;u=' . $author_id) : '',
 
-        'U_DELETE'          => (checkaccess('u_pm_delete')) ? "$url&amp;op=send&amp;mode=compose&amp;action=delete&amp;f=$folder_id&amp;p=" . $message_row['msg_id'] : '',
+        'U_DELETE'          => ($auth->acl_get('u_pm_delete')) ? "$url&amp;op=send&amp;mode=compose&amp;action=delete&amp;f=$folder_id&amp;p=" . $message_row['msg_id'] : '',
         'U_EMAIL'           => $user_info['email'],
         'U_REPORT'          => ($config['allow_pm_report']) ? append_sid("{$siteurl}/report.$phpEx", "pm=" . $message_row['msg_id']) : '',
         'U_QUOTE'           => ($author_id != 0) ? "$url&amp;op=send&amp;mode=compose&amp;action=quote&amp;f=$folder_id&amp;p=" . $message_row['msg_id'] : '',
@@ -235,8 +235,8 @@ function view_message($id, $mode, $folder_id, $msg_id, $folder, $message_row)
         'S_SPECIAL_FOLDER'  => in_array($folder_id, array(PRIVMSGS_NO_BOX, PRIVMSGS_OUTBOX)),
         'S_PM_RECIPIENTS'   => $num_recipients,
 
-        'U_PRINT_PM'        => ($config['print_pm'] && checkaccess('u_pm_printpm')) ? "$url&amp;f=$folder_id&amp;p=" . $message_row['msg_id'] . "&amp;view=print" : '',
-        'U_FORWARD_PM'      => ($config['forward_pm'] && checkaccess('u_sendpm') && checkaccess('u_pm_forward')) ? "$url&amp;mode=compose&amp;action=forward&amp;f=$folder_id&amp;p=" . $message_row['msg_id'] : '')
+        'U_PRINT_PM'        => ($config['print_pm'] && $auth->acl_get('u_pm_printpm')) ? "$url&amp;f=$folder_id&amp;p=" . $message_row['msg_id'] . "&amp;view=print" : '',
+        'U_FORWARD_PM'      => ($config['forward_pm'] && $auth->acl_get('u_sendpm') && $auth->acl_get('u_pm_forward')) ? "$url&amp;mode=compose&amp;action=forward&amp;f=$folder_id&amp;p=" . $message_row['msg_id'] : '')
     );
 
     // Display not already displayed Attachments for this post, we already parsed them. ;)
