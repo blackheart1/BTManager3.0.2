@@ -526,7 +526,7 @@ function compose_pm($id, $mode, $action)
             WHERE forum_id = 0
                 AND topic_id = 0
                 AND user_id = ' . $user->id .
-                (($draft_id) ? " AND draft_id <> $draft_id" : '') . 'LIMIT 1';
+                (($draft_id) ? " AND draft_id <> $draft_id" : '') . ' LIMIT 1';
         $result = $db->sql_query($sql);
         $row = $db->sql_fetchrow($result);
         $db->sql_freeresult($result);

@@ -370,8 +370,8 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
   function runtime_all() {
     if ($this->main_runtime == "") {
       if ($this->page["Title"] == "") $this->openpage ("Title");
-      if (@preg_match("/<time (.*?)>(.*?)min<\/time/m",$this->page["Title"],$match))
-        $this->main_runtime = $match[2];
+      if (@preg_match("/<\/span><\/li><li role=\"presentation\" class=\"ipc-inline-list__item\">([0-9][h].*?)min<\/li><\/ul>/m",$this->page["Title"],$match))
+        $this->main_runtime = $match[1];
 		//die(print_r($match));
     }
     return $this->main_runtime;
@@ -601,10 +601,10 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
   function photo () {
     if (empty($this->main_photo)) {
       if ($this->page["Title"] == "") $this->openpage ("Title");
-      preg_match("/\<div class=\"poster\">(.*?)<a href(.*?)\>(.*?)<img(.*?)src\=\"(.*?)\"/ms",$this->page["Title"],$match);
-      if (empty($match[5])) return FALSE;
+      preg_match("/\<div class=\"ipc-poster ipc-poster--baseAlt ipc-poster--dynamic-width ipc-sub-grid-item ipc-sub-grid-item--span-2\"(.*?)>(.*?)<img(.*?)src\=\"(.*?)\"/ms",$this->page["Title"],$match);
+      if (empty($match[4])) return FALSE;
 	  //die(print_r($match));
-      $this->main_photo = $match[5];
+      $this->main_photo = $match[4];
     }
     return $this->main_photo;
   }
