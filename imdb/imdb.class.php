@@ -135,7 +135,7 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
     case "Taglines"    : $urlname="/taglines"; break;
     case "Episodes"    : $urlname="/episodes"; break;
     case "Quotes"      : $urlname="/quotes"; break;
-    case "Trailers"    : $urlname="/videogallery"; break;
+    case "Trailers"    : $urlname="/videogallery/"; break;
     case "Trailer"    : $urlname="/video/screenplay"; break;
     case "Goofs"       : $urlname="/goofs"; break;
     case "Trivia"      : $urlname="/trivia"; break;
@@ -772,7 +772,8 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
    if (empty($this->taglines)) {
     if ( $this->page["Taglines"] == "" ) $this->openpage ("Taglines");
     if ( $this->page["Taglines"] == "cannot open page" ) return array(); // no such page
-    if (preg_match_all("/<p>(.*?)<\/p><hr/",$this->page["Taglines"],$matches))
+    if (preg_match_all("/<div class=\"soda .*?\">(.*?)<\/div>/",$this->page["Taglines"],$matches))
+	//die(print_r($matches));
       $this->taglines = $matches[1];
    }
    return $this->taglines;
@@ -1118,13 +1119,13 @@ function get_image_extension($filename, $include_dot = true, $shorter_extensions
     if (empty($this->trailers) ) {
       if ( $this->page["Trailers"] == "" ) $this->openpage("Trailers");
       if ( $this->page["Trailers"] == "cannot open page" ) return array(); // no such page
-      $tag_s = strpos($this->page["Trailers"], '<div class="results-item slate">');
+      $tag_s = strpos($this->page["Trailers"], 'results-item slate');
+	 // die(print($tag_s));
       if (!empty($tag_s)) { // trailers on the IMDB site itself
-        $tag_e = strpos($this->page["Trailers"],"</a>            </span",$tag_s);
+        $tag_e = strpos($this->page["Trailers"],"</ol></div>",$tag_s);
         $trail = substr($this->page["Trailers"], $tag_s, $tag_e - $tag_s +1);
-        if (preg_match_all("/<a href=\"(.*?)\"/",$trail,$matches))
+        if (preg_match_all("/<h2><a href=\"(.*?)\"/",$trail,$matches))
           for ($i=0;$i<count($matches[0]);++$i) $this->trailers[] = "https://".$this->imdbsite.$matches[1][$i];
-		//die(print_r($this->trailers));
       }
       $tag_s = strpos($this->page["Trailers"], "<h3>Trailers on Other Sites</h3>");
       if (empty($tag_s)) return FALSE;
