@@ -642,9 +642,11 @@
                         <h4>{L_MOTION_PIC_RATING}
                         </h4>
         <!-- BEGIN mpaarate -->
+        <!-- IF not mpaarate.S_FIRST_ROW -->
                     <span itemprop="contentRating">{mpaarate.COUNTRY}({mpaarate.RATING})</span>
         <!-- IF not mpaarate.S_LAST_ROW -->
                     <span class="ghost">|</span>
+        <!-- ENDIF -->
         <!-- ENDIF -->
         <!-- END mpaarate -->
             </div>
