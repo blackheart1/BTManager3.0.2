@@ -711,7 +711,7 @@ if (isset($jump_check) AND $jump_check == 1) {
         foreach($materia as $x){
                 $x = trim($x);
                 if(strlen($x)>=5){
-                        $sql .= " OR filename LIKE '".str_replace("\'","\\\'",$x)."'";
+                        $sql .= " OR filename = '".str_replace("\'","\\\'",$x)."'";
 
                 }
         }

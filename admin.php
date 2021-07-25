@@ -352,7 +352,7 @@ else
                             trigger_error($user->lang['NO_AUTH_OPERATION'] . adm_back_link($this->u_action), E_USER_WARNING);
                         }
                         $start = date("Y-m-d H:i:s");
-                        $db->sql_query("UPDATE ".$db_prefix."_config SET `start_date ` =  '" . $start . "'");
+                        $db->sql_query("UPDATE ".$db_prefix."_config SET `start_date` =  '" . $start . "'");
                         $pmbt_cache->remove_file("sql_".md5("config").".php");
                         $sql = "SELECT * FROM ".$db_prefix."_config LIMIT 1;";
                         $configquery = $db->sql_query($sql);

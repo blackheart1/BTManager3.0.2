@@ -1055,8 +1055,8 @@ if($op == 'get_imdb')
                         'IMDB_RELEASE_DATE'  => $release,
                         'IMDB_VOTES'         => $movie->votes (),
                         'IMDB_SCORE'         => $movie->rating (),
-                        'IMDB_RATTING'       => $mpaa['USA'],
-                        'IMDB_RATTING_LOWER' => strtolower($mpaa['USA']),
+                        'IMDB_RATTING'       => $mpaa['United States'],
+                        'IMDB_RATTING_LOWER' => strtolower($mpaa['United States']),
                         'IMDB_MPAA'          => implode(",",$movie->mpaa ()),
                         'IMDB_PLOT'          => implode(",",$movie->plot ()),
                 ));

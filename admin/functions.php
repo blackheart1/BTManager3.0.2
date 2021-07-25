@@ -1519,6 +1519,42 @@ function build_permission_dropdown($options, $default_option, $permission_scope)
 
 		return $errors;
 	}
+	/**
+	* Move forum content from one to another forum
+	*/
+	function move_forum_content($from_id, $to_id, $sync = true)
+	{
+		global $db, $db_prefix;
+
+		$table_ary = array($db_prefix . '_log', $db_prefix . '_posts', $db_prefix . '_topics', $db_prefix . '_drafts', $db_prefix . '_topics_track');
+
+		foreach ($table_ary as $table)
+		{
+			$sql = "UPDATE $table
+				SET forum_id = $to_id
+				WHERE forum_id = $from_id";
+			$db->sql_query($sql);
+		}
+		unset($table_ary);
+
+		$table_ary = array($db_prefix . '_forums_access', $db_prefix . '_forums_track', $db_prefix . '_forums_watch', $db_prefix . '_moderator_cache');
+
+		foreach ($table_ary as $table)
+		{
+			$sql = "DELETE FROM $table
+				WHERE forum_id = $from_id";
+			$db->sql_query($sql);
+		}
+
+		if ($sync)
+		{
+			// Delete ghost topics that link back to the same forum then resync counters
+			sync('topic_moved');
+			sync('forum', 'forum_id', $to_id, false, true);
+		}
+
+		return array();
+	}
 function get_database_size()
 {
 	global $db, $db_prefix, $pmbt_cache;
@@ -2617,7 +2653,7 @@ function delete_topic_shadows($forum_id, $sql_more = '', $auto_sync = true)
 			break;
 		}
 
-		$table_ary = array($db_prefix.'_forum_permissions', $db_prefix.'_forum_track', $db_prefix.'_forum_watch', $db_prefix.'_posts', $db_prefix.'_topics', $db_prefix.'_topics_track');
+		$table_ary = array($db_prefix.'_forum_permissions', $db_prefix.'_forums_track', $db_prefix.'_forum_watch', $db_prefix.'_posts', $db_prefix.'_topics', $db_prefix.'_topics_track');
 
 		foreach ($table_ary as $table)
 		{

@@ -129,12 +129,12 @@ else
                                     );
         $subject= $user->lang['RESEED_REQ'];
                                 $mid2 = submit_pm($action, $subject, $pm_data);
-                meta_refresh(5, $siteurl . "/details.php?id=" . $id );
+                meta_refresh(5, $siteurl . "/details.php?id=" . $reseedid );
                 $template->assign_vars(array(
                     'S_SUCCESS'         => true,
                     'S_FORWARD'         => false,
                     'TITTLE_M'          => $user->lang['SUCCESS'],
-                    'MESSAGE'           => sprintf($user->lang['RESEED_REQ_SENT'], implode($seeder_asked, '<br />')) . back_link("/details.php?id=" . $id ),
+                    'MESSAGE'           => sprintf($user->lang['RESEED_REQ_SENT'], implode($seeder_asked, '<br />')) . back_link("/details.php?id=" . $reseedid ),
                 ));
                 echo $template->fetch('message_body.html');
                 close_out();

@@ -830,7 +830,11 @@ class acp_users
                     }
 
                     // Replace "error" strings with their real, localised form
-                    $error = preg_replace('#^([A-Z_]+)$#e', "(!empty(\$user->lang['\\1'])) ? \$user->lang['\\1'] : '\\1'", $error);
+						$error = preg_replace_callback('#^([A-Z_]+)$#e',
+								function($m) use ($user) {
+									return (!empty($user->lang[$match[1]])) ? $user->lang($match[1]) : $match[1];
+									},
+							$error);
                 }
 
                 if ($user_id == $user->id)
@@ -1188,7 +1192,11 @@ class acp_users
                     }
 
                     // Replace "error" strings with their real, localised form
-                    $error = preg_replace('#^([A-Z_]+)$#e', "(!empty(\$user->lang['\\1'])) ? \$user->lang['\\1'] : '\\1'", $error);
+						$error = preg_replace_callback('#^([A-Z_]+)$#e',
+								function($m) use ($user) {
+									return (!empty($user->lang[$match[1]])) ? $user->lang($match[1]) : $match[1];
+									},
+							$error);
                 }
 
                 $s_birthday_day_options = '<option value="0"' . ((!$data['bday_day']) ? ' selected="selected"' : '') . '>--</option>';
@@ -1350,7 +1358,11 @@ class acp_users
                     }
 
                     // Replace "error" strings with their real, localised form
-                    $error = preg_replace('#^([A-Z_]+)$#e', "(!empty(\$user->lang['\\1'])) ? \$user->lang['\\1'] : '\\1'", $error);
+						$error = preg_replace_callback('#^([A-Z_]+)$#e',
+								function($m) use ($user) {
+									return (!empty($user->lang[$match[1]])) ? $user->lang($match[1]) : $match[1];
+									},
+							$error);
                 }
 
                 $dateformat_options = '';
@@ -1478,7 +1490,11 @@ class acp_users
                     }
 
                     // Replace "error" strings with their real, localised form
-                    $error = preg_replace('#^([A-Z_]+)$#e', "(!empty(\$user->lang['\\1'])) ? \$user->lang['\\1'] : '\\1'", $error);
+						$error = preg_replace_callback('#^([A-Z_]+)$#e',
+								function($m) use ($user) {
+									return (!empty($user->lang[$match[1]])) ? $user->lang($match[1]) : $match[1];
+									},
+							$error);
                 }
 
                 // Generate users avatar
@@ -1604,7 +1620,11 @@ class acp_users
                     }
 
                     // Replace "error" strings with their real, localised form
-                    $error = preg_replace('#^([A-Z_]+)$#e', "(!empty(\$user->lang['\\1'])) ? \$user->lang['\\1'] : '\\1'", $error);
+						$error = preg_replace_callback('#^([A-Z_]+)$#e',
+								function($m) use ($user) {
+									return (!empty($user->lang[$match[1]])) ? $user->lang($match[1]) : $match[1];
+									},
+							$error);
                 }
 
                 $signature_preview = '';
