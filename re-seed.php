@@ -103,7 +103,7 @@ else
         $sql = ("SELECT id, username, email, language FROM ".$db_prefix."_users WHERE id = ".$srow['user']." ") or die(mysql_error());
         $res = $db->sql_query($sql);
         $result=$db->sql_fetchrow($res);
-        $seeder_asked[] = "<a href=\"user.php?op=profile&id=$result[id]\">".$result["username"]."</a> ";
+        $seeder_asked[] = "<a href=\"user.php?op=profile&id=" . $result['id'] . "\">".$result["username"]."</a> ";
         $address_list['u'][$result["id"]] = 'to';
     }
         @setcookie("PMBTreseedreq".$reseedid, $reseedid);
