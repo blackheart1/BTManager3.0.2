@@ -606,8 +606,8 @@ if ($self) { //Peer is already connected
             die();
         }
         if ($self["seconds"] != 0){
-                $upload_speed = round(($uploaded - $self["uploaded"]) / $self["seconds"]);
-                $download_speed = round(($downloaded - $self["downloaded"]) / $self["seconds"] );
+                $upload_speed = round(($self["uploaded"] - $uploaded) / $self["seconds"]);
+                $download_speed = round(($self["downloaded"] - $downloaded) / $self["seconds"] );
                 $updateset[] = "speed = speed - '".$self["upload_speed"]."' + '".$upload_speed."'";
         } else {
                 $upload_speed = 0;
